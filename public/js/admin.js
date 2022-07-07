@@ -238,4 +238,32 @@ remove_tag=function (id,text)
 
 }
 
+add_item_input=function () {
+    const id=document.getElementsByClassName('item_input').length+1;
+    const html='<div class="form-group item_group" id="item_-'+id+'">'+
+        '<input type="text" class="form-control item_input" name="item[-'+id+']" placeholder="نام گروه ویژگی">'+
+        '<span class="fa fa-plus-circle" onclick="add_child_input(-'+id+')"></span>'+
+        '<div class="child_item_box"></div>'
+        +'</div>';
+    $("#item_box").append(html);
 
+}
+
+add_child_input=function (id)
+{
+    const child_count=document.getElementsByClassName('child_input_item').length+1;
+    const count=document.getElementsByClassName('child_'+id).length+1;
+    const html='<div class="form-group child_'+id+'" >'+
+        count +'-'+ '<div class="pretty p-icon p-curve p-pulse">'+
+      '<input type="checkbox" name="check_box_item['+id+'][-'+child_count+']" >'
+        +'<div class="state p-warning-o"> <i class="icon mdi mdi-check"></i><label></label></div></div>'
+        +'<input type="text" name="child_item['+id+'][-'+child_count+']" class="form-control child_input_item" placeholder="نام ویژگی">'+
+        '</div>';
+
+
+
+
+    $("#item_"+id).find('.child_item_box').append(html);
+
+
+}

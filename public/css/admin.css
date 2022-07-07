@@ -479,3 +479,19 @@ thead{
 .ui-sortable-helper{
     display: table;
 }
+
+.item_group{
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.child_item_box{
+    padding-top: 10px;
+}
+.child_item_box input[type=checkbox]{
+    margin-left: 10px;
+}
+.child_input_item{
+    margin-right: 10px!important;
+}

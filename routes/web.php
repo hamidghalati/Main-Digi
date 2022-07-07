@@ -49,6 +49,10 @@ Route::prefix('admin')->group(function (){
     //slider
     create_crud_route('sliders','SliderController');
 
+    //Item
+    Route::get('category/{id}/items','Admin\ItemController@items');
+    Route::post('category/{id}/items','Admin\ItemController@add_items');
+
 
 
 
