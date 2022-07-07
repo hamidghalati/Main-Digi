@@ -82,11 +82,23 @@ set_sidebar_width=function () {
 select_file=function (){
     $('#pic').click();
 };
+select_file2=function (){
+    $('#mobile_pic').click();
+};
 
 loadFile=function (event) {
     const render=new FileReader();
     render.onload=function (){
         const output=document.getElementById('output');
+        output.src=render.result;
+    };
+    render.readAsDataURL(event.target.files[0]);
+
+}
+loadFile2=function (event) {
+    const render=new FileReader();
+    render.onload=function (){
+        const output=document.getElementById('output2');
         output.src=render.result;
     };
     render.readAsDataURL(event.target.files[0]);

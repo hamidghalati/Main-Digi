@@ -46,6 +46,8 @@ Route::prefix('admin')->group(function (){
     Route::delete('products/gallery/{id}','Admin\ProductController@removeImageGallery');
     Route::post('products/change_images_status/{id}','Admin\ProductController@change_images_status');
 
+    //slider
+    create_crud_route('sliders','SliderController');
 
 
 
