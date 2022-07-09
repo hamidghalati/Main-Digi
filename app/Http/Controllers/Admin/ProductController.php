@@ -7,6 +7,7 @@ use App\CategoriesModel;
 use App\ColorModel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\ItemModel;
 use App\ProductGalleryModel;
 use App\ProductsModel;
 use Illuminate\Http\Request;
@@ -195,6 +196,37 @@ class ProductController extends CustomController
          }
     }
 
+    public function items($id)
+    {
+        $product=ProductsModel::where('id',$id)->select(['id','title','cat_id'])->firstOrFail();
+
+        $product_items=ItemModel::getProductItem($product);
+        return view('admin.product.items',['product'=>$product,'product_items'=>$product_items]);
+    }
+
+    public function add_items($id,Request $request)
+    {
+
+        $product=ProductsModel::where('id',$id)->select(['id','title','cat_id'])->firstOrFail();
+        $items_value=$request->get('item_value');
+        DB::table('item_value')->where(['product_id'=>$id])->delete();
+        foreach ($items_value as $key=>$value)
+        {
+            foreach ($value as $key2=>$value2)
+            {
+                if (!empty($value2))
+                {
+                    DB::table('item_value')->insert([
+                        'product_id'=>$id,
+                        'item_id'=>$key,
+                        'item_value'=>$value2
+                    ]);
+                }
+            }
+        }
+        return redirect()->back()->with(['message'=>'ثبت مشخصات فنی برای محصول با موفقیت انجام شد','header'=>'مشخصات فنی ','alerts'=>'success']);
+
+    }
 
 
 

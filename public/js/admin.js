@@ -259,11 +259,38 @@ add_child_input=function (id)
         +'<div class="state p-warning-o"> <i class="icon mdi mdi-check"></i><label></label></div></div>'
         +'<input type="text" name="child_item['+id+'][-'+child_count+']" class="form-control child_input_item" placeholder="نام ویژگی">'+
         '</div>';
-
-
-
-
     $("#item_"+id).find('.child_item_box').append(html);
 
 
+}
+
+add_item_value_item=function (id)
+{
+    const html='<div class="form-group">' +
+        '<label></label>'+
+        '<input name="item_value['+id+'][]" type="text" class="form-control" placeholder=" مشخصات را وارد نمایید...">'+
+        '</div>';
+    $("#input_item_box_"+id).append(html);
+}
+
+add_filter_input=function ()
+{
+    const id=document.getElementsByClassName('filter_input').length+1;
+    const html='<div class="form-group item_group" id="filter_-'+id+'">' +
+        '<input type="text" class="form-control filter_input" name="filter[-'+id+']" placeholder="نام گروه فیلتر">'
+        +'<span class="fa fa-plus-circle" onclick="add_filter_child_input(-'+id+')"></span>'
+        +'<div class="child_filter_box"></div>'
+        +'</div>';
+    $("#filter_box").append(html);
+};
+
+add_filter_child_input=function (id) {
+
+    const child_count=document.getElementsByClassName('child_input_filter').length+1;
+    const count=document.getElementsByClassName('child_'+id).length+1;
+
+    const html='<div class="form-group child_'+id+'" >'+
+        count +'-'+  '<input type="text" name="child_filter['+id+'][-'+child_count+']" class="form-control child_input_filter" placeholder="نام فیلتر">'+
+        '</div>';
+    $("#filter_"+id).find('.child_filter_box').append(html);
 }

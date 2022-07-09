@@ -55,6 +55,7 @@ class ProductsModel extends Model
                     remove_file($product->image_url,'products');
                     remove_file($product->image_url,'thumb');
                     DB::table('product_color')->where('product_id',$product->id)->delete();
+                    DB::table('item_value')->where('product_id',$product->id)->delete();
 
                 }
 

@@ -495,3 +495,34 @@ thead{
 .child_input_item{
     margin-right: 10px!important;
 }
+.item_remove_message{
+    float: left;
+    color: white;
+    font-size: 13px;
+    cursor: pointer;
+}
+.child_item_remove_message{
+    color: red;
+    cursor: pointer;
+}
+.main-title{
+    color: #0fabef;
+    font-weight: bold;
+    font-size: 20px;
+}
+.icon_title
+{
+    position: relative;
+    top: 3px;
+    margin-left: 10px
+}
+.input_item_box{
+    margin-top: 10px;
+    margin-right: 12px;
+}
+.input_value_item{
+    margin-right: 10px;
+}
+.child_filter_box{
+    margin-top: 10px;
+}

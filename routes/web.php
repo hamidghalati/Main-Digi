@@ -49,9 +49,19 @@ Route::prefix('admin')->group(function (){
     //slider
     create_crud_route('sliders','SliderController');
 
-    //Item
+    //Item category
     Route::get('category/{id}/items','Admin\ItemController@items');
     Route::post('category/{id}/items','Admin\ItemController@add_items');
+    Route::delete('category/items/{id}','Admin\ItemController@destroy');
+
+    //Item product
+    Route::get('products/{id}/items','Admin\ProductController@items');
+    Route::post('products/{id}/items','Admin\ProductController@add_items');
+
+    //filter
+    Route::get('category/{id}/filters','Admin\FilterController@filters');
+    Route::post('category/{id}/filters','Admin\FilterController@add_filters');
+    Route::delete('category/filters/{id}','Admin\FilterController@destroy');
 
 
 
