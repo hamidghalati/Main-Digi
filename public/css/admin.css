@@ -526,3 +526,28 @@ thead{
 .child_filter_box{
     margin-top: 10px;
 }
+
+.item_filter_box{
+    width: calc(100% - 685px)!important;
+    margin-right: 184px;
+    z-index: 10;
+    position: relative;
+    background: white;
+}
+.item_filter_box ul{
+    position: absolute;
+    width: 100%;
+    background: white;
+    padding: 5px;
+    overflow-y: auto;
+    border: 1px solid #ced4da;
+    max-height: 300px;
+    display: none;
+
+}
+.item_filter_box ul li{
+    list-style: none;
+    margin-right:10px!important;
+    padding: 10px;
+    cursor: pointer;
+}

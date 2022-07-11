@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class ItemModel extends Model
 {
@@ -95,7 +96,6 @@ class ItemModel extends Model
     {
         define('product_id',$product->id);
         $category=CategoriesModel::find($product->cat_id);
-
         $cat_id[0]=$product->cat_id;
         if ($category)
         {
@@ -114,7 +114,64 @@ class ItemModel extends Model
             ->where(['product_id'=>product_id]);
     }
 
+    public static function getCategoryItem($id)
+    {
+        $category=CategoriesModel::find($id);
+        $cat_id[0]=$id;
+        if ($category)
+        {
+            $cat_id[1]=$category->parent_id;
+        }
+        $items=self::with('getChild')->where(['parent_id'=>0])
+            ->whereIn('category_id',$cat_id)
+            ->orderBy('position','ASC')->get();
+        return $items;
+    }
 
+    public static function getProductItemWithFilter($product)
+    {
+        define('product_id',$product->id);
+        $category=CategoriesModel::find($product->cat_id);
+        $cat_id[0]=$product->cat_id;
+        if ($category)
+        {
+            $cat_id[1]=$category->parent_id;
+        }
+        $items=self::with('getChild.getValue')->where(['parent_id'=>0])
+            ->whereIn('category_id',$cat_id)
+            ->orderBy('position','ASC')->get();
+        $filters=FilterModel::whereIn('category_id',$cat_id)
+            ->where(['parent_id'=>0])
+            ->whereNotNull('item_id')
+            ->with('getChild')->get();
+        return ['items'=>$items,'filters'=>$filters];
+    }
 
+    public static function addFilter($key,$filters_value,$product_id)
+    {
+        if (array_key_exists($key,$filters_value))
+        {
+            foreach ($filters_value as $k=>$v)
+            {
+                $filter_id=$k;
+                DB::table('filter_product')
+                    ->where(['product_id'=>$product_id,'filter_id'=>$filter_id])
+                    ->delete();
+                $e=explode('@',$v);
+                foreach ($e as $k2=>$v2)
+                {
+                    if (!empty($v2))
+                    {
+                        DB::table('filter_product')
+                            ->insert([
+                               'product_id'=>$product_id,
+                               'filter_id'=>$filter_id,
+                                'filter_value'=>$v2
+                            ]);
+                    }
+                }
+            }
+        }
+    }
 
 }

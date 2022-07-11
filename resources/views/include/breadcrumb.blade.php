@@ -37,7 +37,7 @@ $v = new Verta();
         @endif
 
         <li class="date_li">
-            <span class="fa fa-calendar"></span>
+            <span class="mdi mdi-calendar-clock fa-xl" aria-hidden="true"></span>
             <span>امروز</span>
             <span>{{$v->formatWord('l')}}</span>
             <span>{{replace_number($v->day)}}</span>

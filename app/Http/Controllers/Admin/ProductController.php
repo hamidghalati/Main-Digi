@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\BrandsModel;
 use App\CategoriesModel;
 use App\ColorModel;
+use App\FilterModel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\ItemModel;
+use App\ProductFilterModel;
 use App\ProductGalleryModel;
 use App\ProductsModel;
 use Illuminate\Http\Request;
@@ -199,9 +201,11 @@ class ProductController extends CustomController
     public function items($id)
     {
         $product=ProductsModel::where('id',$id)->select(['id','title','cat_id'])->firstOrFail();
-
-        $product_items=ItemModel::getProductItem($product);
-        return view('admin.product.items',['product'=>$product,'product_items'=>$product_items]);
+        $data=ItemModel::getProductItemWithFilter($product);
+        $product_items=$data['items'];
+        $filters=$data['filters'];
+        $product_filters=ProductFilterModel::where('product_id',$product->id)->pluck('filter_id','filter_value')->toarray();
+        return view('admin.product.items',['product'=>$product,'product_items'=>$product_items,'filters'=>$filters,'product_filters'=>$product_filters]);
     }
 
     public function add_items($id,Request $request)
@@ -209,6 +213,7 @@ class ProductController extends CustomController
 
         $product=ProductsModel::where('id',$id)->select(['id','title','cat_id'])->firstOrFail();
         $items_value=$request->get('item_value');
+        $filters_value=$request->get('filter_value');
         DB::table('item_value')->where(['product_id'=>$id])->delete();
         foreach ($items_value as $key=>$value)
         {
@@ -223,11 +228,45 @@ class ProductController extends CustomController
                     ]);
                 }
             }
+            ItemModel::addFilter($key,$filters_value,$id);
         }
         return redirect()->back()->with(['message'=>'ثبت مشخصات فنی برای محصول با موفقیت انجام شد','header'=>'مشخصات فنی ','alerts'=>'success']);
 
     }
 
+    public function filters($id)
+    {
+        $product=ProductsModel::where('id',$id)->select(['id','title','cat_id'])->firstOrFail();
+        $product_filters=FilterModel::getProductFilter($product);
+        return view('admin.product.filters',['product'=>$product,'product_filters'=>$product_filters]);
+
+    }
+
+    public function add_filters($id,Request $request)
+    {
+        $product=ProductsModel::where('id',$id)->select(['id','title','cat_id'])->firstOrFail();
+        $filter=$request->get('filter');
+        DB::table('filter_product')->where(['product_id'=>$id])->delete();
+        if (is_array($filter))
+        {
+            foreach ($filter as $key=>$value)
+            {
+                if (is_array($value))
+                {
+                    foreach ($value as $key2=>$value2)
+                    {
+                        DB::table('filter_product')->insert([
+                           'product_id'=>$id,
+                            'filter_id'=>$key,
+                            'filter_value'=>$value2
+                        ]);
+                    }
+                }
+            }
+        }
+        return redirect()->back()->with(['message'=>'ثبت فیلتر برای محصول با موفقیت انجام شد','header'=>'ثبت فیلتر ','alerts'=>'success']);
+
+    }
 
 
 

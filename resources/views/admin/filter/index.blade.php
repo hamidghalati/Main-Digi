@@ -21,14 +21,46 @@
                 @csrf
 
                 <div class="category_filters">
-                    @foreach($filters as $key=>$value)
-                        <div class="form-group item_group" id="filter_{{$value->id}}">
-                            <input type="text" class="form-control filter_input" value="{{$value->title}}" name="filter[{{$value->id}}]" placeholder="نام گروه فیلتر">
-                            <span class="fa fa-plus-circle" onclick="add_filter_child_input({{$value->id}})"></span>
-                            <div class="child_filter_box"></div>
+                    @if(sizeof($filters)>0)
+                        @foreach($filters as $key=>$value)
+                            <div class="form-group item_group" id="filter_{{$value->id}}">
+
+                                <select name="item_id[{{$value->id}}]" class="selectpicker" data-live-search="true">
+                                    <option value="0">انتخاب ویژگی(در صورت نیاز)</option>
+                                    @foreach($items as $itemKey=>$itemValue)
+                                        @foreach($itemValue->getChild as $k=>$v)
+                                            <option @if($v->id==$value->item_id) selected="selected" @endif value="{{$v->id}}">{{$v->title}}</option>
+                                        @endforeach
+                                    @endforeach
+                                </select>
+                                <input type="text" style="margin-right: 90px" class="form-control filter_input" value="{{$value->title}}" name="filter[{{$value->id}}]" placeholder="نام گروه فیلتر">
+                                <span class="fa fa-plus-circle" onclick="add_filter_child_input({{$value->id}})"></span>
+                                <span class="btn btn-danger  item_remove_message" onclick="del_row('{{url('admin/category/filters/'.$value->id)}}','{{ csrf_token() }}','آیا از حذف این فیلتر مطمئن هستید؟')"><i class="fa fa-trash-can-arrow-up" ></i>   حذف  گروه {{ $value->title }} </span>
+                                <div class="child_filter_box">
+                                    <?php $i=1?>
+                                    @foreach($value->getChild as $childFilter)
+                                        <div class="form-group child_{{$value->id}}" >
+                                            {{$i}}-  <input type="text" name="child_filter[{{$value->id}}][{{$childFilter->id}}]" value="{{$childFilter->title}}" class="form-control child_input_filter" placeholder="نام فیلتر">
+                                            <span class="child_item_remove_message " onclick="del_row('{{url('admin/category/filters/'.$childFilter->id)}}','{{ csrf_token() }}','آیا از حذف این فیلتر مطمئن هستید؟')">حذف فیلتر </span>
+
+                                        </div>
+                                        <?php $i++ ?>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                        @endforeach
+                    @else
+                        <div class="form-group item_group" id="filter_-1">
+                            <input type="text" class="form-control filter_input"  name="filter[-1]" placeholder="نام گروه فیلتر">
+                            <span class="fa fa-plus-circle" onclick="add_filter_child_input(-1)"></span>
+
+                            <div class="child_filter_box">
+                            </div>
                         </div>
 
-                    @endforeach
+                    @endif
+
 
                 </div>
 
@@ -59,9 +91,10 @@
 
     <script>
         $(document).ready(function () {
-           $('.category_items').sortable();
-           $('.child_item_box').sortable();
+           $('.category_filters').sortable();
+           $('.child_filter_box').sortable();
         });
     </script>
+
 
 @endsection

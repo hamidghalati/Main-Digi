@@ -4,7 +4,6 @@
     @include('include.breadcrumb',['data'=>[
     ['title'=>'مدیریت  محصولات','url'=>url('admin/products')],
     ['title'=>'  ثبت مشخصات فنی','url'=>url('admin/products/'. $product->id .'/items')],
-
     ]])
     <div class="panel">
         <div class="header">
@@ -13,6 +12,12 @@
 
         </div>
         <div class="panel_content">
+
+            <?php
+            $filter_array=getFilterArray($filters);
+            ?>
+
+
             @include('include.alert')
 
           @if(sizeof($product_items)>0)
@@ -25,11 +30,28 @@
                                 <div class="form-group" style="margin-top: 25px;">
                                     <label>{{$value2->title}} :</label>
                                     @if(sizeof($value2->getValue)>0)
-                                        <input type="text" name="item_value[{{$value2->id}}][]" value="{{$value2->getValue[0]->item_value}}" class="form-control child_input_item" placeholder=" مشخصات را وارد نمایید...">
+                                        <input type="text" name="item_value[{{$value2->id}}][]" value="{{$value2->getValue[0]->item_value}}" class="form-control child_input_item item_value" placeholder=" مشخصات را وارد نمایید...">
                                     @else
-                                        <input type="text" name="item_value[{{$value2->id}}][]" value="" class="form-control child_input_item" placeholder=" مشخصات را وارد نمایید...">
+                                        <input type="text" name="item_value[{{$value2->id}}][]" value="" class="form-control child_input_item item_value" placeholder=" مشخصات را وارد نمایید...">
                                     @endif
-                                    <span class="fa fa-plus-square" onclick="add_item_value_item({{$value2->id}})"></span>
+
+                                    @if(array_key_exists($value2->id,$filter_array))
+                                        <div class="btn btn-success show_filter_box">انتخاب</div>
+                                        <input type="hidden" class="filter_value" value="{{getFilterItemValue($filters[$filter_array[$value2->id]]->id,$product_filters)}}" name="filter_value[{{$value2->id}}]{{$filters[$filter_array[$value2->id]]->id}}">
+                                        <div class="item_filter_box">
+                                            <ul>
+                                                @foreach($filters[$filter_array[$value2->id]]['getChild'] as $k=>$v)
+                                                    <li>
+                                                        <input @if(array_key_exists($v->id,$product_filters)) checked @endif type="checkbox" value="{{$v->id}}">
+                                                        {{$v->title}}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @else
+                                        <span class="fa fa-plus-square" onclick="add_item_value_item({{$value2->id}})"></span>
+
+                                    @endif
                                     <div class="input_item_box" id="input_item_box_{{$value2->id}}"></div>
                                     @if(sizeof($value2->getValue)>1)
                                         @foreach($value2->getValue as $item_key=>$item_value)

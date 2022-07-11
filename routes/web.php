@@ -63,6 +63,10 @@ Route::prefix('admin')->group(function (){
     Route::post('category/{id}/filters','Admin\FilterController@add_filters');
     Route::delete('category/filters/{id}','Admin\FilterController@destroy');
 
+    //filter product
+    Route::get('products/{id}/filters','Admin\ProductController@filters');
+    Route::post('products/{id}/filters','Admin\ProductController@add_filters');
+
 
 
 

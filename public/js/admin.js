@@ -294,3 +294,50 @@ add_filter_child_input=function (id) {
         '</div>';
     $("#filter_"+id).find('.child_filter_box').append(html);
 }
+$('.item_filter_box ul li input[type="checkbox"]').click(function () {
+    const filter=$(this).parent().parent().parent().parent().find('.filter_value');
+    const input=$(this).parent().parent().parent().parent().find('.item_value');
+    const text=$(this).parent().text().trim();
+   let value=input.val();
+   let filter_value=filter.val();
+   if ($(this).is(":checked"))
+   {
+       if (value.trim()=='')
+       {
+           value=text;
+           filter_value=$(this).val();
+       }
+       else
+       {
+           value=value+","+text;
+           filter_value=filter_value+"@"+$(this).val();
+       }
+       input.val(value);
+       filter.val(filter_value);
+   }
+   else {
+       value=value.replace(","+text,"");
+       value=value.replace(text+",","");
+       value=value.replace(text,"");
+       filter_value=filter_value.replace("@"+$(this).val(),"");
+       filter_value=filter_value.replace($(this).val(),"");
+       input.val(value);
+       filter.val(filter_value);
+
+   }
+
+
+});
+
+$('.show_filter_box').click(function () {
+   const el=$(this).parent().find('.item_filter_box ul');
+   const display=el.css('display');
+   if (display=='block')
+   {
+       el.slideUp();
+   }
+   else
+   {
+       el.slideDown();
+   }
+});
