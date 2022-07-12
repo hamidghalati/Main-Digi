@@ -37,12 +37,16 @@
             <div class="header_action">
                 <div class="dropdown">
                     <div class="index_auth_div" role="button" data-toggle="dropdown">
-                        <span>ورود | ثبت نام</span>
+                        <span>ورود  |  ثبت نام</span>
                         <span class="mdi mdi-menu-down"></span>
                     </div>
 
                     <div class="dropdown-menu header-auth-box" aria-labelledby="dropdownMenuButton">
                         @if(Auth::check())
+                            @if(Auth::user()->role_id>0 || Auth::user()->role=='admin')
+                                <a class="dropdown-item admin" href="{{url('admin')}}">پنل مدیریت</a>
+
+                            @endif
                         @else
                             <a class="btn btn-primary" href="{{url('login')}}">ورود به دیجی کالا</a>
                             <div class="register-link">
@@ -50,19 +54,35 @@
                                 <a class="link" href="{{url('register')}}">ثبت نام</a>
                             </div>
                             <div class="dropdown-divider"></div>
-                            <a href="{{url('profile')}}" class="dropdown-item profile">
 
-                                پروفایل</a>
-                            <a href="{{url('profile/orders')}}" class="dropdown-item order">پیگیری سفارشات</a>
                         @endif
+                        <a href="{{url('profile')}}" class="dropdown-item profile">
+
+                            پروفایل</a>
+                        <a href="{{url('profile/orders')}}" class="dropdown-item order">پیگیری سفارشات</a>
+
+                        @if(Auth::check())
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item logout">خروج از حساب کاربری</a>
+                        @endif
+
+                    </div>
+                </div>
+                <div class="header_divider"></div>
+
+                <div class="cart-header-box">
+                    <div class="btn-cart">
+                        <span id="cart-product-count" data-counter="۰">سبد خرید</span>
                     </div>
                 </div>
             </div>
 
+
         </div>
-
-
     </div>
+
+    @include('include.CategoryList',['catList'=>$catList])
+
 </div>
 
 
