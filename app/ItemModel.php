@@ -149,7 +149,7 @@ class ItemModel extends Model
 
     public static function addFilter($key,$filters_value,$product_id)
     {
-        if (array_key_exists($key,$filters_value))
+        if (is_array($filters_value) && array_key_exists($key,$filters_value))
         {
             foreach ($filters_value as $k=>$v)
             {

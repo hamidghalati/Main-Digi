@@ -33,6 +33,8 @@
                                         @endforeach
                                     @endforeach
                                 </select>
+
+
                                 <input type="text" style="margin-right: 90px" class="form-control filter_input" value="{{$value->title}}" name="filter[{{$value->id}}]" placeholder="نام گروه فیلتر">
                                 <span class="fa fa-plus-circle" onclick="add_filter_child_input({{$value->id}})"></span>
                                 <span class="btn btn-danger  item_remove_message" onclick="del_row('{{url('admin/category/filters/'.$value->id)}}','{{ csrf_token() }}','آیا از حذف این فیلتر مطمئن هستید؟')"><i class="fa fa-trash-can-arrow-up" ></i>   حذف  گروه {{ $value->title }} </span>
