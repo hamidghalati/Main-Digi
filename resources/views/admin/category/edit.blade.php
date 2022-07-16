@@ -47,8 +47,8 @@
             </div>
 
             <div class="form-group">
-                {{ Form::label('img', 'انتخاب عکس :')}}
-                <input type="file" name="img" id="pic" onchange="loadFile(event)" style="display: none">
+                {{ Form::label('pic', 'انتخاب عکس :')}}
+                <input type="file" name="pic" id="pic" onchange="loadFile(event)" style="display: none">
                 <img src="{{url('files/images/pic_1.jpg')}}" onclick="select_file()" width="250ox" id="output">
             </div>
 

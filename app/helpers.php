@@ -236,3 +236,17 @@ function getFilterItemValue($filter_id,$product_filters)
     return $string;
 
 }
+
+function get_show_category_count($catList)
+{
+    $n=0;
+    foreach ($catList as $key=>$value)
+    {
+        if ($value->notShow==0)
+        {
+            $n++;
+        }
+    }
+    return $n;
+}
+
