@@ -1,6 +1,7 @@
 <?php
 
-use App\Lib\Jdf;
+    use App\CategoriesModel;
+    use App\Lib\Jdf;
 use App\ProductPriceModel;
 use App\ProductWarranty;
 use Illuminate\Support\Facades\DB;
@@ -250,3 +251,30 @@ function get_show_category_count($catList)
     return $n;
 }
 
+function getCatList()
+{
+    $data=cache('catList');
+    if ($data)
+    {
+        return $data;
+    }
+    else
+    {
+        $category=CategoriesModel::with('getChild.getChild.getChild')->where('parent_id',0)->get();
+        $minutes=30*24*60*60;
+        cache()->put('catList',$category,$minutes);
+
+    }
+    return $category;
+}
+function get_cat_url($cat)
+{
+    if (!empty($cat->search_url))
+    {
+        return url($cat->url);
+    }
+    else
+    {
+        return url('search/'.$cat->url);
+    }
+}

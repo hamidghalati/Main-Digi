@@ -1,3 +1,138 @@
+$(document).ready(function () {
+    $(".cat_item").mouseover(function () {
+        const li_width=$(this).css('width');
+        const ul_width=$(".index-cat-list ul").width();
+        const a=li_width.replace('px','');
+       const right=ul_width-$(this).offset().left-a+15;
+        $('.cat_hover').css('width',li_width);
+        $(".cat_hover").css('right',right);
+        $(".cat_hover").css('transform','scaleX(1)');
+        $('.li_div').hide();
+        $('.li_div',this).show();
+    });
+
+    $('.index-cat-list').mouseleave(function () {
+        $(".cat_hover").css('transform','scaleX(0)');
+        $('.li_div').hide();
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //        <!--دستور جی کوِرب برای منو-->
 var  timer={};
 

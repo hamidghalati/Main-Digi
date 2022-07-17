@@ -36,6 +36,7 @@ class CategoryController extends CustomController
         $img_url=uploade_file($request,'pic','upload');
         $Categories->img=$img_url;
         $Categories->save();
+        cache()->forget('catList');
         return redirect('admin/category')->with(['message'=>'ثبت گروه محصولات با موفقیت انجام شد','header'=>'ثبت گروه محصولات','alerts'=>'success']);
     }
 
@@ -49,6 +50,7 @@ class CategoryController extends CustomController
 
     public function update(Request $request, $id)
     {
+        cache()->forget('catList');
         $data=$request->all();
         $category=CategoriesModel::findOrFail($id);
         $notShow=$request->has('notShow')?1:0;

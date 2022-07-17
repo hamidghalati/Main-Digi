@@ -1,9 +1,13 @@
 <div class="index-cat-list container-fluid">
     <ul>
+        <li class="cat_hover">
+            <div></div>
+        </li>
         @foreach($catList as $key=>$value)
             <li class="cat_item">
                 <a href="{{url('main/'.$value->url)}}">{{$value->name}}</a>
-                <div class="li_div" @if($key==0) style="display: block" @endif>
+                @if(sizeof($value->getChild)>0)
+                <div class="li_div">
                     <?php
                     $c = 0
                     ?>
@@ -13,19 +17,18 @@
                                 @foreach($value->getChild as $key2=>$value2)
                                     @if($value2->notShow==0)
 
-                                        @if(get_show_category_count($value2->getChild)>=(14-$c)) <? $c = 0?></ul>
-                            <ul class="list-inline sublist">@endif
+                                        @if(get_show_category_count($value2->getChild)>=(14-$c)) <?php $c = 0?></ul><ul class="list-inline sublist">@endif
                                 <li>
-                                    <a  href="" class="child_cat">
+                                    <a  href="{{get_cat_url($value2)}}" class="child_cat">
                                         <span class="fa fa-angle-left"></span>
                                         <span>{{$value2->name}}</span>
 
                                     </a>
                                     <ul>
-                                        @foreach($value2->getChild as $key3=>$value3)
-                                            @if($value3->notShow==0)
-                                                <li>
-                                                    <a href="">{{$value3->name}}</a>
+                                        @foreach($value2->getChild as $key5=>$value5)
+                                            @if($value5->notShow==0)
+                                        <li>
+                                                    <a href="{{get_cat_url($value5)}}">{{$value5->name}}</a>
                                                 </li>
                                                 <?php $c++?>
                                             @endif
@@ -33,17 +36,16 @@
                                     </ul>
                                 </li>
                                 <?php $c++?>
-                                @if($c==13) </ul> <? $c = 0?>
-                            <ul class="list-inline sublist">@endif
+                                @if($c==13) </ul> <? $c = 0?><ul class="list-inline sublist">@endif
+
                                 @else
                                     @foreach($value2->getChild as $key3=>$value3)
-                                        @if(get_show_category_count($value3->getChild)>=(14-$c)) <? $c = 0?></ul>
-                            <ul class="list-inline sublist">@endif
+                                        @if(get_show_category_count($value3->getChild)>=(14-$c)) <?php $c = 0?></ul><ul class="list-inline sublist">@endif
 
 
                                 @if($value3->notShow==0)
                                     <li>
-                                        <a href="" class="child_cat">
+                                        <a href="{{get_cat_url($value3)}}" class="child_cat">
                                             <span class="fa fa-angle-left"></span>
                                             <span>{{$value3->name}}</span>
 
@@ -52,7 +54,7 @@
                                             @foreach($value3->getChild as $key4=>$value4)
                                                 @if($value4->notShow==0)
                                                     <li>
-                                                        <a href="">{{$value4->name}}</a>
+                                                        <a href="{{get_cat_url($value4)}}">{{$value4->name}}</a>
                                                     </li>
                                                     <?php $c++?>
                                                 @endif
@@ -90,11 +92,14 @@
 
 
                 </div>
+                @endif
             </li>
             <?php $c++?>
     @endforeach
-
-        </ul>
+            <li class="float-left">
+                <a href="">فروش ویژه</a>
+            </li>
+    </ul>
 </div>
 
 

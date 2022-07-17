@@ -262,9 +262,11 @@ a:hover {
     display: inline-flex;
     font-size: 13px;
     padding: 9px;
+    cursor: pointer;
 }
 .index-cat-list>ul>li>a {
 color: white;
+
 }
 .li_div{
     width: 100%;
@@ -329,6 +331,24 @@ color: white;
 }
 
 
+.cat_hover{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    transform: scaleX(0);
+    transition: 0.3s;
+}
+.cat_hover div:before{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #ef5661;
+    width: 100%;
+}
 
 
 
