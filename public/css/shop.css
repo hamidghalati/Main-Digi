@@ -338,6 +338,7 @@ color: white;
     height: 100%;
     transform: scaleX(0);
     transition: 0.3s;
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,0.15);
 }
 .cat_hover div:before{
     content: "";
@@ -350,15 +351,102 @@ color: white;
     width: 100%;
 }
 
+.slider_box{
+    width: 100%;
+    height: 240px;
+    margin-top: 10px;
+    position: relative;
+    cursor: pointer;
+}
+.slide_div{
+    width: 100%;
+    display: none;
+}
 
 
+#right-slide{
+    width: 25px;
+    height: 28px;
+    background-image:url("../files/images/slices.png") ;
+    position: absolute;
+    background-position: -25px -320px;
+    top: 104px;
+    right: 15px;
+}
+#left-slide{
+    width: 25px;
+    height: 28px;
+    background-image:url("../files/images/slices.png") ;
+    position: absolute;
+    background-position: -25px -350px;
+    top: 104px;
+    left: 15px;
+}
+.slide_div a{
+    height: 240px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    opacity: 1;
+    width: 100%;
+    display: block;
+    background-size: cover;
+}
+.slider_box_footer{
+    width: 100%;
+    float: left;
+}
+.slider_bullet_div{
+    display: table;
+margin: -40px auto;
+}
+.slider_bullet_div span{
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    margin-left: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    opacity: 0.8;
+    background-color: #fff;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.3);
+}
+.slider_bullet_div span.active
+{
+    background-color: #00bfd6!important;
+}
 
 
-
-
-
-
-
+@media(min-width: 1281px) {
+    .slider_box{
+        height: 320px;
+    }
+    .slide_div a{
+        height: 320px;
+    }
+    #right-slide{
+        top: 144px;
+    }
+    #left-slide{
+        top: 144px;
+    }
+}
+.an{
+    animation-name: slider;
+    -webkit-animation-name: slider;
+    -moz-animation-name: slider;
+    animation-duration: 1.5s;
+    -webkit-animation-duration: 1.5s;
+    -moz-animation-duration: 1.5s;
+}
+@keyframes slider {
+    from{opacity: 0.1}
+    to{opacity: 1}
+}
+@media (max-width: 1280px) {
+    .slider .col-2{display: none}
+    .slider .col-10{max-width: 100%!important;flex: 0 0 100%!important;}
+}
 
 
 

@@ -11,4 +11,8 @@ class AdminController extends Controller
     {
         return view('admin.index');
     }
+    public function incredible_offers()
+    {
+        return view('admin.incredible-offers');
+    }
 }

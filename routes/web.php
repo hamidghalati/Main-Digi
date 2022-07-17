@@ -65,6 +65,9 @@ Route::prefix('admin')->group(function (){
     Route::get('products/{id}/filters','Admin\ProductController@filters');
     Route::post('products/{id}/filters','Admin\ProductController@add_filters');
 
+    //incredible offers
+    Route::get('incredible-offers','Admin\AdminController@incredible_offers');
+
 
 
 

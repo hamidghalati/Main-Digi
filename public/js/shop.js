@@ -17,8 +17,36 @@ $(document).ready(function () {
     });
 });
 
+let img_count=0;
+let img=0;
+function load_slider(count){
+    img_count=count;
+    setInterval( next,5000);
+}
+function next(){
+    $('.slider_bullet_div span').removeClass('active');
+    if (img==(img_count-1))
+    {
+        img=-1;
+    }
+    img=img+1;
+    $('.slide_div').hide();
+    document.getElementById('slider_img_'+img).style.display='block';
+    $("#slider_bullet_"+img).addClass('active');
+}
 
+function prev(){
+    $('.slider_bullet_div span').removeClass('active');
+    img=img-1;
+    if (img==-1)
+    {
+        img=(img_count-1);
+    }
+    $('.slide_div').hide();
+    document.getElementById('slider_img_'+img).style.display='block';
+    $("#slider_bullet_"+img).addClass('active');
 
+}
 
 
 

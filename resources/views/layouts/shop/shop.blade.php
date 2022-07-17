@@ -85,6 +85,9 @@
 
   @include('include.CategoryList',['catList'=>$catList])
 {{--        @include('include.Menu')--}}
+        <div class="container-fluid">
+            @yield('content')
+        </div>
 
     </div>
 
