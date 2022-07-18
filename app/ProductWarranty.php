@@ -60,6 +60,10 @@ public function getWarranty()
         });
     }
 
+    public function getProduct(){
+    return $this->hasOne(ProductsModel::class,'id','product_id')->select(['id','title','image_url']);
+    }
+
 
 
 
