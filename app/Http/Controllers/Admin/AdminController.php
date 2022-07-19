@@ -22,7 +22,7 @@ class AdminController extends Controller
             ->orderBy('id','DESC')
             ->whereHas('getWarranty')
             ->whereHas('getProduct')
-            ->get();
+            ->paginate(10);
         return $productWarranty;
     }
 }

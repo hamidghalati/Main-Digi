@@ -9,11 +9,11 @@
         </div>
         <div class="panel_content">
 
-    @include('include.alert')
+            @include('include.alert')
 
-         <incredible-offers>
+            <incredible-offers>
 
-         </incredible-offers>
+            </incredible-offers>
 
 
 

@@ -13,7 +13,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(item,key) in WarrantyList">
+            <tr v-for="(item,key) in WarrantyList.data">
                 <th scope="row">{{(++key)}}</th>
                 <td><img v-bind:src="$siteUrl+'files/thumb/'+item.get_product.image_url" alt="" class="product_pic"></td>
                 <td>{{item.get_product.title}}</td>
@@ -31,6 +31,13 @@
 
             </tbody>
         </table>
+
+     <pagination :data="WarrantyList" @pagination-change-page="getWarrantyList"></pagination>
+        <!--        <pagination align="center" :data="WarrantyList" @pagination-change-page="getWarrantyList"></pagination>-->
+<!--        <pagination :data="WarrantyList">-->
+<!--            <span slot="prev-nav">&lt; Previous</span>-->
+<!--            <span slot="next-nav">Next &gt;</span>-->
+<!--        </pagination>-->
     </div>
 
 </template>
@@ -38,18 +45,19 @@
 <script>
 export default {
     name: "IncredibleOffers",
+
     data(){
         return{
-            WarrantyList:[]
+            WarrantyList: {data:[]}
         }
     },
     mounted() {
-        this.getWarranty();
+        this.getWarrantyList();
     },
     methods:{
-        getWarranty:function (item) {
+        getWarrantyList:function (page) {
 
-            const url=this.$siteUrl+'/admin/ajax/getWarranty'
+            const url=this.$siteUrl+'/admin/ajax/getWarranty?page='+page;
             this.axios.get(url).then(response=>{
                 this.WarrantyList=response.data;
             })
