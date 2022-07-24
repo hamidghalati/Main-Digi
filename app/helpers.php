@@ -278,3 +278,28 @@ function get_cat_url($cat)
         return url('search/'.$cat->url);
     }
 }
+
+function getTimestamp($date,$type)
+{
+
+   $jdf=new Jdf();
+    $time=0;
+    $e=explode('/',$date);
+    if (sizeof($e)==3)
+    {
+        $y=$e[0];
+        $m=$e[1];
+        $d=$e[2];
+
+        if ($type=='first')
+        {
+            $time=$jdf->jmktime(0,0,0,$m,$d,$y);
+        }
+        else
+        {
+            $time=$jdf->jmktime(23,59,59,$m,$d,$y);
+        }
+    }
+    return $time;
+
+}

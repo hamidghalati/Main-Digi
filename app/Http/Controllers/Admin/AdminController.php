@@ -25,4 +25,12 @@ class AdminController extends Controller
             ->paginate(10);
         return $productWarranty;
     }
+
+    public function add_incredible_offers(Request $request)
+    {
+        $date1=$request->get('date1');
+        $date2=$request->get('date2');
+        //$offers_first_time=getTimestamp($date1,'first');
+        return true;
+    }
 }

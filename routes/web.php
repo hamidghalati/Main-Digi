@@ -68,6 +68,7 @@ Route::prefix('admin')->group(function (){
     //incredible offers
     Route::get('incredible-offers','Admin\AdminController@incredible_offers');
     Route::get('ajax/getWarranty','Admin\AdminController@getWarranty');
+    Route::post('add_incredible_offers/{warranty_id}','Admin\AdminController@add_incredible_offers');
 
 
 
