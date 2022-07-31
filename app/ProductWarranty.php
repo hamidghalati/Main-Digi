@@ -9,7 +9,9 @@ class ProductWarranty extends Model
 {
     use SoftDeletes;
     protected $table='product_warranties';
-    protected $fillable=['product_id','warranty_id','color_id','price1','price2','send_time','seller_id','product_number','product_number_cart'];
+    protected $fillable=['product_id','warranty_id','color_id'
+        ,'price1','price2','send_time','seller_id','product_number','product_number_cart',
+        'offers_first_date','offers_last_date','offers_first_time','offers_last_time','offers','show_index'];
 
 public static function getDate($request)
 {

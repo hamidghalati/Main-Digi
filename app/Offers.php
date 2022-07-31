@@ -1,0 +1,84 @@
+<?php
+
+    namespace App;
+
+    use DB;
+
+    class Offers
+    {
+        public function add($request,$productWarranty)
+        {
+            $date1=$request->get('date1');
+            $date2=$request->get('date2');
+            $offers_first_time=getTimestamp($date1,'first');
+            $offers_last_time=getTimestamp($date2,'last');
+            $row=DB::table('old_price')->where('warranty_id',$productWarranty->id)->first();
+            if (!$row)
+            {
+                $this->addNewPriceRow($productWarranty,$request);
+
+            }
+            else
+            {
+
+                $this->updatePriceRow($row,$request,$productWarranty);
+            }
+
+            $productWarranty->offers_first_date=$date1;
+            $productWarranty->offers_last_date=$date2;
+            $productWarranty->offers_first_time=$offers_first_time;
+            $productWarranty->offers_last_time=$offers_last_time;
+            $productWarranty->offers=1;
+
+            if ($productWarranty->update($request->all()))
+            {
+                return 'ok';
+            }
+            else
+            {
+                return 'error2';
+            }
+
+        }
+
+        public function addNewPriceRow($productWarranty,$request)
+        {
+            $n=$productWarranty->product_number-$request->get('product_number');
+            if ($n<=0)
+            {
+                $n=0;
+            }
+            $insert_id=DB::table('old_price')
+                ->insertGetId([
+                    'warranty_id'=>$productWarranty->id,
+                    'price1'=>$productWarranty->price1,
+                    'price2'=>$productWarranty->price2,
+                    'product_number'=>$n,
+                    'product_number_cart'=>$productWarranty->product_number_cart,
+                    'number_product_sales'=>$request->get('product_number'),
+
+                ]);
+        }
+
+        public function updatepriceRow($row,$request,$productWarranty)
+        {
+            $n=$row->product_number;
+            if ($row->number_product_sales > $request->get('product_number'))
+            {
+                $n1=$row->number_product_sales-$request->get('product_number');
+                $n=$n+$n1;
+            }
+            else
+            {
+                $n1=$request->get('product_number')-$row->number_product_sales ;
+                $n=$n-$n1;
+            }
+            DB::table('old_price')->where(['warranty_id'=>$productWarranty->id])
+                ->update([
+                    'number_product_sales'=>$request->get('product_number'),
+                    'product_number'=>$n
+                ]);
+        }
+
+
+    }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Offers;
 use App\ProductWarranty;
 use Illuminate\Http\Request;
 
@@ -26,11 +27,20 @@ class AdminController extends Controller
         return $productWarranty;
     }
 
-    public function add_incredible_offers(Request $request)
+    public function add_incredible_offers($id,Request $request)
     {
-        $date1=$request->get('date1');
-        $date2=$request->get('date2');
-        //$offers_first_time=getTimestamp($date1,'first');
-        return true;
+        $productWarranty=ProductWarranty::find($id);
+        if ($productWarranty)
+        {
+        $offers=new Offers();
+        $res=$offers->add($request,$productWarranty);
+        return $res;
+
+       }
+        else
+        {
+            return 'error';
+        }
+
     }
 }

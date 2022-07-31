@@ -29,6 +29,7 @@
 
                 <td>
                     <p class="select_item" v-on:click="show_box(item.id,key)">انتخاب</p>
+                    <p class="remove_item" v-if="item.offers==1" v-on:click="remove_offers(item.id,key)">حذف</p>
                 </td>
             </tr>
 
@@ -124,7 +125,8 @@ export default {
             date1:'',
             date2:'',
             select_key:-1,
-            warranty_id:-1
+            warranty_id:-1,
+            send_form:true
         }
     },
     mounted() {
@@ -155,17 +157,24 @@ export default {
             return n;
         },
         show_box:function (item_id,key) {
-            this.warranty_id=item_id;
-            this.select_key=key;
-            this.formInput.price1=this.WarrantyList.data[key].price1;
-            this.formInput.price2=this.WarrantyList.data[key].price2;
-            this.formInput.product_number=this.WarrantyList.data[key].product_number;
-            this.formInput.product_number_cart=this.WarrantyList.data[key].product_number_cart;
-            $("#priceBox").modal('show');
+            if (this.send_form==true)
+            {
+                this.warranty_id=item_id;
+                this.select_key=key;
+                this.formInput.price1=this.WarrantyList.data[key].price1;
+                this.formInput.price2=this.WarrantyList.data[key].price2;
+                this.formInput.product_number=this.WarrantyList.data[key].product_number;
+                this.formInput.product_number_cart=this.WarrantyList.data[key].product_number_cart;
+                this.date1=this.WarrantyList.data[this.select_key].offers_first_date;
+                this.date2=this.WarrantyList.data[this.select_key].offers_last_date;
+                $("#priceBox").modal('show');
+            }
+
         },
         add:function (){
             this.date1=$("#pcal1").val();
             this.date2=$("#pcal2").val();
+            this.send_form=false;
 
             const formData=new FormData();
             formData.append('price1',this.formInput.price1);
@@ -177,7 +186,18 @@ export default {
 
              const url=this.$siteUrl+"/admin/add_incredible_offers/"+this.warranty_id;
             this.axios.post(url,formData).then(response=>{
-                alert(response.data)
+                if(response.data=='ok')
+                {
+                    this.send_form=true;
+                    $("#priceBox").modal('hide');
+                    this.WarrantyList.data[this.select_key].offers=1;
+                    this.WarrantyList.data[this.select_key].price1=this.formInput.price1;
+                    this.WarrantyList.data[this.select_key].price2=this.formInput.price2;
+                    this.WarrantyList.data[this.select_key].product_number=this.formInput.product_number;
+                    this.WarrantyList.data[this.select_key].product_number_cart=this.formInput.product_number_cart;
+                    this.WarrantyList.data[this.select_key].offers_first_date=this.date1;
+                    this.WarrantyList.data[this.select_key].offers_last_date=this.date2;
+                }
             });
 
 

@@ -612,3 +612,14 @@ a.pcalBtn {
     vertical-align: middle!important;
     margin-right:5px!important;
 }
+.remove_item{
+    font-size: 13px;
+    background-color: #ef5661;
+    color: white;
+    padding: 5px 7px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+
+}
