@@ -69,7 +69,7 @@ Route::prefix('admin')->group(function (){
     Route::get('incredible-offers','Admin\AdminController@incredible_offers');
     Route::get('ajax/getWarranty','Admin\AdminController@getWarranty');
     Route::post('add_incredible_offers/{warranty_id}','Admin\AdminController@add_incredible_offers');
-
+    Route::post('remove_incredible_offers/{warranty_id}','Admin\AdminController@remove_incredible_offers');
 
 
 

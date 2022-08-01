@@ -414,9 +414,7 @@ thead{
 .description{
     width: 100%!important;
 }
-.has_error{
-    display: block!important;
-}
+
 .product_pic{
     width: 100px;
     max-height: 220px;
@@ -623,3 +621,5 @@ a.pcalBtn {
     margin-top: 15px;
 
 }
+
+

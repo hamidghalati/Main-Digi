@@ -61,7 +61,6 @@
         <a  class="alert alert-success" onclick="delete_row()">بلی</a>
         <a  class="alert alert-danger" onclick="hide_box()">خیر</a>
     </div>
-
 </div>
 
 <div id="loading_box">
