@@ -439,6 +439,120 @@ margin: -40px auto;
     -webkit-animation-duration: 1.5s;
     -moz-animation-duration: 1.5s;
 }
+
+
+.discount_box{
+    position: relative;
+    color: #515151;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    width: 100%;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    height:435px;
+    background: #fff;
+    line-height: 22px;
+    box-shadow: 1px 1px 4px 0 rgba(0,0,0,0.07);
+    overflow: hidden;
+}
+.discount_box .item{
+    display: none;
+    color: #727272;
+}
+.discount_box .item img {
+    height: 270px!important;
+    margin: 55px auto;
+    display: block;
+
+}
+.discount_box_content{
+    width: 100%;
+}
+.discount_bottom_bar{
+    width: 223px;
+    position: absolute;
+    height: 46px;
+    left: calc(50% - 111px);
+}
+.discount_bottom_bar::before{
+    background: #56ccef url(../files/images/amazing-offer.png) no-repeat 50%;
+    width: 226px;
+    height: 46px;
+    content: "";
+    display: block;
+    border-radius: 0 0 24px 24px;
+    -webkit-border-radius: 0 0 24px 24px;
+    background-size: auto 22px;
+
+}
+
+.price_box{
+    margin-top: 30px;
+
+}
+.incredible-offers-price{
+    margin-top: 10px;
+}
+.incredible-offers-price label{
+    font-size: 23px!important;
+    font-weight: bold;
+    color: #ef5661;
+    margin-top: 5px;
+    margin-left: 15px;
+
+}
+.price_box del
+{
+    font-size: 16px!important;
+    font-weight: bolder;
+}
+a{
+    color: black;
+}
+.discount-badge{
+    padding: 5px 10px;
+    color: white!important;
+    background: #ef5662;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    font-size: 18px;
+    letter-spacing: .5px;
+    position: absolute;
+    z-index: 2;
+    line-height: 1.2;
+}
+.discount_title{
+    margin: 20px 0 10px 15px;
+    font-weight: 700;
+    text-align: right;
+    color: #515151!important;
+    line-height: 30px;
+    font-size: 20px;
+}
+.important_item_ul{
+    margin:15px ;
+}
+.important_item_ul li{
+    color: #5d5d5d;
+    padding: 5px 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @keyframes slider {
     from{opacity: 0.1}
     to{opacity: 1}

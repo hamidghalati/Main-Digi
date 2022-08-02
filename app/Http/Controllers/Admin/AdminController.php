@@ -26,7 +26,7 @@ class AdminController extends Controller
     {
         $search_text=$request->get('search_text','');
         $productWarranty=ProductWarranty::with(['getColor','getProduct','getWarranty'])
-            ->orderBy('id','DESC');
+            ->orderBy('offers','DESC');
             $productWarranty=$productWarranty->whereHas('getWarranty');
 
 

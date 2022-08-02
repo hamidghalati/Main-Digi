@@ -249,7 +249,7 @@ export default {
                    {
                        this.server_errors=response.data;
                        this.send_form=true;
-                       console.log(response.data)
+
                    }
                });
            }

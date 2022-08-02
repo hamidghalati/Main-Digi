@@ -63,8 +63,14 @@ public function getWarranty()
     }
 
     public function getProduct(){
-    return $this->hasOne(ProductsModel::class,'id','product_id')->select(['id','title','image_url']);
+    return $this->hasOne(ProductsModel::class,'id','product_id')->select(['id','title','image_url','cat_id','product_url']);
     }
+
+    public function itemValue()
+    {
+        return $this->hasMany(ItemValueModel::class,'product_id','product_id');
+    }
+
 
 
 
