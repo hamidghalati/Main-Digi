@@ -1,4 +1,7 @@
 @extends('layouts.shop.shop')
+@section('header')
+    <link rel="stylesheet" href="{{asset('css/swiper.min.css')}}">
+@endsection
 @section('content')
     <div class="row slider">
         <div class="col-2"></div>
@@ -34,9 +37,10 @@
         <div class="col-10">
             <div class="discount_box">
                 <div class="row">
+                    {{--right incredible--}}
                     <div class="discount_box_content">
                         @foreach($incredible_offers as $key=>$value)
-                            <div @if($key==0) style="display: block" @endif class="item">
+                            <div @if($key==0) style="display: block"  @endif id="discount_box_link_{{$value->id}}" class="item an">
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="discount_bottom_bar"></div>
@@ -85,16 +89,51 @@
 
                         @endforeach
                     </div>
+                    {{--right incredible--}}
+                    <div class="discount_left_item">
+                        @foreach($incredible_offers as $key=>$value)
+                            <div id="item_number_{{$key}}" @if($key==0) class="active" @endif data-id="<?= $value->id?>">
+                                {{$value->getProduct->getCat->name}}
+                            </div>
+                        @endforeach
+                        @if(sizeof($incredible_offers)>=9)
+                                <a href="{{url('incredible-offers')}}">
+                                    مشاهده همه شگفت انگیزها
+                                </a>
+                        @endif
+
+                    </div>
+
+
+                </div>
+                <div class="discount_box_footer">
+                    <div class="swiper-container">
+                       <div class="swiper-wrapper">
+                           @foreach($incredible_offers as $key=>$value)
+                               <div class="swiper-slide">
+                                   {{$value->getProduct->getCat->name}}
+                               </div>
+                           @endforeach
+                       </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 
 @endsection
+
 @section('footer')
+
     <script>
         load_slider('<?= sizeof($sliders)?>');
+        const swiper=new swiper('.swiper-container',{
+           slidesPerView:'auto',
+           spaceBetween:30
+        });
     </script>
+    <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
 @endsection
 
 
