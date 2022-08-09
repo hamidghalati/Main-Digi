@@ -2,6 +2,7 @@
 
     namespace App;
 
+    use App\Jobs\IncredibleOffers;
     use DB;
     use Validator;
 
@@ -54,6 +55,8 @@
 
                if ($productWarranty->update($request->all()))
                {
+                   $second=$offers_last_time-time()+1;
+                   IncredibleOffers::dispatch($productWarranty->id)->delay(now()->addSecond($second));
                    add_min_product_price($productWarranty);
                    $product=ProductsModel::where('id',$productWarranty->product_id)->select(['price','id','status'])->first();
                    update_product_price($product);
@@ -106,7 +109,7 @@
                 ]);
         }
 
-        public function remove($request,$productWarranty)
+        public function remove($productWarranty)
         {
             $old_price=DB::table('old_price')->where('warranty_id',$productWarranty->id)->first();
             if ($old_price)

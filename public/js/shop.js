@@ -23,26 +23,43 @@ $(document).ready(function () {
         $("#discount_box_link_"+id).show();
         $(this).addClass('active');
     });
+
+    $(".discount_box_footer .slide-amazing").click(function () {
+        const id=$(this).attr('data-id');
+        $('.discount_box_content .item').hide();
+        $("#discount_box_link_"+id).show();
+        $(".discount_box_footer .slide-amazing").removeClass('active');
+        $(this).addClass('active');
+    });
+
     let discount_slider_count=0;
     let discount_slider_number=0;
     const discount_box_footer=$('.discount_box_footer').css('display')
     if (discount_box_footer=='none')
     {
         discount_slider_count=$('.discount_left_item div').length;
-        setInterval(function () {
-            discount_slider_number++;
-            $(".discount_left_item div").removeClass('active');
-            $('.discount_box_content .item').hide();
-
-            if (discount_slider_number>=discount_slider_count)
+        const discount_slider= setInterval(function () {
+            const discount_box_footer=$('.discount_box_footer').css('display');
+            if (discount_box_footer=='none')
             {
-                discount_slider_number=0;
+                discount_slider_number++;
+                $(".discount_left_item div").removeClass('active');
+                $('.discount_box_content .item').hide();
+
+                if (discount_slider_number>=discount_slider_count)
+                {
+                    discount_slider_number=0;
+                }
+
+                $("#item_number_"+discount_slider_number).addClass('active');
+                const id=$("#item_number_"+discount_slider_number).attr('data-id');
+                $("#discount_box_link_"+id).show();
+            }
+            else {
+                clearInterval(discount_slider);
             }
 
 
-            $("#item_number_"+discount_slider_number).addClass('active');
-            const id=$("#item_number_"+discount_slider_number).attr('data-id');
-            $("#discount_box_link_"+id).show();
 
 
         },5000);

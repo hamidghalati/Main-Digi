@@ -63,12 +63,12 @@ class AdminController extends Controller
 
     }
 
-    public function remove_incredible_offers($id,Request $request)
+    public function remove_incredible_offers($id)
     {
         $productWarranty=ProductWarranty::find($id);
         if ($productWarranty) {
             $offers=new Offers();
-            $res=$offers->remove($request,$productWarranty);
+            $res=$offers->remove($productWarranty);
             return $res;
         }
         else

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div  v-if="show_second>0">
         <div class="c-counter">
             <span>{{h}}</span>:<span>{{m}}</span>:<span>{{s}}</span>
         </div>

@@ -1,139 +1,112 @@
 @extends('layouts.shop.shop')
-@section('header')
-    <link rel="stylesheet" href="{{asset('css/swiper.min.css')}}">
-@endsection
+
 @section('content')
     <div class="row slider">
-        <div class="col-2"></div>
+        <div class="col-2">
+            <div>
+                <a href="{{url('')}}">
+                    <img src="{{url('files/images/direct-access1.jpg')}}" alt="" @if(sizeof($incredible_offers)==0) style="height: 154px" @endif class="index-pic">
+                </a>
+                <a href="{{url('')}}">
+                    <img src="{{url('files/images/direct-access5.jpg')}}" alt="" @if(sizeof($incredible_offers)==0) style="height: 154px" @endif class="index-pic">
+                </a>
+                @if(sizeof($incredible_offers)>0)
+                    <a href="{{url('')}}">
+                        <img src="{{url('files/images/direct-access3.jpg')}}" alt="" class="index-pic">
+                    </a>
+                    <a href="{{url('')}}">
+                        <img src="{{url('files/images/direct-access4.jpg')}}" alt="" class="index-pic">
+                    </a>
+                @endif
+            </div>
+        </div>
         <div class="col-10">
-            @if(sizeof($sliders)>0)
-                <div class="slider_box">
-                    <div style="position: relative" >
-                        @foreach($sliders as $key=>$value)
-                            <div class="slide_div an" id="slider_img_{{$key}}" @if($key==0)style="display: block" @endif>
-                                <a href="{{$value->url}}" style="background-image: url('<?= url('files/slider/'.$value->image_url)?>')"></a>
-                            </div>
-                        @endforeach
-                    </div>
 
-                    <div id="right-slide" onclick="prev()"></div>
-                    <div id="left-slide" onclick="next()"></div>
+         @include('include.slider',['sliders'=>$sliders])
 
-                </div>
-               <div class="slider_box_footer">
-                   <div class="slider_bullet_div">
-                       @for($i=0;$i<sizeof($sliders);$i++)
-                           <span id="slider_bullet_{{$i}}" @if($i==0) class="active"@endif></span>
+         @include('include.incredible_offers',['incredible_offers'=>$incredible_offers])
 
-                       @endfor
-                   </div>
-               </div>
-            @endif
+
         </div>
     </div>
 
-    <div class="row incredible-offers">
-        <div class="col-2"></div>
-        <div class="col-10">
-            <div class="discount_box">
-                <div class="row">
-                    {{--right incredible--}}
-                    <div class="discount_box_content">
-                        @foreach($incredible_offers as $key=>$value)
-                            <div @if($key==0) style="display: block"  @endif id="discount_box_link_{{$value->id}}" class="item an">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="discount_bottom_bar"></div>
-                                        <a href="{{url('product/dkp-'.$value->getProduct->id.'/'.$value->getProduct->product_url)}}">
-                                            <img src="{{url('files/thumb/'.$value->getProduct->image_url)}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-6">
-                                        <a href="{{url('product/dkp-'.$value->getProduct->id.'/'.$value->getProduct->product_url)}}">
-                                            <div class="price_box">
-                                                <del>{{replace_number(number_format($value->price1))}} تومان</del>
-                                                <div class="incredible-offers-price">
-                                                    <label >{{replace_number(number_format($value->price2))}} تومان</label>
-                                                    <span class="discount-badge">
-                                                    <?php
-                                                        $a=($value->price2/$value->price1)*100;
-                                                        $a=100-$a;
-                                                        $a=round($a);
-                                                        ?>
-                                                        {{'%'.replace_number($a).' تخفیف  '}}
-                                                </span>
-                                                </div>
-                                                <div class="discount_title">{{$value->getProduct->title}}</div>
-                                                <ul class="important_item_ul">
-                                                    @foreach($value->itemValue as $key=>$item )
-                                                       @if($key<2)
-                                                            <li>
-                                                                {{$item->important_item->title}} :
-                                                                {{$item->item_value}}
-                                                            </li>
-                                                       @endif
-                                                    @endforeach
-                                                </ul>
-                                                @if($value->product_number>0)
-                                                    <counter second="<?= $value->offers_last_time-time()?>"></counter>
-                                                @else
-                                                @endif
-
-                                            </div>
-
-                                        </a>
-
-                                    </div>
-                                </div>
+    <div class="row">
+        <div class="product_box">
+            <div class="box_title"></div>
+            <div class="product_list" dir="rtl">
+                @foreach($new_product as $product)
+                    <a>
+                        <div class="product">
+                            <div>
+                                <img src="{{url('files/thumb/'.$product->image_url)}}" alt="">
                             </div>
-
-                        @endforeach
-                    </div>
-                    {{--right incredible--}}
-                    <div class="discount_left_item">
-                        @foreach($incredible_offers as $key=>$value)
-                            <div id="item_number_{{$key}}" @if($key==0) class="active" @endif data-id="<?= $value->id?>">
-                                {{$value->getProduct->getCat->name}}
-                            </div>
-                        @endforeach
-                        @if(sizeof($incredible_offers)>=9)
-                                <a href="{{url('incredible-offers')}}">
-                                    مشاهده همه شگفت انگیزها
-                                </a>
-                        @endif
-
-                    </div>
-
-
-                </div>
-                <div class="discount_box_footer">
-                    <div class="swiper-container">
-                       <div class="swiper-wrapper">
-                           @foreach($incredible_offers as $key=>$value)
-                               <div class="swiper-slide">
-                                   {{$value->getProduct->getCat->name}}
-                               </div>
-                           @endforeach
-                       </div>
-                    </div>
-
-                </div>
+                        </div>
+                    </a>
+                @endforeach
             </div>
         </div>
     </div>
 
+
+
 @endsection
 
+@section('header')
+    <link rel="stylesheet" href="{{asset('css/swiper.min.css')}}">
+    <link rel="stylesheet" href="{{asset('slick/slick/slick.css')}}">
+    <link rel="stylesheet" href="{{asset('slick/slick/slick-theme.css')}}">
+@endsection
 @section('footer')
-
+    <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
+{{--    <script type="text/javascript" src="{{asset('js/jquery-2.2.0.min.js')}}"></script>--}}
+    <script type="text/javascript" src="{{asset('slick/slick/slick.js')}}"></script>
     <script>
-        load_slider('<?= sizeof($sliders)?>');
-        const swiper=new swiper('.swiper-container',{
+
+
+
+        const swiper=new Swiper('.swiper-container',{
            slidesPerView:'auto',
-           spaceBetween:30
+           spaceBetween:30,
+            navigation:{
+               nextEl:'.slick-next',
+                prevEl:'slick-prev',
+
+            }
+        });
+        <?php
+        if (sizeof($incredible_offers)<6)
+            {
+                ?>
+                $(".discount_box_footer .slick-next").hide();
+                $(".discount_box_footer .slick-prev").hide();
+        <?php
+            }
+        ?>
+
+        // $('.product_list').slick({
+        //
+        //     speed: 900,
+        //     slidesToShow: 2,
+        //     slidesToScroll: 3,
+        //     rtl:true,
+        //     infinite: false,
+        //
+        // });
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.product_list').slick({
+                speed: 900,
+                slidesToShow: 2,
+                slidesToScroll: 3,
+                rtl:true,
+                infinite: false,
+        });
         });
     </script>
-    <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
+
 @endsection
 
 

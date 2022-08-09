@@ -94,6 +94,7 @@
 
     <script src="{{ asset('js/ShopVue.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/shop.js') }}" type="text/javascript"></script>
+
     @yield('footer')
 </body>
 
