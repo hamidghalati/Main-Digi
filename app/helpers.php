@@ -806,11 +806,22 @@ function update_product_price($product)
     if($warrenty)
     {
         $product->price=$warrenty->price2;
+        if ($warrenty->price1>$warrenty->price2)
+        {
+            $warrenty_price=$warrenty->price1-$warrenty->price2;
+            $product->discount_price=$warrenty_price;
+        }
+        else
+        {
+            $product->discount_price=0;
+        }
+
         $product->status=1;
         $product->update();
     }
     else
     {
+        $product->discount_price=0;
         $product->status=0;
         $product->update();
     }
@@ -909,16 +920,16 @@ function getCatList()
     $data=cache('catList');
     if ($data)
     {
-        return $data;
+        View::share('catList',$data);
     }
     else
     {
         $category=CategoriesModel::with('getChild.getChild.getChild')->where('parent_id',0)->get();
         $minutes=30*24*60*60;
         cache()->put('catList',$category,$minutes);
-
+        View::share('catList',$category);
     }
-    return $category;
+
 }
 function get_cat_url($cat)
 {
@@ -956,8 +967,33 @@ function getTimestamp($date,$type)
 
 }
 
+function check_has_color_in_warranty_list($warranty_list,$color_id)
+{
+    $r=false;
+    foreach ($warranty_list as $key=>$value)
+    {
+        if ($value->color_id==$color_id)
+        {
+            $r=true;
+        }
+    }
+    return $r;
+}
 
+function get_first_color_id($warranty_list,$color_id)
+{
+    if (sizeof($warranty_list)>0)
+    {
+        if($warranty_list[0]->color_id==$color_id)
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
+}
 
 
 

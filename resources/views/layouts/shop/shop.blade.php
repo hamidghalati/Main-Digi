@@ -10,8 +10,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('header')
-    <link href="{{ asset('css/shop.css') }}" rel="stylesheet">
+
     <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
+    <link href="{{ asset('css/shop.css') }}" rel="stylesheet">
+
     <title>فروشگاه من</title>
 </head>
 
@@ -94,6 +96,25 @@
 
     <script src="{{ asset('js/ShopVue.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/shop.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.0/slick.min.js"></script>
+
+
+
+
+<script>
+    $('.product_list').slick({
+
+        speed: 900,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        rtl:true,
+        infinite: false,
+
+    });
+</script>
+
+
+
 
     @yield('footer')
 </body>

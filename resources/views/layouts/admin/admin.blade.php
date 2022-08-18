@@ -70,11 +70,11 @@
         <span  class="h5 text-dark">   چند لحظه صبر نمایید   </span>
     </div>
 </div>
-
+@yield('footer')
 <script src="{{ asset('js/app.js') }}" ></script>
 <script src="{{ asset('js/AdminVue.js') }}" ></script>
 <script src="{{ asset('js/admin.js') }}" ></script>
-@yield('footer')
+
 </body>
 </html>
 

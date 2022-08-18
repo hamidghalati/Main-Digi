@@ -11,7 +11,7 @@ class ProductsModel extends Model
     use SoftDeletes;
     protected $table='products';
     protected $fillable=['title','ename','product_url','show','view','keywords','description',
-        'special','cat_id','brand_id','image_url','tozihat','status'];
+        'special','cat_id','brand_id','image_url','tozihat','status','price','discount_price','order_number'];
 
     public static function ProductStatus(){
         $array=array();
@@ -67,6 +67,23 @@ class ProductsModel extends Model
         return $this->hasOne(CategoriesModel::class,'id','cat_id')->withDefault(['name'=>'']);
     }
 
+    public function getBrand()
+    {
+        return $this->hasOne(BrandsModel::class,'id','brand_id')
+            ->withDefault(['brand_name'=>'','brand_ename'=>'']);
+    }
+
+    public function getProductColor()
+    {
+        return $this->hasMany(ProductColorModel::class,'product_id','id');
+    }
+
+    public function getWarranty()
+    {
+        return $this->hasMany(ProductWarranty::class,'product_id','id')
+            ->where('product_number','>',0)
+            ->orderBy('price2','ASC');
+    }
 
 
 

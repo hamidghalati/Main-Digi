@@ -49,15 +49,15 @@ $('#sidebarToggle').click(function () {
 });
 
 $(window).resize(function () {
-   set_sidebar_width();
+    set_sidebar_width();
 });
 
 $(document).ready(function () {
-   set_sidebar_width();
+    set_sidebar_width();
 
-   const url=window.location.href.split('?')[0];
-   $('#sidebar_menu a[href="'+url+'"]').parent().parent().addClass('active');
-   $('#sidebar_menu a[href="'+url+'"]').parent().parent().find('a .fa-angle-left').addClass('fa-angle-down');
+    const url=window.location.href.split('?')[0];
+    $('#sidebar_menu a[href="'+url+'"]').parent().parent().addClass('active');
+    $('#sidebar_menu a[href="'+url+'"]').parent().parent().find('a .fa-angle-left').addClass('fa-angle-down');
     $('#sidebar_menu a[href="'+url+'"]').parent().parent().find('.child_menu').show();
 
 
@@ -255,7 +255,7 @@ add_child_input=function (id)
     const count=document.getElementsByClassName('child_'+id).length+1;
     const html='<div class="form-group child_'+id+'" >'+
         count +'-'+ '<div class="pretty p-icon p-curve p-pulse">'+
-      '<input type="checkbox" name="check_box_item['+id+'][-'+child_count+']" >'
+        '<input type="checkbox" name="check_box_item['+id+'][-'+child_count+']" >'
         +'<div class="state p-warning-o"> <i class="icon mdi mdi-check"></i><label></label></div></div>'
         +'<input type="text" name="child_item['+id+'][-'+child_count+']" class="form-control child_input_item" placeholder="نام ویژگی">'+
         '</div>';
@@ -298,48 +298,48 @@ $('.item_filter_box ul li input[type="checkbox"]').click(function () {
     const filter=$(this).parent().parent().parent().parent().find('.filter_value');
     const input=$(this).parent().parent().parent().parent().find('.item_value');
     const text=$(this).parent().text().trim();
-   let value=input.val();
-   let filter_value=filter.val();
-   if ($(this).is(":checked"))
-   {
-       if (value.trim()=='')
-       {
-           value=text;
-           filter_value=$(this).val();
-       }
-       else
-       {
-           value=value+","+text;
-           filter_value=filter_value+"@"+$(this).val();
-       }
-       input.val(value);
-       filter.val(filter_value);
-   }
-   else {
-       value=value.replace(","+text,"");
-       value=value.replace(text+",","");
-       value=value.replace(text,"");
-       filter_value=filter_value.replace("@"+$(this).val(),"");
-       filter_value=filter_value.replace($(this).val(),"");
-       input.val(value);
-       filter.val(filter_value);
+    let value=input.val();
+    let filter_value=filter.val();
+    if ($(this).is(":checked"))
+    {
+        if (value.trim()=='')
+        {
+            value=text;
+            filter_value=$(this).val();
+        }
+        else
+        {
+            value=value+","+text;
+            filter_value=filter_value+"@"+$(this).val();
+        }
+        input.val(value);
+        filter.val(filter_value);
+    }
+    else {
+        value=value.replace(","+text,"");
+        value=value.replace(text+",","");
+        value=value.replace(text,"");
+        filter_value=filter_value.replace("@"+$(this).val(),"");
+        filter_value=filter_value.replace($(this).val(),"");
+        input.val(value);
+        filter.val(filter_value);
 
-   }
+    }
 
 
 });
 
 $('.show_filter_box').click(function () {
-   const el=$(this).parent().find('.item_filter_box ul');
-   const display=el.css('display');
-   if (display=='block')
-   {
-       el.slideUp();
-   }
-   else
-   {
-       el.slideDown();
-   }
+    const el=$(this).parent().find('.item_filter_box ul');
+    const display=el.css('display');
+    if (display=='block')
+    {
+        el.slideUp();
+    }
+    else
+    {
+        el.slideDown();
+    }
 });
 
 

@@ -77,4 +77,5 @@ Route::prefix('admin')->group(function (){
 
 });
 
-
+Route::get('product/{product_id}/{product_url}','SiteController@show_product');
+Route::get('product/{product_id}','SiteController@show_product');
