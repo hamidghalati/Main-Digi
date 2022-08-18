@@ -830,6 +830,46 @@ del{
     background: #1a7bb7 !important;
     font-size: 15px!important;
 }
+.final_product_price{
+    color: #fb3449;
+    font-size: 22px;
+    padding-top: 10px;
+    display: block;
+}
+.product_discount{
+    background: #ef5662;
+    height: 32px;
+    border-radius: 0 19px;
+    -webkit-border-radius: 0 19px 19px;
+    width: 60px;
+    position: relative;
+    margin: 30px 20px 0;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    line-height: 32px;
+}
+
+.product_discount::before{
+    content: attr(data-title);
+    font-size: 13px;
+    line-height: 22px;
+    color: #7f7f2f;
+    position: absolute;
+    bottom: 100%;
+    right:12px;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -850,8 +890,6 @@ del{
     .slider .col-3{display: none!important;}
     .slider .col-9{width: 100%;min-width: 100%;padding: 0!important;}
     .slider .col-10{padding-left: 0!important;}
-
-
 }
 
 @media (max-width: 1279px) {
