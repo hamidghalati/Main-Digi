@@ -66,12 +66,12 @@ $(document).ready(function () {
         },5000);
     }
 
-    $(".color_li").click(function () {
+    $(document).on('click','.color_li',function () {
         const color_id=$(this).attr('data');
         const product_id=$("#product_id").val();
         change_color(color_id,product_id);
 
-    })
+    });
 
 });
 
@@ -109,8 +109,8 @@ function prev(){
 function change_color(color_id,product_id)
 {
     $.ajaxSetup({
-        'headers': {
-            'X_CSRF_TOKEN':$('meta[name="csrf-token"]').attr('content')
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
     const url=site_url+"site/change_color";
@@ -119,10 +119,14 @@ function change_color(color_id,product_id)
         type:"POST",
         data:"color_id="+color_id+"&product_id="+product_id,
         success:function (response) {
-            alert(response);
+            if(response)
+            {
+                $("#warranty_box").html(response);
+            }
+
 
         }
-    })
+    });
 }
 
 

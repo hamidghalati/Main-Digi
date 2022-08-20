@@ -48,7 +48,28 @@ class SiteController extends Controller
         {
             $where['product_url']=$product_url;
         }
-        $product=ProductsModel::with('getBrand','getProductColor.getColor','getWarranty','getWarranty','getCat')->where($where)->firstOrFail();
+        $product=ProductsModel::with('getBrand','getProductColor.getColor','getWarranty','getCat')->where($where)->firstOrFail();
         return view('shop.show_product',['product'=>$product]);
+    }
+
+    public function change_color(Request $request)
+    {
+        $color_id=$request->get('color_id');
+        $product_id=$request->get('product_id');
+        $product=ProductsModel::with(['getWarranty','getProductColor.getColor'])
+            ->where(['id'=>$product_id])->first();
+        $check_has_color=ProductWarranty::where(['color_id'=>$color_id,'product_id'=>$product_id])
+            ->where('product_number','>',0)
+            ->first();
+        if ($product && $check_has_color)
+        {
+            return view('include.warranty',['product'=>$product,'color_id'=>$color_id]);
+        }
+        else
+        {
+            return false;
+        }
+
+
     }
 }
