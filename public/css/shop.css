@@ -20,6 +20,14 @@ body {
     font-weight: bold;
     font-style: normal;
 }
+@font-face {
+    font-family: 'IRANSans';
+
+    src: url('../fonts/Webfonts/Woff/IRANSansXFaNum-DemiBold.woff') format('woff'),
+    url('../fonts/Webfonts/Woff2/IRANSansXFaNum-DemiBold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
 
 a {
     text-decoration: none !important;
@@ -503,6 +511,7 @@ margin: -40px auto;
 }
 .price_box del
 {
+    font-family: 'IRANSans';
     font-size: 16px!important;
     font-weight: bolder;
 }
@@ -732,7 +741,8 @@ a{
     font-weight: bold;
 }
 del{
-    font-size: 20px!important;
+    font-family: IRANSans;
+    font-size: 15px!important;
 }
 
 .product_info{
@@ -818,6 +828,7 @@ del{
 }
 .info_item_product{
     font-size: 15px;
+    margin-top: 20px;
 }
 .info_item_product fa{
     font-size: 20px!important;
@@ -831,8 +842,9 @@ del{
     font-size: 15px!important;
 }
 .final_product_price{
+    font-family: IRANSans;
     color: #fb3449;
-    font-size: 22px;
+    font-size: 18px;
     padding-top: 10px;
     display: block;
 }

@@ -1,3 +1,4 @@
+const site_url='http://127.0.0.1:8000/';
 $(document).ready(function () {
     $(".cat_item").mouseover(function () {
         const li_width=$(this).css('width');
@@ -65,6 +66,13 @@ $(document).ready(function () {
         },5000);
     }
 
+    $(".color_li").click(function () {
+        const color_id=$(this).attr('data');
+        const product_id=$("#product_id").val();
+        change_color(color_id,product_id);
+
+    })
+
 });
 
 let img_count=0;
@@ -98,7 +106,24 @@ function prev(){
 
 }
 
+function change_color(color_id,product_id)
+{
+    $.ajaxSetup({
+        'headers': {
+            'X_CSRF_TOKEN':$('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    const url=site_url+"site/change_color";
+    $.ajax({
+        url:url,
+        type:"POST",
+        data:"color_id="+color_id+"&product_id="+product_id,
+        success:function (response) {
+            alert(response);
 
+        }
+    })
+}
 
 
 
