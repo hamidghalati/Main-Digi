@@ -4,7 +4,39 @@
 
     <div class="content">
         <div class="product_info">
-            <div class="product_image_box">a</div>
+            <div class="product_image_box">
+                <offer-time></offer-time>
+
+                <div>
+                    <ul class="product_options">
+                        <li data-toggle="tooltip" data-placement="left" title="افزودن به علاقه مندی ها">
+                            <a href="">
+                                <i class="mdi mdi-heart-outline" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li data-toggle="tooltip" data-placement="left" title="اشتراک گذاری">
+                            <a href="">
+                                <i class="fa fa-share-alt" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li data-toggle="tooltip" data-placement="left" title="مقایسه">
+                            <a href="">
+                                <i class="fa fa-rocket" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li data-toggle="tooltip" data-placement="left" title="نمودار قیمت">
+                            <a href="">
+                                <i class="fa fa-line-chart" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    @if(!empty($product->image_url))
+                       <div class="default_product_pic">
+                           <img src="{{url('files/products/'.$product->image_url)}}" alt="">
+                       </div>
+                    @endif
+                </div>
+            </div>
             <div class="product_data">
                 <div class="product_headline">
                     <h6 class="product_title">
@@ -53,8 +85,11 @@
 
 @section('footer')
     <script>
+
+
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
+
     </script>
 @endsection

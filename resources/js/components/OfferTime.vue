@@ -1,32 +1,41 @@
 <template>
-    <div  v-if="show_second>0">
+    <div class="offer_box" v-if="show_second>0">
+        <img class="offer_pic" v-bind:src="this.$siteUrl+'files/images/amazing-offer.png'" alt="">
         <div class="c-counter">
             <span>{{h}}</span>:<span>{{m}}</span>:<span>{{s}}</span>
         </div>
-        <p class="discount_counter_title">زمان باقی مانده تا پایان سفارش</p>
     </div>
-
-
-
 </template>
 
 <script>
 export default {
-    name: "Counter",
+    name: "OfferTime",
     data(){
         return{
             h: '',
             m: '',
             s: '',
             show_second:0
-
         }
     },
-    props:['second'],
     mounted() {
-        this.show_second=this.second;
-        this.counter();
-        setInterval(this.counter,1000);
+
+        const self=this;
+        self.show_second=$("#offers_time").attr('data');
+        self.counter();
+        setInterval(self.counter,1000);
+
+        $(document).on('click','#offers_time',function () {
+            if ($("#offers_time").attr('data')!= undefined)
+            {
+                self.show_second=$("#offers_time").attr('data');
+                self.counter();
+                setInterval(self.counter,1000);
+            }
+
+        });
+
+
     },
     methods:{
         counter:function () {

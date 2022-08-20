@@ -760,7 +760,7 @@ del{
 }
 
 .product_info .product_image_box{
-    flex: 420px;
+    flex:0 0 420px;
 }
 
 .product_headline{
@@ -838,7 +838,7 @@ del{
     font-family: 'Yekan'!important;
 }
 .tooltip-inner{
-    background: #1a7bb7 !important;
+    background: #000000 !important;
     font-size: 15px!important;
 }
 .final_product_price{
@@ -900,8 +900,14 @@ del{
     -webkit-border-bottom-left-radius: 50%;
     -webkit-border-top-left-radius: 50%;
     font-size: 20px!important;
+    transition: 0.3s
+;
  }
-
+.send_btn .line2{
+    width: 100%!important;
+    border-radius: 8px!important;
+    -webkit-border-radius: 8px!important;
+}
 .send_btn .title{
     width: calc(100% - 70%)!important;
     margin-right: 65px;
@@ -919,9 +925,31 @@ del{
 
 }
 
+.product_options{
+    padding: 30px;
+    display: table;
+    position: absolute;
+}
 
+.product_options li{
+    list-style: none;
+    margin: 10px;
+    padding: 8px 12px 5px 10px;
+    font-size: 23px;
+    cursor: pointer;
+}
 
+.product_image_box img{
+    max-width: 75%;
+    margin-top: 80px;
+    margin-right: 20%;
+    max-height: 300px;
+    margin-bottom: 40px;
+}
 
+.default_product_pic{
+    min-height: 200px;
+}
 
 
 

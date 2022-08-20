@@ -73,6 +73,12 @@ $(document).ready(function () {
 
     });
 
+    $('.send_btn').hover(function () {
+        $('.send_btn .line').addClass('line2');
+    },function (){
+        $('.send_btn .line').removeClass('line2');
+    });
+
 });
 
 let img_count=0;
@@ -122,6 +128,7 @@ function change_color(color_id,product_id)
             if(response)
             {
                 $("#warranty_box").html(response);
+                $("#offers_time").click();
             }
 
 

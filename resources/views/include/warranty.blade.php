@@ -37,6 +37,12 @@
 
                         ?>
                     <span style="position:relative;bottom: 1px!important;">{{$value->getWarranty->name}}</span>
+
+
+                        <span id="offers_time" data="{{$value->offers_last_time-time()>0 ? $value->offers_last_time-time() }}">
+                        </span>
+
+
                 @endif
             @else
                 @if($key==0)
@@ -48,6 +54,12 @@
                     <span style="position:relative;bottom: 1px!important;">
                     {{$value->getWarranty->name}}
                     </span>
+
+
+                        <span id="offers_time" data="{{($value->offers_last_time-time()>0) ? $value->offers_last_time-time()}}"></span>
+
+
+
                 @endif
             @endif
         @endforeach
