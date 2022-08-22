@@ -6,6 +6,7 @@ use App\CategoriesModel;
 use App\ProductsModel;
 use App\ProductWarranty;
 use App\SliderModel;
+use App\ItemModel;
 use Illuminate\Http\Request;
 
 class SiteController extends Controller
@@ -49,7 +50,8 @@ class SiteController extends Controller
             $where['product_url']=$product_url;
         }
         $product=ProductsModel::with('getBrand','getProductColor.getColor','getWarranty','getCat')->where($where)->firstOrFail();
-        return view('shop.show_product',['product'=>$product]);
+        $product_item=ItemModel::getProductItem($product);
+        return view('shop.show_product',['product'=>$product,'product_item'=>$product_item]);
     }
 
     public function change_color(Request $request)

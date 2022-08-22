@@ -2007,15 +2007,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var self = this;
-    self.show_second = $("#offers_time").attr('data');
-    self.counter();
-    setInterval(self.counter, 1000);
+
+    if ($("#offers_time").attr('data') > 0) {
+      self.show_second = $("#offers_time").attr('data');
+      self.counter();
+      setInterval(self.counter, 1000);
+    }
+
     $(document).on('click', '#offers_time', function () {
-      if ($("#offers_time").attr('data') != undefined) {
-        self.show_second = $("#offers_time").attr('data');
-        self.counter();
-        setInterval(self.counter, 1000);
-      }
+      self.show_second = $("#offers_time").attr('data');
+      self.counter();
+      setInterval(self.counter, 1000);
     });
   },
   methods: {

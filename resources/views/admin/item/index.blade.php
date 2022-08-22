@@ -32,7 +32,7 @@
                                     <?php $i=1?>
                                     @foreach($value->getChild as $childItem)
                                         <div class="form-group child_{{$value->id}}" >
-                                            {{$i}} -  <div class="pretty p-icon p-curve p-pulse">
+                                            <span style="font-family: IRANSans!important;">{{$i}}</span> -  <div class="pretty p-icon p-curve p-pulse">
                                                 <input type="checkbox" @if($childItem->show_item==1) checked @endif name="check_box_item[{{$value->id}}][{{$childItem->id}}]" >
                                                 <div class="state p-warning-o">
                                                     <i class="icon mdi mdi-check"></i>
@@ -44,7 +44,7 @@
                                             <span class="child_item_remove_message " onclick="del_row('{{url('admin/category/items/'.$childItem->id)}}','{{ csrf_token() }}','آیا از حذف این آیتم مطمئن هستید؟')">حذف  </span>
 
 
-                                            <?php $i++?>
+                                            <span style="font-family: IRANSans!important;"><?php $i++?></span>
                                         </div>
                                     @endforeach
                                 </div>

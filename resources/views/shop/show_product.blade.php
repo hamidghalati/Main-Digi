@@ -62,7 +62,7 @@
                         </li>
                     </ul>
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-7">
                             <div id="warranty_box">
                                 @include('include.warranty',['color_id'=>0])
                             </div>
@@ -73,7 +73,9 @@
                             </div>
 
                         </div>
-                        <div class="col-4"></div>
+                        <div class="col-5">
+                            @include('include.show_important_item')
+                        </div>
                     </div>
                 </div>
             </div>

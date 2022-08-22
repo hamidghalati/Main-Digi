@@ -79,6 +79,23 @@ $(document).ready(function () {
         $('.send_btn .line').removeClass('line2');
     });
 
+
+    $('.show_more_important_item').click(function () {
+       const  more_important_item=$('.more_important_item').css('display');
+       if (more_important_item=='none')
+       {
+           $(".more_important_item").slideDown();
+           $('.show_more_important_item').text('موارد کمتر');
+           $('.show_more_important_item').addClass('minus_important_item');
+       }
+       else
+       {
+           $(".more_important_item").slideUp();
+           $('.show_more_important_item').text('موارد بیشتر');
+           $('.show_more_important_item').removeClass('minus_important_item');
+       }
+    });
+
 });
 
 let img_count=0;
