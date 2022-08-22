@@ -105,7 +105,7 @@
 
                         <div class="form-group">
                             <label for="">تاریخ پایان :</label>
-                            <input type="text" v-model="date2" id="pcal2" class="form-control pdate">
+                            <input  type="text" v-model="date2" id="pcal2" class="form-control pdate">
                         </div>
 
 
@@ -294,6 +294,7 @@ export default {
             }
             return result;
         },
+
 
 
 

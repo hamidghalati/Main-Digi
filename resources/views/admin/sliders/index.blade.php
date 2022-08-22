@@ -103,7 +103,7 @@
 
                     @endforeach
 
-                    @if(sizeof($sliders)==0))
+                    @if(sizeof($sliders)==0)
                         <tr>
                             <td colspan="5">رکوردی برای نمایش وجود ندارد</td>
                         </tr>

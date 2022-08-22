@@ -39,8 +39,8 @@
                     <span class="fa fa-angle-left"></span>
                 </a>
                 <div class="child_menu">
-                    <a href="">مدیریت اسلایدرها</a>
-                    <a href="">افزودن اسلایدر</a>
+                    <a href="{{url('admin/sliders')}}">مدیریت اسلایدرها</a>
+                    <a href="{{url('admin/sliders/create')}}">افزودن اسلایدر</a>
                 </div>
             </li>
         </ul>
@@ -70,9 +70,10 @@
         <span  class="h5 text-dark">   چند لحظه صبر نمایید   </span>
     </div>
 </div>
-@yield('footer')
+
 <script src="{{ asset('js/app.js') }}" ></script>
 <script src="{{ asset('js/AdminVue.js') }}" ></script>
+@yield('footer')
 <script src="{{ asset('js/admin.js') }}" ></script>
 
 </body>

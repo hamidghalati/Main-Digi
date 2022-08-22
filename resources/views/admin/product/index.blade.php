@@ -61,7 +61,7 @@
                             </td>
                             <td>{{replace_number(++$i)}}</td>
                             <td><img src="{{url('files/thumb/'.$value->image_url)}}" class="product_pic" alt=""></td>
-                            <td>{{$value->title}}</td>
+                            <td width="30%" style="font-family: iransans">{{$value->title}}</td>
                             <td></td>
                             <td>
                                 @if(array_key_exists($value->status,$status))
@@ -90,13 +90,13 @@
                                         <span class="btn btn-danger" data-toggle="tooltip" data-placement="top"
                                               title="حذف محصولات" onclick="del_row('{{url('admin/products/'.$value->id)}}','{{ csrf_token() }}','آیا از حذف این دسته مطمئن هستید؟')" >
                                              <i class="fa fa-remove" ></i>
-                                              حذف  محصولات
+                                              حذف
                                         </span>
                                     @else
                                         <span class="btn btn-danger" onclick="del_row('{{url('admin/products/'.$value->id)}}','{{ csrf_token() }}','اطلاعات شما از بین خواهد رفت.آیا مطمئن هستید؟')" data-toggle="tooltip" data-placement="top"
                                               title="حذف کامل محصولات">
                                              <i class="fa fa-remove" ></i>
-                                              حذف  محصولات
+                                              حذف
                                         </span>
                                     @endif
 
@@ -109,7 +109,7 @@
 
                     @endforeach
 
-                    @if(sizeof($product)==0))
+                    @if(sizeof($product)==0)
                         <tr>
                             <td colspan="7">رکوردی برای نمایش وجود ندارد</td>
                         </tr>

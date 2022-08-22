@@ -6,6 +6,7 @@ let _method='DELETE';
 
 $('#sidebar_menu li').click(function () {
     if (!$(this).hasClass('active')){
+
         $('#sidebar_menu li').removeClass('active');
         $(this).addClass('active');
 
@@ -14,7 +15,7 @@ $('#sidebar_menu li').click(function () {
 
 
         $('#sidebar_menu .fa-angle-down').removeClass('fa-angle-down');
-        $('.fa-angle-left',this).addClass('fa-angle-down');
+        $('#sidebar_menu .fa-angle-left',this).addClass('fa-angle-down');
 
         if (!Toggle){
             $('.child_menu',this).slideDown(500);
@@ -26,7 +27,8 @@ $('#sidebar_menu li').click(function () {
 
     else if (Toggle){
         $('.child_menu').slideUp(500);
-        $('.child_menu',this).show();
+        $(".child_menu",this).show();
+        alert('a');
     }
 
 

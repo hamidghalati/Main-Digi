@@ -104,7 +104,7 @@
 
                     @endforeach
 
-                    @if(sizeof($brand)==0))
+                    @if(sizeof($brand)==0)
                         <tr>
                             <td colspan="6">رکوردی برای نمایش وجود ندارد</td>
                         </tr>

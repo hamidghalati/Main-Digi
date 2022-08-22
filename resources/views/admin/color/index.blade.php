@@ -101,7 +101,7 @@
 
                     @endforeach
 
-                    @if(sizeof($color)==0))
+                    @if(sizeof($color)==0)
                         <tr>
                             <td colspan="5">رکوردی برای نمایش وجود ندارد</td>
                         </tr>

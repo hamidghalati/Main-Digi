@@ -97,7 +97,7 @@
 
                     @endforeach
 
-                    @if(sizeof($warranty)==0))
+                    @if(sizeof($warranty)==0)
                         <tr>
                             <td colspan="4">رکوردی برای نمایش وجود ندارد</td>
                         </tr>

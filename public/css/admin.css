@@ -20,6 +20,14 @@ body{
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'IRANSans';
+
+    src: url('../fonts/Webfonts/Woff/IRANSansXFaNum-Regular.woff') format('woff'),
+    url('../fonts/Webfonts/Woff2/IRANSansXFaNum-Regular.woff2') format('woff2');
+
+}
+
 a {
     text-decoration: none!important;
 }
@@ -65,6 +73,11 @@ a {
     padding-top: 5px!important;
 }
 #sidebar_menu .fa-angle-left{
+    float: left;
+    font-size: 16px;
+    padding-left: 5px;
+}
+#sidebar_menu .fa-angle-down{
     float: left;
     font-size: 16px;
     padding-left: 5px;
@@ -358,6 +371,7 @@ thead{
 }
 .left{
     text-align: left!important;
+    font-family: 'IRANSans'!important;
 }
 .color_option{
 
@@ -624,3 +638,6 @@ a.pcalBtn {
 }
 
 
+input.pdate{
+    font-family: "IRANSans"!important;
+}
