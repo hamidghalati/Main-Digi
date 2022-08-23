@@ -1,4 +1,4 @@
-<form action="{{url('cart')}}" method="post">
+<form action="{{url('Cart')}}" method="post" id="add_cart_form">
     {{csrf_field()}}
 
 
@@ -22,6 +22,9 @@
             @endif
         @endforeach
     </ul>
+
+    <input type="hidden" name="color_id" value="{{$color_id}}">
+
     <p class="info_item_product">
 
 

@@ -86,3 +86,6 @@ Route::get('product/{product_id}','SiteController@show_product');
 
 //ajax
 Route::post('site/change_color','SiteController@change_color');
+
+Route::post('Cart','SiteController@add_cart');
+Route::get('Cart','SiteController@show_cart');

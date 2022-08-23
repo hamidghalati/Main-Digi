@@ -5,6 +5,7 @@ import axios from 'axios';
 import VueAxios from "vue-axios";
 import Counter from "./components/Counter";
 import OfferTime from "./components/OfferTime";
+import ShoppingCart from "./components/ShoppingCart";
 
 
 
@@ -16,6 +17,7 @@ const app = new Vue({
     el: '#app',
     components:{
         Counter,
-        OfferTime
+        OfferTime,
+        ShoppingCart
     }
 });

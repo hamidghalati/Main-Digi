@@ -67,7 +67,7 @@
                                 @include('include.warranty',['color_id'=>0])
                             </div>
 
-                            <div class="send_btn">
+                            <div class="send_btn" id="cart_btn">
                                 <span class="line"></span>
                                 <span class="title"> افزودن به سبد خرید</span>
                             </div>

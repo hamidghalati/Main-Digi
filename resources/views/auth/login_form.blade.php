@@ -45,14 +45,21 @@
                 <span class="title">ورود به سایت</span>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row" style="margin-right: 3px;padding-top: 10px;">
                 <input checked="checked" class="form-check-input" type="checkbox" name="remember"
                        id="remember" {{ old('remember') ? 'checked' : '' }}>
                 <span class="check_box active" id="login_remember"></span>
                 <span class="form-check-label">مرا به خاطر بسپار</span>
 
             </div>
-
         </form>
     </div>
+
+    <div class="alert alert-warning">
+        <span>کاربر جدید هستید؟</span>
+        <span>
+                <a class="data_link" href="{{route('register')}}">ثبت نام</a>
+        </span>
+    </div>
+
 </div>

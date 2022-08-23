@@ -995,7 +995,36 @@ function get_first_color_id($warranty_list,$color_id)
 
 }
 
-
+function getCartProductData($products,$product_id)
+{
+    foreach ($products as $key=>$value)
+    {
+        if ($value->id==$product_id)
+        {
+            return $value;
+        }
+    }
+}
+function getCartColorData($colors,$color_id)
+{
+    foreach ($colors as $key=>$value)
+    {
+        if ($value->id==$color_id)
+        {
+            return $value;
+        }
+    }
+}
+function getCartWarrantyData($warranties,$warranty_id)
+{
+    foreach ($warranties as $key=>$value)
+    {
+        if ($value->id==$warranty_id)
+        {
+            return $value;
+        }
+    }
+}
 
 
 

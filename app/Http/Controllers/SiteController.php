@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
 use App\CategoriesModel;
 use App\ItemValueModel;
 use App\ProductsModel;
@@ -144,7 +145,17 @@ class SiteController extends Controller
     }
 
 
+    public function add_cart(Request $request)
+    {
+        Cart::add_cart($request->all());
 
+    }
+
+    public function show_cart()
+    {
+        $cart_data=Cart::getCartData();
+        return view('shop.cart',['cart_data'=>$cart_data]);
+    }
 
 
 

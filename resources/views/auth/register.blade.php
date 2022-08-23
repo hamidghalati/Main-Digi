@@ -37,6 +37,17 @@
                     </label>
                 </div>
 
+
+                <div class="register_accept">
+                    <label for="">
+                        <span class="check_box active"></span>
+                        <a href="" class="data_link">حریم خصوصی</a>
+                        <span>و</span>
+                        <a class="data_link" href="">شرایط و قوانین</a>
+                        <span>استفاده از سرویس های سایت را مطالعه نموده و با کلیه موارد آن موافقم</span>
+                    </label>
+                </div>
+
                 <div class="send_btn register_btn" id="register_btn">
                     <span class="line"></span>
                     <span class="title">ثبت نام در سایت</span>

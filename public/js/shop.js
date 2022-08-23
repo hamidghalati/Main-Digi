@@ -164,6 +164,10 @@ $(document).ready(function () {
        }
     });
 
+    $("#cart_btn").click(function () {
+       $("#add_cart_form").submit();
+    });
+
 });
 
 let img_count=0;
