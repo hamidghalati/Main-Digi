@@ -80,6 +80,44 @@
                 </div>
             </div>
         </div>
+
+        <div id="tab_div">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active"  data-toggle="tab" href="#review" role="tab" aria-selected="true">
+                        <span class="fa fa-camera-retro"></span>
+                        <span>نقد و بررسی</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"  data-toggle="tab" href="#product_items" role="tab"  aria-selected="false">
+                        <span class="fa fa-list-ul"></span>
+                        <span>مشخصات فنی</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"  data-toggle="tab" href="#comments" role="tab"  aria-selected="false">
+                        <span class="fa fa-comments"></span>
+                        <span>نظرات کاربران</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"  data-toggle="tab" href="#question" role="tab"  aria-selected="false">
+                        <span class="fa fa-question-circle"></span>
+                        <span>پرسش و پاسخ</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="home-tab">a</div>
+                <div class="tab-pane fade" id="product_items" role="tabpanel" aria-labelledby="profile-tab">
+                    @include('include.product_items')
+                </div>
+                <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="contact-tab">c</div>
+                <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="contact-tab">d</div>
+            </div>
+        </div>
+
     </div>
 
 

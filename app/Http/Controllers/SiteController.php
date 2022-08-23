@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CategoriesModel;
+use App\ItemValueModel;
 use App\ProductsModel;
 use App\ProductWarranty;
 use App\SliderModel;
@@ -51,7 +52,16 @@ class SiteController extends Controller
         }
         $product=ProductsModel::with('getBrand','getProductColor.getColor','getWarranty','getCat')->where($where)->firstOrFail();
         $product_item=ItemModel::getProductItem($product);
-        return view('shop.show_product',['product'=>$product,'product_item'=>$product_item]);
+        $product_item_count=ItemValueModel::where('product_id',$product->id)->count();
+        $relate_product=ProductsModel::where(['cat_id'=>$product->cat_id,'brand_id'=>$product->brand_id])
+            ->where('id','!=',$product->id)->limit(15);
+        return view('shop.show_product',[
+            'product'=>$product,
+            'product_item'=>$product_item,
+            'product_item_count'=>$product_item_count,
+            'relate_product'=>$relate_product
+
+            ]);
     }
 
     public function change_color(Request $request)
