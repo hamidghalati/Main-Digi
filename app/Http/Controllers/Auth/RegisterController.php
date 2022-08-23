@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Rules\ValidateMobileNumber;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -50,8 +51,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'mobile' => ['required', 'string', 'max:15', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'mobile' => ['required', 'string', 'max:11',new ValidateMobileNumber()],
+            'password' => ['required', 'string', 'min:8'],
         ],[],['mobile'=>'شماره همراه','password'=>'کلمه عبور']);
     }
 
@@ -63,10 +64,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $active_Code=rand(99999,1000000);
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'mobile' => $data['mobile'],
             'password' => Hash::make($data['password']),
+            'account_status'=>'InActive',
+            'active_code'=>$active_Code,
+            'role'=>'user'
         ]);
     }
 }

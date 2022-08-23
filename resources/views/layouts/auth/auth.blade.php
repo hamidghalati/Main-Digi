@@ -8,10 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('header')
-
-    <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
     <link href="{{ asset('css/auth.css') }}" rel="stylesheet">
 
     <title>فروشگاه من</title>
@@ -22,7 +21,7 @@
 <div id="app">
 
 
-    {{--        @include('include.Menu')--}}
+
     <div class="container-fluid">
         @yield('content')
     </div>
@@ -38,8 +37,15 @@
 
 
 @yield('footer')
-<script src="{{ asset('js/shop.js') }}" ></script>
 
+<script src="{{ asset('js/app.js') }}" ></script>
+@yield('footer')
+<script src="{{ asset('js/shop.js') }}" ></script>
+<script>
+
+        startTime();
+
+</script>
 </body>
 
 </html>

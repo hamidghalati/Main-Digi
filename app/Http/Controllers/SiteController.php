@@ -8,7 +8,10 @@ use App\ProductsModel;
 use App\ProductWarranty;
 use App\SliderModel;
 use App\ItemModel;
+use App\User;
+use Auth;
 use Illuminate\Http\Request;
+use Session;
 
 class SiteController extends Controller
 {
@@ -84,4 +87,70 @@ class SiteController extends Controller
 
 
     }
+
+    public function confirm()
+    {
+        if (Session::has('mobile_number'))
+        {
+            return view('auth.confirm');
+        }
+        else
+        {
+            return redirect('/');
+        }
+    }
+
+    public function resend(Request $request)
+    {
+        $active_code=rand(99999,1000000);
+        $mobile=$request->get('mobile');
+        if ($request->ajax())
+        {
+            $user=User::where(['mobile'=>$mobile,'account_status'=>'InActive'])->first();
+            if ($user)
+            {
+                $user->active_code=$active_code;
+                $user->update();
+                return 'ok';
+            }
+            else
+            {
+                return 'error';
+            }
+        }
+        else
+        {
+            return 'erroe';
+        }
+    }
+
+    public function active_account(Request $request)
+    {
+        $mobile=$request->get('mobile');
+        $active_code=$request->get('active_code');
+        $user=User::where(['mobile'=>$mobile,'active_code'=>$active_code,'account_status'=>'InActive'])->first();
+        if ($user)
+        {
+            $user->account_status='active';
+            $user->active_code=null;
+            $user->update();
+            Auth::guard()->login($user);
+            return redirect('/');
+
+        }
+        else{
+            return redirect()->back()->with('mobile_number',$mobile)->with('validate_error','کد وارد شده اشتباه می باشد')->withInput();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 }

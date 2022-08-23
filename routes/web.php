@@ -14,6 +14,10 @@
 Route::get('/','SiteController@index');
 
 Auth::routes();
+Route::get('/confirm','SiteController@confirm')->middleware('guest');
+Route::post('ajax/resend','SiteController@resend')->middleware('guest');
+Route::post('active_account','SiteController@active_account')->middleware('guest')->name('active_account');
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 

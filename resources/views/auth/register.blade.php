@@ -14,7 +14,7 @@
                 <div class="form-group">
                     <div class="field_name">شماره موبایل :</div>
                     <label for="" class="input_label user_name">
-                        <input type="text" class="form-control @if($errors->has('mobile')) validate_error_border @endif" name="mobile" id="register_mobile" value="{{ old('name') }}" placeholder="شماره موبایل خود را وارد نمایید">
+                        <input type="text" class="form-control @if($errors->has('mobile')) validate_error_border @endif " name="mobile" id="register_mobile" value="{{ old('name') }}" placeholder="شماره موبایل خود را وارد نمایید">
                         <label id="mobile_error_message" class="feedback_hint" @if($errors->has('mobile')) style="display: block" @endif>
                             @if($errors->has('mobile'))
                                 <span>{{$errors->first('mobile')}}</span>

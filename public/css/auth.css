@@ -28,9 +28,13 @@ body{
 
 }
 
+a {
+    text-decoration: none!important;
+}
+
 #auth_box{
     background: #fff;
-    width: 410px;
+    width: 520px;
     margin: 40px auto;
     border: 1px solid #dedede;
     box-shadow: 0 12px 12px 0 rgba(180, 180, 180, 0.1);
@@ -61,6 +65,7 @@ body{
     height: 45px;
     color: #777;
     font-size: 13px;
+    font-family: iransans;
 }
 .input_label.user_name::before{
     font:normal normal normal 30px/1 FontAwesome;
@@ -136,14 +141,14 @@ body{
 }
 
 .send_btn .title{
-    width: calc(100% - 70%)!important;
+    width: calc(100% - 78%)!important;
     margin-right: 65px;
     text-align: center;
     display: table-cell;
     font-size: 16px!important;
 }
 
-.send_btn .line::before{
+.send_btn.register_btn .line::before{
     content: "\F234";
     font-family: FontAwesome;
     padding-right: 20px;
@@ -166,4 +171,105 @@ body{
 .data_link {
     color: #1ca2db!important;
     border-bottom: 1px dashed #1ca2db;
+}
+.validate_error_border{
+    border: 1px solid #ef5662!important;
+}
+
+#auth_box .alert-success{
+    text-align: right;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.number_input_div{
+    width: 380px;
+    margin: auto;
+}
+.number_input{
+    border: none!important;
+    height: 35px;
+    width: 330px;
+    margin-right: -15px;
+    text-align: left!important;
+    letter-spacing: 45px;
+    font-family: iransans;
+
+}
+.number_input:focus{
+    outline: none;
+}
+
+.line{
+    width: 45px;
+    height: 1px;
+    background: #000;
+    float: right;
+    margin-left: 10px;
+}
+.line_box{
+    width: 330px;
+    margin: auto;
+    padding-bottom: 10px;
+}
+#resend_active_code{
+    font-size: 13px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+.code_active{
+    font-family: 'IRANSans';
+    color: #d51e40;
+    margin: 5px;
+    border-bottom: 1px dashed;
+}
+
+.confirm_btn{
+    width: calc(100% - 75%)!important;
+    margin-right: 65px;
+    text-align: center;
+    display: table-cell;
+    font-size: 16px!important
+}
+
+.send_btn.login_btn {
+    width: 100%;
+}
+
+.send_btn.login_btn .line::before{
+    content: "\F08B";
+    font-family: FontAwesome;
+    padding-right: 20px;
+    padding-top: 12px;
+    display: block;
+}
+
+.form-check-label {
+    margin-right: 5px!important;
+}
+
+#remember{
+    display: none;
+}
+.check_box{
+    width: 19px;
+    height: 18px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    background:#fff;
+    display: block;
+    border: 1px solid #d8d8d8;
+    float: right;
+}
+.check_box.active{
+    background-color: #2196F3!important;
+    border: 1px solid #2196F3!important;
+}
+.check_box.active::before{
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\F00C";
+    display: block;
+    color: white;
+    margin-right: 1px;
 }
