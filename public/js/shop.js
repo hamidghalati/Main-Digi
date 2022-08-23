@@ -96,6 +96,10 @@ $(document).ready(function () {
        }
     });
 
+    $("#register_btn").click(function () {
+        $("#register_form").submit();
+    });
+
 });
 
 let img_count=0;

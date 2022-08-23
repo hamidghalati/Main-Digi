@@ -1,4 +1,5 @@
-    <div class="product_box">
+@if(sizeof($products)>0)
+<div class="product_box">
         <div class="box_title">
             <h5>{{$title}}</h5>
         </div>
@@ -45,3 +46,4 @@
             @endforeach
         </div>
     </div>
+@endif

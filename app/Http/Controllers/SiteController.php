@@ -54,7 +54,7 @@ class SiteController extends Controller
         $product_item=ItemModel::getProductItem($product);
         $product_item_count=ItemValueModel::where('product_id',$product->id)->count();
         $relate_product=ProductsModel::where(['cat_id'=>$product->cat_id,'brand_id'=>$product->brand_id])
-            ->where('id','!=',$product->id)->limit(15);
+            ->where('id','!=',$product->id)->limit(15)->get();
         return view('shop.show_product',[
             'product'=>$product,
             'product_item'=>$product_item,

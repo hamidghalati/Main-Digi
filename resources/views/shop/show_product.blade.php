@@ -81,6 +81,9 @@
             </div>
         </div>
 
+        @include('include.horizontal_product',['title'=>' محصولات مرتبط','products'=>$relate_product])
+
+
         <div id="tab_div">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
@@ -122,14 +125,22 @@
 
 
 @endsection
+@section('header')
+    <link rel="stylesheet" href="{{asset('css/swiper.min.css')}}">
+    <link rel="stylesheet" href="{{asset('slick/slick/slick.css')}}">
+    <link rel="stylesheet" href="{{asset('slick/slick/slick-theme.css')}}">
 
+@endsection
 @section('footer')
+    <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
+
     <script>
 
 
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
-        })
+        });
+
 
     </script>
 @endsection

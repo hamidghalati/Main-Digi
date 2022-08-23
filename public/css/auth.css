@@ -1,0 +1,169 @@
+body{
+    direction: rtl;
+    text-align: right;
+    font-family: Yekan;
+    position: absolute;
+    width: 100%;
+    min-height:700px ;
+    background-color: #f6f8fa;
+}
+
+@font-face {
+    font-family: 'Yekan';
+    src: url( '../fonts/yekan/Yekan.eot' );
+    src: url( '../fonts/yekan/Yekan.eot?#iefix' ) format( 'embedded-opentype' ),
+    url( '../fonts/yekan/Yekan.woff2' ) format( 'woff2' ),
+    url( '../fonts/yekan/Yekan.woff' ) format( 'woff' ),
+    url( '../fonts/yekan/Yekan.ttf' ) format( 'truetype' ),
+    url( '../fonts/yekan/Yekan.svg#Yekan' ) format( 'svg' );
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IRANSans';
+
+    src: url('../fonts/Webfonts/Woff/IRANSansXFaNum-Regular.woff') format('woff'),
+    url('../fonts/Webfonts/Woff2/IRANSansXFaNum-Regular.woff2') format('woff2');
+
+}
+
+#auth_box{
+    background: #fff;
+    width: 410px;
+    margin: 40px auto;
+    border: 1px solid #dedede;
+    box-shadow: 0 12px 12px 0 rgba(180, 180, 180, 0.1);
+}
+
+.auth_box_title{
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #dedede;
+}
+#auth_box .field_name{
+    font-weight: bold;
+    padding-bottom: 5px;
+    display: block;
+}
+
+.input_label{
+    width: 100%;
+    margin-top: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input_label input{
+    padding-right: 45px;
+    height: 45px;
+    color: #777;
+    font-size: 13px;
+}
+.input_label.user_name::before{
+    font:normal normal normal 30px/1 FontAwesome;
+    content: "\F10B";
+    padding-right: 15px;
+    position: absolute;
+    z-index: 10;
+}
+.input_label.user_pass::before{
+    font:normal normal normal 30px/1 FontAwesome;
+    content: "\F023";
+    padding-right: 15px;
+    position: absolute;
+    z-index: 10;
+}
+.feedback_hint{
+    background: #ef5662;
+    font-size: 13px;
+    color: #fff;
+    z-index: 100000;
+    padding: 9px 25px;
+    position: absolute;
+    right: 100%;
+    bottom: 100%;
+    margin-right: -150px;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    display: none;
+}
+.feedback_hint::before{
+    border-color: #ef5662 transparent transparent transparent;
+    border-style: solid;
+    content: "";
+    border-width: 10px 12px 0;
+    position: absolute;
+    top: 100%;
+    right: 35px;
+}
+
+.send_btn {
+    background: #00bfd6;
+    color: white!important;
+    width: 340px;
+    height: 50px;
+    line-height: 50px;
+    cursor: pointer;
+    border: 1px solid #41a7b4;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    position: relative;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.send_btn .line{
+    width: 70px;
+    height: 75px;
+    background: rgba(255,255,255,0.2);
+    position: absolute;
+    top: -13px;
+    z-index: 10;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    -webkit-border-bottom-left-radius: 50%;
+    -webkit-border-top-left-radius: 50%;
+    font-size: 20px!important;
+    transition: 0.3s;
+}
+.send_btn .line2{
+    width: 100%!important;
+    border-radius: 8px!important;
+    -webkit-border-radius: 8px!important;
+}
+
+.send_btn .title{
+    width: calc(100% - 70%)!important;
+    margin-right: 65px;
+    text-align: center;
+    display: table-cell;
+    font-size: 16px!important;
+}
+
+.send_btn .line::before{
+    content: "\F234";
+    font-family: FontAwesome;
+    padding-right: 20px;
+    padding-top: 12px;
+    display: block;
+}
+
+.send_btn.register_btn
+{
+    width: 100%;
+}
+
+#auth_box .alert{
+    border-radius: 0!important;
+    -webkit-border-radius: 0!important;
+    margin-bottom: 0!important;
+    text-align: center;
+    font-size: 15px;
+}
+.data_link {
+    color: #1ca2db!important;
+    border-bottom: 1px dashed #1ca2db;
+}

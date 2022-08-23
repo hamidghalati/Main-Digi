@@ -40,5 +40,9 @@
 
         </table>
     @else
+        <p class="empty_message">
+            مشخصات فنی برای این محصول ثبت نشده است
+        </p>
     @endif
 </div>
+

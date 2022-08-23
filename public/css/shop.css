@@ -900,8 +900,7 @@ del{
     -webkit-border-bottom-left-radius: 50%;
     -webkit-border-top-left-radius: 50%;
     font-size: 20px!important;
-    transition: 0.3s
-;
+    transition: 0.3s;
  }
 .send_btn .line2{
     width: 100%!important;
@@ -1080,8 +1079,15 @@ del{
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);;
 }
-
-
+.slick-track{
+    margin-right: 0!important;
+}
+.empty_message{
+    color: red;
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 30px;
+}
 
 
 
