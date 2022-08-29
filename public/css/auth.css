@@ -281,24 +281,5 @@ a {
     margin-left: 10px;
     margin-top: 8px;
 }
-.page_row{
-    display: flex;
-}
-.page-content{
-    flex: 0 0 71.5%;
-    max-width: 71.5%;
-    padding-left:10px;
-    padding-right: 0;
-}
-.page_aside{
-    flex: 0 0 28.5%;
-    max-width: 28.5%;
-    padding-left: 0;
-    padding-right: 10px;
-}
-.page-content table{
-    background: white!important;
-    width: 100%!important;
-    margin-top: 20px!important;
-    border: 1px solid #e8e8e8!important;
-}
+
+

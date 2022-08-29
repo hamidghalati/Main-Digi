@@ -1089,18 +1089,104 @@ del{
     padding-bottom: 30px;
 }
 
+.page_row{
+    display: flex;
+}
+.page-content{
+    flex: 0 0 71.5%;
+    max-width: 71.5%;
+    padding-left:10px;
+    padding-right: 0;
+}
+.cart_table{
+    background: white!important;
+    width: 100%!important;
+    margin-top: 20px!important;
+    border: 1px solid #e8e8e8!important;
+    box-shadow: 0 12px 12px 0 rgba(180,180,180,0.1);
+}
+.cart_table tr{
+    padding: 15px;
+    border-bottom: 1px solid #e8e8e8!important;
+    display: block;
+}
+.page_aside{
+    flex: 0 0 28.5%;
+    max-width: 28.5%;
+    padding-left: 0;
+    padding-right: 10px;
+}
 
+.cart_table tr td .fa-close{
+    cursor: pointer;
+    background: #f5f5f5;
+    padding: 5px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    font-size: 14px;
+}
+.cart_table tr td:nth-child(2)
+{
+    width: 20%;
+}
+.cart_table tr td:nth-child(2) img
+{
+    width: 70%!important;
+    margin: auto;
+    display: block;
+}
 
+.cart_table tr td:nth-child(3)
+{
+    width: 49%;
+}
+.cart_table ul li{
+    list-style: none;
+    font-size: 14px;
+    padding-top: 5px;
+    position: relative;
+}
+.cart_table ul li title{
+    font-size: 17px!important;
+    padding-bottom: 20px;
+}
 
+.cart_table ul li .ui-variant-shape{
+    margin-right: 15px!important;
+}
 
+.cart_table tr td:nth-child(4){
+    width: 10%;
+    text-align: center;
+    font-family: IRANSans;
+    font-size: 13px;
+}
+.cart_table tr td:nth-child(5){
+    width: 25%;
+    text-align: center;
+    font-family: IRANSans;
+}
 
+.order_info{
+    background: white!important;
+    width: 100%!important;
+    margin-top: 20px!important;
+    border: 1px solid #e8e8e8!important;
+    box-shadow: 0 12px 12px 0 rgba(180,180,180,0.1);
 
+}
+.order_info ul li{
+    list-style: none;
+    padding: 10px;
+}
+.order_info ul li .left{
+    float: left;
+    font-family: IRANSans;
+}
 
+.cart_discount_li{
 
-
-
-
-
+}
 
 
 
@@ -1137,6 +1223,7 @@ del{
     .index-pic{height: 211px!important;}
 
 }
+
 
 
 

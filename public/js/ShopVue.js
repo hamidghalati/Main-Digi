@@ -1908,6 +1908,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _myMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../myMixin */ "./resources/js/myMixin.js");
 //
 //
 //
@@ -1920,8 +1921,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Counter",
+  mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
     return {
       h: '',
@@ -1960,17 +1963,6 @@ __webpack_require__.r(__webpack_exports__);
       this.m = this.replaceNumber(m);
       this.s = this.replaceNumber(s);
       this.show_second = this.show_second - 1;
-    },
-    replaceNumber: function replaceNumber(n) {
-      n = n.toString();
-      var find = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-      var replace = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-
-      for (var i = 0; i < find.length; i++) {
-        n = n.replace(new RegExp(find[i], 'g'), replace[i]);
-      }
-
-      return n;
     }
   }
 });
@@ -2070,6 +2062,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _myMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../myMixin */ "./resources/js/myMixin.js");
 //
 //
 //
@@ -2097,10 +2090,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ShoppingCart",
   props: ['cart_data'],
-  mounted: function mounted() {}
+  mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mounted: function mounted() {},
+  methods: {
+    remove_product: function remove_product(product) {}
+  }
 });
 
 /***/ }),
@@ -3349,7 +3375,16 @@ var render = function () {
         { staticClass: "cart_table" },
         _vm._l(_vm.cart_data["product"], function (product) {
           return _c("tr", [
-            _vm._m(0, true),
+            _c("td", [
+              _c("span", {
+                staticClass: "fa fa-close remove_product",
+                on: {
+                  click: function ($event) {
+                    return _vm.remove_product(product)
+                  },
+                },
+              }),
+            ]),
             _vm._v(" "),
             _c("td", [
               _c("img", {
@@ -3378,12 +3413,67 @@ var render = function () {
                       _c("span", [_vm._v(_vm._s(product.color_name))]),
                       _vm._v(" "),
                       _c("span", {
-                        staticClass: "ui_variant_shape",
+                        staticClass: "ui-variant-shape",
                         style: { background: product.color_code },
                       }),
                     ])
                   : _vm._e(),
               ]),
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("span", [_vm._v("تعداد")]),
+              _vm._v(" "),
+              product.product_number_cart > 1
+                ? _c("p", [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: product.product_count,
+                            expression: "product.product_count",
+                          },
+                        ],
+                        on: {
+                          change: function ($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function (o) {
+                                return o.selected
+                              })
+                              .map(function (o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              product,
+                              "product_count",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                        },
+                      },
+                      _vm._l(product.product_number_cart, function (i) {
+                        return _c("option", { domProps: { value: i } }, [
+                          _vm._v(_vm._s(i)),
+                        ])
+                      }),
+                      0
+                    ),
+                  ])
+                : _c("p", [_vm._v(_vm._s(product.product_count))]),
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(product.price2) +
+                  " تومان\n                "
+              ),
             ]),
           ])
         }),
@@ -3391,17 +3481,40 @@ var render = function () {
       ),
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "page_aside" }),
+    _c("div", { staticClass: "page_aside" }, [
+      _c("div", { staticClass: "order_info" }, [
+        _c("ul", [
+          _c("li", [
+            _c("span", [_vm._v("مبلغ کل")]),
+            _vm._v(" "),
+            _c("span", [
+              _vm._v(
+                "  (" +
+                  _vm._s(_vm.replaceNumber(_vm.cart_data.product_count)) +
+                  ") کالا :"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "left" }, [
+              _vm._v(_vm._s(_vm.replaceNumber(_vm.cart_data.total_price))),
+            ]),
+          ]),
+          _vm._v(" "),
+          _vm.cart_data.discount != 0
+            ? _c("li", { staticClass: "cart_discount_li" }, [
+                _c("span", [_vm._v("سود حاصل از خرید شما :")]),
+                _vm._v(" "),
+                _c("span", { staticClass: "left" }, [
+                  _vm._v(_vm._s(_vm.replaceNumber(_vm.cart_data.discount))),
+                ]),
+              ])
+            : _vm._e(),
+        ]),
+      ]),
+    ]),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("span", { staticClass: "fa fa-close remove_product" })])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -15874,6 +15987,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShoppingCart_vue_vue_type_template_id_c86466da_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/myMixin.js":
+/*!*********************************!*\
+  !*** ./resources/js/myMixin.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    replaceNumber: function replaceNumber(n) {
+      n = n.toString();
+      var find = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+      var replace = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+
+      for (var i = 0; i < find.length; i++) {
+        n = n.replace(new RegExp(find[i], 'g'), replace[i]);
+      }
+
+      return n;
+    }
+  }
+});
 
 /***/ }),
 

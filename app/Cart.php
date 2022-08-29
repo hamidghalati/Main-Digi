@@ -119,26 +119,36 @@ class Cart
            $product_number=array_key_exists($n,$cart_product_number)? $cart_product_number[$n]:0;
            if ($product  && $warranty && $product_number>0)
            {
+               $cart_data['product'][$j]['product_id']=$product->id;
                $cart_data['product'][$j]['product_title']=$product->title;
                $cart_data['product'][$j]['product_image_url']=$product->image_url;
                $cart_data['product'][$j]['warranty_name']=$warranty->name;
+               $cart_data['product'][$j]['warranty_id']=$warranty->id;
                if ($color)
                {
                    $cart_data['product'][$j]['color_name']=$color->name;
                    $cart_data['product'][$j]['color_code']=$color->code;
+                   $cart_data['product'][$j]['color_id']=$color->id;
                }
-               $cart_data['product'][$j]['price1']=$v->price1;
-               $cart_data['product'][$j]['price2']=$v->price2;
+               else
+               {
+                   $cart_data['product'][$j]['color_id']=0;
+               }
+               $cart_data['product'][$j]['price1']=$product_number*$v->price1;
+               $cart_data['product'][$j]['price2']=number_format($product_number*$v->price2);
                $cart_data['product'][$j]['product_number_cart']=$v->product_number_cart;
                $cart_data['product'][$j]['product_count']=$product_number;
-               $total_price+=$v->price1;
-               $cart_price+=$v->price2;
+               $total_price+=$product_number*$v->price1;
+               $cart_price+=$product_number*$v->price2;
 
                $j++;
            }
         }
-        $cart_data['total_price']=$total_price;
-        $cart_data['cart_price']=$cart_price;
+        $discount=$total_price-$cart_price;
+        $cart_data['total_price']=replace_number(number_format($total_price));
+        $cart_data['cart_price']=replace_number(number_format($cart_price));
+        $cart_data['discount']=$discount>0 ? replace_number(number_format($discount)) : 0;
+        $cart_data['product_count']=$j;
          return $cart_data ;
     }
 }

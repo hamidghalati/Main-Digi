@@ -1908,6 +1908,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _myMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../myMixin */ "./resources/js/myMixin.js");
 //
 //
 //
@@ -1920,8 +1921,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Counter",
+  mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
     return {
       h: '',
@@ -1960,17 +1963,6 @@ __webpack_require__.r(__webpack_exports__);
       this.m = this.replaceNumber(m);
       this.s = this.replaceNumber(s);
       this.show_second = this.show_second - 1;
-    },
-    replaceNumber: function replaceNumber(n) {
-      n = n.toString();
-      var find = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-      var replace = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-
-      for (var i = 0; i < find.length; i++) {
-        n = n.replace(new RegExp(find[i], 'g'), replace[i]);
-      }
-
-      return n;
     }
   }
 });
@@ -18600,6 +18592,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IncredibleOffers_vue_vue_type_template_id_1ac9bd27_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/myMixin.js":
+/*!*********************************!*\
+  !*** ./resources/js/myMixin.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    replaceNumber: function replaceNumber(n) {
+      n = n.toString();
+      var find = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+      var replace = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+
+      for (var i = 0; i < find.length; i++) {
+        n = n.replace(new RegExp(find[i], 'g'), replace[i]);
+      }
+
+      return n;
+    }
+  }
+});
 
 /***/ }),
 
