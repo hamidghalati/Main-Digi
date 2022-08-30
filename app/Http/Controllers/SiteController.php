@@ -144,10 +144,10 @@ class SiteController extends Controller
         }
     }
 
-
     public function add_cart(Request $request)
     {
         Cart::add_cart($request->all());
+        return redirect('/Cart');
 
     }
 
@@ -155,6 +155,16 @@ class SiteController extends Controller
     {
         $cart_data=Cart::getCartData();
         return view('shop.cart',['cart_data'=>$cart_data]);
+    }
+
+    public function remove_product(Request $request)
+    {
+        return Cart::removeProduct($request);
+    }
+
+    public function change_product_cart(Request $request)
+    {
+        return Cart::ChangeProductCount($request);
     }
 
 

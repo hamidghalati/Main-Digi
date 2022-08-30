@@ -835,12 +835,34 @@ del{
 }
 
 .tooltip{
-    font-family: 'Yekan'!important;
+    font-family: 'iransans'!important;
+
 }
 .tooltip-inner{
-    background: #000000 !important;
-    font-size: 15px!important;
+    background: #68a5ff !important;
+    font-size: 12px!important;
+    text-align: justify!important;
 }
+.bs-tooltip-auto[x-placement^=bottom] .arrow::before,
+.bs-tooltip-bottom .arrow::before {
+    border-bottom-color: #68a5ff; /* blue */
+}
+
+.bs-tooltip-auto[x-placement^=top] .arrow::before,
+.bs-tooltip-top .arrow::before {
+    border-top-color: #68a5ff; /* blue */
+}
+
+.bs-tooltip-auto[x-placement^=right] .arrow::before,
+.bs-tooltip-right .arrow::before {
+    border-right-color: #68a5ff; /* blue */
+}
+
+.bs-tooltip-auto[x-placement^=left] .arrow::before,
+.bs-tooltip-left .arrow::before {
+    border-left-color: #68a5ff; /* blue */
+}
+
 .final_product_price{
     font-family: IRANSans;
     color: #fb3449;
@@ -1118,7 +1140,7 @@ del{
 }
 
 .cart_table tr td .fa-close{
-    cursor: pointer;
+    cursor: pointer!important;
     background: #f5f5f5;
     padding: 5px;
     border-radius: 20px;
@@ -1187,6 +1209,114 @@ del{
 .cart_discount_li{
 
 }
+.remove_product{
+    cursor: pointer;
+    color: #ef5662;
+}
+
+.message_div{
+    background: rgba(255,255,255,0.5);
+    width: 100%;
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 1000000;
+
+}
+.message_box{
+    background: white;
+    width: 360px;
+    height: 135px;
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    font-size: 16px;
+    padding: 20px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    text-align: center;
+    box-shadow: 5px 7px 4px 0 rgba(0,0,0,0.1);
+
+}
+.message_box #msg{
+    padding-top: 10px!important;
+    padding-bottom: 10px!important;
+    font-size: 15px!important;
+}
+.message_box .alert{
+    padding: 5px 30px 5px 30px!important;
+    cursor: pointer;
+    font-size: 14px!important;
+}
+.message_box .alert-danger{
+    margin-right: 10px;
+}
+
+.empty_cart_div{
+    height: 300px;
+    text-align: center;
+}
+.icon-basket{
+    font-size: 40px;
+    color: #ff6c3f;
+    margin-top: 100px;
+
+}
+.empty-title{
+    margin-top: 10px;
+    font-size: large;
+}
+.order_info ul{
+    margin-top: 20px;
+}
+.cart_discount_li{
+    color: #009ec9;
+}
+
+.checkout_divider{
+    width: 96%;
+    margin: 2%;
+    height: 4px;
+    border: 1px solid #e6e6e6;
+}
+.checkout_content{
+    text-align: center;
+    font-size: 15px;
+    padding-top: 10px;
+}
+.cart_price_p{
+    font-family: IRANSans;
+}
+.send_btn.checkout{
+    margin: 10px auto;
+}
+.send_btn.checkout .line::before{
+    content: "\F060"!important;
+}
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn){
+    width: 60px!important;
+    margin-top: 10px;
+}
+.bootstrap-select .btn-light .filter-option{
+    text-align: center!important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

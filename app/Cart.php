@@ -151,4 +151,81 @@ class Cart
         $cart_data['product_count']=$j;
          return $cart_data ;
     }
+
+    public static function removeProduct($request)
+    {
+        $product_id=$request->get('product_id',0);
+        $warranty_id=$request->get('warranty_id',0);
+        $color_id=$request->get('color_id',0);
+        $cart=Session::get('cart');
+        if (array_key_exists($product_id,$cart))
+        {
+            $a=$cart[$product_id]['product_data'];
+            $childkey=$warranty_id.'_'.$color_id;
+            if (array_key_exists($childkey,$a))
+            {
+                unset($cart[$product_id]['product_data'][$childkey]);
+                if (empty($cart[$product_id]['product_data']))
+                {
+                    unset($cart[$product_id]);
+                }
+                if (empty($cart))
+                {
+                    Session::forget('cart');
+                }
+                else
+                {
+                    Session::put('cart',$cart);
+                }
+                return self::getCartData();
+            }
+            else
+            {
+                return 'error';
+            }
+        }
+        else
+        {
+            return 'error';
+        }
+
+    }
+
+    public static function ChangeProductCount($request)
+    {
+        $product_id=$request->get('product_id',0);
+        $warranty_id=$request->get('warranty_id',0);
+        $color_id=$request->get('color_id',0);
+        $product_count=$request->get('product_count',1);
+        settype($product_count,'integer');
+        $cart=Session::get('cart');
+        if (array_key_exists($product_id,$cart))
+        {
+            $a=$cart[$product_id]['product_data'];
+            $childkey=$warranty_id.'_'.$color_id;
+            if (array_key_exists($childkey,$a))
+            {
+                if (self::check($product_id,$color_id,$warranty_id,$product_count) && $product_count>0)
+                {
+
+                    $cart[$product_id]['product_data'][$childkey]=$product_count;
+                    Session::put('cart',$cart);
+                    return self::getCartData();
+                }
+                else
+                {
+                    return 'error';
+                }
+            }
+            else
+            {
+                return 'error';
+            }
+
+        }
+        else
+        {
+            return 'error';
+        }
+    }
 }

@@ -641,4 +641,6 @@ input.pdate{
     font-family: 'IRANSans'!important;
 }
 
-
+.send_order label{
+    width: 180px!important;
+}

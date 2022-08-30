@@ -74,7 +74,15 @@
         <?php
         }
         ?>
+        $('.product_list').slick({
 
+            speed: 900,
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            rtl:true,
+            infinite: false,
+
+        });
 
     </script>
 

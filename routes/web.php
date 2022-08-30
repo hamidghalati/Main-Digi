@@ -75,6 +75,8 @@ Route::prefix('admin')->group(function (){
     Route::post('add_incredible_offers/{warranty_id}','Admin\AdminController@add_incredible_offers');
     Route::post('remove_incredible_offers/{warranty_id}','Admin\AdminController@remove_incredible_offers');
 
+    //setting
+   Route::match(['get','post'],'setting/send-order-price','Admin\SettingController@send_order_price');
 
 
 
@@ -89,3 +91,6 @@ Route::post('site/change_color','SiteController@change_color');
 
 Route::post('Cart','SiteController@add_cart');
 Route::get('Cart','SiteController@show_cart');
+
+Route::post('site/cart/remove_product','SiteController@remove_product');
+Route::post('site/cart/change_product_cart','SiteController@change_product_cart');

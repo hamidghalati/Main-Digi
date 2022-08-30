@@ -70,13 +70,15 @@
         @if($send_time>-1)
             @if($send_time==0)
                 <span style="position:relative;bottom: 3px!important;">آماده ارسال</span>
-                <span  class="fa fa-question-circle" data-toggle="tooltip" data-placement="top"
+                <span   data-toggle="tooltip" data-placement="top"
                       title="این کالا در انبار فروشنده موجود است.برای ارسال باید تا مدت زمان ذکر شده منتظر بمانید">
+                    <i class="fa fa-question-circle"></i>
                 </span>
             @else
                 <span style="position:relative!important;bottom: 3px!important;">ارسال از {{replace_number($send_time)}} روز کاری آینده</span>
-                <span  class="fa fa-question-circle" data-toggle="tooltip" data-placement="top"
+                <span  data-toggle="tooltip" data-placement="top"
                       title="این کالا در انبار فروشنده موجود است.برای ارسال باید تا مدت زمان ذکر شده منتظر بمانید">
+                     <i class="fa fa-question-circle"></i>
                 </span>
             @endif
         @endif
