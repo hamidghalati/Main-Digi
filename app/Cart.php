@@ -228,4 +228,15 @@ class Cart
             return 'error';
         }
     }
+
+    public static function get_product_count()
+    {
+        $count=0;
+        $cart=Session::get('cart',array());
+        foreach ($cart as $key=>$value)
+        {
+            $count+=sizeof($value['product_data']);
+        }
+        return $count;
+    }
 }

@@ -24,6 +24,6 @@
 
 @section('footer')
     <script>
-        load_slider('<?= sizeof($sliders)?>');
+
     </script>
 @endsection

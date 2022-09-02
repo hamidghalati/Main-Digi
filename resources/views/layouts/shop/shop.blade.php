@@ -76,7 +76,7 @@
 
                     <div class="cart-header-box">
                         <div class="btn-cart">
-                            <span id="cart-product-count" data-counter="۰">سبد خرید</span>
+                            <span id="cart-product-count" data-counter="{{replace_number(\App\Cart::get_product_count())}}">سبد خرید</span>
                         </div>
                     </div>
                 </div>
@@ -112,6 +112,8 @@
         infinite: false,
 
     });
+
+
 </script>
 
 
