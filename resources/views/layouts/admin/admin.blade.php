@@ -43,6 +43,18 @@
                     <a href="{{url('admin/sliders/create')}}">افزودن اسلایدر</a>
                 </div>
             </li>
+
+            <li>
+                <a>
+                    <span class="fa fa-location"></span>
+                    <span class="sidebar_menu_text">مناطق</span>
+                    <span class="fa fa-angle-left"></span>
+                </a>
+                <div class="child_menu">
+                    <a href="{{url('admin/province')}}">مدیریت استان ها</a>
+                    <a href="{{url('admin/city')}}">مدیریت شهرها</a>
+                </div>
+            </li>
         </ul>
 
 
