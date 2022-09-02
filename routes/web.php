@@ -51,6 +51,15 @@ Route::prefix('admin')->group(function (){
     //slider
     create_crud_route('sliders','SliderController');
 
+    //province
+    create_crud_route('province','ProvinceController');
+
+    //city
+    create_crud_route('city','CityController');
+
+
+
+
     //Item category
     Route::get('category/{id}/items','Admin\ItemController@items');
     Route::post('category/{id}/items','Admin\ItemController@add_items');
