@@ -39,12 +39,31 @@
 @endsection
 
 @section('footer')
+    <script type="text/javascript" src="{{url('js/cedarmaps.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/leaflet.rotatedMarker.js')}}"></script>
     <script>
 
         jQuery(window).load(function () {
             "use strict";
             jQuery("body").find('#site-loading').fadeOut(500);
         });
+
+        // let lat='38.0412';
+        // let lng='46.3993';
+        // let marker=null;
+        // let map=null;
+
+        L.cedarmaps.accessToken = "2192ad1e2821d1104b431cd42c40b3cde410bac8""; // See the note below on how to get an access token
+
+        // Getting maps info from a tileJSON source
+        var tileJSONUrl = 'https://api.cedarmaps.com/v1/tiles/cedarmaps.streets.json?access_token=' + L.cedarmaps.accessToken;
+
+        // initilizing map into div#map
+        var map = L.cedarmaps.map('map', tileJSONUrl, {
+            scrollWheelZoom: true
+        }).setView([35.757448286487595, 51.40876293182373], 15);
+
+        // marker=L.marker([lat,lng]).addTo(map);
 
     </script>
 @endsection

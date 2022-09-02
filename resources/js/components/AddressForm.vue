@@ -1,5 +1,5 @@
 <template>
-
+<div>
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -21,7 +21,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <div class="account_title"> نام و نام خانوادگی تحویل گیرنده </div>
+                                            <div class="account_title"> نام و نام خانوادگی تحویل گیرنده : </div>
                                             <label for="" class="input_label">
                                                 <input type="text" v-model="name" class="form-control" placeholder=" نام و نام خانوادگی تحویل گیرنده">
                                                 <label for="" v-if="error_name_message" :class="[error_name_message? 'feedback-hint active' : 'feedback']">{{error_name_message}}</label>
@@ -39,12 +39,13 @@
                                     </div>
                                 </div>
 
+
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
                                             <div class="account_title"> استان :</div>
                                             <label for="" class="input_label">
-                                                <select class="selectpicker" v-model="province_id" name="" id="province_id" v-on:change="getCity">
+                                                <select class="selectpicker" v-model="province_id" name="" id="province_id" v-on:change="getCity" data-live-search="true">
                                                     <option value="">انتخاب استان</option>
                                                     <option v-for="row in province" v-bind:value="row.id">{{row.name}}</option>
                                                 </select>
@@ -58,7 +59,7 @@
                                         <div class="form-group">
                                             <div class="account_title"> شهر :</div>
                                             <label for="" class="input_label">
-                                                <select class="selectpicker" v-model="city_id" name="" id="city_id" >
+                                                <select class="selectpicker" v-model="city_id" name="" id="city_id" data-live-search="true">
                                                     <option value="">انتخاب شهر</option>
                                                     <option v-for="row in city" v-bind:value="row.id">{{row.name}}</option>
                                                 </select>
@@ -74,12 +75,11 @@
                                         <div class="form-group">
                                             <div class="account_title"> آدرس پستی :</div>
                                             <label for="" class="input_label">
-                                                <textarea class="textarea form-control" v-model="address" name="" id="" ></textarea>
+                                                <textarea class="textarea form-control" v-model="address" placeholder="آدرس پستی تحویل گیرنده" ></textarea>
                                                 <label for="" v-if="error_address_message" :class="[error_address_message? 'feedback-hint active' : 'feedback']">{{error_address_message}}</label>
                                             </label>
                                         </div>
                                     </div>
-
                                 </div>
 
 
@@ -97,7 +97,13 @@
 
                             </div>
                         </div>
-                        <div class="col-md-5"></div>
+                        <div class="col-md-5">
+<!--                            <div id="map" style="width: 100%;height: 400px;"></div>-->
+<!--                            <button class="btn btn-success">انتخاب</button>-->
+                            <div class="fluid-wrapper">
+                                <iframe src="http://mapsengine.google.com/map/embed?mid=z-BEFzFo7gdM.kYdiUKVQpQQI" width="640" height="480"></iframe>
+                            </div>
+                        </div>
                     </div>
 
 
@@ -106,6 +112,7 @@
             </div>
         </div>
     </div>
+</div>
 
 
 </template>
