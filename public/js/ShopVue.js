@@ -2027,6 +2027,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddressForm",
   data: function data() {
@@ -4711,15 +4712,17 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-5" }, [
-      _c("div", { staticClass: "fluid-wrapper" }, [
-        _c("iframe", {
-          attrs: {
-            src: "http://mapsengine.google.com/map/embed?mid=z-BEFzFo7gdM.kYdiUKVQpQQI",
-            width: "640",
-            height: "480",
-          },
-        }),
-      ]),
+      _c("div", {
+        staticStyle: {
+          position: "absolute",
+          "z-index": "1",
+          width: "99%",
+          height: "98%",
+          background: "#eee",
+          border: "2px solid #aaa",
+        },
+        attrs: { id: "map" },
+      }),
     ])
   },
 ]

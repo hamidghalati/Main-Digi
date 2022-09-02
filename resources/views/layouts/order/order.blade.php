@@ -12,6 +12,7 @@
     @yield('header')
 
     <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
+
     <link href="{{ asset('css/shop.css') }}" rel="stylesheet">
 
     <title>فروشگاه من</title>
@@ -26,7 +27,12 @@
         </div>
 
     </div>
-    <script src="{{ asset('js/ShopVue.js') }}" type="text/javascript"></script>
+
+
+
+
+    <script src="{{ asset('js/ShopVue.js') }}" type="text/javascript" ></script>
+    @yield('footer')
  </body>
 
 </html>

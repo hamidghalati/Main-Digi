@@ -38,32 +38,48 @@
 
 @endsection
 
+@section('header')
+
+
+    <link href="https://static.neshan.org/sdk/leaflet/1.4.0/leaflet.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+    <link rel="stylesheet" href="{{url('css/dist/leaflet.awesome-markers.css')}}">
+
+    <script src="https://static.neshan.org/sdk/leaflet/1.4.0/leaflet.js" type="text/javascript"></script>
+
+
+
+@endsection
+
 @section('footer')
-    <script type="text/javascript" src="{{url('js/cedarmaps.js')}}"></script>
-    <script type="text/javascript" src="{{url('js/leaflet.rotatedMarker.js')}}"></script>
+
+    <script src="{{('js/dist/leaflet.awesome-markers.js')}}" type="text/javascript"></script>
+    <script src="{{url('js/server.js')}}" type="text/javascript"></script>
+
+
     <script>
 
-        jQuery(window).load(function () {
-            "use strict";
-            jQuery("body").find('#site-loading').fadeOut(500);
-        });
-
-        // let lat='38.0412';
-        // let lng='46.3993';
-        // let marker=null;
-        // let map=null;
-
-        L.cedarmaps.accessToken = "2192ad1e2821d1104b431cd42c40b3cde410bac8""; // See the note below on how to get an access token
-
-        // Getting maps info from a tileJSON source
-        var tileJSONUrl = 'https://api.cedarmaps.com/v1/tiles/cedarmaps.streets.json?access_token=' + L.cedarmaps.accessToken;
-
-        // initilizing map into div#map
-        var map = L.cedarmaps.map('map', tileJSONUrl, {
-            scrollWheelZoom: true
-        }).setView([35.757448286487595, 51.40876293182373], 15);
-
-        // marker=L.marker([lat,lng]).addTo(map);
+        // jQuery(window).load(function () {
+        //     "use strict";
+        //     jQuery("body").find('#site-loading').fadeOut(500);
+        // });
+        //
+        // // let lat='38.0412';
+        // // let lng='46.3993';
+        // // let marker=null;
+        // // let map=null;
+        //
+        // L.cedarmaps.accessToken = "2192ad1e2821d1104b431cd42c40b3cde410bac8""; // See the note below on how to get an access token
+        //
+        // // Getting maps info from a tileJSON source
+        // var tileJSONUrl = 'https://api.cedarmaps.com/v1/tiles/cedarmaps.streets.json?access_token=' + L.cedarmaps.accessToken;
+        //
+        // // initilizing map into div#map
+        // var map = L.cedarmaps.map('map', tileJSONUrl, {
+        //     scrollWheelZoom: true
+        // }).setView([35.757448286487595, 51.40876293182373], 15);
+        //
+        // // marker=L.marker([lat,lng]).addTo(map);
 
     </script>
 @endsection

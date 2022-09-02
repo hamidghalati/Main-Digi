@@ -98,11 +98,12 @@
                             </div>
                         </div>
                         <div class="col-md-5">
-<!--                            <div id="map" style="width: 100%;height: 400px;"></div>-->
-<!--                            <button class="btn btn-success">انتخاب</button>-->
-                            <div class="fluid-wrapper">
-                                <iframe src="http://mapsengine.google.com/map/embed?mid=z-BEFzFo7gdM.kYdiUKVQpQQI" width="640" height="480"></iframe>
-                            </div>
+                            <div id="map"
+                                 style="position: absolute;z-index: 1; width: 99%; height: 98%; background: #eee; border: 2px solid #aaa;"></div>
+
+
+
+
                         </div>
                     </div>
 
