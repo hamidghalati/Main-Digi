@@ -14,7 +14,7 @@ class UserController extends Controller
        $address->user_id=$user_id;
        if ($address->save())
        {
-           return Address::where(['user_id'=>$user_id])->orderBy('id','Desc')->get();
+           return Address::with(['getProvince','getCity'])->where(['user_id'=>$user_id])->orderBy('id','Desc')->get();
        }
        else{
            return 'error';

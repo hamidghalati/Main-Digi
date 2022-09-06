@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Address;
 use App\Cart;
 use App\ProvinceModel;
 use Illuminate\Http\Request;
@@ -13,11 +14,13 @@ class ShoppingController extends Controller
         $this->middleware('auth');
     }
 
-    public function shipping()
+    public function shipping(Request $request)
     {
         if (Cart::get_product_count()>0)
         {
-            return view('shipping.set_data');
+            $user_id=$request->user()->id;
+            $address=Address::with(['getProvince','getCity'])->where('user_id',$user_id)->orderBy('id','DESC')->get();
+            return view('shipping.set_data',['address'=>$address]);
         }
         else
         {

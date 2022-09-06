@@ -2095,6 +2095,8 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     add_address: function add_address() {
+      var _this3 = this;
+
       var validateName = this.validateName();
       var validateMobileNumber = this.validateMobileNumber();
       var validateَAddress = this.validateAddress();
@@ -2115,8 +2117,10 @@ __webpack_require__.r(__webpack_exports__);
         formData.append('city_id', this.city_id);
         formData.append('lat', lat);
         formData.append('lng', lng);
-        var url = this.$siteUrl + 'user/addAddress';
+        var url = this.$siteUrl + '/user/addAddress';
         this.axios.post(url, formData).then(function (response) {
+          _this3.$emit('setData', response.data);
+
           $("#myModal").modal('hide');
         });
       }
@@ -2202,6 +2206,85 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AddressForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddressForm */ "./resources/js/components/AddressForm.vue");
+/* harmony import */ var _myMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../myMixin */ "./resources/js/myMixin.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2216,10 +2299,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddressList",
   components: {
     AddressForm: _AddressForm__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  props: ['data'],
+  data: function data() {
+    return {
+      AddressLists: [],
+      show_address_list: false,
+      show_default: true
+    };
+  },
+  mounted: function mounted() {
+    this.AddressLists = this.data;
+  },
+  methods: {
+    showModalBox: function showModalBox() {
+      $("#myModal").modal('show');
+    },
+    close_address_list: function close_address_list() {
+      this.show_address_list = false;
+      this.show_default = true;
+    },
+    show_default_address: function show_default_address() {
+      if (this.AddressLists.length > 0 && this.show_default) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    change_address: function change_address() {
+      this.show_default = false;
+      this.show_address_list = true;
+    },
+    updateAddressList: function updateAddressList(data) {
+      this.AddressLists = data;
+    },
+    updateRow: function updateRow(address) {},
+    remove_address: function remove_address(address) {}
   }
 });
 
@@ -4893,25 +5014,227 @@ var render = function () {
   return _c(
     "div",
     [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          attrs: {
-            type: "button",
-            "data-toggle": "modal",
-            "data-target": ".bd-example-modal-lg",
-          },
-        },
-        [_vm._v("Large modal")]
-      ),
+      _vm.show_address_list
+        ? _c(
+            "div",
+            { staticClass: "address_box box_border" },
+            [
+              _c("div", { staticClass: "select_address_label" }, [
+                _c("span", [
+                  _vm._v("آدرس مورد نظر خود را جهت تحویل انتخاب نمایید"),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    attrs: { id: "close_address" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.close_address_list()
+                      },
+                    },
+                  },
+                  [_c("i", { staticClass: "fa fa-close" })]
+                ),
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "add_address_btn",
+                  attrs: {
+                    type: "button",
+                    "data-target": ".bd-example-modal-lg",
+                  },
+                  on: {
+                    click: function ($event) {
+                      return _vm.showModalBox()
+                    },
+                  },
+                },
+                [_c("strong", [_vm._v("افزودن آدرس جدید")])]
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.AddressLists, function (address, key) {
+                return _c(
+                  "div",
+                  { key: address.id, staticClass: "address_row" },
+                  [
+                    _c("h6", [_vm._v(_vm._s(address["name"]))]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "checkout_address" }, [
+                      _vm._v("\n                آدرس :\n                "),
+                      _c("span", [
+                        _vm._v(_vm._s(address["get_province"]["name"])),
+                      ]),
+                      _vm._v(" -\n                "),
+                      _c("span", [_vm._v(_vm._s(address["get_city"]["name"]))]),
+                      _vm._v(" -\n                "),
+                      _c("span", [_vm._v(_vm._s(address["address"]))]),
+                    ]),
+                    _vm._v(" "),
+                    _c("ul", [
+                      _c("li", [
+                        _c("ul", [
+                          _c("li", [
+                            _vm._v(
+                              "\n                            کد پستی تحویل گیرنده :\n                            "
+                            ),
+                            _c("span", [
+                              _vm._v(
+                                _vm._s(_vm.replaceNumber(address["zip_code"]))
+                              ),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _vm._v(
+                              "\n                            شماره موبایل تحویل گیرنده :\n                            "
+                            ),
+                            _c("span", [
+                              _vm._v(
+                                _vm._s(_vm.replaceNumber(address["mobile"]))
+                              ),
+                            ]),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("li", [
+                        _c("ul", [
+                          _c("li", [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "address_btn",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.updateRow(address)
+                                  },
+                                },
+                              },
+                              [_vm._v(" ویرایش")]
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "address_btn",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.remove_address(address)
+                                  },
+                                },
+                              },
+                              [_vm._v(" حذف")]
+                            ),
+                          ]),
+                        ]),
+                      ]),
+                    ]),
+                  ]
+                )
+              }),
+            ],
+            2
+          )
+        : _vm._e(),
       _vm._v(" "),
-      _c("address-form"),
+      _c("address-form", { on: { setData: _vm.updateAddressList } }),
+      _vm._v(" "),
+      _vm.show_default_address()
+        ? _c("div", [
+            _c("div", { staticClass: "address_row default_address" }, [
+              _c("div", { staticStyle: { "padding-right": "20px" } }, [
+                _c("ul", [
+                  _c("li", [
+                    _c("h6", [_vm._v(_vm._s(_vm.AddressLists[0]["name"]))]),
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "change_address_btn" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "address_btn",
+                        on: {
+                          click: function ($event) {
+                            return _vm.change_address()
+                          },
+                        },
+                      },
+                      [_vm._v("تغییر آدرس ارسال")]
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "checkout_address" }, [
+                  _vm._v("\n                  آدرس :\n                  "),
+                  _c("span", [
+                    _vm._v(_vm._s(_vm.AddressLists[0]["get_province"]["name"])),
+                  ]),
+                  _vm._v(" -\n                  "),
+                  _c("span", [
+                    _vm._v(_vm._s(_vm.AddressLists[0]["get_city"]["name"])),
+                  ]),
+                  _vm._v(" -\n                  "),
+                  _c("span", [_vm._v(_vm._s(_vm.AddressLists[0]["address"]))]),
+                ]),
+                _vm._v(" "),
+                _c("ul", [
+                  _c("li", [
+                    _c("ul", [
+                      _c("li", [
+                        _vm._v(
+                          "\n                              کد پستی تحویل گیرنده :\n                              "
+                        ),
+                        _c("span", [
+                          _vm._v(
+                            _vm._s(
+                              _vm.replaceNumber(_vm.AddressLists[0]["zip_code"])
+                            )
+                          ),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("li", [
+                        _vm._v(
+                          "\n                              شماره موبایل تحویل گیرنده :\n                              "
+                        ),
+                        _c("span", [
+                          _vm._v(
+                            _vm._s(
+                              _vm.replaceNumber(_vm.AddressLists[0]["mobile"])
+                            )
+                          ),
+                        ]),
+                      ]),
+                    ]),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "checkout_contact" }),
+            ]),
+          ])
+        : _vm._e(),
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("span", { staticClass: "data_link" }, [_vm._v("اصلاح این آدرس")]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -17569,15 +17892,14 @@ var app = new Vue({
 /*!*************************************************!*\
   !*** ./resources/js/components/AddressForm.vue ***!
   \*************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AddressForm_vue_vue_type_template_id_00905c86_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddressForm.vue?vue&type=template&id=00905c86&scoped=true& */ "./resources/js/components/AddressForm.vue?vue&type=template&id=00905c86&scoped=true&");
 /* harmony import */ var _AddressForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddressForm.vue?vue&type=script&lang=js& */ "./resources/js/components/AddressForm.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _AddressForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _AddressForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -17607,7 +17929,7 @@ component.options.__file = "resources/js/components/AddressForm.vue"
 /*!**************************************************************************!*\
   !*** ./resources/js/components/AddressForm.vue?vue&type=script&lang=js& ***!
   \**************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -205,9 +205,12 @@ export default {
                 formData.append('city_id',this.city_id);
                 formData.append('lat',lat);
                 formData.append('lng',lng);
-                const url=this.$siteUrl+'user/addAddress';
+                const url=this.$siteUrl+'/user/addAddress';
                 this.axios.post(url,formData).then(response=>{
+
+                    this.$emit('setData',response.data);
                     $("#myModal").modal('hide');
+
                 });
 
             }

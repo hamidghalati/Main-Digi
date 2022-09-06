@@ -24,8 +24,8 @@
             <h6>انتخاب آدرس تحویل گیرنده :</h6>
         </div>
         <div class="page_row">
-            <div>
-                <address-list></address-list>
+            <div class="page-content">
+                <address-list :data="{{json_encode($address)}}"></address-list>
             </div>
         </div>
     </div>
