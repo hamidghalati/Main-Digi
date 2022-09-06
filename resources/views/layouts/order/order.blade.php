@@ -28,6 +28,28 @@
 
     </div>
 
+    <!-- LOADING ANIMATION -->
+    <div id="site-loading"></div>
+
+
+   <div id="loading">
+       <span class="loader"></span>
+       <h6>لطفاً صبور باشید</h6>
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

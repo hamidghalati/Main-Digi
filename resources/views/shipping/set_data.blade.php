@@ -2,8 +2,7 @@
 @section('content')
 
 
-    <!-- LOADING ANIMATION -->
-    <div id="site-loading"></div>
+
 
     <div class="container">
         <article class="card">
@@ -27,6 +26,9 @@
             <div class="page-content">
                 <form action="{{url('payment')}}" id="add_order" method="post">
                     <input type="hidden" id="address_id" name="address_id">
+                    <input type="hidden" id="lat" name="lat" value="0.0">
+                    <input type="hidden" id="lng" name="lng" value="0.0">
+
                 </form>
                 <address-list :data="{{json_encode($address)}}"></address-list>
             </div>
@@ -80,6 +82,15 @@
             });
 
         });
+        updateMap=function (lat,lng) {
+            document.getElementById('lat').value=lat;
+            document.getElementById('lng').value=lng;
+            if (myMap!=null)
+            {
+                myMap.panTo(new L.LatLng(lat,lng));
+                marker.setLatLng({lat:lat,lng:lng});
+            }
+        }
 
     </script>
 @endsection

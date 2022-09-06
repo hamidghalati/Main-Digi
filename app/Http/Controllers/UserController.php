@@ -9,16 +9,19 @@ class UserController extends Controller
 {
    public function addAddress(Request $request)
    {
+      return Address::addUserAddress($request);
+   }
+   public function removeAddress($id,Request $request)
+   {
        $user_id=$request->user()->id;
-       $address=new Address($request->all());
-       $address->user_id=$user_id;
-       if ($address->save())
+       $delete=Address::where(['user_id'=>$user_id,'id'=>$id])->delete();
+       if ($delete)
        {
            return Address::with(['getProvince','getCity'])->where(['user_id'=>$user_id])->orderBy('id','Desc')->get();
+
        }
        else{
            return 'error';
        }
-
    }
 }

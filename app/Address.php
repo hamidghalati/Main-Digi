@@ -19,4 +19,35 @@ class Address extends Model
     {
         return $this->hasOne(CityModel::class,'id','city_id')->withDefault(['name'=>''])->select(['id','name']);
     }
+
+    public static function addUserAddress($request)
+    {
+        $user_id=$request->user()->id;
+        $id=$request->get('id','0');
+        if ($id==0){
+            $address=new Address($request->all());
+            $address->user_id=$user_id;
+            if ($address->save())
+            {
+                return Address::with(['getProvince','getCity'])->where(['user_id'=>$user_id])->orderBy('id','Desc')->get();
+            }
+            else{
+                return 'error';
+            }
+        }
+        else{
+            $address=Address::where(['id'=>$id,'user_id'=>$user_id])->first();
+            if ($address)
+            {
+                $address->update($request->all());
+                return Address::with(['getProvince','getCity'])->where(['user_id'=>$user_id])->orderBy('id','Desc')->get();
+
+            }
+            else{
+                return 'error';
+            }
+        }
+
+
+    }
 }

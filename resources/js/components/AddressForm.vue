@@ -6,7 +6,7 @@
                 <div class="modal-header">
                     <h6 class="modal-title">
                         <span class="fa fa-location-crosshairs"></span>
-                        <span>   ثبت آدرس   </span>
+                        <span>   {{ title }}   </span>
                     </h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -16,8 +16,6 @@
                     <div class="row">
                         <div class="col-md-7">
                             <div id="add_address_box">
-                                <input type="hidden" name="lat" id="lat" value="0.0">
-                                <input type="hidden" name="lng" id="lng" value="0.0">
 
                                 <div class="row">
                                     <div class="col-6">
@@ -45,7 +43,7 @@
                                         <div class="form-group">
                                             <div class="account_title"> استان :</div>
                                             <label for="" class="input_label">
-                                                <select class="selectpicker" v-model="province_id" name="" id="province_id" v-on:change="getCity" data-live-search="true">
+                                                <select class="selectpicker" v-model="province_id" name="" id="province_id" v-on:change="getCity('')" data-live-search="true">
                                                     <option value="">انتخاب استان</option>
                                                     <option v-for="row in province" v-bind:value="row.id">{{row.name}}</option>
                                                 </select>
@@ -141,7 +139,7 @@ export default {
     name: "AddressForm",
     data(){
         return{
-            id:'',
+            id:0,
             name:'',
             mobile:'',
             province_id:'',
@@ -156,6 +154,7 @@ export default {
             error_zip_code_message:false,
             province:[],
             city:[],
+            title:'ثبت آدرس'
         }
     },
     mixins:[myMixin],
@@ -172,9 +171,10 @@ export default {
                 },100)
             });
         },
-        getCity:function () {
+        getCity:function (id) {
             if (this.province_id != '')
             {
+                this.city_id=id;
                 this.city=[];
                 this.axios.get(this.$siteUrl+'/api/get_city/'+this.province_id).then(response=>{
                     this.city=response.data;
@@ -194,10 +194,11 @@ export default {
 
             if (validateName && validateMobileNumber && validateَAddress && validateZipCode && validateProvince &&validateCity)
             {
+                $("#loading").show();
                 const lat=$("#lat").val();
                 const lng=$("#lng").val();
-                alert(lat);
                 const formData=new FormData();
+                formData.append('id',this.id);
                 formData.append('name',this.name);
                 formData.append('mobile',this.mobile);
                 formData.append('address',this.address);
@@ -208,10 +209,16 @@ export default {
                 formData.append('lng',lng);
                 const url=this.$siteUrl+'/user/addAddress';
                 this.axios.post(url,formData).then(response=>{
+                    $("#loading").hide();
+                    if (response.data!="error")
+                    {
+                        this.$emit('setData',response.data);
+                        $("#myModal").modal('hide');
+                    }
 
-                    this.$emit('setData',response.data);
-                    $("#myModal").modal('hide');
 
+                }).catch(error=>{
+                    $("#loading").hide();
                 });
 
             }
@@ -300,17 +307,44 @@ export default {
                 return true;
             }
         },
-        setUpdateData:function (address) {
+        setUpdateData:function (address,title) {
             this.id=address.id;
             this.name=address.name;
             this.mobile=address.mobile;
             this.city_id=address.city_id;
-            this.province=address.province_id;
+            this.province_id=address.province_id;
             this.address=address.address;
             this.zip_code=address.zip_code;
+            this.title=title;
             this.getProvince();
-            this.getCity();
+            if (this.province_id>0)
+            {
+                this.getCity(this.city_id);
+            }
+            else {
+                this.cityList=[];
+                setTimeout(function () {
+                    $("#city_id").selectpicker('refresh');
+                },100);
+            }
+            this.error_name_message=false;
+            this.error_mobile_message=false;
+            this.error_address_message=false;
+            this.error_zip_code_message=false;
+            this.error_province_id_message=false;
+            this.error_city_id_message=false;
+
             $("#myModal").modal('show');
+        },
+        setTitle:function (title) {
+            this.title=title;
+            this.name='';
+            this.mobile='';
+            this.city_id='';
+            this.province_id='';
+            this.address='';
+            this.zip_code='';
+
         }
 
 

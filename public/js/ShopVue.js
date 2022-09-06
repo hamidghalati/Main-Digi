@@ -2043,14 +2043,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddressForm",
   data: function data() {
     return {
-      id: '',
+      id: 0,
       name: '',
       mobile: '',
       province_id: '',
@@ -2064,7 +2062,8 @@ __webpack_require__.r(__webpack_exports__);
       error_address_message: false,
       error_zip_code_message: false,
       province: [],
-      city: []
+      city: [],
+      title: 'ثبت آدرس'
     };
   },
   mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -2082,10 +2081,11 @@ __webpack_require__.r(__webpack_exports__);
         }, 100);
       });
     },
-    getCity: function getCity() {
+    getCity: function getCity(id) {
       var _this2 = this;
 
       if (this.province_id != '') {
+        this.city_id = id;
         this.city = [];
         this.axios.get(this.$siteUrl + '/api/get_city/' + this.province_id).then(function (response) {
           _this2.city = response.data;
@@ -2106,10 +2106,11 @@ __webpack_require__.r(__webpack_exports__);
       var validateCity = this.validateCity();
 
       if (validateName && validateMobileNumber && validateَAddress && validateZipCode && validateProvince && validateCity) {
+        $("#loading").show();
         var lat = $("#lat").val();
         var lng = $("#lng").val();
-        alert(lat);
         var formData = new FormData();
+        formData.append('id', this.id);
         formData.append('name', this.name);
         formData.append('mobile', this.mobile);
         formData.append('address', this.address);
@@ -2120,9 +2121,15 @@ __webpack_require__.r(__webpack_exports__);
         formData.append('lng', lng);
         var url = this.$siteUrl + '/user/addAddress';
         this.axios.post(url, formData).then(function (response) {
-          _this3.$emit('setData', response.data);
+          $("#loading").hide();
 
-          $("#myModal").modal('hide');
+          if (response.data != "error") {
+            _this3.$emit('setData', response.data);
+
+            $("#myModal").modal('hide');
+          }
+        })["catch"](function (error) {
+          $("#loading").hide();
         });
       }
     },
@@ -2192,17 +2199,42 @@ __webpack_require__.r(__webpack_exports__);
         return true;
       }
     },
-    setUpdateData: function setUpdateData(address) {
+    setUpdateData: function setUpdateData(address, title) {
       this.id = address.id;
       this.name = address.name;
       this.mobile = address.mobile;
       this.city_id = address.city_id;
-      this.province = address.province_id;
+      this.province_id = address.province_id;
       this.address = address.address;
       this.zip_code = address.zip_code;
+      this.title = title;
       this.getProvince();
-      this.getCity();
+
+      if (this.province_id > 0) {
+        this.getCity(this.city_id);
+      } else {
+        this.cityList = [];
+        setTimeout(function () {
+          $("#city_id").selectpicker('refresh');
+        }, 100);
+      }
+
+      this.error_name_message = false;
+      this.error_mobile_message = false;
+      this.error_address_message = false;
+      this.error_zip_code_message = false;
+      this.error_province_id_message = false;
+      this.error_city_id_message = false;
       $("#myModal").modal('show');
+    },
+    setTitle: function setTitle(title) {
+      this.title = title;
+      this.name = '';
+      this.mobile = '';
+      this.city_id = '';
+      this.province_id = '';
+      this.address = '';
+      this.zip_code = '';
     }
   }
 });
@@ -2321,6 +2353,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2335,7 +2374,9 @@ __webpack_require__.r(__webpack_exports__);
       AddressLists: [],
       show_address_list: false,
       show_default: true,
-      city_id: ''
+      city_id: '',
+      show_dialog_box: false,
+      remove_address_id: ''
     };
   },
   mounted: function mounted() {
@@ -2348,6 +2389,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     showModalBox: function showModalBox() {
+      this.$refs.data.setTitle('افزودن آدرس جدید');
       $("#myModal").modal('show');
     },
     close_address_list: function close_address_list() {
@@ -2369,9 +2411,16 @@ __webpack_require__.r(__webpack_exports__);
       this.AddressLists = data;
     },
     updateRow: function updateRow(address) {
-      this.$refs.data.setUpdateData(address);
+      this.$refs.data.setUpdateData(address, 'ویرایش آدرس');
+
+      if (address['lat'] != "0.0") {
+        updateMap(address['lat'], address['lng']);
+      }
     },
-    remove_address: function remove_address(address) {},
+    remove_address: function remove_address(address) {
+      this.remove_address_id = address.id;
+      this.show_dialog_box = true;
+    },
     change_default_address: function change_default_address(key) {
       var old_array = this.AddressLists;
       var first = old_array[0];
@@ -2384,6 +2433,22 @@ __webpack_require__.r(__webpack_exports__);
       this.show_address_list = false;
       this.show_default = this;
       document.getElementById('address_id').value = select.id;
+    },
+    delete_address: function delete_address() {
+      var _this = this;
+
+      $("#loading").show();
+      this.show_dialog_box = false;
+      var url = this.$siteUrl + "/user/removeAddress/" + this.remove_address_id;
+      this.axios["delete"](url).then(function (response) {
+        $("#loading").hide();
+
+        if (response.data != 'error') {
+          _this.AddressLists = response.data;
+        }
+      })["catch"](function (error) {
+        $("#loading").hide();
+      });
     }
   }
 });
@@ -4525,30 +4590,20 @@ var render = function () {
       [
         _c("div", { staticClass: "modal-dialog modal-lg" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(0),
+            _c("div", { staticClass: "modal-header" }, [
+              _c("h6", { staticClass: "modal-title" }, [
+                _c("span", { staticClass: "fa fa-location-crosshairs" }),
+                _vm._v(" "),
+                _c("span", [_vm._v("   " + _vm._s(_vm.title) + "   ")]),
+              ]),
+              _vm._v(" "),
+              _vm._m(0),
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-md-7" }, [
                   _c("div", { attrs: { id: "add_address_box" } }, [
-                    _c("input", {
-                      attrs: {
-                        type: "hidden",
-                        name: "lat",
-                        id: "lat",
-                        value: "0.0",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("input", {
-                      attrs: {
-                        type: "hidden",
-                        name: "lng",
-                        id: "lng",
-                        value: "0.0",
-                      },
-                    }),
-                    _vm._v(" "),
                     _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-6" }, [
                         _c("div", { staticClass: "form-group" }, [
@@ -4710,7 +4765,9 @@ var render = function () {
                                           ? $$selectedVal
                                           : $$selectedVal[0]
                                       },
-                                      _vm.getCity,
+                                      function ($event) {
+                                        return _vm.getCity("")
+                                      },
                                     ],
                                   },
                                 },
@@ -4982,26 +5039,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h6", { staticClass: "modal-title" }, [
-        _c("span", { staticClass: "fa fa-location-crosshairs" }),
-        _vm._v(" "),
-        _c("span", [_vm._v("   ثبت آدرس   ")]),
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close",
-          },
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close",
         },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      ),
-    ])
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   },
   function () {
     var _vm = this
@@ -5304,6 +5353,38 @@ var render = function () {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "checkout_contact" }),
+            ]),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.show_dialog_box
+        ? _c("div", { staticClass: "message_div" }, [
+            _c("div", { staticClass: "message_box" }, [
+              _c("p", { attrs: { id: "msg" } }, [
+                _vm._v("آیا مایل به حذف این آدرس هستید؟"),
+              ]),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "alert alert-success",
+                  on: { click: _vm.delete_address },
+                },
+                [_vm._v("بلی")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "alert alert-danger",
+                  on: {
+                    click: function ($event) {
+                      _vm.show_dialog_box = false
+                    },
+                  },
+                },
+                [_vm._v("خیر")]
+              ),
             ]),
           ])
         : _vm._e(),

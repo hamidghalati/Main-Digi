@@ -108,4 +108,6 @@ Route::get('shipping','ShoppingController@shipping');
 
 Route::prefix('user')->middleware(['auth'])->group(function (){
     Route::post('/addAddress','UserController@addAddress');
+    Route::delete('/removeAddress/{address_id}','UserController@removeAddress');
+
 });

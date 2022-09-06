@@ -93,6 +93,13 @@
 
         </div>
 
+        <div class="message_div" v-if="show_dialog_box">
+            <div class="message_box">
+                <p id="msg">آیا مایل به حذف این آدرس هستید؟</p>
+                <a  class="alert alert-success" v-on:click="delete_address">بلی</a>
+                <a  class="alert alert-danger" v-on:click="show_dialog_box=false">خیر</a>
+            </div>
+        </div>
 
 
     </div>
@@ -112,7 +119,9 @@ export default {
             AddressLists:[],
             show_address_list:false,
             show_default:true,
-            city_id:''
+            city_id:'',
+            show_dialog_box:false,
+            remove_address_id:''
         }
     },
     mounted() {
@@ -125,6 +134,7 @@ export default {
     },
     methods:{
         showModalBox:function () {
+            this.$refs.data.setTitle('افزودن آدرس جدید');
             $("#myModal").modal('show');
         },
         close_address_list:function () {
@@ -148,11 +158,16 @@ export default {
             this.AddressLists=data;
         },
         updateRow:function (address) {
-            this.$refs.data.setUpdateData(address)
+            this.$refs.data.setUpdateData(address,'ویرایش آدرس');
+            if(address['lat']!="0.0")
+            {
+                updateMap(address['lat'],address['lng']);
+            }
 
         },
         remove_address:function (address) {
-
+            this.remove_address_id=address.id;
+            this.show_dialog_box=true;
         },
         change_default_address:function (key) {
             let old_array=this.AddressLists;
@@ -167,7 +182,21 @@ export default {
             this.show_address_list=false;
             this.show_default=this;
             document.getElementById('address_id').value=select.id;
-        }
+        },
+        delete_address:function () {
+            $("#loading").show();
+            this.show_dialog_box=false;
+            const url=this.$siteUrl+"/user/removeAddress/"+this.remove_address_id;
+            this.axios.delete(url).then(response=>{
+                $("#loading").hide();
+               if (response.data!='error')
+               {
+                   this.AddressLists=response.data;
+               }
+            }).catch(error=>{
+                $("#loading").hide();
+            });
+        },
 
 
     }
