@@ -141,6 +141,7 @@ export default {
     name: "AddressForm",
     data(){
         return{
+            id:'',
             name:'',
             mobile:'',
             province_id:'',
@@ -298,6 +299,18 @@ export default {
                 this.error_city_id_message=false;
                 return true;
             }
+        },
+        setUpdateData:function (address) {
+            this.id=address.id;
+            this.name=address.name;
+            this.mobile=address.mobile;
+            this.city_id=address.city_id;
+            this.province=address.province_id;
+            this.address=address.address;
+            this.zip_code=address.zip_code;
+            this.getProvince();
+            this.getCity();
+            $("#myModal").modal('show');
         }
 
 

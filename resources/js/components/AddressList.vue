@@ -1,6 +1,10 @@
 <template>
     <div>
 
+        <button v-if="AddressLists.length==0" type="button" class="add_address_btn" v-on:click="showModalBox()"  data-target=".bd-example-modal-lg">
+            <strong>افزودن آدرس جدید</strong>
+        </button>
+
         <div class="address_box box_border" v-if="show_address_list">
 
             <div class="select_address_label">
@@ -39,10 +43,16 @@
                         </ul>
                     </li>
                 </ul>
+
+                <button :class="[key==0 ? 'checkout_address_btn selected_address' : 'checkout_address_btn']" v-on:click="change_default_address(key)">
+                    <span v-if="key==0">سفارش به این آدرس ارسال می شود</span>
+                    <span v-else>ارسال سفارش به این آدرس</span>
+                </button>
+
             </div>
         </div>
 
-        <address-form @setData="updateAddressList"></address-form>
+        <address-form @setData="updateAddressList" ref="data"></address-form>
 
         <div v-if="show_default_address()">
             <div class="address_row default_address">
@@ -101,11 +111,17 @@ export default {
         return{
             AddressLists:[],
             show_address_list:false,
-            show_default:true
+            show_default:true,
+            city_id:''
         }
     },
     mounted() {
         this.AddressLists=this.data;
+        if (this.AddressLists.length>0)
+        {
+            this.city_id=this.AddressLists[0].city_id;
+            document.getElementById('address_id').value=this.AddressLists[0].id;
+        }
     },
     methods:{
         showModalBox:function () {
@@ -132,11 +148,26 @@ export default {
             this.AddressLists=data;
         },
         updateRow:function (address) {
+            this.$refs.data.setUpdateData(address)
 
         },
         remove_address:function (address) {
 
         },
+        change_default_address:function (key) {
+            let old_array=this.AddressLists;
+            const first=old_array[0];
+            const select=old_array[key];
+
+            // old_array[0]=select;
+            // old_array[key]=first;
+            this.city_id=select.city_id;
+            this.$set(this.AddressLists,0,select);
+            this.$set(this.AddressLists,key,first);
+            this.show_address_list=false;
+            this.show_default=this;
+            document.getElementById('address_id').value=select.id;
+        }
 
 
     }

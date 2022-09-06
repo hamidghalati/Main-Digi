@@ -2050,6 +2050,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "AddressForm",
   data: function data() {
     return {
+      id: '',
       name: '',
       mobile: '',
       province_id: '',
@@ -2190,6 +2191,18 @@ __webpack_require__.r(__webpack_exports__);
         this.error_city_id_message = false;
         return true;
       }
+    },
+    setUpdateData: function setUpdateData(address) {
+      this.id = address.id;
+      this.name = address.name;
+      this.mobile = address.mobile;
+      this.city_id = address.city_id;
+      this.province = address.province_id;
+      this.address = address.address;
+      this.zip_code = address.zip_code;
+      this.getProvince();
+      this.getCity();
+      $("#myModal").modal('show');
     }
   }
 });
@@ -2298,6 +2311,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2311,11 +2334,17 @@ __webpack_require__.r(__webpack_exports__);
     return {
       AddressLists: [],
       show_address_list: false,
-      show_default: true
+      show_default: true,
+      city_id: ''
     };
   },
   mounted: function mounted() {
     this.AddressLists = this.data;
+
+    if (this.AddressLists.length > 0) {
+      this.city_id = this.AddressLists[0].city_id;
+      document.getElementById('address_id').value = this.AddressLists[0].id;
+    }
   },
   methods: {
     showModalBox: function showModalBox() {
@@ -2339,8 +2368,23 @@ __webpack_require__.r(__webpack_exports__);
     updateAddressList: function updateAddressList(data) {
       this.AddressLists = data;
     },
-    updateRow: function updateRow(address) {},
-    remove_address: function remove_address(address) {}
+    updateRow: function updateRow(address) {
+      this.$refs.data.setUpdateData(address);
+    },
+    remove_address: function remove_address(address) {},
+    change_default_address: function change_default_address(key) {
+      var old_array = this.AddressLists;
+      var first = old_array[0];
+      var select = old_array[key]; // old_array[0]=select;
+      // old_array[key]=first;
+
+      this.city_id = select.city_id;
+      this.$set(this.AddressLists, 0, select);
+      this.$set(this.AddressLists, key, first);
+      this.show_address_list = false;
+      this.show_default = this;
+      document.getElementById('address_id').value = select.id;
+    }
   }
 });
 
@@ -5014,6 +5058,22 @@ var render = function () {
   return _c(
     "div",
     [
+      _vm.AddressLists.length == 0
+        ? _c(
+            "button",
+            {
+              staticClass: "add_address_btn",
+              attrs: { type: "button", "data-target": ".bd-example-modal-lg" },
+              on: {
+                click: function ($event) {
+                  return _vm.showModalBox()
+                },
+              },
+            },
+            [_c("strong", [_vm._v("افزودن آدرس جدید")])]
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _vm.show_address_list
         ? _c(
             "div",
@@ -5134,6 +5194,29 @@ var render = function () {
                         ]),
                       ]),
                     ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        class: [
+                          key == 0
+                            ? "checkout_address_btn selected_address"
+                            : "checkout_address_btn",
+                        ],
+                        on: {
+                          click: function ($event) {
+                            return _vm.change_default_address(key)
+                          },
+                        },
+                      },
+                      [
+                        key == 0
+                          ? _c("span", [
+                              _vm._v("سفارش به این آدرس ارسال می شود"),
+                            ])
+                          : _c("span", [_vm._v("ارسال سفارش به این آدرس")]),
+                      ]
+                    ),
                   ]
                 )
               }),
@@ -5142,7 +5225,10 @@ var render = function () {
           )
         : _vm._e(),
       _vm._v(" "),
-      _c("address-form", { on: { setData: _vm.updateAddressList } }),
+      _c("address-form", {
+        ref: "data",
+        on: { setData: _vm.updateAddressList },
+      }),
       _vm._v(" "),
       _vm.show_default_address()
         ? _c("div", [

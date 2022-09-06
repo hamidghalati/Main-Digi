@@ -25,6 +25,9 @@
         </div>
         <div class="page_row">
             <div class="page-content">
+                <form action="{{url('payment')}}" id="add_order" method="post">
+                    <input type="hidden" id="address_id" name="address_id">
+                </form>
                 <address-list :data="{{json_encode($address)}}"></address-list>
             </div>
         </div>

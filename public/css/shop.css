@@ -1855,8 +1855,23 @@ del {
     font: normal normal normal 14px/1 FontAwesome;
     color: #00bfd6;
 }
-
-
+.checkout_address_btn{
+    background-color: #f5f5f5;
+    width: 100%;
+    padding: 6px 0;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    color: #636363;
+    font-size: 13px;
+    cursor: pointer;
+}
+.selected_address{
+    background-color: #f7fdfd!important;
+    border-top-color:#e0eff0!important; ;
+}
 
 
 
