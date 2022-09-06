@@ -105,3 +105,7 @@ Route::post('site/cart/remove_product','SiteController@remove_product');
 Route::post('site/cart/change_product_cart','SiteController@change_product_cart');
 
 Route::get('shipping','ShoppingController@shipping');
+
+Route::prefix('user')->middleware(['auth'])->group(function (){
+    Route::post('/addAddress','UserController@addAddress');
+});

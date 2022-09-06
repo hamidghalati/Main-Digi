@@ -61,7 +61,7 @@
                         <p style="color: red">مبلغ قابل پرداخت</p>
                         <p class="cart_price_p">{{CartProduct.cart_price}} تومان</p>
                     </div>
-                    <a v-bind:href="$siteUrl+'/shipping'">
+                    <a v-bind:href="$siteUrl+'shipping'">
                         <div class="send_btn checkout">
                             <span class="line"></span>
                             <span class="title">ادامه ثبت سفارش</span>

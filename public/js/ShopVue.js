@@ -1908,6 +1908,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _myMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../myMixin */ "./resources/js/myMixin.js");
 //
 //
 //
@@ -2028,6 +2029,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddressForm",
   data: function data() {
@@ -2048,6 +2066,7 @@ __webpack_require__.r(__webpack_exports__);
       city: []
     };
   },
+  mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   mounted: function mounted() {
     this.getProvince();
   },
@@ -2073,6 +2092,99 @@ __webpack_require__.r(__webpack_exports__);
             $("#city_id").selectpicker('refresh');
           }, 100);
         });
+      }
+    },
+    add_address: function add_address() {
+      var validateName = this.validateName();
+      var validateMobileNumber = this.validateMobileNumber();
+      var validateَAddress = this.validateAddress();
+      var validateZipCode = this.validateZipCode();
+      var validateProvince = this.validateProvince();
+      var validateCity = this.validateCity();
+
+      if (validateName && validateMobileNumber && validateَAddress && validateZipCode && validateProvince && validateCity) {
+        var lat = $("#lat").val();
+        var lng = $("#lng").val();
+        alert(lat);
+        var formData = new FormData();
+        formData.append('name', this.name);
+        formData.append('mobile', this.mobile);
+        formData.append('address', this.address);
+        formData.append('zip_code', this.zip_code);
+        formData.append('province_id', this.province_id);
+        formData.append('city_id', this.city_id);
+        formData.append('lat', lat);
+        formData.append('lng', lng);
+        var url = this.$siteUrl + 'user/addAddress';
+        this.axios.post(url, formData).then(function (response) {
+          $("#myModal").modal('hide');
+        });
+      }
+    },
+    validateName: function validateName() {
+      if (this.name.toString().trim() == "") {
+        this.error_name_message = 'نام و نام خانوادگی نمی تواند خالی باشد';
+        return false;
+      } else if (this.name.toString().trim().length < 3) {
+        this.error_name_message = 'نام و نام خانوادگی حداقل شامل 3 کاراکتر باشد';
+        return false;
+      } else {
+        this.error_name_message = false;
+        return true;
+      }
+    },
+    validateMobileNumber: function validateMobileNumber() {
+      if (this.mobile.toString().trim() == "") {
+        this.error_mobile_message = 'شماره موبایل نمی تواند خالی باشد';
+        return false;
+      } else if (this.check_mobile_number()) {
+        this.error_mobile_message = 'شماره موبایل وارد شده معتبر نمی باشد';
+        return false;
+      } else {
+        this.error_mobile_message = false;
+        return true;
+      }
+    },
+    validateAddress: function validateAddress() {
+      if (this.address.toString().trim() == "") {
+        this.error_address_message = 'آدرس نمی تواند خالی باشد';
+        return false;
+      } else if (this.address.toString().trim().length < 20) {
+        this.error_address_message = 'آدرس دقیق را وارد کنید';
+        return false;
+      } else {
+        this.error_address_message = false;
+        return true;
+      }
+    },
+    validateZipCode: function validateZipCode() {
+      if (this.zip_code.toString().trim() == "") {
+        this.error_zip_code_message = 'کد پستی نمی تواند خالی باشد';
+        return false;
+      } else if (this.zip_code.toString().trim().length < 10 || isNaN(this.zip_code) || this.zip_code.toString().trim().length > 10) {
+        this.error_zip_code_message = 'کد پستی وارد شده معتبر نمی باشد';
+        return false;
+      } else {
+        this.error_zip_code_message = false;
+        return true;
+      }
+    },
+    validateProvince: function validateProvince() {
+      if (this.province_id.toString().trim() == "") {
+        this.error_province_id_message = 'استان جهت ارسال کالا را وارد کنید';
+        return false;
+      } else {
+        this.error_province_id_message = false;
+        return true;
+      }
+    },
+    validateCity: function validateCity() {
+      if (this.city_id.toString().trim() == "") {
+        this.error_city_id_message = 'شهر جهت ارسال کالا را وارد کنید';
+        return false;
+      } else {
+        this.error_city_id_message = false;
+        return true;
       }
     }
   }
@@ -4315,7 +4427,7 @@ var render = function () {
                                     {
                                       class: [
                                         _vm.error_name_message
-                                          ? "feedback-hint active"
+                                          ? "feedback_hint active"
                                           : "feedback",
                                       ],
                                       attrs: { for: "" },
@@ -4369,7 +4481,7 @@ var render = function () {
                                     {
                                       class: [
                                         _vm.error_mobile_message
-                                          ? "feedback-hint active"
+                                          ? "feedback_hint active"
                                           : "feedback",
                                       ],
                                       attrs: { for: "" },
@@ -4459,7 +4571,7 @@ var render = function () {
                                     {
                                       class: [
                                         _vm.error_province_id_message
-                                          ? "feedback-hint active"
+                                          ? "feedback_hint active"
                                           : "feedback",
                                       ],
                                       attrs: { for: "" },
@@ -4545,7 +4657,7 @@ var render = function () {
                                     {
                                       class: [
                                         _vm.error_city_id_message
-                                          ? "feedback-hint active"
+                                          ? "feedback_hint active"
                                           : "feedback",
                                       ],
                                       attrs: { for: "" },
@@ -4600,7 +4712,7 @@ var render = function () {
                                     {
                                       class: [
                                         _vm.error_address_message
-                                          ? "feedback-hint active"
+                                          ? "feedback_hint active"
                                           : "feedback",
                                       ],
                                       attrs: { for: "" },
@@ -4656,7 +4768,7 @@ var render = function () {
                                     {
                                       class: [
                                         _vm.error_zip_code_message
-                                          ? "feedback-hint active"
+                                          ? "feedback_hint active"
                                           : "feedback",
                                       ],
                                       attrs: { for: "" },
@@ -4665,6 +4777,25 @@ var render = function () {
                                   )
                                 : _vm._e(),
                             ]
+                          ),
+                        ]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.add_address()
+                                },
+                              },
+                            },
+                            [_c("span", [_vm._v("ثبت و ارسال به این آدرس")])]
                           ),
                         ]),
                       ]),
@@ -4688,9 +4819,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
       _c("h6", { staticClass: "modal-title" }, [
-        _c("span", { staticClass: "fa fa-location-arrow" }),
+        _c("span", { staticClass: "fa fa-location-crosshairs" }),
         _vm._v(" "),
-        _c("span", [_vm._v("ثبت آدرس")]),
+        _c("span", [_vm._v("   ثبت آدرس   ")]),
       ]),
       _vm._v(" "),
       _c(
@@ -4714,15 +4845,27 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-md-5" }, [
       _c("div", {
         staticStyle: {
-          position: "absolute",
-          "z-index": "1",
           width: "99%",
           height: "98%",
           background: "#eee",
           border: "2px solid #aaa",
+          position: "absolute",
+          "z-index": "1",
+          display: "block",
         },
         attrs: { id: "map" },
       }),
+      _vm._v(" "),
+      _c("p", { attrs: { id: "log" } }, [_vm._v("logs")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success",
+          attrs: { id: "select_location_btn" },
+        },
+        [_vm._v("انتخاب")]
+      ),
     ])
   },
 ]
@@ -5067,7 +5210,7 @@ var render = function () {
                   ]),
                 ]),
                 _vm._v(" "),
-                _c("a", { attrs: { href: _vm.$siteUrl + "/shipping" } }, [
+                _c("a", { attrs: { href: _vm.$siteUrl + "shipping" } }, [
                   _vm._m(1),
                 ]),
               ]),
@@ -17426,14 +17569,15 @@ var app = new Vue({
 /*!*************************************************!*\
   !*** ./resources/js/components/AddressForm.vue ***!
   \*************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AddressForm_vue_vue_type_template_id_00905c86_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddressForm.vue?vue&type=template&id=00905c86&scoped=true& */ "./resources/js/components/AddressForm.vue?vue&type=template&id=00905c86&scoped=true&");
 /* harmony import */ var _AddressForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddressForm.vue?vue&type=script&lang=js& */ "./resources/js/components/AddressForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _AddressForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _AddressForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -17463,7 +17607,7 @@ component.options.__file = "resources/js/components/AddressForm.vue"
 /*!**************************************************************************!*\
   !*** ./resources/js/components/AddressForm.vue?vue&type=script&lang=js& ***!
   \**************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17806,6 +17950,27 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return n;
+    },
+    check_mobile_number: function check_mobile_number() {
+      if (isNaN(this.mobile)) {
+        return true;
+      } else {
+        if (this.mobile.toString().trim().length == 11) {
+          if (this.mobile.toString().charAt(0) == '0' && this.mobile.toString().charAt(1) == '9') {
+            return false;
+          } else {
+            return true;
+          }
+        } else if (this.mobile.toString().trim().length == 10) {
+          if (this.mobile.toString().charAt(0) == '9') {
+            return false;
+          } else {
+            return true;
+          }
+        } else {
+          return true;
+        }
+      }
     }
   }
 });

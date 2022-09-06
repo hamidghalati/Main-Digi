@@ -1586,10 +1586,11 @@ del {
     height: 110px;
     width: 100%;
     padding: 5px;
-    font-size: 14px;
+    font-size: small;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     -webkit-border-radius: 0.25rem;
+    font-family: iransans!important;
 }
 
 #add_address_box label {
@@ -1604,6 +1605,8 @@ del {
 
 #add_address_box .input_label input{
     padding-right: 10px!important;
+    font-family: iransans!important;
+    font-size: small;
 }
 #add_address_box .bootstrap-select .btn{
     background: white!important;
@@ -1656,6 +1659,61 @@ del {
     position: absolute;
     z-index: 2;
 }
+
+#select_location_btn{
+    position: relative;
+    right: 152px;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    z-index: 10000;
+    top: 335px;
+}
+
+#add_address_box .btn-primary{
+    font-size: 14px;
+    height: 45px!important;
+    line-height: 30px;
+}
+
+.feedback_hint.active{
+    display: block!important;
+}
+.feedback_hint{
+    background: #ef5662;
+    font-size: 13px;
+    color: #fff;
+    z-index: 100000;
+    padding: 9px 25px;
+    position: absolute;
+    right: 100%;
+    bottom: 100%;
+    margin-right: -150px;
+    margin-bottom: -25px;
+    white-space: nowrap;
+    display: none;
+}
+.feedback_hint::before{
+    border-color: #ef5662 transparent transparent transparent;
+    border-style: solid;
+    content: "";
+    border-width: 10px 12px 0;
+    position: absolute;
+    top: 100%;
+    right: 35px;
+}
+
+.modal-header .close{
+    padding: 0!important;
+    margin: 0!important;
+}
+
+
+
+
+
+
+
+
 
 
 

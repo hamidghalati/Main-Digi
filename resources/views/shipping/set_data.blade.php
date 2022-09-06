@@ -53,7 +53,7 @@
 
 @section('footer')
 
-    <script src="{{('js/dist/leaflet.awesome-markers.js')}}" type="text/javascript"></script>
+    <script src="{{url('js/dist/leaflet.awesome-markers.js')}}" type="text/javascript"></script>
     <script src="{{url('js/server.js')}}" type="text/javascript"></script>
 
 
@@ -63,51 +63,23 @@
         //     "use strict";
         //     jQuery("body").find('#site-loading').fadeOut(500);
         // });
-        //
-        // // let lat='38.0412';
-        // // let lng='46.3993';
-        // // let marker=null;
-        // // let map=null;
-        //
-        // L.cedarmaps.accessToken = "2192ad1e2821d1104b431cd42c40b3cde410bac8""; // See the note below on how to get an access token
-        //
-        // // Getting maps info from a tileJSON source
-        // var tileJSONUrl = 'https://api.cedarmaps.com/v1/tiles/cedarmaps.streets.json?access_token=' + L.cedarmaps.accessToken;
-        //
-        // // initilizing map into div#map
-        // var map = L.cedarmaps.map('map', tileJSONUrl, {
-        //     scrollWheelZoom: true
-        // }).setView([35.757448286487595, 51.40876293182373], 15);
-        //
-        // // marker=L.marker([lat,lng]).addTo(map);
+        $("#myModal").on('show.bs.modal',function (){
+            setTimeout(function () {
+                myMap.invalidateSize()
+            },500);
+
+            get_my_location();
+            myMap.on('move',function (e) {
+                lat=e.target.getCenter().lat;
+                lng=e.target.getCenter().lng;
+                marker.setLatLng({lat:lat,lng:lng});
+
+            });
+
+        });
 
     </script>
 @endsection
 
 
 
-
-{{--<div class="order_header">--}}
-
-
-{{--        <ul class="checkout_steps">--}}
-{{--            <li>--}}
-{{--                <a class="checkout_steps">--}}
-{{--                    <div class="step_item active_item" step-title="اطلاعات ارسال"></div>--}}
-{{--                </a>--}}
-{{--            </li>--}}
-
-{{--            <li class="inactive">--}}
-{{--                <a class="checkout_steps">--}}
-{{--                    <div class="step_item " step-title="پرداخت"></div>--}}
-{{--                </a>--}}
-{{--            </li>--}}
-
-{{--            <li class="inactive">--}}
-{{--                <a class="checkout_steps">--}}
-{{--                    <div class="step_item " step-title="اتمام خرید و ارسال"></div>--}}
-{{--                </a>--}}
-{{--            </li>--}}
-
-{{--        </ul>--}}
-{{--    </div>--}}

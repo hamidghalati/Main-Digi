@@ -55,7 +55,9 @@
 
     <script>
 
-        load_slider('<?= sizeof($sliders)?>');
+
+
+
         const swiper = new Swiper('.swiper-container', {
             slidesPerView: 'auto',
             spaceBetween: 30,

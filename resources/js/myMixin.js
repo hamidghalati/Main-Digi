@@ -10,5 +10,40 @@ export default {
             }
             return n;
         },
+        check_mobile_number(){
+            if (isNaN(this.mobile))
+            {
+                return true;
+            }
+            else {
+                if (this.mobile.toString().trim().length==11)
+                {
+
+                    if (this.mobile.toString().charAt(0)=='0' && this.mobile.toString().charAt(1)=='9')
+                    {
+
+                        return false;
+                    }
+                    else {
+                        return true;
+
+                    }
+                }
+                else if(this.mobile.toString().trim().length==10)
+                {
+                    if (this.mobile.toString().charAt(0)=='9' )
+                    {
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                }
+                else {
+                    return true;
+                }
+
+            }
+        }
     }
 }
