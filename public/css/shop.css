@@ -2022,11 +2022,15 @@ del {
 .checkout_image{
     width: 49px;
     height: 40px;
-    background-image: url("../files/images/slices.png");
+    background-image: url("../files/images/rsz_1rsz_1rsz_161908725.png");
     cursor: pointer;
     position: absolute;
     margin-top: 10px;
-    background-position: -705px -220px;
+    /*background-position: -705px -220px;*/
+    background-position: 50%;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+    background-size: contain;
 
 }
 .checkout_time{
@@ -2037,7 +2041,11 @@ del {
     font-size: 14px;
 }
 
-
+.swiper_product_box{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    width: 100%;
+}
 
 
 

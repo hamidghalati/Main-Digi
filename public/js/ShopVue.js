@@ -2688,6 +2688,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -11476,6 +11515,120 @@ var render = function () {
           ])
         : _vm._e(),
       _vm._v(" "),
+      _vm.normal_send
+        ? _c(
+            "div",
+            {
+              staticClass: "shipping_data_box",
+              staticStyle: { "padding-left": "0", "padding-right": "0" },
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "swiper_product_box" },
+                [
+                  _c(
+                    "swiper",
+                    { attrs: { options: _vm.swiperOtion } },
+                    [
+                      _vm._l(
+                        _vm.OrderingData.cart_product_data,
+                        function (product) {
+                          return _c(
+                            "swiper-slide",
+                            {
+                              key: product.product_id,
+                              staticClass: "product_info_box",
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src:
+                                    _vm.$siteUrl +
+                                    "files/thumb/" +
+                                    product.product_image_url,
+                                  alt: "",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("p", [_vm._v(_vm._s(product.product_title))]),
+                              _vm._v(" "),
+                              _c("div", {
+                                staticClass: "swiper-button-next",
+                                attrs: { slot: "button-next" },
+                                slot: "button-next",
+                              }),
+                              _vm._v(" "),
+                              _c("div", {
+                                staticClass: "swiper-button-prev",
+                                attrs: { slot: "button-prev" },
+                                slot: "button-prev",
+                              }),
+                            ]
+                          )
+                        }
+                      ),
+                      _vm._v(" "),
+                      _c("div", {
+                        staticClass: "swiper-button-next",
+                        attrs: { slot: "button-next" },
+                        slot: "button-next",
+                      }),
+                      _vm._v(" "),
+                      _c("div", {
+                        staticClass: "swiper-button-prev",
+                        attrs: { slot: "button-prev" },
+                        slot: "button-prev",
+                      }),
+                    ],
+                    2
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticStyle: {
+                    "padding-bottom": "10px",
+                    "padding-top": "10px",
+                  },
+                },
+                [
+                  _c("span", { staticClass: "checkout_image" }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "checkout_time" }, [
+                    _c("p", [
+                      _c("span", [_vm._v("بازه تحویل سفارش : ")]),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("زمان تقریبی تحویل از ")]),
+                      _vm._v(" "),
+                      _c("span", [
+                        _vm._v(_vm._s(_vm.OrderingData.min_ordering_day)),
+                      ]),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("تا")]),
+                      _vm._v(" "),
+                      _c("span", [
+                        _vm._v(_vm._s(_vm.OrderingData.max_ordering_day)),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("span", [_vm._v(" (پست پیشتاز)")]),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("هزینه ارسال : ")]),
+                    _vm._v(" "),
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.OrderingData.normal_send_order_amount)),
+                    ]),
+                  ]),
+                ]
+              ),
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _vm._l(
         _vm.OrderingData.delivery_order_interval,
         function (delivery_order_interval, key) {
@@ -11510,6 +11663,7 @@ var render = function () {
                   [
                     _c(
                       "div",
+                      { staticClass: "swiper_product_box" },
                       [
                         _c(
                           "swiper",
@@ -11570,7 +11724,6 @@ var render = function () {
                       "div",
                       {
                         staticStyle: {
-                          background: "#ece",
                           "padding-bottom": "10px",
                           "padding-top": "10px",
                         },

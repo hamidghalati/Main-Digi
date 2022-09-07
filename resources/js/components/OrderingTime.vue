@@ -15,6 +15,45 @@
 
             </div>
         </div>
+
+
+        <div v-if="normal_send" class="shipping_data_box" style="padding-left: 0;padding-right: 0">
+            <div class="swiper_product_box">
+                <swiper :options="swiperOtion">
+                    <swiper-slide v-for="product in OrderingData.cart_product_data" :key="product.product_id" class="product_info_box">
+                        <img v-bind:src="$siteUrl+'files/thumb/'+product.product_image_url" alt="">
+                        <p>{{product.product_title}}</p>
+
+                        <div class="swiper-button-next" slot="button-next"></div>
+                        <div class="swiper-button-prev" slot="button-prev"></div>
+
+                    </swiper-slide>
+                    <div class="swiper-button-next" slot="button-next"></div>
+                    <div class="swiper-button-prev" slot="button-prev"></div>
+                </swiper>
+            </div>
+
+
+            <div style="padding-bottom:10px;padding-top:10px">
+                <span class="checkout_image"></span>
+                <div class="checkout_time">
+                    <p>
+                        <span>بازه تحویل سفارش : </span>
+                        <span>زمان تقریبی تحویل از </span>
+                        <span>{{OrderingData.min_ordering_day}}</span>
+                        <span>تا</span>
+                        <span>{{OrderingData.max_ordering_day}}</span>
+                    </p>
+
+                    <span> (پست پیشتاز)</span>
+                    <span>هزینه ارسال : </span>
+                    <span>{{OrderingData.normal_send_order_amount}}</span>
+                </div>
+            </div>
+
+        </div>
+
+
         <div v-if="fast_send" v-for="(delivery_order_interval,key) in OrderingData.delivery_order_interval">
             <p>
                 <span>مرسوله </span>
@@ -23,7 +62,7 @@
                 <span>{{replaceNumber(OrderingData.delivery_order_interval.length)}}</span>
             </p>
             <div class="shipping_data_box" style="padding-left: 0;padding-right: 0">
-                <div>
+                <div class="swiper_product_box">
                     <swiper :options="swiperOtion">
                         <swiper-slide v-for="(data,key2) in OrderingData.array_product_id[key]" :key="key" class="product_info_box">
                             <img v-bind:src="$siteUrl+'files/thumb/'+OrderingData.cart_product_data[data+'_'+key2].product_image_url" alt="">
@@ -35,7 +74,7 @@
                     </swiper>
                 </div>
 
-                <div style="background: #ece;padding-bottom:10px;padding-top:10px">
+                <div style="padding-bottom:10px;padding-top:10px">
                     <span class="checkout_image"></span>
                     <div class="checkout_time">
                         <p>
