@@ -21,15 +21,25 @@ class ShoppingController extends Controller
         {
             $user_id=$request->user()->id;
             $address=Address::with(['getProvince','getCity'])->where('user_id',$user_id)->orderBy('id','DESC')->get();
-            $orderingTime=new OrderingTime(2);
-            return $orderingTime->getGlobalSendData();
 
-//            return view('shipping.set_data',['address'=>$address]);
+
+
+//            $orderingTime=new OrderingTime(5);
+//            dd( $orderingTime->getGlobalSendData());
+
+
+          return view('shipping.set_data',['address'=>$address]);
         }
         else
         {
             return redirect('/');
         }
+    }
+
+    public function getSendData($city_id)
+    {
+        $orderingTime= new OrderingTime($city_id);
+        return  $orderingTime->getGlobalSendData();
     }
 
 }

@@ -21,7 +21,7 @@ class ProductwarrantyController extends CustomController
     protected $query_string;
 
 
-    public function __construct(Request $request, LaravelDebugbar $debugbar)
+    public function __construct(Request $request)
     {
         $product_id=$request->get('product_id');
         $this->product=ProductsModel::findOrFail($product_id);

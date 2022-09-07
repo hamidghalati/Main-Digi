@@ -16,7 +16,7 @@ class CustomController extends BaseController
 
     public function destroy($id)
     {
-        $query_string=property_exists($this,'query_string')? '&'.$this->query_string:'';
+        $query_string=property_exists($this,'query_string')? '&'.$this->query_string :'';
         $model_name="App\\".$this->model;
 
         $row=$model_name::withTrashed()->findOrFail($id);

@@ -59,6 +59,13 @@
                             <td>{{$value->getParent->name}}</td>
                             <td>
                                 @if(!$value->trashed())
+                                    <a class="btn btn-primary"
+                                       href="{{url('admin/category/'.$value->id.'/filters')}}">
+                                        <i class="fa fa-filter"></i>
+                                        فیلتر
+                                    </a>
+                                @endif
+                                @if(!$value->trashed())
                                     <a class="btn btn-warning"
                                        href="{{url('admin/category/'.$value->id.'/edit')}}">
                                         <i class="fa fa-edit"></i>

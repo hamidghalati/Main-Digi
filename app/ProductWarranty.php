@@ -17,7 +17,7 @@
         public static function getDate($request)
         {
             $string = '?';
-            $products_warranties = self::with('getColor', 'getWarranty')->orderBy('id', 'Desc');
+            $products_warranties = self::where('product_id',$request['product_id'])->with('getColor','getWarranty')->orderBy('id', 'Desc');
             if (inTrashed($request)) {
                 $products_warranties = $products_warranties->onlyTrashed();
                 $string = create_paginate_url($string, 'trashed=true');

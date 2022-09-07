@@ -1,7 +1,7 @@
 <?php
 namespace App;
 use App\Lib\Jdf;
-use phpDocumentor\Reflection\Types\This;
+
 
 class OrderingTime
 {
@@ -43,7 +43,7 @@ class OrderingTime
             $this->send_time=$send_time;
             $this->send_price=$send_price;
             $this->min_order_price=$min_order_price;
-            $this->getCartData();
+
         }
         else
         {
@@ -58,24 +58,26 @@ class OrderingTime
             $this->send_time=$send_time;
             $this->send_price=$send_price;
             $this->min_order_price=$min_order_price;
-            $this->getCartData();
         }
-
+      return  $this->getCartData();
     }
+
     public function getCartData()
     {
         $getCartData=Cart::getCartData('shopping');
+
         foreach ($getCartData['product']as $product)
         {
             $k=$product['product_id'].'_'.$product['product_warranty_id'];
             $this->cart_product_data[$k]=$product;
-            $this->cart_price=$this->cart_price+$product['price2'];
+            $this->cart_price+=$product['price2'];
             $this->set_fast_order_sending_time($product);
+
 
         }
         $array=array();
         $array['delivery_order_interval']=$this->get_delivery_order_interval();
-        if ($this->cart_price<$this->min_order_price)
+        if ($this->cart_price < $this->min_order_price)
         {
             $array['normal_send_order_amount']=replace_number(number_format($this->send_price));
             $array['integer_normal_send_order_amount']=$this->send_price;
@@ -91,7 +93,7 @@ class OrderingTime
         $array['array_product_id']=$this->array_product_id;
         $array['array_warranty_id']=$this->array_warranty_id;
 
-        return $array;
+       return $array;
 
 
     }
@@ -111,7 +113,7 @@ class OrderingTime
         else{
             $this->array_product_id[$key][$product['product_warranty_id']]=$product['product_id'];
             $this->array_warranty_id[$key][$product['product_warranty_id']]=$product['product_warranty_id'];
-            $this->order_price_by_fast_send[$key]+=$product['price2'];
+            $this->order_price_by_fast_send[$key]=$this->order_price_by_fast_send[$key]+$product['price2'];
         }
 
 
@@ -137,7 +139,7 @@ class OrderingTime
 
             $day_array[$key]=['day_label1'=>$this->day_label1[$key],'day_label2'=>$this->day_label2[$key]];
 
-            if ($this->order_price_by_fast_send[$key]<$this->min_order_price)
+            if ($this->order_price_by_fast_send[$key] < $this->min_order_price)
             {
                 $day_array[$key]['send_fast_price']=replace_number(number_format($this->send_price));
                 $day_array[$key]['integer_send_fast_price']=$this->send_price;
@@ -148,10 +150,9 @@ class OrderingTime
                 $day_array[$key]['send_fast_price']="رایگان";
                 $day_array[$key]['integer_send_fast_price']=0;
             }
-
-
         }
         return $day_array;
+
 
     }
 

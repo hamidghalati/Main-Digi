@@ -74,10 +74,26 @@
                                 @if(!$value->trashed())
                                     <a class="btn btn-warning"
                                        href="{{url('admin/products/'.$value->id.'/edit')}}">
-                                        <i class="fa fa-edit"></i>
-                                        ویرایش
+                                        <span data-toggle="tooltip" data-placement="top" title="ویرایش محصول"><i class="fa fa-edit"></i></span>
+
                                     </a>
                                 @endif
+
+                                @if(!$value->trashed())
+                                    <a class="btn btn-success"
+                                       href="{{url('admin/products/'.$value->id.'/items')}}">
+                                        <span data-toggle="tooltip" data-placement="top" title="اضافه کردن آیتم به محصول"><i class="fa fa-bar-chart"></i></span>
+
+                                    </a>
+                                @endif
+
+                                    @if(!$value->trashed())
+                                        <a class="btn btn-info"
+                                           href="{{url('admin/Product_warranties/create?product_id='.$value->id)}}">
+                                            <span data-toggle="tooltip" data-placement="top" title="اضافه کردن تنوع قیمت"><i class="fa fa-credit-card"></i></span>
+
+                                        </a>
+                                    @endif
 
                                     @if($value->trashed())
                                         <span class="btn btn-info" data-toggle="tooltip" data-placement="top"
@@ -90,7 +106,7 @@
                                         <span class="btn btn-danger" data-toggle="tooltip" data-placement="top"
                                               title="حذف محصولات" onclick="del_row('{{url('admin/products/'.$value->id)}}','{{ csrf_token() }}','آیا از حذف این دسته مطمئن هستید؟')" >
                                              <i class="fa fa-remove" ></i>
-                                              حذف
+
                                         </span>
                                     @else
                                         <span class="btn btn-danger" onclick="del_row('{{url('admin/products/'.$value->id)}}','{{ csrf_token() }}','اطلاعات شما از بین خواهد رفت.آیا مطمئن هستید؟')" data-toggle="tooltip" data-placement="top"

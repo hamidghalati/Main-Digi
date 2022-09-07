@@ -93,6 +93,8 @@
 
         </div>
 
+        <OrderingTime v-if="city_id>0" v-bind:city_id="city_id"></OrderingTime>
+
         <div class="message_div" v-if="show_dialog_box">
             <div class="message_box">
                 <p id="msg">آیا مایل به حذف این آدرس هستید؟</p>
@@ -109,9 +111,10 @@
 <script>
 import AddressForm from "./AddressForm";
 import myMixin from "../myMixin";
+import OrderingTime from "./OrderingTime";
 export default {
     name: "AddressList",
-    components: {AddressForm},
+    components: {OrderingTime, AddressForm},
     mixins:[myMixin],
     props:['data'],
     data(){
