@@ -25,9 +25,11 @@
         <div class="page_row">
             <div class="page-content">
                 <form action="{{url('payment')}}" id="add_order" method="post">
+                    @csrf
                     <input type="hidden" id="address_id" name="address_id">
                     <input type="hidden" id="lat" name="lat" value="0.0">
                     <input type="hidden" id="lng" name="lng" value="0.0">
+                    <input type="hidden" id="send_type" name="send_type" value="1">
 
                 </form>
                 <address-list :data="{{json_encode($address)}}"></address-list>
@@ -36,8 +38,8 @@
                 <div class="order_info" style="margin-top: 0!important;">
                     <?php
                         $total_product_price=Session::get('total_product_price',0);
-                        $final_product_price=Session::get('final_product_price',0);
-                        $discount=$total_product_price-$final_product_price;
+                        $final_price=Session::get('final_price',0);
+                        $discount=$total_product_price-$final_price;
                         ?>
                     <ul>
                         <li>

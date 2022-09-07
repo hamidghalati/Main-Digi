@@ -2727,6 +2727,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2776,17 +2796,21 @@ __webpack_require__.r(__webpack_exports__);
       this.normal_send = true;
       this.fast_send = false;
       this.setPrice();
+      document.getElementById('send_type').value = 1;
     },
     send_fast_send: function send_fast_send() {
       this.normal_send = false;
       this.fast_send = true;
       this.setPrice();
+      document.getElementById('send_type').value = 2;
     },
     setPrice: function setPrice() {
       if (this.normal_send) {
         $("#total_send_order_price").text(this.OrderingData.normal_send_order_amount);
+        $("#final_price").text(this.OrderingData.normal_cart_price);
       } else {
         $("#total_send_order_price").text(this.OrderingData.total_fast_send_amount);
+        $("#final_price").text(this.OrderingData.fasted_cart_amount);
       }
     }
   },
@@ -11787,11 +11811,65 @@ var render = function () {
             : _vm._e()
         }
       ),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c("ul", { staticClass: "checkout_action" }, [
+        _c("li", [
+          _c(
+            "a",
+            {
+              staticClass: "data_link",
+              attrs: { href: _vm.$siteUrl + "Cart" },
+            },
+            [_vm._v("بازگشت به سبد خرید")]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              staticClass: "data_link",
+              attrs: { href: _vm.$siteUrl + "payment" },
+            },
+            [_vm._v("تایید و ادامه ثبت سفارش ")]
+          ),
+        ]),
+      ]),
     ],
     2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "shipping_data_box",
+        staticStyle: { padding: "20px 20px 15px 30px" },
+      },
+      [
+        _c("input", {
+          staticClass: "form-check-input",
+          attrs: { type: "checkbox", checked: "", name: "need-invoice" },
+        }),
+        _vm._v(" "),
+        _c("span", {
+          staticClass: "check_box active",
+          attrs: { id: "need-invoice" },
+        }),
+        _vm._v(" "),
+        _c("span", { staticStyle: { "padding-right": "10px" } }, [
+          _vm._v("درخواست ارسال فاکتور خرید"),
+        ]),
+      ]
+    )
+  },
+]
 render._withStripped = true
 
 

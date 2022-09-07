@@ -156,7 +156,7 @@ class Cart
         $discount=$total_price-$cart_price;
 
         Session::put('total_product_price',$total_price);
-        Session::put('final_product_price',$cart_price);
+        Session::put('final_price',$cart_price);
 
         $cart_data['total_price']=replace_number(number_format($total_price));
         $cart_data['cart_price']=replace_number(number_format($cart_price));

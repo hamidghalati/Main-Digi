@@ -93,6 +93,26 @@
 
             </div>
         </div>
+
+
+        <div class="shipping_data_box"  style="padding: 20px 20px 15px 30px">
+            <input type="checkbox" checked class="form-check-input" name="need-invoice">
+            <span class="check_box active" id="need-invoice"></span>
+            <span style="padding-right: 10px">درخواست ارسال فاکتور خرید</span>
+        </div>
+
+        <ul class="checkout_action">
+            <li>
+                <a v-bind:href="$siteUrl+'Cart'" class="data_link">بازگشت به سبد خرید</a>
+            </li>
+
+            <li>
+                <a v-bind:href="$siteUrl+'payment'" class="data_link">تایید و ادامه ثبت سفارش </a>
+            </li>
+
+        </ul>
+
+
     </div>
 
 </template>
@@ -143,19 +163,23 @@ export default {
             this.normal_send=true;
             this.fast_send=false;
             this.setPrice();
+            document.getElementById('send_type').value=1;
         },
         send_fast_send:function () {
             this.normal_send=false;
             this.fast_send=true;
             this.setPrice();
+            document.getElementById('send_type').value=2;
         },
         setPrice:function () {
             if (this.normal_send)
             {
                 $("#total_send_order_price").text(this.OrderingData.normal_send_order_amount);
+                $("#final_price").text(this.OrderingData.normal_cart_price);
             }
             else{
                 $("#total_send_order_price").text(this.OrderingData.total_fast_send_amount);
+                $("#final_price").text(this.OrderingData.fasted_cart_amount)
             }
         }
     },

@@ -22,6 +22,8 @@ class OrderingTime
     protected $day_label1=array();
     protected $day_label2=array();
     protected $total_fast_send_amount=0;
+    protected $cart_amount=0;
+    protected $fasted_cart_amount=0;
 
 
 
@@ -82,19 +84,37 @@ class OrderingTime
         {
             $array['normal_send_order_amount']=replace_number(number_format($this->send_price)).' تومان ';
             $array['integer_normal_send_order_amount']=$this->send_price;
+
+            $normal_cart_price=$this->cart_price+$this->send_price;
+            $array['normal_cart_price']=replace_number(number_format($normal_cart_price)).' تومان ';
+            $array['integer_normal_cart_price']=$normal_cart_price;
+
+
         }
         else
         {
             $array['normal_send_order_amount']="رایگان";
             $array['integer_normal_send_order_amount']=0;
+
+            $array['normal_cart_price']=replace_number(number_format($this->cart_price)).' تومان ';
+            $array['integer_normal_cart_price']=$this->cart_price;
         }
+
+
+        $fasted_cart_amount=$this->cart_price+$this->total_fast_send_amount;
+        $array['fasted_cart_amount']=replace_number(number_format($fasted_cart_amount)).' تومان ';
+        $array['integer_fasted_cart_amount']=$fasted_cart_amount;
+
+        $array['total_fast_send_amount']=$this->total_fast_send_amount==0 ? 'رایگان': replace_number(number_format($this->total_fast_send_amount)).' تومان ';
+        $array['integer_total_fast_send_amount']=$this->total_fast_send_amount==0 ? 0 : $this->total_fast_send_amount;
+
+
+
         $array['min_ordering_day']=$this->get_min_ordering_day();
         $array['max_ordering_day']=$this->get_max_ordering_day();
         $array['cart_product_data']=$this->cart_product_data;
         $array['array_product_id']=$this->array_product_id;
         $array['array_warranty_id']=$this->array_warranty_id;
-        $array['total_fast_send_amount']=$this->total_fast_send_amount==0 ? 'رایگان': replace_number(number_format($this->total_fast_send_amount)).' تومان ';
-        $array['integer_total_fast_send_amount']=$this->total_fast_send_amount==0 ? 0 : $this->total_fast_send_amount;
 
        return $array;
 
@@ -145,7 +165,7 @@ class OrderingTime
             if ($this->order_price_by_fast_send[$key] < $this->min_order_price)
             {
                 $this->total_fast_send_amount=$this->total_fast_send_amount+$this->send_price;
-                $day_array[$key]['send_fast_price']=replace_number(number_format($this->send_price));
+                $day_array[$key]['send_fast_price']=replace_number(number_format($this->send_price)).' تومان ';
                 $day_array[$key]['integer_send_fast_price']=$this->send_price;
 
 
@@ -154,6 +174,7 @@ class OrderingTime
                 $day_array[$key]['send_fast_price']="رایگان";
                 $day_array[$key]['integer_send_fast_price']=0;
             }
+            $day_array[$key]['send_order_day_number']=$value;
         }
         return $day_array;
 

@@ -2055,16 +2055,121 @@ del {
     margin: 15px;
 }
 
+.swiper-button-prev,.swiper-button-next{
+    background-image: none!important;
+    width: 40px!important;
+    height: 40px;
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    box-shadow: 0 8px 9px 0 rgba(0,0,0,0.07);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.swiper-button-prev::before{
+    content: "\F105";
+    display: inline-block;
+    font-family: FontAwesome;
+    font-size: 25px;
+    color: #cecece;
+}
 
+.swiper-button-next::before{
+    content: "\F104";
+    display: inline-block;
+    font-family: FontAwesome;
+    font-size: 25px;
+    color: #cecece;
+}
 
+.swiper_product_box .product_info_box p{
+    font-size: 13px;
+    margin-top: 20px;
+    text-align: center;
+    line-height: 1.692;
+    font-weight: 700;
+    letter-spacing: -.4px;
+    color: #858585;
+    font-family: 'IRANSans';
+}
+.product_info_box{
+    width: 201.25px;
+    margin-left: 30px;
+    margin-right: 50px;
+}
+.form-check-input{
+    display: none;
+}
 
+.check_box{
+    width: 19px;
+    height: 18px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    background:#fff;
+    display: block;
+    border: 1px solid #d8d8d8;
+    float: right;
+}
+.check_box.active{
+    background-color: #2196F3!important;
+    border: 1px solid #2196F3!important;
+}
+.check_box.active::before{
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\F00C";
+    display: block;
+    color: white;
+    margin-right: 1px;
+}
+.checkout_action{
+    display: flex;
+    justify-content: space-between;padding-bottom: 30px;
+}
+.checkout_action li{
+    list-style: none;
+}
+.payment_box{
+    padding-bottom: 20px!important;
+}
 
+.shipping_data_box .header_box
+{
+    background-color: #fcfcfc;
+    border-bottom: 1px solid #e7e7e7;
+    border-radius: 6px 0 0 6px;
+    -webkit-border-radius: 6px 0 0 6px;
+    padding: 9px;
+    display: inline-flex;
+    width: 100%;
+    font-size: 13px;
+    /*position: absolute;*/
+}
+.shipping_data_box .header_box div{
+    width: 25%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #858585;
+}
+.shipping_data_box .header_box div span{
+    display: block;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-left: 30px;
+}
 
-
-
-
-
+.shipping_data_box .header_box::after{
+    content: "\F107";
+    font:normal normal normal 14px/1 FontAwesome;
+    position: absolute;
+    top: 38%;
+    left: 20px;
+    font-size: 30px;
+    color: #c6c6c6;
+}
 
 
 

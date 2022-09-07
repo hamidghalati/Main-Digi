@@ -106,6 +106,8 @@ Route::post('site/cart/change_product_cart','SiteController@change_product_cart'
 
 Route::get('shipping','ShoppingController@shipping');
 Route::get('shipping/getSendData/{city_id}','ShoppingController@getSendData');
+//payment
+Route::post('payment','ShoppingController@payment');
 
 
 
