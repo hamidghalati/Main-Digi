@@ -44,6 +44,7 @@
         "pretty-checkbox": "^3.0.3",
         "shetabit-laravel-vue-pagination": "^2.3.2",
         "slick-carousel": "^1.8.1",
+        "vue-awesome-swiper": "^2.6.7",
         "vue-axios": "^3.4.1",
         "vue-cleave-component": "^2.1.3"
     }

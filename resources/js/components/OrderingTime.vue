@@ -1,20 +1,87 @@
 <template>
     <div>
-{{city_id}}
+        <div v-if="multi_type_send">
+            <h6>انتخاب نحوه ارسال</h6>
+            <div class="shipping_data_box">
+                <p v-on:click="send_normal_send">
+                    <span :class="(normal_send ? 'radio_check active_radio_check' : 'radio_check')"></span>
+                    <span>عادی</span>
+                </p>
+
+                <p v-on:click="send_fast_send">
+                    <span :class="(fast_send ? 'radio_check active_radio_check' : 'radio_check')"></span>
+                    <span>سریع (مرسوله شما در سریع ترین زمان ممکن ارسال می شود)</span>
+                </p>
+
+            </div>
+        </div>
+        <div v-if="fast_send" v-for="(delivery_order_interval,key) in OrderingData.delivery_order_interval">
+            <p>
+                <span>مرسوله </span>
+                <span>{{replaceNumber(i=key+1)}}</span>
+                <span>از</span>
+                <span>{{replaceNumber(OrderingData.delivery_order_interval.length)}}</span>
+            </p>
+            <div class="shipping_data_box" style="padding-left: 0;padding-right: 0">
+                <div>
+                    <swiper :options="swiperOtion">
+                        <swiper-slide v-for="(data,key2) in OrderingData.array_product_id[key]" :key="key" class="product_info_box">
+                            <img v-bind:src="$siteUrl+'files/thumb/'+OrderingData.cart_product_data[data+'_'+key2].product_image_url" alt="">
+                            <p>{{OrderingData.cart_product_data[data+'_'+key2].product_title}}</p>
+                        </swiper-slide>
+
+                        <div class="swiper-button-next" slot="button-next"></div>
+                        <div class="swiper-button-prev" slot="button-prev"></div>
+                    </swiper>
+                </div>
+
+                <div style="background: #ece;padding-bottom:10px;padding-top:10px">
+                    <span class="checkout_image"></span>
+                    <div class="checkout_time">
+                        <p>
+                            <span>بازه تحویل سفارش : </span>
+                            <span>زمان تقریبی تحویل از </span>
+                            <span>{{delivery_order_interval.day_label1}}</span>
+                            <span>تا</span>
+                            <span>{{delivery_order_interval.day_label2}}</span>
+                        </p>
+
+                        <span> (پست پیشتاز)</span>
+                        <span>هزینه ارسال : </span>
+                        <span>{{delivery_order_interval.send_fast_price}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
 </template>
 
 <script>
+import MyMixin from "../myMixin";
+import {swiper,swiperSlide} from 'vue-awesome-swiper';
+import 'swiper/dist/css/swiper.css'
+
 export default {
     name: "OrderingTime",
     props:['city_id'],
+    mixins:[MyMixin],
+    components:{swiper,swiperSlide},
     data(){
         return {
             OrderingData:[],
             multi_type_send:false,
             normal_send:true,
-            fast_send:false
+            fast_send:false,
+            swiperOtion:{
+                slidesPerView:4,
+                spaceBetween:30,
+                navigation:{
+                    nextEl:'.swiper-button-next',
+                    prevEl:'.swiper-button-prev',
+                }
+            }
         }
     },
     mounted() {
@@ -25,12 +92,20 @@ export default {
             const url=this.$siteUrl+"/shipping/getSendData/"+this.city_id
             this.axios.get(url).then(response=>{
                this.OrderingData=response.data;
-               alert(this.OrderingData.delivery_order_interval.length);
+
                if (this.OrderingData.delivery_order_interval.length>1)
                {
                    this.multi_type_send=true;
                }
             });
+        },
+        send_normal_send:function () {
+            this.normal_send=true;
+            this.fast_send=false;
+        },
+        send_fast_send:function () {
+            this.normal_send=false;
+            this.fast_send=true;
         }
     }
 }

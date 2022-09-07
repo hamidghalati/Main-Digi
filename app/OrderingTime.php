@@ -134,8 +134,8 @@ class OrderingTime
             $this->minTimeStamp[$key]=strtotime('+ '.$day1.'day');
             $this->maxTimeStamp[$key]=strtotime('+ '.$day2.'day');
 
-            $this->day_label1[$key]=$jdf->jdate('j F',$this->minTimeStamp[$key]);
-            $this->day_label2[$key]=$jdf->jdate('j F',$this->maxTimeStamp[$key]);
+            $this->day_label1[$key]=$jdf->jdate('j F Y',$this->minTimeStamp[$key]);
+            $this->day_label2[$key]=$jdf->jdate('j F Y',$this->maxTimeStamp[$key]);
 
             $day_array[$key]=['day_label1'=>$this->day_label1[$key],'day_label2'=>$this->day_label2[$key]];
 

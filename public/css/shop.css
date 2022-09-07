@@ -1973,6 +1973,69 @@ del {
     }
 }
 
+.shipping_data_box{
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 8px 13px -7px rgba(0,0,0,0.05);
+    margin: 20px auto;
+    font-size: 14px;
+    padding: 20px 40px 10px 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    position: relative;
+}
+.radio_check{
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #ccc;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    position: absolute;
+    margin-top: 4px;
+    right: 15px;
+}
+
+.active_radio_check::before{
+    content: "";
+    width: 11px;
+    height: 11px;
+    border-radius: inherit;
+    -webkit-border-radius: inherit;
+    background-color: #00bfd6;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+}
+
+.shipping_data_box .product_info_box{
+    width: 180px;
+    margin-top: 10px;
+}
+.shipping_data_box .product_info_box img{
+    width: 120px;
+    margin: auto;
+    display: block;
+}
+.checkout_image{
+    width: 49px;
+    height: 40px;
+    background-image: url("../files/images/slices.png");
+    cursor: pointer;
+    position: absolute;
+    margin-top: 10px;
+    background-position: -705px -220px;
+
+}
+.checkout_time{
+    margin-right: 70px;
+
+}
+.checkout_time span{
+    font-size: 14px;
+}
 
 
 
