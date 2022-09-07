@@ -57,7 +57,7 @@ class Cart
         }
     }
 
-    public static function getCartData()
+    public static function getCartData($type='cart')
     {
 
         $cart=Session::get('cart',array());
@@ -124,6 +124,8 @@ class Cart
                $cart_data['product'][$j]['product_image_url']=$product->image_url;
                $cart_data['product'][$j]['warranty_name']=$warranty->name;
                $cart_data['product'][$j]['warranty_id']=$warranty->id;
+               $cart_data['product'][$j]['send_day']=$v->send_time;
+               $cart_data['product'][$j]['product_warranty_id']=$v->id;
                if ($color)
                {
                    $cart_data['product'][$j]['color_name']=$color->name;
@@ -135,7 +137,14 @@ class Cart
                    $cart_data['product'][$j]['color_id']=0;
                }
                $cart_data['product'][$j]['price1']=$product_number*$v->price1;
-               $cart_data['product'][$j]['price2']=number_format($product_number*$v->price2);
+               if ($type=='cart')
+               {
+                   $cart_data['product'][$j]['price2']=number_format($product_number*$v->price2);
+               }
+               else
+               {
+                   $cart_data['product'][$j]['price2']=$product_number*$v->price2;
+               }
                $cart_data['product'][$j]['product_number_cart']=$v->product_number_cart;
                $cart_data['product'][$j]['product_count']=$product_number;
                $total_price+=$product_number*$v->price1;

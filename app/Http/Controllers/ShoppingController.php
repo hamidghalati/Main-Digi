@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Address;
 use App\Cart;
+use App\OrderingTime;
 use App\ProvinceModel;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,10 @@ class ShoppingController extends Controller
         {
             $user_id=$request->user()->id;
             $address=Address::with(['getProvince','getCity'])->where('user_id',$user_id)->orderBy('id','DESC')->get();
-            return view('shipping.set_data',['address'=>$address]);
+            $orderingTime=new OrderingTime(2);
+            return $orderingTime->getGlobalSendData();
+
+//            return view('shipping.set_data',['address'=>$address]);
         }
         else
         {
