@@ -136,15 +136,33 @@ export default {
                {
                    this.multi_type_send=true;
                }
+               this.setPrice();
             });
         },
         send_normal_send:function () {
             this.normal_send=true;
             this.fast_send=false;
+            this.setPrice();
         },
         send_fast_send:function () {
             this.normal_send=false;
             this.fast_send=true;
+            this.setPrice();
+        },
+        setPrice:function () {
+            if (this.normal_send)
+            {
+                $("#total_send_order_price").text(this.OrderingData.normal_send_order_amount);
+            }
+            else{
+                $("#total_send_order_price").text(this.OrderingData.total_fast_send_amount);
+            }
+        }
+    },
+    watch:{
+        city_id:function (newVal,oldVal) {
+            this.city_id=newVal;
+            this.get_ordering_time();
         }
     }
 }

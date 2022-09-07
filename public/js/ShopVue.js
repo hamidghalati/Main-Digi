@@ -2768,15 +2768,32 @@ __webpack_require__.r(__webpack_exports__);
         if (_this.OrderingData.delivery_order_interval.length > 1) {
           _this.multi_type_send = true;
         }
+
+        _this.setPrice();
       });
     },
     send_normal_send: function send_normal_send() {
       this.normal_send = true;
       this.fast_send = false;
+      this.setPrice();
     },
     send_fast_send: function send_fast_send() {
       this.normal_send = false;
       this.fast_send = true;
+      this.setPrice();
+    },
+    setPrice: function setPrice() {
+      if (this.normal_send) {
+        $("#total_send_order_price").text(this.OrderingData.normal_send_order_amount);
+      } else {
+        $("#total_send_order_price").text(this.OrderingData.total_fast_send_amount);
+      }
+    }
+  },
+  watch: {
+    city_id: function city_id(newVal, oldVal) {
+      this.city_id = newVal;
+      this.get_ordering_time();
     }
   }
 });

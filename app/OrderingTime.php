@@ -21,6 +21,7 @@ class OrderingTime
     protected $maxTimeStamp=array();
     protected $day_label1=array();
     protected $day_label2=array();
+    protected $total_fast_send_amount=0;
 
 
 
@@ -79,7 +80,7 @@ class OrderingTime
         $array['delivery_order_interval']=$this->get_delivery_order_interval();
         if ($this->cart_price < $this->min_order_price)
         {
-            $array['normal_send_order_amount']=replace_number(number_format($this->send_price));
+            $array['normal_send_order_amount']=replace_number(number_format($this->send_price)).' تومان ';
             $array['integer_normal_send_order_amount']=$this->send_price;
         }
         else
@@ -92,6 +93,8 @@ class OrderingTime
         $array['cart_product_data']=$this->cart_product_data;
         $array['array_product_id']=$this->array_product_id;
         $array['array_warranty_id']=$this->array_warranty_id;
+        $array['total_fast_send_amount']=$this->total_fast_send_amount==0 ? 'رایگان': replace_number(number_format($this->total_fast_send_amount)).' تومان ';
+        $array['integer_total_fast_send_amount']=$this->total_fast_send_amount==0 ? 0 : $this->total_fast_send_amount;
 
        return $array;
 
@@ -141,6 +144,7 @@ class OrderingTime
 
             if ($this->order_price_by_fast_send[$key] < $this->min_order_price)
             {
+                $this->total_fast_send_amount=$this->total_fast_send_amount+$this->send_price;
                 $day_array[$key]['send_fast_price']=replace_number(number_format($this->send_price));
                 $day_array[$key]['integer_send_fast_price']=$this->send_price;
 

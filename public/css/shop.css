@@ -1198,6 +1198,8 @@ del {
 
 .page_row {
     display: flex;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .page-content {
@@ -2046,6 +2048,25 @@ del {
     border-bottom: 1px solid #e0e0e0;
     width: 100%;
 }
+.headline-checkout{
+    padding-top: 20px;
+}
+.headline-checkout h6{
+    margin: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
