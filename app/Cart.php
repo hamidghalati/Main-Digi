@@ -115,6 +115,7 @@ class Cart
             $product=getCartProductData($products,$v->product_id);
             $color=getCartColorData($colors,$v->color_id);
            $warranty=getCartWarrantyData($warranties,$v->warranty_id);
+
            $n=$v->product_id.'_'.$v->color_id.'_'.$v->warranty_id;
            $product_number=array_key_exists($n,$cart_product_number)? $cart_product_number[$n]:0;
            if ($product  && $warranty && $product_number>0)

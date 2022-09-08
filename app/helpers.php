@@ -1027,7 +1027,23 @@ function getCartWarrantyData($warranties,$warranty_id)
 }
 
 
-
+//function getProductCost($info,$products)
+//    {
+//        $amount=$info->send_order_amount;
+//        $products_id=explode('_',$info->product_id);
+//        $colors_id=explode('_',$info->colors_id);
+//        $warranty_id=explode('_',$info->warranty_id);
+//        foreach ($products_id as $key=>$value)
+//        {
+//            if (!empty($value))
+//            {
+////                $p=getProductDataOfList($info,$products,$value,$warranty_id[$key],$colors_id[$key]);
+////                $amount+=$p;
+//            }
+//        }
+//        return $amount;
+//
+//    }
 
 
 

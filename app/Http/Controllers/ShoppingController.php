@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Address;
 use App\Cart;
 use App\Order;
+
+use App\OrderData;
 use App\OrderingTime;
 use App\ProvinceModel;
 use DB;
@@ -91,15 +93,19 @@ class ShoppingController extends Controller
     }
 
     public function verify(){
-        $order_id=1;
-        $order=Order::with(['getOrdertRow','getOrderInfo','getAddress'])
+        $order_id=13;
+        $order=Order::with(['getProductRow','getOrderInfo','getAddress'])
             ->where(['id'=>$order_id])->firstOrFail();
         $order->pay_status='ok';
         $order->update();
+
+        $order_data=new OrderData($order->getOrderInfo,$order->getProductRow);
+        $order_data=$order_data->getData();
+
         DB::table('order_infos')->where('order_id',$order_id)->update(['send_status'=>1]);
         DB::table('order_products')->where('order_id',$order_id)->update(['send_status'=>1]);
 
-        return view('shipping.verify',['order'=>$order]);
+        return view('shipping.verify',['order'=>$order,'order_data'=>$order_data]);
     }
 
 }

@@ -197,7 +197,7 @@ class Order extends Model
         return $warranty_id;
     }
 
-    public function getOrdertRow(){
+    public function getProductRow(){
         return $this->hasMany(OrderProduct::class,'order_id','id')
             ->with(['getProduct','getColor','getWarranty']);
     }

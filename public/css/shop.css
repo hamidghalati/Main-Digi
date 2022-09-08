@@ -2221,14 +2221,50 @@ del {
     border: 1px solid #cfe3bb;
     color: #b1b58b;
 }
+.product_list_data{
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    /*font-size: 13px;*/
+    border: 1px solid #e7e7e7;
+}
+.product_list_data  tr th{
+    background-color: #85b3be;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    border-right-color: #85b3be;
+}
+.product_list_data tr td{
+    border-left: 1px solid #e7e7e7;
+    text-align: center;
+    vertical-align: center;
+}
+.product_list_data .product_verify_info{
+    width: 35%;
 
-
-
-
-
-
-
-
+}
+.product_list_data .product_verify_info div{
+    display: flex;
+}
+.product_list_data .product_verify_info div img{
+    width: 100px;
+    height: 100px;
+}
+.product_list_data .product_verify_info div ul{
+    font-size: 13px;
+    color: #acacac!important;
+    width: calc(100% - 100px);
+    margin-right: 10px;
+}
+.product_list_data .product_verify_info div ul li{
+    list-style: none;
+    text-align: justify;
+}
+.product_list_data .product_verify_info div ul li .title{
+    text-align: justify!important;
+}
 
 
 

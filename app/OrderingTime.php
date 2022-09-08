@@ -135,7 +135,7 @@ class OrderingTime
         {
             $this->array_product_id[sizeof($this->send_status)][$product['product_warranty_id']]=$product['product_id'];
             $this->array_warranty_id[sizeof($this->send_status)][$product['product_warranty_id']]=$product['warranty_id'];
-            $this->array_colors_id[sizeof($this->send_status)][$product['color_id']]=$product['color_id'];
+            $this->array_colors_id[sizeof($this->send_status)][$product['product_warranty_id']]=$product['color_id'];
 
             $this->order_price_by_fast_send[sizeof($this->send_status)]=$product['price2'];
             $this->send_status[sizeof($this->send_status)]=$day;
@@ -143,7 +143,7 @@ class OrderingTime
         else{
             $this->array_product_id[$key][$product['product_warranty_id']]=$product['product_id'];
             $this->array_warranty_id[$key][$product['product_warranty_id']]=$product['warranty_id'];
-            $this->array_colors_id[$key][$product['color_id']]=$product['color_id'];
+            $this->array_colors_id[$key][$product['product_warranty_id']]=$product['color_id'];
             $this->order_price_by_fast_send[$key]=$this->order_price_by_fast_send[$key]+$product['price2'];
         }
 
