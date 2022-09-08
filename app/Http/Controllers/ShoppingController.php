@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Address;
 use App\Cart;
+use App\Order;
 use App\OrderingTime;
 use App\ProvinceModel;
 use Illuminate\Http\Request;
+use Session;
 
 class ShoppingController extends Controller
 {
@@ -45,6 +47,8 @@ class ShoppingController extends Controller
             $send_type=$request->get('send_type',1);
             if ($address)
             {
+                Session::put('order_address_id',$address_id);
+                Session::put('order_send_type',$send_type);
                 $OreringTime=new OrderingTime($address->city_id);
                 $send_order_data=$OreringTime->getGlobalSendData();
                 return view('shipping.payment',['send_order_data'=>$send_order_data,'send_type'=>$send_type]);
@@ -57,6 +61,31 @@ class ShoppingController extends Controller
         else
         {
             return redirect('/');
+        }
+    }
+
+    public function order_payment(Request $request)
+    {
+        $address_id=Session::get('order_address_id');
+        $user_id=$request->user()->id;
+        if ($address_id)
+        {
+            $address=Address::where(['id'=>$address_id,'user_id'=>$user_id])->first();
+            if ($address)
+            {
+                $OreringTime=new OrderingTime($address->city_id);
+                $send_order_data=$OreringTime->getGlobalSendData();
+                $order=new Order();
+               $order->add_order($send_order_data);
+            }
+            else{
+                return redirect('/shipping');
+            }
+
+
+        }
+        else{
+            return redirect('/shipping');
         }
     }
 

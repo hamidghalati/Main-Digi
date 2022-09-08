@@ -108,6 +108,7 @@ Route::get('shipping','ShoppingController@shipping');
 Route::get('shipping/getSendData/{city_id}','ShoppingController@getSendData');
 //payment
 Route::post('payment','ShoppingController@payment');
+Route::get('order/payment','ShoppingController@order_payment');
 
 
 
