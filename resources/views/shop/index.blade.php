@@ -63,7 +63,7 @@
             spaceBetween: 30,
             navigation: {
                 nextEl: '.slick-next',
-                prevEl: 'slick-prev',
+                prevEl: '.slick-prev',
 
             }
         });

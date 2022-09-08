@@ -70,6 +70,7 @@
                         <p style="color: red">مبلغ قابل پرداخت</p>
                         <p class="cart_price_p" id="final_price">{{replace_number(number_format($final_price))}} تومان </p>
                     </div>
+
                     <a onclick="$('#add_order').submit()">
                         <div class="send_btn checkout">
                             <span class="line"></span>
@@ -77,8 +78,14 @@
                         </div>
                     </a>
 
+
+
+
+
                 </div>
+
             </div>
+
         </div>
     </div>
 

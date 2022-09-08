@@ -39,6 +39,53 @@
                     <?php $i=1;
                     ?>
                     @if($send_type==1)
+
+                        <div class="shipping_data_box" style="padding: 0">
+
+                            <div class="header_box">
+                                <div>
+                                    مرسوله ۱ از ۱
+                                    <span>({{replace_number(\App\Cart::get_product_count())}}) کالا </span>
+                                </div>
+                                <div>
+                                    نحوه ارسال :
+                                    <span>پست پیشتاز </span>
+                                </div>
+
+                                <div>
+                                    ارسال از :
+                                    <span>
+{{--                                            @if($send_order_data['send_order_day_number']==0)--}}
+                                            آماده ارسال
+{{--                                        @else--}}
+{{--                                            {{replace_number($send_order_data['send_order_day_number'])}} روز کاری--}}
+{{--                                        @endif--}}
+                                        </span>
+                                </div>
+
+                                <div>
+                                    هزینه ارسال :
+                                    <span>{{ $send_order_data['normal_send_order_amount'] }} </span>
+                                </div>
+
+                            </div>
+
+                            <div class="ordering_product_list swiper-container">
+                                <div class="swiper-wrapper swiper_product_box">
+                                    @foreach($send_order_data['cart_product_data'] as $product)
+                                        <div class="product_info_box swiper-slide">
+                                            <img src="{{url('files/thumb/'.$product['product_image_url'])}}" alt="">
+                                            <p class="product_title">{{$product['product_title']}}</p>
+                                            <p class="product_color">رنگ :{{$product['color_name']}}</p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+
                     @else
 
                         @foreach($send_order_data['delivery_order_interval'] as $key=>$value)
@@ -71,11 +118,20 @@
 
                                 </div>
                                 <div class="ordering_product_list swiper-container">
-                                    <div class="swiper-wrapper">
+                                    <div class="swiper-wrapper swiper_product_box">
                                         @foreach($send_order_data['array_product_id'][$key] as $key2=>$value2)
-                                            <p>{{$send_order_data['cart_product_data'][$value2.'_'.$key2]['product_title']}}</p>
+                                            <div class="product_info_box swiper-slide">
+                                                <?php
+                                                    $product=$send_order_data['cart_product_data'][$value2.'_'.$key2];
+                                                    ?>
+                                                <img src="{{url('files/thumb/'.$product['product_image_url'])}}" alt="">
+                                                <p class="product_title">{{$product['product_title']}}</p>
+                                                <p class="product_color">رنگ : {{$product['color_name']}}</p>
+                                            </div>
                                         @endforeach
                                     </div>
+                                    <div class="swiper-button-prev"></div>
+                                    <div class="swiper-button-next"></div>
                                 </div>
                             </div>
                             <?php $i++ ?>
@@ -97,4 +153,28 @@
 
 
 
+@endsection
+
+@section('header')
+    <link rel="stylesheet" href="{{asset('slick/slick/slick.css')}}">
+    <link rel="stylesheet" href="{{asset('slick/slick/slick-theme.css')}}">
+@endsection
+
+@section('footer')
+    <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper-container', {
+            slidesPerView: 'auto',
+            spaceBetween: 30,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination:{
+                el:'.swiper-pagination',
+                clickable:true,
+            }
+        });
+    </script>
 @endsection

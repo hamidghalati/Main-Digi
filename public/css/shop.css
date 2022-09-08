@@ -2171,7 +2171,18 @@ del {
     color: #c6c6c6;
 }
 
-
+.ordering_product_list{
+    width: 100%;
+    margin-bottom: 10px;
+    /*display: none;*/
+}
+.ordering_product_list .product_title{
+    height: 55px;
+}
+.ordering_product_list .product_color{
+    color: #b9b9b9!important;
+    margin-top: 50px!important;
+}
 
 
 
