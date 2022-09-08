@@ -2163,18 +2163,20 @@ del {
 
 .shipping_data_box .header_box::after{
     content: "\F107";
-    font:normal normal normal 14px/1 FontAwesome;
-    position: absolute;
-    top: 38%;
-    left: 20px;
+    font: normal normal normal 14px/1 FontAwesome;
+    position: relative;
+
+    left: 30px;
     font-size: 30px;
     color: #c6c6c6;
+
+    margin-top: 20px;
 }
 
 .ordering_product_list{
     width: 100%;
     margin-bottom: 10px;
-    /*display: none;*/
+    display: none;
 }
 .ordering_product_list .product_title{
     height: 55px;

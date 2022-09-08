@@ -113,7 +113,9 @@
         infinite: false,
 
     });
-
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
 
 </script>
 

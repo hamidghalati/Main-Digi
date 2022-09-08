@@ -24,6 +24,7 @@ class OrderingTime
     protected $total_fast_send_amount=0;
     protected $cart_amount=0;
     protected $fasted_cart_amount=0;
+    protected $normal_send_day=0;
 
 
 
@@ -108,6 +109,8 @@ class OrderingTime
         $array['total_fast_send_amount']=$this->total_fast_send_amount==0 ? 'رایگان': replace_number(number_format($this->total_fast_send_amount)).' تومان ';
         $array['integer_total_fast_send_amount']=$this->total_fast_send_amount==0 ? 0 : $this->total_fast_send_amount;
 
+        $array['normal_send_day']=$this->normal_send_day;
+
 
 
         $array['min_ordering_day']=$this->get_min_ordering_day();
@@ -175,6 +178,11 @@ class OrderingTime
                 $day_array[$key]['integer_send_fast_price']=0;
             }
             $day_array[$key]['send_order_day_number']=$value;
+
+            if ($value>$this->normal_send_day)
+            {
+                $this->normal_send_day=$value;
+            }
         }
         return $day_array;
 

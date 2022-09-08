@@ -28,7 +28,7 @@
         <div class="page_row">
             <div class="page-content">
 
-                <div class="shipping_data_box payment_box">
+                <div class="shipping_data_box payment_box" style="margin-top: 0;">
                     <span class="radio_check active_radio_check"></span>
                     <span>پرداخت اینترنتی (آنلاین با تمام کارت های بانکی)</span>
                 </div>
@@ -55,11 +55,11 @@
                                 <div>
                                     ارسال از :
                                     <span>
-{{--                                            @if($send_order_data['send_order_day_number']==0)--}}
+                                            @if($send_order_data['normal_send_day']==0)
                                             آماده ارسال
-{{--                                        @else--}}
-{{--                                            {{replace_number($send_order_data['send_order_day_number'])}} روز کاری--}}
-{{--                                        @endif--}}
+                                        @else
+                                            {{replace_number($send_order_data['normal_send_day'])}} روز کاری
+                                        @endif
                                         </span>
                                 </div>
 
@@ -141,6 +141,56 @@
                 </div>
 
             </div>
+
+            <div class="page_aside">
+                <div class="order_info" style="margin-top: 0!important;">
+                    <?php
+
+                    $cart_final_price=$send_type==1 ? $send_order_data['integer_normal_cart_price'] : $send_order_data['integer_fasted_cart_amount'];
+                    $final_price=Session::get('final_price',0);
+                    ?>
+                    <ul>
+                        <li>
+                            <span>مبلغ کل</span>
+                            <span>  ({{replace_number(\App\Cart::get_product_count())}}) کالا :</span>
+                            <span class="left">{{replace_number(number_format( $final_price))}} تومان </span>
+                        </li>
+
+
+
+
+
+
+                        <li>
+                            <span>هزینه ارسال :</span>
+                            <span class="left" id="total_send_order_price">
+                                <?= $send_type==1 ? $send_order_data['normal_send_order_amount'] : $send_order_data['total_fast_send_amount']?>
+                            </span>
+                        </li>
+
+
+                    </ul>
+                    <div class="checkout_divider"></div>
+                    <div class="checkout_content">
+                        <p style="color: red">مبلغ قابل پرداخت</p>
+                        <p class="cart_price_p" id="final_price">{{replace_number(number_format($cart_final_price))}} تومان </p>
+                    </div>
+
+                    <a href="{{url('order/payment')}}">
+                        <div class="send_btn checkout">
+                            <span class="line"></span>
+                            <span class="title">پرداخت و ثبت نهایی سفارش</span>
+                        </div>
+                    </a>
+
+
+
+
+
+                </div>
+
+            </div>
+
         </div>
     </div>
 
@@ -158,14 +208,19 @@
 @section('header')
     <link rel="stylesheet" href="{{asset('slick/slick/slick.css')}}">
     <link rel="stylesheet" href="{{asset('slick/slick/slick-theme.css')}}">
+
 @endsection
 
 @section('footer')
+
     <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+
     <script>
+
         const swiper = new Swiper('.swiper-container', {
-            slidesPerView: 'auto',
+            slidesPerView: 1,
             spaceBetween: 30,
             navigation: {
                 nextEl: '.swiper-button-next',
@@ -176,5 +231,10 @@
                 clickable:true,
             }
         });
+
+
+
+
+
     </script>
 @endsection

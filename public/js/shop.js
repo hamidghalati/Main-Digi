@@ -35,6 +35,22 @@ $(document).ready(function () {
         $(this).addClass('active');
     });
 
+    $('.header_box').click(function () {
+       const el=$(this).parent().find('.ordering_product_list');
+       const display=el.css('display');
+       if (display=='block')
+       {
+           el.slideUp();
+       }
+       else
+       {
+           el.slideDown();
+       }
+    });
+
+
+
+
     let discount_slider_count=0;
     let discount_slider_number=0;
     const discount_box_footer=$('.discount_box_footer').css('display')

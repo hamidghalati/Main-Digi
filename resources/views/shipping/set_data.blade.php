@@ -34,6 +34,7 @@
                 </form>
                 <address-list :data="{{json_encode($address)}}"></address-list>
             </div>
+
             <div class="page_aside">
                 <div class="order_info" style="margin-top: 0!important;">
                     <?php
@@ -115,7 +116,7 @@
     <script src="{{url('js/dist/leaflet.awesome-markers.js')}}" type="text/javascript"></script>
     <script src="{{url('js/server.js')}}" type="text/javascript"></script>
 
-
+    <script src="{{ asset('js/shop.js') }}" type="text/javascript"></script>
     <script>
 
         // jQuery(window).load(function () {
@@ -145,6 +146,10 @@
                 marker.setLatLng({lat:lat,lng:lng});
             }
         }
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
 
     </script>
 @endsection
