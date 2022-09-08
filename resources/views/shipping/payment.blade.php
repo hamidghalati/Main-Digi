@@ -76,7 +76,9 @@
                                         <div class="product_info_box swiper-slide">
                                             <img src="{{url('files/thumb/'.$product['product_image_url'])}}" alt="">
                                             <p class="product_title">{{$product['product_title']}}</p>
-                                            <p class="product_color">رنگ :{{$product['color_name']}}</p>
+                                            @if($product['color_id']>0)
+                                                <p class="product_color">رنگ :{{$product['color_name']}}</p>
+                                            @endif
                                         </div>
                                     @endforeach
                                 </div>
@@ -126,7 +128,9 @@
                                                     ?>
                                                 <img src="{{url('files/thumb/'.$product['product_image_url'])}}" alt="">
                                                 <p class="product_title">{{$product['product_title']}}</p>
-                                                <p class="product_color">رنگ : {{$product['color_name']}}</p>
+                                                @if($product['color_id']>0)
+                                                    <p class="product_color">رنگ : {{$product['color_name']}}</p>
+                                                @endif
                                             </div>
                                         @endforeach
                                     </div>

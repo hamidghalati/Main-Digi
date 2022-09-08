@@ -20,6 +20,7 @@ class CreateOrderInfosTable extends Migration
             $table->string('send_order_amount');
             $table->string('product_id');
             $table->string('warranty_id')->nullable();
+            $table->string('colors_id')->nullable();
             $table->string('send_status');
             $table->integer('order_send_time');
             $table->softDeletes();

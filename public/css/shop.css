@@ -2165,7 +2165,6 @@ del {
     content: "\F107";
     font: normal normal normal 14px/1 FontAwesome;
     position: relative;
-
     left: 30px;
     font-size: 30px;
     color: #c6c6c6;
@@ -2185,6 +2184,45 @@ del {
     color: #b9b9b9!important;
     margin-top: 50px!important;
 }
+
+.profile_menu{
+    background-color: #fff;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border: 1px solid #dedede;
+    box-shadow: 0 12px 12px 0 rgba(180,180,180,0.1);
+}
+.profile_menu_title{
+    display: block;
+    padding: 20px;
+    color: #858585;
+}
+.order_table_info{
+    width: 95%;
+    margin: 30px auto!important;
+}
+.order_table_info tr td{
+    color: #bababa;
+    width: 50%;
+}
+.order_table_info tr td span{
+    color: black!important;
+    width: 100%;
+    display: block;
+    margin-top: 10px;
+}
+.order_info_div{
+    width: 95%;
+    margin: 20px auto!important;
+    border: 1px solid #e5e5e5;
+}
+.order_info_div .header{
+    background-color: #fcfef5;
+    border: 1px solid #cfe3bb;
+    color: #b1b58b;
+}
+
+
 
 
 

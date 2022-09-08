@@ -7,6 +7,7 @@ use App\Cart;
 use App\Order;
 use App\OrderingTime;
 use App\ProvinceModel;
+use DB;
 use Illuminate\Http\Request;
 use Session;
 
@@ -90,11 +91,15 @@ class ShoppingController extends Controller
     }
 
     public function verify(){
-        $order_id=8;
-        $order=Order::with(['getProductRow','getProductInfo'])
+        $order_id=1;
+        $order=Order::with(['getOrdertRow','getOrderInfo','getAddress'])
             ->where(['id'=>$order_id])->firstOrFail();
         $order->pay_status='ok';
         $order->update();
+        DB::table('order_infos')->where('order_id',$order_id)->update(['send_status'=>1]);
+        DB::table('order_products')->where('order_id',$order_id)->update(['send_status'=>1]);
+
+        return view('shipping.verify',['order'=>$order]);
     }
 
 }

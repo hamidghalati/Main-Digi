@@ -51,6 +51,7 @@
                         $send_time=$value->send_time;
                         $product_price1=$value->price1;
                         $product_price2=$value->price2;
+                        $warranty_id=$value->warranty_id;
                        ?>
                     <span style="position:relative;bottom: 1px!important;">
                     {{$value->getWarranty->name}}
