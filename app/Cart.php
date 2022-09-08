@@ -36,7 +36,7 @@ class Cart
         }
 
         Session::put('cart',$cart);
-//        print_r(Session::get('cart',array()));
+
     }
 
     public static function check($product_id,$color_id,$warranty_id,$count)
@@ -126,6 +126,7 @@ class Cart
                $cart_data['product'][$j]['warranty_id']=$warranty->id;
                $cart_data['product'][$j]['send_day']=$v->send_time;
                $cart_data['product'][$j]['product_warranty_id']=$v->id;
+               $cart_data['product'][$j]['seller_id']=$v->seller_id;
                if ($color)
                {
                    $cart_data['product'][$j]['color_name']=$color->name;

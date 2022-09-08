@@ -10,7 +10,7 @@ class ProductsModel extends Model
 {
     use SoftDeletes;
     protected $table='products';
-    protected $fillable=['title','ename','product_url','show','view','keywords','description',
+    protected $fillable=['id','title','ename','product_url','show','view','keywords','description',
         'special','cat_id','brand_id','image_url','tozihat','status','price','discount_price','order_number'];
 
     public static function ProductStatus(){

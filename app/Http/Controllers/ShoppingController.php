@@ -89,4 +89,12 @@ class ShoppingController extends Controller
         }
     }
 
+    public function verify(){
+        $order_id=8;
+        $order=Order::with(['getProductRow','getProductInfo'])
+            ->where(['id'=>$order_id])->firstOrFail();
+        $order->pay_status='ok';
+        $order->update();
+    }
+
 }

@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('pay_status',100);
             $table->integer('total_price');
             $table->integer('price');
-            $table->integer('order_id');
+            $table->string('order_id');
             $table->string('pay_code1')->nullable();
             $table->string('pay_code2')->nullable();
             $table->string('order_read');
@@ -30,13 +30,11 @@ class CreateOrdersTable extends Migration
             $table->string('discount_code')->nullable();
             $table->string('gift_value')->nullable();
             $table->integer('gift_id')->nullable();
+            $table->integer('created_at');
+            $table->integer('updated_at');
+            $table->integer('deleted_at')->nullable();
 
 
-
-
-
-            $table->softDeletes();
-            $table->timestamps();
         });
     }
 
