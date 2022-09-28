@@ -2265,6 +2265,74 @@ del {
 .product_list_data .product_verify_info div ul li .title{
     text-align: justify!important;
 }
+.step_inactive{
+    filter: grayscale(100%);
+    opacity: 0.3;
+}
+.order_steps{
+    width: 95%;
+    margin: 20px auto;
+}
+.step_div{
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+}
+.step_div span{
+    padding-top: 15px;
+}
+.order_steps img{
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    display: block;
+}
+.order_steps hr{
+    min-width: 66px;
+    margin-right: 10px;
+    margin-left: 10px;
+    background-color: #e5e5e5;
+    opacity: 1;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    height: 5px;
+}
+/*.order_steps .swiper-slide{*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
+
+.hr_active{
+    background-color: #81d7e2!important;
+}
+.hr_active::before{
+    background-color: #81d7e2!important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

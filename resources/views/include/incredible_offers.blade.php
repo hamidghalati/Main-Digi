@@ -86,7 +86,7 @@
 
                 </div>
 
-                {{--                            <span class="fa fa-angle-right"></span>--}}
+
                 <div class="discount_box_footer">
                     <div class="swiper-container" dir="rtl">
                         <div class="swiper-wrapper">

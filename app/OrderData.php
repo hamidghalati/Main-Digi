@@ -23,6 +23,7 @@ class OrderData
     {
 
         foreach ($this->OrderInfo as $info) {
+            $this->order_row_amount[$info->id]=$info->send_order_amount;
             $products_id = explode('_', $info->product_id);
             $colors_id = explode('_', $info->colors_id);
             $warranty_id = explode('_', $info->warranty_id);

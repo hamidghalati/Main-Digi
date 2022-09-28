@@ -79,6 +79,27 @@
                         {{\App\Order::getOrderStatus($value['send_status'],$orderStatus)}}
                     </div>
 
+                    <div class="swiper-container order_steps">
+                        <div class="swiper-wrapper">
+                        @foreach($orderStatus as $keys=>$status)
+                            @if($keys>-1)
+                                <div class="swiper-slide">
+                                    <div class="step_div @if($value['send_status']<$keys) step_inactive @endif">
+                                        <img src="{{url('files/images/steps/step'.$keys.'.png')}}" alt="" >
+                                        <span  class="@if($value['send_status']>=$keys) text-success @endif">{{$status}}</span>
+                                    </div>
+                                    <hr class="@if($value['send_status']>=$keys) hr_active @endif">
+
+
+                                </div>
+                            @endif
+                        @endforeach
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+
+
 
                     <table class="table table-bordered order_table_info">
                         <tr>
@@ -168,5 +189,27 @@
 
 
     </div>
+
+@endsection
+
+@section('header')
+    <link rel="stylesheet" href="{{asset('slick/slick/slick.css')}}">
+    <link rel="stylesheet" href="{{asset('slick/slick/slick-theme.css')}}">
+@endsection
+@section('footer')
+    <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+
+    <script>
+        const swiper = new Swiper('.swiper-container', {
+            slidesPerView: 5,
+            spaceBetween: 0,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            }
+        });
+
+    </script>
 
 @endsection

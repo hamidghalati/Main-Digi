@@ -119,10 +119,10 @@
                                     </div>
 
                                 </div>
-                                <div class="ordering_product_list swiper-container">
+                                <div class="swiper-container ordering_product_list">
                                     <div class="swiper-wrapper swiper_product_box">
                                         @foreach($send_order_data['array_product_id'][$key] as $key2=>$value2)
-                                            <div class="product_info_box swiper-slide">
+                                            <div class="swiper-slide product_info_box ">
                                                 <?php
                                                     $product=$send_order_data['cart_product_data'][$value2.'_'.$key2];
                                                     ?>
@@ -224,8 +224,8 @@
     <script>
 
         const swiper = new Swiper('.swiper-container', {
-            slidesPerView: 1,
-            spaceBetween: 30,
+            slidesPerView: 'auto',
+            spaceBetween: 0,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
