@@ -2210,6 +2210,7 @@ del {
     width: 100%;
     display: block;
     margin-top: 10px;
+    font-family: 'IRANSans';
 }
 .order_info_div{
     width: 95%;
@@ -2309,6 +2310,15 @@ del {
     background-color: #81d7e2!important;
 }
 
+.payment_warning{
+    width: 95%;
+    margin: 10px auto;
+    font-family: 'IRANSans';
+    display: block;
+}
+.payment_warning span{
+
+}
 
 
 

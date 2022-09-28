@@ -87,6 +87,10 @@ Route::prefix('admin')->group(function (){
     //setting
    Route::match(['get','post'],'setting/send-order-price','Admin\SettingController@send_order_price');
 
+   //orders
+    Route::get('orders','Admin\OrdersController@index');
+    Route::get('orders/{order_id}','Admin\OrdersController@show');
+    Route::post('order/change_status','Admin\OrdersController@change_status');
 
 
 

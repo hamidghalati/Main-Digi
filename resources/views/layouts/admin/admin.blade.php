@@ -18,43 +18,75 @@
 
 <div class="container-fluid">
     <div class="page-sidebar">
+        <?php
+            $sideBarMenu=array();
+            $sideBarMenu[0]=[
+                'label'=>'محصولات',
+                'icon'=>'fa fa-shopping-cart',
+                'access'=>'products|category',
+                'child'=>[
+                    ['url'=>url('admin/products'),'label'=>'مدیریت محصولات','access'=>'products'],
+                    ['url'=>url('admin/products/create'),'label'=>'فزودن محصول','access'=>'products','accessValue'=>0],
+                    ['url'=>url('admin/category'),'label'=>'مدیریت گروه محصولات','access'=>'products'],
+                ]
+            ];
+        $sideBarMenu[1]=[
+            'label'=>'اسلایدر',
+            'icon'=>'fa fa-sliders',
+            'access'=>'sliders',
+            'child'=>[
+                ['url'=>url('admin/sliders'),'label'=>'مدیریت اسلایدرها','access'=>'sliders'],
+                ['url'=>url('admin/sliders/create'),'label'=>'افزودن اسلایدر','access'=>'sliders'],
+            ]
+        ];
+        $sideBarMenu[2]=[
+            'label'=>'مناطق',
+            'icon'=>'fa fa-location',
+            'access'=>'location',
+            'child'=>[
+                ['url'=>url('admin/province'),'label'=>'مدیریت استان ها','access'=>'location'],
+                ['url'=>url('admin/city'),'label'=>'مدیریت شهرها','access'=>'location'],
+            ]
+        ];
+        $sideBarMenu[3]=[
+            'label'=>'سفارشات',
+            'icon'=>'fa fa-list',
+            'access'=>'orders',
+            'child'=>[
+                ['url'=>url('admin/orders'),'label'=>'مدیریت سفارشات','access'=>'orders','accessValue'=>0],
+                ['url'=>url('admin/orders/submission'),'label'=>'مدیریت مرسوله ها','access'=>'orders','accessValue'=>4],
+                ['url'=>url('admin/orders/submission/approved'),'label'=>' مرسوله های تأیید شده','access'=>'orders','accessValue'=>5],
+                ['url'=>url('admin/orders/submission/items/today'),'label'=>' مرسوله های ارسالی امروز','access'=>'orders','accessValue'=>6],
+                ['url'=>url('admin/orders/submission/ready'),'label'=>' مرسوله های آماده ارسال','access'=>'orders','accessValue'=>7],
+                ['url'=>url('admin/orders/submission/posting/send'),'label'=>' مرسوله های ارسال شده به پست','access'=>'orders','accessValue'=>8],
+                ['url'=>url('admin/orders/submission/posting/receive'),'label'=>' مرسوله های آماده دریافت از پست','access'=>'orders','accessValue'=>9],
+                ['url'=>url('admin/orders/delivered/shipping'),'label'=>' مرسوله های تحویل داده شده','access'=>'orders','accessValue'=>10],
+
+            ]
+        ];
+            ?>
         <span class="fa fa-bars" id="sidebarToggle"></span>
         <ul id="sidebar_menu">
-            <li>
-                <a>
-                    <span class="fa fa-shopping-cart"></span>
-                    <span class="sidebar_menu_text">محصولات</span>
-                    <span class="fa fa-angle-left"></span>
-                </a>
-                <div class="child_menu">
-                    <a href="{{url('admin/products')}}">مدیریت محصولات</a>
-                    <a href="{{url('admin/products/create')}}">افزودن محصول</a>
-                    <a href="{{url('admin/category')}}">مدیریت گروه محصولات</a>
-                </div>
-            </li>
-            <li>
-                <a>
-                    <span class="fa fa-sliders"></span>
-                    <span class="sidebar_menu_text">اسلایدر</span>
-                    <span class="fa fa-angle-left"></span>
-                </a>
-                <div class="child_menu">
-                    <a href="{{url('admin/sliders')}}">مدیریت اسلایدرها</a>
-                    <a href="{{url('admin/sliders/create')}}">افزودن اسلایدر</a>
-                </div>
-            </li>
+            @foreach($sideBarMenu as $key=>$value)
+                <?php $child=array_key_exists('child',$value) ?>
+                <li>
+                    <a @if(array_key_exists('url',$value)) href="{{$value['url']}}" @endif>
+                        <span class="{{$value['icon']}}"></span>
+                        <span class="sidebar_menu_text">{{$value['label']}}</span>
+                        @if($child) <span class="fa fa-angle-left"></span> @endif
+                    </a>
+                    @if($child)
+                        <div class="child_menu">
+                            @foreach($value['child'] as $key2=>$value2)
+                                <a href="{{$value2['url']}}">{{$value2['label']}}</a>
+                            @endforeach
+                        </div>
+                    @endif
 
-            <li>
-                <a>
-                    <span class="fa fa-location"></span>
-                    <span class="sidebar_menu_text">مناطق</span>
-                    <span class="fa fa-angle-left"></span>
-                </a>
-                <div class="child_menu">
-                    <a href="{{url('admin/province')}}">مدیریت استان ها</a>
-                    <a href="{{url('admin/city')}}">مدیریت شهرها</a>
-                </div>
-            </li>
+
+                </li>
+            @endforeach
+
         </ul>
 
 
@@ -62,6 +94,7 @@
     <div class="page-content">
         <div class="content_box" id="app">
             @yield('content')
+
         </div>
 
     </div>
@@ -83,10 +116,18 @@
     </div>
 </div>
 
+<div id="loading">
+    <span class="loader"></span>
+    <h6>لطفاً صبور باشید</h6>
+</div>
+
+
+
 <script src="{{ asset('js/app.js') }}" ></script>
 <script src="{{ asset('js/AdminVue.js') }}" ></script>
 @yield('footer')
 <script src="{{ asset('js/admin.js') }}" ></script>
+
 
 </body>
 </html>

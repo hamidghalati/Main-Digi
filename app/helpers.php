@@ -980,6 +980,8 @@ function check_has_color_in_warranty_list($warranty_list,$color_id)
     return $r;
 }
 
+
+
 function get_first_color_id($warranty_list,$color_id)
 {
     if (sizeof($warranty_list)>0)
@@ -1026,6 +1028,40 @@ function getCartWarrantyData($warranties,$warranty_id)
     }
 }
 
+function set_order_product_status($orderInfo,$status)
+{
+    $product_id=$orderInfo->products_id;
+    $colors_id=$orderInfo->colors_id;
+    $warranty_id=$orderInfo->warranty_id;
+    $product_id=explode('-',$product_id);
+    $colors_id=explode('-',$colors_id);
+    $warranty_id=explode('-',$warranty_id);
+    foreach ($product_id as $key=>$value)
+    {
+        if (!empty($value))
+        {
+            DB::table('order_products')
+                ->where(['order_id'=>$orderInfo->order_id,'product_id'=>$value,'color_id'=>$colors_id[$key],'warranty_id'=>$warranty_id[$key]])
+                ->update(['send_status'=>$status]);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //function getProductCost($info,$products)
 //    {
@@ -1044,6 +1080,8 @@ function getCartWarrantyData($warranties,$warranty_id)
 //        return $amount;
 //
 //    }
+
+
 
 
 

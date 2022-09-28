@@ -154,6 +154,7 @@ class Order extends Model
         $warranty_id=$collection->implode('_');
         return $warranty_id;
     }
+
     public function get_fasted_send_colors_id($order_data,$key)
     {
         $collection=collect($order_data['array_colors_id'][$key]);
@@ -232,6 +233,25 @@ class Order extends Model
     public static function getOrderStatus($status,$orderStatus)
     {
         return $orderStatus[$status];
+    }
+
+    public static function getData($request){
+        $string='?';
+        $orders=self::orderBy('id','DESc');
+        if (inTrashed($request)){
+            $orders=$orders->onlyTrashed();
+            $string=create_paginate_url($string,'trashed=true');
+        }
+
+        if (array_key_exists('user_id',$request)&& !empty($request['string']))
+        {
+            $orders=$orders->where('user_id','like','%'.$request['user_id'].'%');
+            $string=create_paginate_url($string,'user_id='.$request['user_id']);
+        }
+
+        $orders= $orders->paginate(10);
+        $orders->withPath($string);
+        return $orders;
     }
 
 

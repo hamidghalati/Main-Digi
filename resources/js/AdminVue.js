@@ -10,6 +10,7 @@ import IncredibleOffers from './components/IncredibleOffers';
 import axios from 'axios';
 import VueAxios from "vue-axios";
 import Counter from "./components/Counter";
+import OrderStep from "./components/OrderStep";
 
 
 
@@ -21,7 +22,8 @@ const app = new Vue({
     el: '#app',
     components:{
         IncredibleOffers,
-        Counter
+        Counter,
+        OrderStep
 
 
     }

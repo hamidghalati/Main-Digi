@@ -48,9 +48,6 @@ class CategoriesModel extends Model
         return $array;
     }
 
-
-
-
     public function getChild(){
         return $this->hasMany(CategoriesModel::class,'parent_id','id');
     }

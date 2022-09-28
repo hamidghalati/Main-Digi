@@ -1,24 +1,15 @@
-@extends('layouts.order.order')
+@extends('layouts.admin.admin')
 @section('content')
+    @include('include.breadcrumb',['data'=>[
+    ['title'=>'مدیریت سفارشات','url'=>url('admin/orders')],
+    ['title'=>'جزییات سفارشات','url'=>url('admin/orders/'.$order->id)]
 
-    <div class="container">
-        <article class="card">
-            <div class="card-body">
-                <div class="track">
-                    <div class="step active"><span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">اطلاعات ارسال</span>
-                    </div>
-                    <div class="step active"><span class="icon"> <i class="fa fa-credit-card"></i> </span> <span
-                            class="text"> پرداخت</span></div>
-                    <div class="step active"><span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> اتمام خرید و ارسال </span>
-                    </div>
-                    {{--                    <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">پیگیری</span> </div>--}}
-                </div>
+    ]])
+    <div class="panel">
+        <div class="header">
+                جزییات سفارشات : {{ replace_number($order->order_id) }}
+        </div>
 
-            </div>
-        </article>
-    </div>
-
-    <div class="container-fluid">
         <?php
 
         use Hekmatinasser\Verta\Verta;
@@ -27,25 +18,7 @@
         $orderStatus = \App\Order::orderStatus();
         ?>
 
-
-        <div class="profile_menu">
-            <span class="profile_menu_title">
-                جزییات سفارش : {{ replace_number($order->order_id) }}
-            </span>
-            <span class="profile_menu_title" style="padding: 0 20px 0;font-size: 12px">
-                تاریخ ثبت سفارش :
-                {{replace_number(verta($order->created_at)->formatJalaliDatetime())}}
-            </span>
-
-            @if(isset($error_payment))
-                <div class="alert alert-warning payment_warning">
-                    <span>تراکنش نامعتبر است</span>
-                    (در صورت کسر وجه از حساب شما، مبلغ مذکور طی ۷۲ ساعت به حساب شما عودت داده خواهد شد)
-                </div>
-            @endif
-
-
-
+        <div class="panel_content">
             <table class="table table-bordered order_table_info">
                 <tr>
                     <td>
@@ -88,25 +61,8 @@
                         {{\App\Order::getOrderStatus($value['send_status'],$orderStatus)}}
                     </div>
 
-                    <div class="swiper-container order_steps">
-                        <div class="swiper-wrapper">
-                        @foreach($orderStatus as $keys=>$status)
-                            @if($keys>-1)
-                                <div class="swiper-slide">
-                                    <div class="step_div @if($value['send_status']<$keys) step_inactive @endif">
-                                        <img src="{{url('files/images/steps/step'.$keys.'.png')}}" alt="" >
-                                        <span  class="@if($value['send_status']>=$keys) text-success @endif">{{$status}}</span>
-                                    </div>
-                                    <hr class="@if($value['send_status']>=$keys) hr_active @endif">
 
-
-                                </div>
-                            @endif
-                        @endforeach
-                        </div>
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
-                    </div>
+                    <order-step :steps="{{json_encode($orderStatus)}}" :send_status="{{$value['send_status']}}" :order_id="{{$value->id}}"></order-step>
 
 
 
@@ -180,7 +136,7 @@
                                 <td>{{replace_number($product['product_count'])}} </td>
                                 <td>{{replace_number(number_format($product['product_price1']))}} تومان </td>
                                 <td>{{replace_number(number_format($product['product_price1']*$product['product_count']))}} تومان </td>
-                                <?php
+                                    <?php
                                     $discount=(($product['product_price1']*$product['product_count'])-($product['product_price2']*$product['product_count']));
                                     ?>
                                 <td>{{replace_number(number_format($discount))}}</td>
@@ -193,24 +149,23 @@
                 </div>
             @endforeach
 
-
         </div>
-
-
     </div>
 
 @endsection
 
 @section('header')
-    <link rel="stylesheet" href="{{asset('slick/slick/slick.css')}}">
-    <link rel="stylesheet" href="{{asset('slick/slick/slick-theme.css')}}">
+    <link rel="stylesheet" href="{{asset('css/swiper.min.css')}}">
+{{--    <link rel="stylesheet" href="{{asset('slick/slick/slick.css')}}">--}}
+{{--    <link rel="stylesheet" href="{{asset('slick/slick/slick-theme.css')}}">--}}
 
 @endsection
 @section('footer')
     <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+{{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>--}}
 
     <script>
+        $('#sidebarToggle').click();
         const swiper = new Swiper('.swiper-container', {
             slidesPerView: 5,
             spaceBetween: 0,

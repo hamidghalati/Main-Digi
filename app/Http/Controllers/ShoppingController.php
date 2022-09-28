@@ -93,7 +93,7 @@ class ShoppingController extends Controller
     }
 
     public function verify(){
-        $order_id=13;
+        $order_id=15;
         $order=Order::with(['getProductRow','getOrderInfo','getAddress'])
             ->where(['id'=>$order_id])->firstOrFail();
         $order->pay_status='ok';
