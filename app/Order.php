@@ -243,10 +243,31 @@ class Order extends Model
             $string=create_paginate_url($string,'trashed=true');
         }
 
-        if (array_key_exists('user_id',$request)&& !empty($request['string']))
+        if (array_key_exists('user_id',$request)&& !empty($request['user_id']))
         {
             $orders=$orders->where('user_id','like','%'.$request['user_id'].'%');
             $string=create_paginate_url($string,'user_id='.$request['user_id']);
+        }
+
+        if (array_key_exists('order_id',$request)&& !empty($request['order_id']))
+        {
+            $order_id=replace_number2($request['order_id']);
+            $orders=$orders->where('order_id','like','%'.$order_id.'%');
+            $string=create_paginate_url($string,'order_id='.$request['order_id']);
+        }
+
+        if (array_key_exists('first_date',$request)&& !empty($request['first_date']))
+        {
+            $first_date=getTimestamp($request['first_date'],'first');
+            $orders=$orders->where('created_at','>=',$first_date);
+            $string=create_paginate_url($string,'first_date='.$request['first_date']);
+        }
+
+        if (array_key_exists('end_date',$request)&& !empty($request['end_date']))
+        {
+            $end_date=getTimestamp($request['end_date'],'end');
+            $orders=$orders->where('created_at','<',$end_date);
+            $string=create_paginate_url($string,'end_date='.$request['end_date']);
         }
 
         $orders= $orders->paginate(10);

@@ -1,7 +1,8 @@
 <?php
 
     use App\CategoriesModel;
-    use App\Lib\JDF;
+use App\GiftCart;
+use App\Lib\JDF;
     use App\ProductPriceModel;
 use App\ProductWarranty;
 use Illuminate\Support\Facades\DB;
@@ -706,6 +707,20 @@ function replace_number($number){
     return $number;
 }
 
+function replace_number2($number){
+    $number=str_replace("۰",'0',$number);
+    $number=str_replace("۱",'1',$number);
+    $number=str_replace("۲",'2',$number);
+    $number=str_replace("۳",'3',$number);
+    $number=str_replace("۴",'4',$number);
+    $number=str_replace("۵",'5',$number);
+    $number=str_replace("۶",'6',$number);
+    $number=str_replace("۷",'7',$number);
+    $number=str_replace("۸",'8',$number);
+    $number=str_replace("۹",'9',$number);
+    return $number;
+}
+
 function inTrashed($req){
     if (array_key_exists('trashed',$req) && ['trashed']==true)
     {
@@ -1047,7 +1062,29 @@ function set_order_product_status($orderInfo,$status)
     }
 }
 
+function getOrderProductCount($products_id)
+{
+    $e=explode('_',$products_id);
+    return sizeof($e);
+}
 
+function CheckGiftCart($product,$user_id,$credit_cart,$order_id)
+{
+    if ($product->use_for_gift_cart=='yes')
+    {
+        $code='shopGift-'.rand(99,999).$user_id.rand(9,99);
+        $gift_cart=new GiftCart();
+        $gift_cart->user_id=$user_id;
+        $gift_cart->order_id=$order_id;
+        $gift_cart->credit_cart=$credit_cart;
+        $gift_cart->credit_used=0;
+        $gift_cart->code=$code;
+        $gift_cart->save();
+
+
+
+    }
+}
 
 
 

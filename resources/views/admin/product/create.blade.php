@@ -113,8 +113,27 @@
                 @endif
             </div>
 
-            <div class="d-grid gap-2 col-6 mx-auto">
-                <button type="submit" class="btn btn-success btn-lg "><i class="fa fa-check"></i>  ثبت اطلاعات</button>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>استفاده به عنوان کارت هدیه</label>
+                    <div class="pretty p-icon p-curve p-tada p-bigger p-jelly">
+                        <input type="checkbox" name="use_for_gift_cart" id="use_for_gift_cart" />
+                        <div class="state p-success-o">
+                            <i class="icon mdi mdi-gift"></i>
+                            <label></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="d-grid gap-2 col-6 mx-auto" style="text-align: center!important;">
+                        <button type="submit" class="btn btn-success btn-lg "><i class="fa fa-pencil"></i>     ثبت اطلاعات     </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

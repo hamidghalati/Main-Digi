@@ -48,12 +48,14 @@ class ProductController extends CustomController
 
     public function store(ProductRequest $request)
     {
+        $use_for_gift_cart=$request->has('use_for_gift_cart') ? 'yes' : 'no';
         $product_color=$request->get('product_color',array());
         $product=new ProductsModel($request->all());
         $product_url=get_url($request->get('title'));
         $product->product_url=$product_url;
         $image_url=uploade_file($request,'pic','products');
         $product->image_url=$image_url;
+        $product->use_for_gift_cart=$use_for_gift_cart;
         $product->view=0;
         create_fit_pic('files/products/'.$image_url,$image_url);
         $product->saveOrFail();
@@ -96,13 +98,15 @@ class ProductController extends CustomController
 
     public function update(Request $request, $id)
     {
+        $data=$request->all();
+        $use_for_gift_cart=$request->has('use_for_gift_cart') ? 'yes' : 'no';
         $product=ProductsModel::findOrFail($id);
         $product_color=$request->get('product_color',array());
         $product_url=get_url($request->get('title'));
         $product->product_url=$product_url;
+        $data['use_for_gift_cart']=$use_for_gift_cart;
         $image_url=uploade_file($request,'pic','products');
         if (!empty($image_url)){
-//            if (!empty($product->image_url)){
 
            remove_file($product->image_url,'products');
            remove_file($product->image_url,'thumb');
@@ -110,7 +114,7 @@ class ProductController extends CustomController
             $product->image_url=$image_url;
         }
 
-        $product->update($request->all());
+        $product->update($data);
         DB::table('product_color')->where('product_id',$product->id)->delete();
         foreach ($product_color as $key=>$value)
         {

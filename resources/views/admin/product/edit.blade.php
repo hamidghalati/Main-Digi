@@ -1,8 +1,8 @@
 @extends('layouts.admin.admin')
 @section('content')
     @include('include.breadcrumb',['data'=>[
-       ['title'=>'ویرایش محصولات ','url'=>url('admin/products')],
-       ['title'=>'ویرایش محصول جدید','url'=>url('admin/products/'.$product->id.'/edit')]
+       ['title'=>'مدیریت محصولات ','url'=>url('admin/products')],
+       ['title'=>'ویرایش محصول ','url'=>url('admin/products/'.$product->id.'/edit')]
        ]])
 
     <?php
@@ -89,7 +89,6 @@
 
                 </div>
                 <div class="col-md-6">
-{{--                    {{ Form::label('keywords', 'برچسب محصول :')}}--}}
                     <div class="form-group">
 
                         <input type="text" name="tag_list"  id="tag_list" class="form-control" placeholder="برچسب های محصول">
@@ -137,9 +136,29 @@
 
             </div>
 
-            <div class="d-grid gap-2 col-6 mx-auto">
-                <button type="submit" class="btn btn-warning btn-lg "><i class="fa fa-pencil"></i>     ویرایش اطلاعات     </button>
-            </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>استفاده به عنوان کارت هدیه</label>
+                        <div class="pretty p-icon p-curve p-tada p-bigger">
+                            <input type="checkbox" @if($product->use_for_gift_cart=='yes') checked="checked" @endif value="yes" name="use_for_gift_cart" id="use_for_gift_cart" />
+                            <div class="state p-success-o">
+                                <i class="icon mdi mdi-close-outline"></i>
+                                <label></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="d-grid gap-2 col-6 mx-auto" style="text-align: center!important;">
+                            <button type="submit" class="btn btn-warning btn-lg "><i class="fa fa-pencil"></i>     ویرایش اطلاعات     </button>
+                        </div>
+                    </div>
+                </div>
+
         </div>
     </div>
 

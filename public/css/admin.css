@@ -730,6 +730,7 @@ input.pdate{
     width: 100%;
     text-align: center;
     font-size: 13px;
+    cursor: pointer;
 }
 .step_div span{
     padding-top: 15px;
@@ -909,4 +910,14 @@ input.pdate{
     -webkit-border-radius: 10px;
     z-index: 100000;
     display: none;
+}
+.order_search{
+    display: flex;
+}
+.order_search .pcalBtn{
+    display: none;
+}
+
+.order_search .form-control{
+    border-radius: 0!important;
 }

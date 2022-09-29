@@ -32,7 +32,7 @@ class OrdersController extends CustomController
             $order->update();
         }
 
-        $order_data=new OrderData($order->getOrderInfo,$order->getProductRow);
+        $order_data=new OrderData($order->getOrderInfo,$order->getProductRow,$order->user_id);
         $order_data=$order_data->getData();
 
         return view('admin.orders.show',['order'=>$order,'order_data'=>$order_data]);
@@ -68,5 +68,92 @@ class OrdersController extends CustomController
         }
     }
 
+    public function submission(Request $request)
+    {
+        $submission=OrderInfo::getData($request->all(),0,'DESC');
+        return view('admin.orders.submission',[
+           'label'=>'مدیریت مرسوله ها',
+           'label_url'=>'submission',
+           'submission'=>$submission,
+            'req'=>$request
+        ]);
 
+    }
+
+    public function submission_info($id)
+    {
+        $submission_info=OrderInfo::with('getOrder.getAddress')
+            ->where('id',$id)
+            ->has('getOrder')
+            ->firstOrFail();
+        $order_data=new OrderData($submission_info->getOrder->getOrderInfo,$submission_info->getOrder->getProductRow,$submission_info->getOrder->user_id);
+        $order_data=$order_data->getData($id);
+        return view('admin.orders.submission_info',['submission_info'=>$submission_info,'order_data'=>$order_data]);
+    }
+
+    public function submission_approved(Request $request)
+    {
+        $submission=OrderInfo::getData($request->all(),1,'DESC');
+        return view('admin.orders.submission',[
+            'label'=>'مرسوله های تأیید شده',
+            'label_url'=>'submission/approved',
+            'submission'=>$submission,
+            'req'=>$request
+        ]);
+    }
+
+    public function items_today(Request $request)
+    {
+        $submission=OrderInfo::getData($request->all(),2,'DESC');
+        return view('admin.orders.submission',[
+            'label'=>'مرسوله های ارسالی امروز',
+            'label_url'=>'submission/items/today',
+            'submission'=>$submission,
+            'req'=>$request
+        ]);
+    }
+
+    public function submission_ready(Request $request)
+    {
+        $submission=OrderInfo::getData($request->all(),3,'DESC');
+        return view('admin.orders.submission',[
+            'label'=>'مرسوله های آماده ارسال',
+            'label_url'=>'submission/ready',
+            'submission'=>$submission,
+            'req'=>$request
+        ]);
+    }
+
+    public function posting_send(Request $request)
+    {
+        $submission=OrderInfo::getData($request->all(),4,'DESC');
+        return view('admin.orders.submission',[
+            'label'=>'  مرسوله های ارسال شده به پست',
+            'label_url'=>'submission/posting/send',
+            'submission'=>$submission,
+            'req'=>$request
+        ]);
+    }
+
+    public function posting_receive(Request $request)
+    {
+        $submission=OrderInfo::getData($request->all(),5,'DESC');
+        return view('admin.orders.submission',[
+            'label'=>'  مرسوله های آماده دریافت از پست',
+            'label_url'=>'submission/posting/receive',
+            'submission'=>$submission,
+            'req'=>$request
+        ]);
+    }
+
+        public function delivered_shipping(Request $request)
+    {
+        $submission=OrderInfo::getData($request->all(),6,'DESC');
+        return view('admin.orders.submission',[
+            'label'=>'  مرسوله های تحویل داده شده',
+            'label_url'=>'delivered/shipping',
+            'submission'=>$submission,
+            'req'=>$request
+        ]);
+    }
 }

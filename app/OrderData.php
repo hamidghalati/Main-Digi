@@ -12,26 +12,38 @@ class OrderData
     protected $array_color_id=array();
     protected $array_warranty_id=array();
     protected $row_data=array();
+    protected $user_id=0;
+    protected $check_gift_cart='no';
 
-    public function __construct($OrderInfo, $ProductRow)
+    public function __construct($OrderInfo, $ProductRow,$user_id,$check_gift_cart='no')
     {
+        $this->check_gift_cart=$check_gift_cart;
+        $this->user_id=$user_id;
         $this->OrderInfo = $OrderInfo;
         $this->ProductRow = $ProductRow;
     }
 
-    public function getData()
+    public function getData($id=0)
     {
 
+
         foreach ($this->OrderInfo as $info) {
-            $this->order_row_amount[$info->id]=$info->send_order_amount;
-            $products_id = explode('_', $info->product_id);
-            $colors_id = explode('_', $info->colors_id);
-            $warranty_id = explode('_', $info->warranty_id);
-            foreach ($products_id as $key => $value) {
-                if (!empty($value)) {
-                    $this->getProductDataOfList($info, $this->ProductRow, $value, $warranty_id[$key], $colors_id[$key]);
+
+            if (($id>0 && $info->id=$id)|| $id==0)
+            {
+                $this->order_row_amount[$info->id]=$info->send_order_amount;
+                $products_id = explode('_', $info->product_id);
+                $colors_id = explode('_', $info->colors_id);
+                $warranty_id = explode('_', $info->warranty_id);
+                foreach ($products_id as $key => $value) {
+                    if (!empty($value)) {
+                        $this->getProductDataOfList($info, $this->ProductRow, $value, $warranty_id[$key], $colors_id[$key]);
+                    }
                 }
             }
+
+
+
         }
 
         $this->getProductData();
@@ -64,7 +76,8 @@ class OrderData
 
     public function getProductData()
     {
-        $products=ProductsModel::whereIn('id',$this->array_product_id)->select(['id','title','image_url'])->get();
+        $products=ProductsModel::whereIn('id',$this->array_product_id)
+            ->select(['id','title','image_url','use_for_gift_cart'])->get();
         $colors=ColorModel::whereIn('id',$this->array_color_id)->get();
         $warranties=WarrantyModel::whereIn('id',$this->array_warranty_id)->get();
         $j=0;
@@ -77,6 +90,11 @@ class OrderData
                 $warranty=getCartWarrantyData($warranties,$value2->warranty_id);
                 if ($product  && $warranty)
                 {
+                    if ($this->check_gift_cart=='yes')
+                    {
+                        CheckGiftCart($product,$this->user_id,$value2->product_price2,$this->OrderInfo[0]->order_id);
+
+                    }
                     $this->row_data[$key][$j]['title']=$product->title;
                     $this->row_data[$key][$j]['image_url']=$product->image_url;
                     $this->row_data[$key][$j]['warranty_name']=$warranty->name;

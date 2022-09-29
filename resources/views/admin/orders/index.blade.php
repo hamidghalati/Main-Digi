@@ -14,15 +14,18 @@
             @include('include.alert')
 
 
-{{--            <form action="" method="get" class="search_form">--}}
-{{--                @if(isset($_GET['trashed']) && $_GET['trashed']==true)--}}
-{{--                    <input type="hidden" name="trashed" value="true">--}}
-{{--                @endif--}}
-{{--                <input type="text" name="string" class="form-control" value="{{$req->get('string','')}}" placeholder="کلمه مورد نظر را وارد کنید">--}}
-{{--                <button class="btn btn-primary btn_search">جستجو--}}
-{{--                </button>--}}
+            <form action="" method="get" class="search_form order_search">
+                @if(isset($_GET['trashed']) && $_GET['trashed']==true)
+                    <input type="hidden" name="trashed" value="true">
+                @endif
+                <input autocomplete="off" type="text" name="order_id" class="form-control" value="{{$req->get('order_id','')}}" placeholder="شماره سفارش مورد نظر را وارد کنید">
+                <input autocomplete="off" type="text" name="first_date" class="form-control pdate" id="pcal1" value="{{$req->get('first_date','')}}" placeholder="از تاریخ ">
+                <input autocomplete="off" type="text" name="end_date" class="form-control pdate" id="pcal2" value="{{$req->get('end_date','')}}" placeholder="تا تاریخ">
+                <button class="btn btn-primary btn_search">جستجو
+                </button>
 
-{{--            </form>--}}
+            </form>
+
             <?php
 
             use Hekmatinasser\Verta\Verta;
@@ -143,3 +146,15 @@
 
 @endsection
 
+@section('header')
+    <link rel="stylesheet" href="{{asset('css/jspc-gray.css')}}">
+@endsection
+
+@section('footer')
+    <script type="text/javascript" src="{{asset('js/js-persian-cal.min.js')}}"></script>
+
+    <script>
+        const pcal1=new AMIB.persianCalendar('pcal1');
+        const pcal2=new AMIB.persianCalendar('pcal2');
+    </script>
+@endsection

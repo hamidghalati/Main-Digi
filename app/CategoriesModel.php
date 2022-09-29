@@ -75,7 +75,7 @@ class CategoriesModel extends Model
 
         $category= $category->orderBy('id','DESc')->paginate(10);
         $category->withPath($string);
-     return $category;
+         return $category;
     }
 
     protected static function boot()

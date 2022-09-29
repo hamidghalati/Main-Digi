@@ -93,14 +93,16 @@ class ShoppingController extends Controller
     }
 
     public function verify(){
-        $order_id=15;
+        $order_id=21;
         $order=Order::with(['getProductRow','getOrderInfo','getAddress'])
             ->where(['id'=>$order_id])->firstOrFail();
         $order->pay_status='ok';
         $order->update();
 
-        $order_data=new OrderData($order->getOrderInfo,$order->getProductRow);
+        $order_data=new OrderData($order->getOrderInfo,$order->getProductRow,$order->user_id,'yes');
         $order_data=$order_data->getData();
+
+//        hasGiftCart($order->getProductRow);
 
         DB::table('order_infos')->where('order_id',$order_id)->update(['send_status'=>1]);
         DB::table('order_products')->where('order_id',$order_id)->update(['send_status'=>1]);

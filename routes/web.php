@@ -89,7 +89,18 @@ Route::prefix('admin')->group(function (){
 
    //orders
     Route::get('orders','Admin\OrdersController@index');
+    Route::get('orders/submission','Admin\OrdersController@submission');
+    Route::get('orders/submission/approved','Admin\OrdersController@submission_approved');
+    Route::get('orders/submission/items/today','Admin\OrdersController@items_today');
+    Route::get('orders/submission/ready','Admin\OrdersController@submission_ready');
+    Route::get('orders/submission/posting/send','Admin\OrdersController@posting_send');
+    Route::get('orders/submission/posting/receive','Admin\OrdersController@posting_receive');
+    Route::get('orders/delivered/shipping','Admin\OrdersController@delivered_shipping');
+
+    Route::get('orders/submission/{submission_id}','Admin\OrdersController@submission_info');
+
     Route::get('orders/{order_id}','Admin\OrdersController@show');
+
     Route::post('order/change_status','Admin\OrdersController@change_status');
 
 
@@ -122,5 +133,10 @@ Route::get('order/verify','ShoppingController@verify');
 Route::prefix('user')->middleware(['auth'])->group(function (){
     Route::post('/addAddress','UserController@addAddress');
     Route::delete('/removeAddress/{address_id}','UserController@removeAddress');
+
+    //user panel
+    Route::get('/profile/gift-cart','User\UserPanelController@gift_cart');
+
+
 
 });
