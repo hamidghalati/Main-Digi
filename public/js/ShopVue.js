@@ -3036,12 +3036,18 @@ __webpack_require__.r(__webpack_exports__);
         data: []
       },
       request_url: '',
-      noUiSlider: null
+      noUiSlider: null,
+      min_price: 0,
+      max_price: 0
     };
   },
   mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   mounted: function mounted() {
     this.request_url = window.location.href.replace(this.$siteUrl, this.$siteUrl + '/getProduct/');
+    var app = this;
+    $(document).on('click', '#price_filter_btn', function () {
+      app.setFilterPrice();
+    });
     this.getProduct();
   },
   methods: {
@@ -3077,19 +3083,39 @@ __webpack_require__.r(__webpack_exports__);
             }
           }
         });
-        slider.noUiSlider.on('update', function (values, handle) {
-          $("#min_price").text(app.number_format(values[0]));
-          $("#max_price").text(app.number_format(values[1]));
-        });
-      } else {
-        this.noUiSlider.updateOptions({
-          start: [0, price],
-          range: {
-            'min': 0,
-            'max': price
-          }
-        });
       }
+
+      slider.noUiSlider.on('update', function (values, handle) {
+        app.min_price = values[0];
+        app.max_price = values[1];
+        $("#min_price").text(app.number_format(values[0]));
+        $("#max_price").text(app.number_format(values[1]));
+      });
+    },
+    setFilterPrice: function setFilterPrice() {
+      this.add_url_param('price[min]', this.min_price);
+      this.add_url_param('price[max]', this.max_price);
+    },
+    add_url_param: function add_url_param(key, value) {
+      var params = new window.URLSearchParams(window.location.search);
+      var url = window.location.href;
+
+      if (params.get(key) != null) {
+        var old_param = key + "=" + params.get(key);
+      } else {
+        var url_params = url.split('?');
+
+        if (url_params[1] == undefined) {
+          url += "?" + key + "=" + value;
+        } else {
+          url += "&" + key + "=" + value;
+        }
+      }
+
+      this.setPageUrl(url);
+    },
+    setPageUrl: function setPageUrl(url) {
+      window.history.pushState('data', 'title', url);
     }
   }
 });

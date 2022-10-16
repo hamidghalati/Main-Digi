@@ -2554,7 +2554,7 @@ del {
     font-size: 14px;
 }
 .noUi-txt-dir-rtl.noUi-horizontal .noUi-handle {
-    left: 280px;
+    left: 250px;
     right: auto;
 }
 .filter_price_ul li:first-child{
@@ -2562,12 +2562,24 @@ del {
 }
 .filter_price_ul li .price{
     background-color: #F0F0F0;
-    width: 100%;
+    width: 80%;
     margin: 10px auto;
     color: grey!important;
 }
 
+.price_range_slider{
+    width: 90%;
+    margin: 30px auto!important;
 
+}
+
+#price_filter_btn{
+    background-color: #2196F3!important;
+    border: 1px solid #2196F3;
+    margin: 10px auto;
+    font-size: 14px;
+    display: block;
+}
 
 
 

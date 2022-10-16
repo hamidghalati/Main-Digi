@@ -44,13 +44,20 @@ export default {
         return{
             productList: {data:[]},
             request_url:'',
-            noUiSlider:null
+            noUiSlider:null,
+            min_price:0,
+            max_price:0,
+
 
         }
     },
     mixins:[myMixin],
     mounted() {
         this.request_url=window.location.href.replace(this.$siteUrl,this.$siteUrl+'/getProduct/');
+        const app=this;
+        $(document).on('click','#price_filter_btn',function () {
+            app.setFilterPrice();
+        });
         this.getProduct();
 
 
@@ -88,21 +95,42 @@ export default {
                     }
                 });
 
-                slider.noUiSlider.on('update',function (values,handle) {
-                    $("#min_price").text(app.number_format(values[0]));
-                    $("#max_price").text(app.number_format(values[1]));
-                });
-            }
-            else {
-                this.noUiSlider.updateOptions({
-                    start: [0, price],
-                    range: {
-                        'min': 0,
-                        'max': price
-                    },
-                });
+
             }
 
+            slider.noUiSlider.on('update',function (values,handle) {
+                app.min_price=values[0];
+                app.max_price=values[1];
+                $("#min_price").text(app.number_format(values[0]));
+                $("#max_price").text(app.number_format(values[1]));
+            });
+
+            },
+        setFilterPrice:function () {
+            this.add_url_param('price[min]',this.min_price);
+            this.add_url_param('price[max]',this.max_price);
+        },
+        add_url_param:function (key,value) {
+            let params=new window.URLSearchParams(window.location.search);
+            let url=window.location.href;
+            if (params.get(key)!=null)
+            {
+                let old_param=key+"="+params.get(key);
+            }
+            else {
+                const url_params=url.split('?');
+                if (url_params[1]==undefined)
+                {
+                    url+="?"+key+"="+value;
+                }
+                else {
+                    url+="&"+key+"="+value;
+                }
+            }
+            this.setPageUrl(url);
+        },
+        setPageUrl:function (url) {
+            window.history.pushState('data','title',url);
         }
     }
 }
@@ -111,3 +139,34 @@ export default {
 <style scoped>
 
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// else {
+//     this.noUiSlider.updateOptions({
+//         start: [0, price],
+//         range: {
+//             'min': 0,
+//             'max': price
+//         },
+//     });
+// }
