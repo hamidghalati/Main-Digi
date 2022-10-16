@@ -85,6 +85,12 @@ class ProductsModel extends Model
             ->orderBy('price2','ASC');
     }
 
+    public function getFirstProductPrice()
+    {
+        return $this->hasOne(ProductWarranty::class,'product_id','id')
+            ->orderBy('price2','asc')
+            ->select('id','product_id','price1','price2','offers_last_time','offers');
+    }
 
 
 

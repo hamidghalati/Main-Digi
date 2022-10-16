@@ -194,6 +194,7 @@ class SiteController extends Controller
         $searchProduct=new SearchProduct($request);
         $searchProduct->set_product_category($category);
         $result=$searchProduct->getProduct();
+        return $result;
     }
 
 

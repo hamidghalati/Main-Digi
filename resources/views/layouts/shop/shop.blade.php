@@ -63,7 +63,7 @@
                             <a href="{{url('profile')}}" class="dropdown-item profile">
 
                                 پروفایل</a>
-                            <a href="{{url('profile/orders')}}" class="dropdown-item order">پیگیری سفارشات</a>
+                            <a href="{{url('user/profile/orders')}}" class="dropdown-item order">پیگیری سفارشات</a>
 
                             @if(Auth::check())
                             <div class="dropdown-divider"></div>

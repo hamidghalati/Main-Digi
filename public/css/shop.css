@@ -2513,13 +2513,59 @@ del {
 .item_box ul li .title{
     padding-right: 5px;
 }
-
-
-
-
-
-
-
+.product_list{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+}
+.product_div{
+    width: 33.333%;
+    border-left: 1px solid #dedede;
+    cursor: pointer;
+    color: grey;
+    border-bottom: 1px solid #dedede;
+    font-size: 13px;
+}
+.product_div img{
+    width: 55%;
+    margin: 10px auto;
+    display: block;
+}
+.info{
+    padding: 10px 15px;
+}
+.info a .title{
+    color: black;
+    height: 50px;
+    text-align: justify;
+}
+.filter_price_ul{
+    display: inline-flex;
+    width: 100%;
+    padding-top: 0!important;
+    border-bottom: 1px solid #dedede;
+    padding-bottom: 0!important;
+}
+.filter_price_ul li{
+    width: 50%;
+    list-style: none;
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: 14px;
+}
+.noUi-txt-dir-rtl.noUi-horizontal .noUi-handle {
+    left: 280px;
+    right: auto;
+}
+.filter_price_ul li:first-child{
+    border-left: 1px solid #dedede;
+}
+.filter_price_ul li .price{
+    background-color: #F0F0F0;
+    width: 100%;
+    margin: 10px auto;
+    color: grey!important;
+}
 
 
 
@@ -2556,6 +2602,8 @@ del {
     .slider .col-3{display: none!important;}
     .slider .col-9{width: 100%;min-width: 100%;padding: 0!important;}
     .slider .col-10{padding-left: 0!important;}
+    .product_div{width: 25%!important;}
+    product_div img{width: 60%!important;}
 }
 
 @media (max-width: 1279px) {

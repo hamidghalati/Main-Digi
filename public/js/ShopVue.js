@@ -2989,14 +2989,109 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _myMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../myMixin */ "./resources/js/myMixin.js");
 //
 //
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "ProductBox"
+  name: "ProductBox",
+  data: function data() {
+    return {
+      productList: {
+        data: []
+      },
+      request_url: '',
+      noUiSlider: null
+    };
+  },
+  mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mounted: function mounted() {
+    this.request_url = window.location.href.replace(this.$siteUrl, this.$siteUrl + '/getProduct/');
+    this.getProduct();
+  },
+  methods: {
+    getProduct: function getProduct() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.axios.get(this.request_url + "?page=" + page).then(function (response) {
+        _this.productList = response.data['product'];
+
+        _this.setRangeSlider(response.data.max_price);
+      });
+    },
+    setRangeSlider: function setRangeSlider(price) {
+      var app = this;
+      var slider = document.querySelector('.price_range_slider');
+
+      if (this.noUiSlider == null) {
+        this.noUiSlider = noUiSlider.create(slider, {
+          start: [0, price],
+          connect: true,
+          direction: 'rtl',
+          range: {
+            'min': 0,
+            'max': price
+          },
+          format: {
+            from: function from(value) {
+              return parseInt(value);
+            },
+            to: function to(value) {
+              return parseInt(value);
+            }
+          }
+        });
+        slider.noUiSlider.on('update', function (values, handle) {
+          $("#min_price").text(app.number_format(values[0]));
+          $("#max_price").text(app.number_format(values[1]));
+        });
+      } else {
+        this.noUiSlider.updateOptions({
+          start: [0, price],
+          range: {
+            'min': 0,
+            'max': price
+          }
+        });
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -12230,9 +12325,97 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("productBox ")])
+  return _c(
+    "div",
+    { staticClass: "product_list" },
+    [
+      _vm._l(this.productList.data, function (product) {
+        return _c("div", { staticClass: "product_div" }, [
+          _c("div", { staticClass: "image_div" }, [
+            _c(
+              "a",
+              {
+                attrs: {
+                  href:
+                    _vm.$siteUrl +
+                    "product/dkp-" +
+                    product.id +
+                    "/" +
+                    product.product_url,
+                },
+              },
+              [
+                _c("img", {
+                  attrs: {
+                    src: _vm.$siteUrl + "files/thumb/" + product.image_url,
+                    alt: "",
+                  },
+                }),
+              ]
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "info" }, [
+            _c(
+              "a",
+              {
+                attrs: {
+                  href:
+                    _vm.$siteUrl +
+                    "product/dkp-" +
+                    product.id +
+                    "/" +
+                    product.product_url,
+                },
+              },
+              [
+                _c("p", { staticClass: "title" }, [
+                  _vm._v(_vm._s(product.title)),
+                ]),
+              ]
+            ),
+            _vm._v(" "),
+            product.status == 1 && product.get_first_product_price != null
+              ? _c("div", { staticClass: "price" }, [
+                  _c("div", { staticClass: "discount_div" }),
+                  _vm._v(" "),
+                  _c("span", [
+                    _vm._v(
+                      _vm._s(
+                        _vm.replaceNumber(
+                          _vm.number_format(
+                            product.get_first_product_price.price2
+                          )
+                        )
+                      )
+                    ),
+                  ]),
+                ])
+              : _c("div", { staticClass: "product_status" }, [_vm._m(0, true)]),
+          ]),
+        ])
+      }),
+      _vm._v(" "),
+      _c("pagination", {
+        attrs: { align: "center", data: _vm.productList },
+        on: { "pagination-change-page": _vm.getProduct },
+      }),
+    ],
+    2
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("p", { staticClass: "line" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("ناموجود")]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -25496,6 +25679,23 @@ __webpack_require__.r(__webpack_exports__);
           return true;
         }
       }
+    },
+    number_format: function number_format(num) {
+      num = num.toString();
+      var format = '';
+      var counter = 0;
+
+      for (var i = num.length - 1; i >= 0; i--) {
+        format += num[i];
+        counter++;
+
+        if (counter == 3) {
+          format += ",";
+          counter = 0;
+        }
+      }
+
+      return format.split('').reverse().join('');
     }
   }
 });

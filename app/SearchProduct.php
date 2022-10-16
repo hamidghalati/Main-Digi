@@ -20,15 +20,23 @@ class SearchProduct
 
     public function getProduct()
     {
-        $product=ProductsModel::with(['getProductColor.getColor'])
+        $max_price=0;
+        $product=ProductsModel::with(['getProductColor.getColor','getFirstProductPrice'])
             ->select('id','title','product_url','price','discount_price','special','image_url','brand_id','status');
         if (is_array($this->category) && sizeof($this->category)>0)
         {
-            $product=$product->where('cat_id',$this->category);
+            $product=$product->whereIn('cat_id',$this->category);
         }
+        $max_price=$product->orderBy('price','Desc')->first();
         $product=$product->paginate(12);
+
+        $max_price=$max_price ? $max_price->price : 0;
+
+
+
         return [
-          'product'=>$product
+          'product'=>$product,
+            'max_price'=>$max_price
         ];
     }
 

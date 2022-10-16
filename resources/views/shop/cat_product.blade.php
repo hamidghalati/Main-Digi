@@ -26,6 +26,29 @@
                     </div>
                 @endforeach
             @endif
+
+                <div class="item_box">
+                    <div class="title_box">
+                        <label for="">محدوده قیمت مورد نظر</label>
+                        <span class="fa fa-angle-down"></span>
+                    </div>
+                    <div>
+                        <div id="slider" class="price_range_slider"></div>
+                        <ul class="filter_price_ul">
+                            <li>
+                                <div>از</div>
+                                <div class="price" id="min_price"></div>
+                                <div>تومان</div>
+                            </li>
+                            <li>
+                                <div>تا</div>
+                                <div class="price" id="max_price"></div>
+                                <div>تومان</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
         </div>
 
         <div class="col-9">
@@ -33,5 +56,14 @@
         </div>
 
     </div>
+
+@endsection
+@section('header')
+    <link rel="stylesheet" href="{{asset('css/nouislider.min.css')}}">
+    <script type="text/javascript" src="{{asset('js/nouislider.min.js')}}"></script>
+
+
+@endsection
+@section('footer')
 
 @endsection

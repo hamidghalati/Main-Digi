@@ -44,6 +44,24 @@ export default {
                 }
 
             }
+        },
+        number_format:function (num)
+        {
+            num=num.toString();
+            let format='';
+            let counter=0;
+            for (let i=num.length-1;i>=0;i--)
+            {
+                format+=num[i];
+                counter++;
+                if (counter==3)
+                {
+                    format+=",";
+                    counter=0;
+                }
+            }
+            return format.split('').reverse().join('');
         }
+
     }
 }

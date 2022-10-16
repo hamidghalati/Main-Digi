@@ -18932,6 +18932,23 @@ __webpack_require__.r(__webpack_exports__);
           return true;
         }
       }
+    },
+    number_format: function number_format(num) {
+      num = num.toString();
+      var format = '';
+      var counter = 0;
+
+      for (var i = num.length - 1; i >= 0; i--) {
+        format += num[i];
+        counter++;
+
+        if (counter == 3) {
+          format += ",";
+          counter = 0;
+        }
+      }
+
+      return format.split('').reverse().join('');
     }
   }
 });
