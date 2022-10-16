@@ -7,6 +7,9 @@ import Counter from "./components/Counter";
 import OfferTime from "./components/OfferTime";
 import ShoppingCart from "./components/ShoppingCart";
 import AddressList from "./components/AddressList";
+import GiftCart from "./components/GiftCart";
+import DiscountBox from "./components/DiscountBox";
+import ProductBox from "./components/ProductBox";
 
 
 
@@ -22,6 +25,9 @@ const app = new Vue({
         OfferTime,
         ShoppingCart,
         AddressList,
+        GiftCart,
+        DiscountBox,
+        ProductBox
 
     }
 });

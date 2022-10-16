@@ -42,6 +42,10 @@ Route::prefix('admin')->group(function (){
     //product_warranties
     create_crud_route('Product_warranties','ProductwarrantyController');
 
+    //discount_code
+    create_crud_route('discount','DiscountController');
+
+
     //gallery
     Route::get('products/gallery/{id}','Admin\ProductController@gallery');
     Route::post('products/gallery_upload/{id}','Admin\ProductController@gallery_upload');
@@ -88,6 +92,9 @@ Route::prefix('admin')->group(function (){
    Route::match(['get','post'],'setting/send-order-price','Admin\SettingController@send_order_price');
 
    //orders
+
+    create_crud_route('orders','OrdersController');
+
     Route::get('orders','Admin\OrdersController@index');
     Route::get('orders/submission','Admin\OrdersController@submission');
     Route::get('orders/submission/approved','Admin\OrdersController@submission_approved');
@@ -119,12 +126,24 @@ Route::get('Cart','SiteController@show_cart');
 Route::post('site/cart/remove_product','SiteController@remove_product');
 Route::post('site/cart/change_product_cart','SiteController@change_product_cart');
 
+
+//main
+Route::get('main/{cat_url}','SiteController@show_child_cat_list');
+
+//search
+Route::get('search/{cat_url}','SiteController@cat_product');
+
+Route::get('search/getProduct/{cat_url}','SiteController@get_cat_product');
+
+
 Route::get('shipping','ShoppingController@shipping');
 Route::get('shipping/getSendData/{city_id}','ShoppingController@getSendData');
 //payment
 Route::post('payment','ShoppingController@payment');
 Route::get('order/payment','ShoppingController@order_payment');
 Route::get('order/verify','ShoppingController@verify');
+Route::post('site/check_gift_cart','ShoppingController@check_gift_cart');
+Route::post('site/check_discount_code','ShoppingController@check_discount_code');
 
 
 
@@ -136,7 +155,27 @@ Route::prefix('user')->middleware(['auth'])->group(function (){
 
     //user panel
     Route::get('/profile/gift-cart','User\UserPanelController@gift_cart');
+    Route::get('/profile/orders','User\UserPanelController@orders');
+    Route::get('/profile/orders/{order_id}','User\UserPanelController@show_orders');
+
 
 
 
 });
+
+
+Route::get('test',function (){
+//    $time=time();
+//    $discounts=\App\DiscountCode::where('code','takhfif-samsung')->where('expire_time','>=',$time)->get();
+//    if ($discounts)
+//    {
+//        return \App\DiscountCode::check($discounts);
+//    }
+//
+    Session::forget('cart_final_price');
+Session::forget('discount_value');
+Session::forget('gift_value');
+});
+
+//Session::forget('cart_final_price');
+//Session::forget('discount_value');

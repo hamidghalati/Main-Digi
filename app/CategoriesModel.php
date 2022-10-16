@@ -12,7 +12,7 @@ class CategoriesModel extends Model
     protected $table='categories';
     protected $fillable=['name','ename','url','img','search_url','parent_id','notShow'];
 
-    public function get_parent(){
+    public static function get_parent(){
         $array=[0=>'دسته اصلی'];
         $list=self::with('getChild.getChild')->where('parent_id',0)->get();
         foreach ($list as $key=>$value){
@@ -100,6 +100,19 @@ class CategoriesModel extends Model
             }
 
         });
+    }
+
+    public static function getCatFilter($cat)
+    {
+        $parent_id=$cat->getParent->id;
+        $array_id=[$cat->id,$parent_id];
+        $filter=FilterModel::with('getChild')
+            ->where('parent_id',0)
+            ->whereIn('category_id',$array_id)
+            ->orderBy('position','ASC')
+            ->get();
+        return $filter;
+
     }
 
 

@@ -80,6 +80,41 @@
                     </td>
                 </tr>
 
+
+                @if(!empty($order->gift_value)&& $order->gift_value>0)
+                    <tr>
+                        <td>
+                            مبلغ کارت هدیه :
+                            <span
+                                style="font-family: IRANSans">{{replace_number(number_format($order->gift_value)).' تومان '}}</span>
+                        </td>
+                        <td>
+                            کد کارت هدیه :
+                            <span
+                                style="font-family: IRANSans">{{$order->getGiftCart->code}}</span>
+                        </td>
+                    </tr>
+
+                @endif
+
+                @if(!empty($order->discount_value)&& $order->discount_value>0)
+                    <tr>
+                        <td>
+                            مبلغ کارت تخفیف :
+                            <span
+                                style="font-family: IRANSans">{{replace_number(number_format($order->discount_value)).' تومان '}}</span>
+                        </td>
+                        <td>
+                            کد کارت تخفیف :
+                            <span
+                                style="font-family: IRANSans">{{$order->discount_code}}</span>
+                        </td>
+                    </tr>
+
+                @endif
+
+
+
             </table>
 
             @foreach($order->getOrderInfo as $key=>$value)
@@ -209,6 +244,8 @@
 @section('footer')
     <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-toastr/dist/vue-toastr.umd.min.js"></script>
 
     <script>
         const swiper = new Swiper('.swiper-container', {

@@ -7,6 +7,7 @@ use App\CategoriesModel;
 use App\ItemValueModel;
 use App\ProductsModel;
 use App\ProductWarranty;
+use App\SearchProduct;
 use App\SliderModel;
 use App\ItemModel;
 use App\User;
@@ -167,6 +168,33 @@ class SiteController extends Controller
         return Cart::ChangeProductCount($request);
     }
 
+    public function show_child_cat_list($cat_url)
+    {
+        $category=CategoriesModel::with('getChild')
+            ->where('url',$cat_url)
+            ->firstOrFail();
+        return view('shop.child_cat',['category'=>$category]);
+    }
+
+    public function cat_product($cat_url,Request $request)
+    {
+        $category=CategoriesModel::with('getParent.getParent')
+            ->where('url',$cat_url)
+            ->firstOrFail();
+        $filter=CategoriesModel::getCatFilter($category);
+        return view('shop.cat_product',['filter'=>$filter,'category'=>$category]);
+    }
+
+    public function get_cat_product($cat_id,Request $request)
+    {
+        $category=CategoriesModel::with('getChild')
+            ->where('url',$cat_id)
+            ->whereNull('search_url')
+            ->firstOrFail();
+        $searchProduct=new SearchProduct($request);
+        $searchProduct->set_product_category($category);
+        $result=$searchProduct->getProduct();
+    }
 
 
 

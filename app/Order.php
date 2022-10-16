@@ -39,15 +39,31 @@ class Order extends Model
         $this->date=$jdf->tr_num($jdf->jdate('Y-n-j'));
         $this->send_type=$order_send_type;
         $price=Session::get('final_price');
+        $final_price=Session::get('final_price',0);
         if ($this->send_type==1)
         {
+            $final_price+=$order_data['integer_normal_send_order_amount'];
             $this->price=$order_data['integer_normal_cart_price'];
-            $this->total_price=$order_data['integer_normal_cart_price'];
+            $this->total_price=$final_price;
         }
         else{
+            $final_price+=$order_data['integer_total_fast_send_amount'];
             $this->price=$order_data['integer_fasted_cart_amount'];
-            $this->total_price=$order_data['integer_fasted_cart_amount'];
+            $this->total_price=$final_price;
         }
+
+        if (Session::has('gift_value')&& Session::get('gift_value')>0)
+        {
+            $this->gift_value=Session::get('gift_value');
+            $this->gift_id=Session::get('gift_cart');
+        }
+
+        if (Session::has('discount_value')&& Session::get('discount_value')>0)
+        {
+            $this->discount_value=Session::get('discount_value');
+            $this->discount_code=Session::get('discount_code');
+        }
+
         DB::beginTransaction();
         try {
             $this->save();
@@ -273,6 +289,12 @@ class Order extends Model
         $orders= $orders->paginate(10);
         $orders->withPath($string);
         return $orders;
+    }
+
+    public function getGiftCart()
+    {
+        return $this->hasOne(GiftCart::class,'id','gift_id')
+            ->withDefault(['code'=>'']);
     }
 
 

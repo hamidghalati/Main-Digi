@@ -25,7 +25,7 @@ class OrdersController extends CustomController
 
     public function show($order_id)
     {
-        $order=Order::with(['getProductRow','getOrderInfo','getAddress'])
+        $order=Order::with(['getProductRow','getOrderInfo','getAddress','getGiftCart'])
             ->where(['id'=>$order_id])->firstOrFail();
         if ($order->order_read=='no'){
             $order->order_read='ok';
@@ -146,7 +146,7 @@ class OrdersController extends CustomController
         ]);
     }
 
-        public function delivered_shipping(Request $request)
+    public function delivered_shipping(Request $request)
     {
         $submission=OrderInfo::getData($request->all(),6,'DESC');
         return view('admin.orders.submission',[
@@ -156,4 +156,6 @@ class OrdersController extends CustomController
             'req'=>$request
         ]);
     }
+
+
 }

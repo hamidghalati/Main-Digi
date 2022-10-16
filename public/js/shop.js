@@ -7,6 +7,7 @@ $(document).ready(function () {
         const ul_width=$(".index-cat-list ul").width();
         const a=li_width.replace('px','');
        const right=ul_width-$(this).offset().left-a+15;
+
         $('.cat_hover').css('width',li_width);
         $(".cat_hover").css('right',right);
         $(".cat_hover").css('transform','scaleX(1)');
@@ -182,6 +183,19 @@ $(document).ready(function () {
 
     $("#cart_btn").click(function () {
        $("#add_cart_form").submit();
+    });
+
+    $('.title_box').click(function () {
+       const el=$(this).parent().find('.filter_box');
+       if (el.css('display')=='none')
+       {
+           el.slideDown();
+           $('.fa-angle-down',this).removeClass('fa-angle-down').addClass('fa-angle-up');
+       }
+       else {
+           el.slideUp();
+           $('.fa-angle-up',this).removeClass('fa-angle-up').addClass('fa-angle-down');
+       }
     });
 
 });

@@ -56,7 +56,7 @@
                             <td>
 
                                 <div class="pretty p-icon p-smooth">
-                                    <input type="checkbox" name="category_id[]" value="{{$value->id}}" class="check_box" />
+                                    <input type="checkbox" name="orders_id[]" value="{{$value->id}}" class="check_box" />
                                     <div class="state p-danger-o">
                                         <i class="icon fa fa-close"></i>
                                         <label></label>
@@ -79,9 +79,10 @@
                                     <span class="alert alert-warning" style="padding: 5px 10px">در انتظار پرداخت</span>
                                 @elseif($value['pay_status']=='ok')
                                     <span class="alert alert-success" style="padding: 5px 10px">  پرداخت شده</span>
+                                @elseif($value['pay_status']=='canceled')
+                                    <span class="alert alert-warning" style="padding: 5px 10px">  لغو شده</span>
                                 @else
                                     <span class="alert alert-danger" style="padding: 5px 10px">  خطا در پرداخت</span>
-
                                 @endif
                             </td>
                             <td>

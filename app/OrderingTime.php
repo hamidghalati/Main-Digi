@@ -1,7 +1,7 @@
 <?php
 namespace App;
 use App\Lib\Jdf;
-
+use Session;
 
 class OrderingTime
 {
@@ -34,6 +34,7 @@ class OrderingTime
         $this->city_id=$city_id;
 
     }
+
     public function getGlobalSendData()
     {
         $city=CityModel::find($this->city_id);
@@ -88,6 +89,17 @@ class OrderingTime
             $array['integer_normal_send_order_amount']=$this->send_price;
 
             $normal_cart_price=$this->cart_price+$this->send_price;
+
+            if (Session::has('gift_value')&& Session::get('gift_value')>0)
+            {
+                $normal_cart_price=$normal_cart_price-Session::get('gift_value');
+            }
+
+            if (Session::has('discount_value')&& Session::get('discount_value')>0)
+            {
+                $normal_cart_price=$normal_cart_price-Session::get('discount_value');
+            }
+
             $array['normal_cart_price']=replace_number(number_format($normal_cart_price)).' تومان ';
             $array['integer_normal_cart_price']=$normal_cart_price;
 
@@ -97,6 +109,17 @@ class OrderingTime
         {
             $array['normal_send_order_amount']="رایگان";
             $array['integer_normal_send_order_amount']=0;
+
+            if (Session::has('gift_value')&& Session::get('gift_value')>0)
+            {
+                $this->cart_price-=Session::get('gift_value');
+            }
+
+            if (Session::has('discount_value')&& Session::get('discount_value')>0)
+            {
+                $this->cart_price-=Session::get('discount_value');
+            }
+
 
             $array['normal_cart_price']=replace_number(number_format($this->cart_price)).' تومان ';
             $array['integer_normal_cart_price']=$this->cart_price;

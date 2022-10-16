@@ -143,8 +143,11 @@
 
                     @endif
                 </div>
-
+                <discount-box></discount-box>
+                <gift-cart></gift-cart>
             </div>
+
+
 
             <div class="page_aside">
                 <div class="order_info" style="margin-top: 0!important;">
@@ -160,16 +163,21 @@
                             <span class="left">{{replace_number(number_format( $final_price))}} تومان </span>
                         </li>
 
-
-
-
-
-
                         <li>
                             <span>هزینه ارسال :</span>
                             <span class="left" id="total_send_order_price">
                                 <?= $send_type==1 ? $send_order_data['normal_send_order_amount'] : $send_order_data['total_fast_send_amount']?>
                             </span>
+                        </li>
+
+                        <li class="gift_li" @if(Session::get('gift_value',0)>0) style="display: block" @endif>
+                            <span>کارت هدیه :</span>
+                            <span class="left" id="gift_cart_amount">{{replace_number(number_format(Session::get('gift_value',0)))}} تومان </span>
+                        </li>
+
+                        <li class="discount_li" @if(Session::get('discount_value',0)>0) style="display: block" @endif>
+                            <span>کارت تخفیف :</span>
+                            <span class="left" id="discount_value">{{replace_number(number_format(Session::get('discount_value',0)))}} تومان </span>
                         </li>
 
 
@@ -217,7 +225,9 @@
 
 @section('footer')
 
-    <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
+<script>
+
+</script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
 
@@ -230,10 +240,7 @@
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
-            pagination:{
-                el:'.swiper-pagination',
-                clickable:true,
-            }
+
         });
 
 

@@ -311,6 +311,7 @@ label{
     padding-bottom: 10px;
     cursor: pointer;
     font-size: 14px;
+    padding-right: 5px;
 }
 
 .breadcrumb .list-inline li a  .fa-angle-left{
@@ -920,4 +921,11 @@ input.pdate{
 
 .order_search .form-control{
     border-radius: 0!important;
+}
+
+#discount_code label{
+    width: 220px!important;
+}
+#discount_code .pretty {
+    margin-right: -200px!important;
 }

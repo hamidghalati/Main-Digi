@@ -7,6 +7,11 @@ class Cart
 
     public static function add_cart($data)
     {
+        Session::forget('cart_final_price');
+        Session::forget('discount_value');
+        Session::forget('gift_value');
+
+
         $product_id=array_key_exists('product_id',$data) ? $data['product_id'] : 0;
         $color_id=array_key_exists('color_id',$data) ? $data['color_id'] : 0;
         $warranty_id=array_key_exists('warranty_id',$data)?$data['warranty_id'] : 0;
@@ -99,7 +104,7 @@ class Cart
 
 
 
-        $products=ProductsModel::whereIn('id',$product_id)->select(['id','title','image_url'])->get();
+        $products=ProductsModel::whereIn('id',$product_id)->select(['id','title','image_url','cat_id'])->get();
         $colors=ColorModel::whereIn('id',$color_id)->get();
         $warranties=WarrantyModel::whereIn('id',$warranty_id)->get();
 
@@ -123,6 +128,7 @@ class Cart
                $cart_data['product'][$j]['product_id']=$product->id;
                $cart_data['product'][$j]['product_title']=$product->title;
                $cart_data['product'][$j]['product_image_url']=$product->image_url;
+               $cart_data['product'][$j]['cat_id']=$product->cat_id;
                $cart_data['product'][$j]['warranty_name']=$warranty->name;
                $cart_data['product'][$j]['warranty_id']=$warranty->id;
                $cart_data['product'][$j]['send_day']=$v->send_time;
@@ -179,6 +185,12 @@ class Cart
             $childkey=$warranty_id.'_'.$color_id;
             if (array_key_exists($childkey,$a))
             {
+
+                Session::forget('cart_final_price');
+                Session::forget('discount_value');
+                Session::forget('gift_value');
+
+
                 unset($cart[$product_id]['product_data'][$childkey]);
                 if (empty($cart[$product_id]['product_data']))
                 {
