@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\CatBrand;
 use App\CategoriesModel;
 use App\ItemValueModel;
 use App\ProductsModel;
@@ -182,7 +183,9 @@ class SiteController extends Controller
             ->where('url',$cat_url)
             ->firstOrFail();
         $filter=CategoriesModel::getCatFilter($category);
-        return view('shop.cat_product',['filter'=>$filter,'category'=>$category]);
+        $brands=CatBrand::with('getBrand')->get();
+        return view('shop.cat_product',['filter'=>$filter,'category'=>$category,'brands'=>$brands]);
+
     }
 
     public function get_cat_product($cat_id,Request $request)

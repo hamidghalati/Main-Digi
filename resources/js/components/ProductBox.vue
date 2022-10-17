@@ -1,62 +1,77 @@
 <template>
 
-    <div class="product_list">
+    <div class="product_list_box">
 
-        <div class="product_div" v-for="product in this.productList.data">
-            <div class="image_div">
+        <div class="header">
+            <ul class="list-inline">
+                <li><i class="fa fa-sort-amount-asc icon-sort"></i>مرتب سازی بر اساس :</li>
+                <li :class="sort==21 ? 'active'  : ''" v-on:click="set_sort(21)"><a href=""><span>پر بازدیدترین</span></a></li>
+                <li :class="sort==22 ? 'active'  : ''" v-on:click="set_sort(22)"><a href=""><span>محبوب ترین</span></a></li>
+                <li :class="sort==23 ? 'active'  : ''" v-on:click="set_sort(23)"><a href=""><span>جدیدترین</span></a></li>
+                <li :class="sort==24 ? 'active'  : ''" v-on:click="set_sort(24)"><a href=""><span>ارزان ترین</span></a></li>
+                <li :class="sort==25 ? 'active'  : ''" v-on:click="set_sort(25)"><a href=""><span>گران ترین</span></a></li>
+            </ul>
+        </div>
 
-                <ul class="color_box list-inline">
-                    <li v-for="(color,key) in product.get_product_color" v-if="color.get_color != null && key<3">
-                        <label for="" :style="{background:color.get_color.code}"></label>
-                    </li>
+        <div class="product_list">
 
-                    <li v-if="product.get_product_color.length>3">
-                        <span class="fa fa-plus"></span>
-                    </li>
-                </ul>
+            <div class="product_div" v-for="product in this.productList.data">
+                <div class="image_div">
 
-                <a v-bind:href="$siteUrl+'product/dkp-'+product.id+'/'+product.product_url">
-                    <img v-bind:src="$siteUrl+'files/thumb/'+product.image_url" alt="">
-                </a>
-            </div>
+                    <ul class="color_box list-inline">
+                        <li v-for="(color,key) in product.get_product_color" v-if="color.get_color != null && key<3">
+                            <label for="" :style="{background:color.get_color.code}"></label>
+                        </li>
 
-            <div class="info">
-                <a v-bind:href="$siteUrl+'product/dkp-'+product.id+'/'+product.product_url">
-                    <p class="title">{{product.title}}</p>
-                </a>
+                        <li v-if="product.get_product_color.length>3">
+                            <span class="fa fa-plus"></span>
+                        </li>
+                    </ul>
 
-                <div v-if="product.status==1 && product.get_first_product_price !=null" class="price">
-                    <div class="discount_div">
-                        <div v-if="product.get_first_product_price.price1 != product.get_first_product_price.price2">
-<!--                            <img :src="$siteUrl+'files/images/discount.png'" alt="">-->
-                            <del>
-                                {{replaceNumber(number_format(product.get_first_product_price.price1))}} تومان
-                            </del>
-                            <span class="discount-badge">
+                    <a v-bind:href="$siteUrl+'product/dkp-'+product.id+'/'+product.product_url">
+                        <img v-bind:src="$siteUrl+'files/thumb/'+product.image_url" alt="">
+                    </a>
+                </div>
+
+                <div class="info">
+                    <a v-bind:href="$siteUrl+'product/dkp-'+product.id+'/'+product.product_url">
+                        <p class="title">{{product.title}}</p>
+                    </a>
+
+                    <div v-if="product.status==1 && product.get_first_product_price !=null" class="price">
+                        <div class="discount_div">
+                            <div v-if="product.get_first_product_price.price1 != product.get_first_product_price.price2">
+                                <!--                            <img :src="$siteUrl+'files/images/discount.png'" alt="">-->
+                                <del>
+                                    {{replaceNumber(number_format(product.get_first_product_price.price1))}} تومان
+                                </del>
+                                <span class="discount-badge">
                                 %{{getDiscountValue(product.get_first_product_price.price1,product.get_first_product_price.price2)}}
                             </span>
+                            </div>
+                        </div>
+                        <span>{{replaceNumber(number_format(product.get_first_product_price.price2))}} تومان </span>
+                    </div>
+                    <div v-else class="product_status">
+                        <div>
+                            <p class="line"></p>
+                            <span>ناموجود</span>
                         </div>
                     </div>
-                    <span>{{replaceNumber(number_format(product.get_first_product_price.price2))}} تومان </span>
-                </div>
-                <div v-else class="product_status">
-                    <div>
-                        <p class="line"></p>
-                        <span>ناموجود</span>
-                    </div>
+
                 </div>
 
             </div>
 
+            <div v-if="this.productList.data==0 && get_result" class="not_found_product_message">
+                محصولی برای نمایش یافت نشد
+            </div>
+
+            <pagination align="center" :data="productList" @pagination-change-page="getProduct"></pagination>
+
         </div>
-
-        <div v-if="this.productList.data==0 && get_result" class="not_found_product_message">
-            محصولی برای نمایش یافت نشد
-        </div>
-
-        <pagination align="center" :data="productList" @pagination-change-page="getProduct"></pagination>
-
     </div>
+
 
 </template>
 
@@ -72,7 +87,8 @@ export default {
             noUiSlider:null,
             min_price:0,
             max_price:0,
-            get_result:false
+            get_result:false,
+            sort:21
         }
     },
     mixins:[myMixin],
@@ -109,30 +125,29 @@ export default {
             {
                 if (params[1].indexOf('&')>-1)
                 {
+
+
                     let vars=params[1].split('&');
                     for (let i in vars)
                     {
                         let k=vars[i].split('=')[0];
                         let v=vars[i].split('=')[1];
                         k=k.split('[');
-                        if (k.length>1)
-                        {
-                            if (k.length==3)
-                            {
-                                let data=k[0]+"["+k[1]+"_param_"+v;
-                                data="'"+data+"'";
-                                $('li[data='+data+'] .check_box').addClass('active');
-                                $('li[data='+data+']').parent().parent().slideDown();
-                                if ($('li[data='+data+']').length==1)
-                                {
-                                    this.add_filter_tag(data,k[0],v);
-                                }
-                            }
-                            else {
 
-                            }
-                        }
+                        this.add_active_filter(k,v);
+
                     }
+
+                }
+
+                else {
+
+                    let k=params[1].split('=')[0];
+                    let v=params[1].split('=')[1];
+                    k=k.split('[');
+                    this.add_active_filter(k,v);
+
+
                 }
 
 
@@ -196,6 +211,44 @@ export default {
             }
 
         },
+        add_active_filter:function (k,v) {
+            if (k.length>1)
+            {
+                let data="";
+                if (k.length==3)
+                {
+                    let data=k[0]+"["+k[1]+"_param_"+v;
+                    data="'"+data+"'";
+                    $('li[data='+data+'] .check_box').addClass('active');
+                    $('li[data='+data+']').parent().parent().slideDown();
+                     if ($('li[data='+data+']').length==1)
+                {
+                    this.add_filter_tag(data,k[0],v);
+                }
+                }
+                else {
+                     data=k[0]+"_param_"+v;
+                    $('li[data='+data+'] .check_box').addClass('active');
+                    $('li[data='+data+']').parent().parent().slideDown();
+                     if ($('li[data='+data+']').length==1)
+                {
+                    this.add_filter_tag(data,k[0],v);
+                }
+                }
+
+                // $('li[data='+data+'] .check_box').addClass('active');
+                // $('li[data='+data+']').parent().parent().slideDown();
+                // if ($('li[data='+data+']').length==1)
+                // {
+                //     this.add_filter_tag(data,k[0],v);
+                // }
+            }
+        },
+        set_sort:function (value) {
+            this.sort=value;
+            this.add_url_param('sortby',value);
+            this.getProduct(1);
+        }
 
 
 

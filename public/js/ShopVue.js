@@ -3052,6 +3052,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ProductBox",
@@ -3064,7 +3079,8 @@ __webpack_require__.r(__webpack_exports__);
       noUiSlider: null,
       min_price: 0,
       max_price: 0,
-      get_result: false
+      get_result: false,
+      sort: 21
     };
   },
   mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -3108,20 +3124,13 @@ __webpack_require__.r(__webpack_exports__);
             var k = vars[i].split('=')[0];
             var v = vars[i].split('=')[1];
             k = k.split('[');
-
-            if (k.length > 1) {
-              if (k.length == 3) {
-                var data = k[0] + "[" + k[1] + "_param_" + v;
-                data = "'" + data + "'";
-                $('li[data=' + data + '] .check_box').addClass('active');
-                $('li[data=' + data + ']').parent().parent().slideDown();
-
-                if ($('li[data=' + data + ']').length == 1) {
-                  this.add_filter_tag(data, k[0], v);
-                }
-              } else {}
-            }
+            this.add_active_filter(k, v);
           }
+        } else {
+          var _k = params[1].split('=')[0];
+          var _v = params[1].split('=')[1];
+          _k = _k.split('[');
+          this.add_active_filter(_k, _v);
         }
       }
     },
@@ -3170,6 +3179,42 @@ __webpack_require__.r(__webpack_exports__);
           start: [parseInt(search.get('price[min]')), slider.noUiSlider.get()[1]]
         });
       }
+    },
+    add_active_filter: function add_active_filter(k, v) {
+      if (k.length > 1) {
+        var data = "";
+
+        if (k.length == 3) {
+          var _data = k[0] + "[" + k[1] + "_param_" + v;
+
+          _data = "'" + _data + "'";
+          $('li[data=' + _data + '] .check_box').addClass('active');
+          $('li[data=' + _data + ']').parent().parent().slideDown();
+
+          if ($('li[data=' + _data + ']').length == 1) {
+            this.add_filter_tag(_data, k[0], v);
+          }
+        } else {
+          data = k[0] + "_param_" + v;
+          $('li[data=' + data + '] .check_box').addClass('active');
+          $('li[data=' + data + ']').parent().parent().slideDown();
+
+          if ($('li[data=' + data + ']').length == 1) {
+            this.add_filter_tag(data, k[0], v);
+          }
+        } // $('li[data='+data+'] .check_box').addClass('active');
+        // $('li[data='+data+']').parent().parent().slideDown();
+        // if ($('li[data='+data+']').length==1)
+        // {
+        //     this.add_filter_tag(data,k[0],v);
+        // }
+
+      }
+    },
+    set_sort: function set_sort(value) {
+      this.sort = value;
+      this.add_url_param('sortby', value);
+      this.getProduct(1);
     }
   }
 });
@@ -12405,146 +12450,266 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "product_list" },
-    [
-      _vm._l(this.productList.data, function (product) {
-        return _c("div", { staticClass: "product_div" }, [
-          _c("div", { staticClass: "image_div" }, [
-            _c(
-              "ul",
-              { staticClass: "color_box list-inline" },
-              [
-                _vm._l(product.get_product_color, function (color, key) {
-                  return color.get_color != null && key < 3
-                    ? _c("li", [
-                        _c("label", {
-                          style: { background: color.get_color.code },
-                          attrs: { for: "" },
-                        }),
-                      ])
-                    : _vm._e()
-                }),
-                _vm._v(" "),
-                product.get_product_color.length > 3
-                  ? _c("li", [_c("span", { staticClass: "fa fa-plus" })])
-                  : _vm._e(),
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                attrs: {
-                  href:
-                    _vm.$siteUrl +
-                    "product/dkp-" +
-                    product.id +
-                    "/" +
-                    product.product_url,
-                },
+  return _c("div", { staticClass: "product_list_box" }, [
+    _c("div", { staticClass: "header" }, [
+      _c("ul", { staticClass: "list-inline" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            class: _vm.sort == 21 ? "active" : "",
+            on: {
+              click: function ($event) {
+                return _vm.set_sort(21)
               },
-              [
-                _c("img", {
-                  attrs: {
-                    src: _vm.$siteUrl + "files/thumb/" + product.image_url,
-                    alt: "",
-                  },
-                }),
-              ]
-            ),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "info" }, [
-            _c(
-              "a",
-              {
-                attrs: {
-                  href:
-                    _vm.$siteUrl +
-                    "product/dkp-" +
-                    product.id +
-                    "/" +
-                    product.product_url,
-                },
+            },
+          },
+          [_vm._m(1)]
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            class: _vm.sort == 22 ? "active" : "",
+            on: {
+              click: function ($event) {
+                return _vm.set_sort(22)
               },
-              [
-                _c("p", { staticClass: "title" }, [
-                  _vm._v(_vm._s(product.title)),
-                ]),
-              ]
-            ),
-            _vm._v(" "),
-            product.status == 1 && product.get_first_product_price != null
-              ? _c("div", { staticClass: "price" }, [
-                  _c("div", { staticClass: "discount_div" }, [
-                    product.get_first_product_price.price1 !=
-                    product.get_first_product_price.price2
-                      ? _c("div", [
-                          _c("del", [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(
-                                  _vm.replaceNumber(
-                                    _vm.number_format(
-                                      product.get_first_product_price.price1
-                                    )
-                                  )
-                                ) +
-                                " تومان\n                            "
-                            ),
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "discount-badge" }, [
-                            _vm._v(
-                              "\n                                %" +
-                                _vm._s(
-                                  _vm.getDiscountValue(
-                                    product.get_first_product_price.price1,
-                                    product.get_first_product_price.price2
-                                  )
-                                ) +
-                                "\n                            "
-                            ),
-                          ]),
+            },
+          },
+          [_vm._m(2)]
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            class: _vm.sort == 23 ? "active" : "",
+            on: {
+              click: function ($event) {
+                return _vm.set_sort(23)
+              },
+            },
+          },
+          [_vm._m(3)]
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            class: _vm.sort == 24 ? "active" : "",
+            on: {
+              click: function ($event) {
+                return _vm.set_sort(24)
+              },
+            },
+          },
+          [_vm._m(4)]
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            class: _vm.sort == 25 ? "active" : "",
+            on: {
+              click: function ($event) {
+                return _vm.set_sort(25)
+              },
+            },
+          },
+          [_vm._m(5)]
+        ),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "product_list" },
+      [
+        _vm._l(this.productList.data, function (product) {
+          return _c("div", { staticClass: "product_div" }, [
+            _c("div", { staticClass: "image_div" }, [
+              _c(
+                "ul",
+                { staticClass: "color_box list-inline" },
+                [
+                  _vm._l(product.get_product_color, function (color, key) {
+                    return color.get_color != null && key < 3
+                      ? _c("li", [
+                          _c("label", {
+                            style: { background: color.get_color.code },
+                            attrs: { for: "" },
+                          }),
                         ])
-                      : _vm._e(),
-                  ]),
+                      : _vm._e()
+                  }),
                   _vm._v(" "),
-                  _c("span", [
-                    _vm._v(
-                      _vm._s(
-                        _vm.replaceNumber(
-                          _vm.number_format(
-                            product.get_first_product_price.price2
-                          )
-                        )
-                      ) + " تومان "
-                    ),
+                  product.get_product_color.length > 3
+                    ? _c("li", [_c("span", { staticClass: "fa fa-plus" })])
+                    : _vm._e(),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  attrs: {
+                    href:
+                      _vm.$siteUrl +
+                      "product/dkp-" +
+                      product.id +
+                      "/" +
+                      product.product_url,
+                  },
+                },
+                [
+                  _c("img", {
+                    attrs: {
+                      src: _vm.$siteUrl + "files/thumb/" + product.image_url,
+                      alt: "",
+                    },
+                  }),
+                ]
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "info" }, [
+              _c(
+                "a",
+                {
+                  attrs: {
+                    href:
+                      _vm.$siteUrl +
+                      "product/dkp-" +
+                      product.id +
+                      "/" +
+                      product.product_url,
+                  },
+                },
+                [
+                  _c("p", { staticClass: "title" }, [
+                    _vm._v(_vm._s(product.title)),
                   ]),
-                ])
-              : _c("div", { staticClass: "product_status" }, [_vm._m(0, true)]),
-          ]),
-        ])
-      }),
-      _vm._v(" "),
-      this.productList.data == 0 && _vm.get_result
-        ? _c("div", { staticClass: "not_found_product_message" }, [
-            _vm._v("\n            محصولی برای نمایش یافت نشد\n        "),
+                ]
+              ),
+              _vm._v(" "),
+              product.status == 1 && product.get_first_product_price != null
+                ? _c("div", { staticClass: "price" }, [
+                    _c("div", { staticClass: "discount_div" }, [
+                      product.get_first_product_price.price1 !=
+                      product.get_first_product_price.price2
+                        ? _c("div", [
+                            _c("del", [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(
+                                    _vm.replaceNumber(
+                                      _vm.number_format(
+                                        product.get_first_product_price.price1
+                                      )
+                                    )
+                                  ) +
+                                  " تومان\n                            "
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "discount-badge" }, [
+                              _vm._v(
+                                "\n                            %" +
+                                  _vm._s(
+                                    _vm.getDiscountValue(
+                                      product.get_first_product_price.price1,
+                                      product.get_first_product_price.price2
+                                    )
+                                  ) +
+                                  "\n                        "
+                              ),
+                            ]),
+                          ])
+                        : _vm._e(),
+                    ]),
+                    _vm._v(" "),
+                    _c("span", [
+                      _vm._v(
+                        _vm._s(
+                          _vm.replaceNumber(
+                            _vm.number_format(
+                              product.get_first_product_price.price2
+                            )
+                          )
+                        ) + " تومان "
+                      ),
+                    ]),
+                  ])
+                : _c("div", { staticClass: "product_status" }, [
+                    _vm._m(6, true),
+                  ]),
+            ]),
           ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("pagination", {
-        attrs: { align: "center", data: _vm.productList },
-        on: { "pagination-change-page": _vm.getProduct },
-      }),
-    ],
-    2
-  )
+        }),
+        _vm._v(" "),
+        this.productList.data == 0 && _vm.get_result
+          ? _c("div", { staticClass: "not_found_product_message" }, [
+              _vm._v("\n            محصولی برای نمایش یافت نشد\n        "),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("pagination", {
+          attrs: { align: "center", data: _vm.productList },
+          on: { "pagination-change-page": _vm.getProduct },
+        }),
+      ],
+      2
+    ),
+  ])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("i", { staticClass: "fa fa-sort-amount-asc icon-sort" }),
+      _vm._v("مرتب سازی بر اساس :"),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "" } }, [
+      _c("span", [_vm._v("پر بازدیدترین")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "" } }, [
+      _c("span", [_vm._v("محبوب ترین")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "" } }, [_c("span", [_vm._v("جدیدترین")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "" } }, [
+      _c("span", [_vm._v("ارزان ترین")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "" } }, [_c("span", [_vm._v("گران ترین")])])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -25928,11 +26093,17 @@ __webpack_require__.r(__webpack_exports__);
           }
         } else {
           url = url.replace('?' + key + "[0]" + "=" + value, '');
-          url = url.replace('&' + key + "[0]" + "=" + value, '');
         }
       }
 
+      var url_params = url.split('?');
+
+      if (url_params[1] == undefined) {
+        url = url.replace('&', '?');
+      }
+
       this.setPageUrl(url);
+      this.getProduct(1);
     }
   }
 });

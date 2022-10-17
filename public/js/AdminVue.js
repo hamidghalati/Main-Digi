@@ -19041,11 +19041,17 @@ __webpack_require__.r(__webpack_exports__);
           }
         } else {
           url = url.replace('?' + key + "[0]" + "=" + value, '');
-          url = url.replace('&' + key + "[0]" + "=" + value, '');
         }
       }
 
+      var url_params = url.split('?');
+
+      if (url_params[1] == undefined) {
+        url = url.replace('&', '?');
+      }
+
       this.setPageUrl(url);
+      this.getProduct(1);
     }
   }
 });

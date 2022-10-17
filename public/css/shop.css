@@ -2656,12 +2656,43 @@ del {
     height: 80px;
     border: 2px dashed grey;
 }
+.ename{
+    float: left;
+    font-size: 12px!important;
+    padding-left: 10px;
+}
 
+.product_list_box{
+    box-shadow: 0 12px 12px 0 rgba(180,180,180,0.1);
+    border: 1px solid #dedede;
+    background-color: white;
+    width: 100%;
+    min-height: 300px;
+}
+.product_list_box .header{
+    width: 100%;
+    border-bottom: 1px solid #dedede;
+}
+.product_list_box .header ul{
+    display: inline-flex;
+    font-size: 14px;
+    margin: 0!important;
+}
 
-
-
-
-
+.product_list_box .header ul li .icon-sort{
+    padding-left: 10px !important;
+}
+.product_list_box .header ul li{
+    margin-right: 10px;
+    padding: 5px;
+    cursor: pointer;
+}
+.product_list_box .header ul .active{
+    background: #00bfd6!important;
+    color: white!important;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
 
 
 

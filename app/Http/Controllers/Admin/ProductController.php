@@ -59,6 +59,7 @@ class ProductController extends CustomController
         $product->view=0;
         create_fit_pic('files/products/'.$image_url,$image_url);
         $product->saveOrFail();
+        set_cat_brand($product,null);
         foreach ($product_color as $key=>$value)
         {
             DB::table('product_color')->insert([
@@ -175,7 +176,6 @@ class ProductController extends CustomController
         }
     }
 
-
     public function removeImageGallery($id)
     {
         $image=ProductGalleryModel::findOrfail($id);
@@ -190,7 +190,6 @@ class ProductController extends CustomController
 
 
     }
-
 
     public function change_images_status($id,Request $request)
     {

@@ -4,10 +4,35 @@
     <div class="row" id="product_box">
         <div class="col-3">
 
+
+            @if(isset($brands))
+                <div class="item_box">
+                    <div class="title_box">
+                        <label for="">برند</label>
+                        <span class="fa fa-angle-down"></span>
+                    </div>
+                    <div>
+                        <div class="filter_box" style="display: block">
+                            <ul class="list-inline product_cat_ul">
+                                @foreach($brands as $key=>$value)
+
+                                    <li data="brand_param_{{$value->brand_id}}">
+                                        <span class="check_box"></span>
+                                        <span class="title">{{$value->getBrand->brand_name}}</span>
+                                        <span class="ename">{{$value->getBrand->brand_ename}}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <div class="item_box">
+
                 <div class="title_box">
                     <label for="">محدوده قیمت مورد نظر</label>
-{{--                    <span class="fa fa-angle-down"></span>--}}
+                    <span class="fa fa-angle-down"></span>
                 </div>
                 <div>
                     <div id="slider" class="price_range_slider"></div>

@@ -8,11 +8,14 @@ class SearchProduct
     protected $min_price=0;
     protected $max_price=0;
     protected $attribute;
+    protected $brands=null;
+    protected $sort=21;
 
     public function __construct($request)
     {
         $this->setMinAndMaxPrice($request->all());
         $this->attribute=$request->get('attribute',null);
+        $this->brands=$request->get('brand',null);
     }
     public function set_product_category($catList)
     {
@@ -41,6 +44,17 @@ class SearchProduct
             $product=$product->whereIn('id',$product_id);
         }
 
+        if ($this->brands)
+        {
+            if (is_array($this->brands))
+            {
+                $product=$product->whereIn('brand_id',$this->brands);
+            }
+            else{
+                $product=$product->where('brand_id',$this->brands);
+            }
+        }
+
         if ($this->max_price!=0)
         {
             $product=$product->where('price','<=',$this->max_price);
@@ -50,6 +64,9 @@ class SearchProduct
             $product=$product->where('price','>=',$this->min_price);
         }
 
+
+        $sort=$this->get_sort();
+        $product=$product->orderBy($sort[0],$sort[1]);
 
         $product=$product->paginate(12);
 
@@ -98,6 +115,24 @@ class SearchProduct
             $products_id=$id->values()->all()[0];
         }
         return $products_id;
+    }
+
+    public function get_sort()
+    {
+        $sort=array();
+        $sort[21]=array('view','DESC');
+        $sort[22]=array('order_number','DESC');
+        $sort[23]=array('id','DESC');
+        $sort[24]=array('price','ASC');
+        $sort[25]=array('Price','DESC');
+
+        if (array_key_exists($this->sort,$sort))
+        {
+            return $sort[$this->sort];
+        }
+        else{
+            return $sort[23];
+        }
     }
 
 }
