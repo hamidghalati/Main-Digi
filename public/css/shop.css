@@ -2580,6 +2580,80 @@ del {
     font-size: 14px;
     display: block;
 }
+.color_box{
+    position: absolute;
+    margin-right: 10px;
+}
+.color_box li{
+    height: 15px!important;
+}
+.color_box li label{
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border: 1px solid #c9c5c5;
+}
+.color_box li .fa-plus{
+    font-size: 11px;
+    color: #000;
+}
+.discount_div{
+    font-size: 16px!important;
+    margin-bottom: 10px;
+    color: #acacac!important;
+    min-height: 30px;
+}
+
+.info .price{
+    color: black!important;
+    font-size: 18px;
+    text-align: left;
+    position: relative;
+    padding-bottom: 10px;
+    min-height: 80px;
+}
+.discount_div .discount-badge{
+    left: 0!important;
+}
+.info .product_status{
+    padding-bottom: 10px;
+    min-height: 80px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+.info .product_status div{
+    width: 100%;
+    position: relative;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    font-size: 16px
+}
+.product_status div .line{
+    width: 100%;
+    height: 1px;
+    margin: 0!important;
+    background: grey;
+
+}
+.info .product_status div span{
+    position: absolute;
+    top: -13px;
+    width: auto;
+    background: white;
+    padding-right: 5px;
+    padding-left: 5px;
+    color: grey;
+}
+
+
+
+
+
+
+
 
 
 

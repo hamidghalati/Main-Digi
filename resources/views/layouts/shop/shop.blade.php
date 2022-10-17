@@ -94,6 +94,12 @@
     </div>
 
 
+    <div id="loading">
+        <span class="loader"></span>
+        <h6>لطفاً صبور باشید</h6>
+    </div>
+
+
     <script src="{{ asset('js/ShopVue.js') }}" type="text/javascript"></script>
 
     <script src="{{ asset('js/shop.js') }}" type="text/javascript"></script>

@@ -3027,6 +3027,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ProductBox",
@@ -3055,10 +3076,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      $("#loading").show();
+      this.request_url = window.location.href.replace(this.$siteUrl, this.$siteUrl + '/getProduct/');
       this.axios.get(this.request_url + "?page=" + page).then(function (response) {
         _this.productList = response.data['product'];
 
         _this.setRangeSlider(response.data.max_price);
+
+        $("#loading").hide();
       });
     },
     setRangeSlider: function setRangeSlider(price) {
@@ -3095,6 +3120,7 @@ __webpack_require__.r(__webpack_exports__);
     setFilterPrice: function setFilterPrice() {
       this.add_url_param('price[min]', this.min_price);
       this.add_url_param('price[max]', this.max_price);
+      this.getProduct(1);
     },
     add_url_param: function add_url_param(key, value) {
       var params = new window.URLSearchParams(window.location.search);
@@ -3102,6 +3128,8 @@ __webpack_require__.r(__webpack_exports__);
 
       if (params.get(key) != null) {
         var old_param = key + "=" + params.get(key);
+        var new_param = key + "=" + value;
+        url = url.replace(old_param, new_param);
       } else {
         var url_params = url.split('?');
 
@@ -3116,6 +3144,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     setPageUrl: function setPageUrl(url) {
       window.history.pushState('data', 'title', url);
+    },
+    getDiscountValue: function getDiscountValue(price1, price2) {
+      var a = price2 / price1 * 100;
+      a = 100 - a;
+      a = Math.round(a);
+      return a;
     }
   }
 });
@@ -12359,6 +12393,28 @@ var render = function () {
         return _c("div", { staticClass: "product_div" }, [
           _c("div", { staticClass: "image_div" }, [
             _c(
+              "ul",
+              { staticClass: "color_box list-inline" },
+              [
+                _vm._l(product.get_product_color, function (color, key) {
+                  return color.get_color != null && key < 3
+                    ? _c("li", [
+                        _c("label", {
+                          style: { background: color.get_color.code },
+                          attrs: { for: "" },
+                        }),
+                      ])
+                    : _vm._e()
+                }),
+                _vm._v(" "),
+                product.get_product_color.length > 3
+                  ? _c("li", [_c("span", { staticClass: "fa fa-plus" })])
+                  : _vm._e(),
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c(
               "a",
               {
                 attrs: {
@@ -12403,7 +12459,39 @@ var render = function () {
             _vm._v(" "),
             product.status == 1 && product.get_first_product_price != null
               ? _c("div", { staticClass: "price" }, [
-                  _c("div", { staticClass: "discount_div" }),
+                  _c("div", { staticClass: "discount_div" }, [
+                    product.get_first_product_price.price1 !=
+                    product.get_first_product_price.price2
+                      ? _c("div", [
+                          _c("del", [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(
+                                  _vm.replaceNumber(
+                                    _vm.number_format(
+                                      product.get_first_product_price.price1
+                                    )
+                                  )
+                                ) +
+                                " تومان\n                            "
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "discount-badge" }, [
+                            _vm._v(
+                              "\n                                %" +
+                                _vm._s(
+                                  _vm.getDiscountValue(
+                                    product.get_first_product_price.price1,
+                                    product.get_first_product_price.price2
+                                  )
+                                ) +
+                                "\n                            "
+                            ),
+                          ]),
+                        ])
+                      : _vm._e(),
+                  ]),
                   _vm._v(" "),
                   _c("span", [
                     _vm._v(
@@ -12413,7 +12501,7 @@ var render = function () {
                             product.get_first_product_price.price2
                           )
                         )
-                      )
+                      ) + " تومان "
                     ),
                   ]),
                 ])
