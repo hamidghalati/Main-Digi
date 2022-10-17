@@ -3,6 +3,35 @@
 
     <div class="row" id="product_box">
         <div class="col-3">
+
+            <div class="item_box">
+                <div class="title_box">
+                    <label for="">محدوده قیمت مورد نظر</label>
+{{--                    <span class="fa fa-angle-down"></span>--}}
+                </div>
+                <div>
+                    <div id="slider" class="price_range_slider"></div>
+                    <ul class="filter_price_ul">
+                        <li>
+                            <div>از</div>
+                            <div class="price" id="min_price"></div>
+                            <div>تومان</div>
+                        </li>
+                        <li>
+                            <div>تا</div>
+                            <div class="price" id="max_price"></div>
+                            <div>تومان</div>
+                        </li>
+                    </ul>
+
+                    <button class="btn btn-primary" id="price_filter_btn">
+                        <span class="fa fa-filter"></span>
+                        <span> اعمال محدوده قیمت </span>
+                    </button>
+
+                </div>
+            </div>
+
             @if(isset($filter))
                 @foreach($filter as $key=>$value)
                     <div class="item_box">
@@ -27,33 +56,7 @@
                 @endforeach
             @endif
 
-                <div class="item_box">
-                    <div class="title_box">
-                        <label for="">محدوده قیمت مورد نظر</label>
-                        <span class="fa fa-angle-down"></span>
-                    </div>
-                    <div>
-                        <div id="slider" class="price_range_slider"></div>
-                        <ul class="filter_price_ul">
-                            <li>
-                                <div>از</div>
-                                <div class="price" id="min_price"></div>
-                                <div>تومان</div>
-                            </li>
-                            <li>
-                                <div>تا</div>
-                                <div class="price" id="max_price"></div>
-                                <div>تومان</div>
-                            </li>
-                        </ul>
 
-                        <button class="btn btn-primary" id="price_filter_btn">
-                            <span class="fa fa-filter"></span>
-                            <span> اعمال محدوده قیمت </span>
-                        </button>
-
-                    </div>
-                </div>
 
         </div>
 

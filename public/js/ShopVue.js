@@ -3069,6 +3069,9 @@ __webpack_require__.r(__webpack_exports__);
     $(document).on('click', '#price_filter_btn', function () {
       app.setFilterPrice();
     });
+    $(document).on('click', '.product_cat_ul li', function () {
+      app.set_filter_event(this);
+    });
     this.getProduct();
   },
   methods: {
@@ -3150,6 +3153,68 @@ __webpack_require__.r(__webpack_exports__);
       a = 100 - a;
       a = Math.round(a);
       return a;
+    },
+    set_filter_event: function set_filter_event(el) {
+      var data = $(el).attr('data');
+      data = data.split('_');
+
+      if ($('.check_box', el).hasClass('active')) {
+        $('.check_box', el).removeClass('active');
+        this.remove_url_query_string(data[0], data[2]);
+      } else {
+        $('.check_box', el).addClass('active');
+        this.add_url_query_string(data[0], data[2]);
+      }
+    },
+    add_url_query_string: function add_url_query_string(key, value) {
+      var url = window.location.href;
+      var check = url.split(key);
+      var n = check.length - 1;
+      var url_params = url.split('?');
+
+      if (url_params[1] == undefined) {
+        url = url + "?" + key + "[" + n + "]=" + value;
+      } else {
+        url = url + "&" + key + "[" + n + "]=" + value;
+      }
+
+      this.setPageUrl(url);
+      this.getProduct(1);
+    },
+    remove_url_query_string: function remove_url_query_string(key, value) {
+      var url = window.location.href;
+      var check = url.split(key);
+      var params = url.split('?');
+      var h = 0;
+
+      if (params[1] != undefined) {
+        if (params[1].indexOf('&') > 1) {
+          var vars = params[1].split('&');
+
+          for (var i in vars) {
+            var k = vars[i].split('=')[0];
+            var v = vars[i].split('=')[1];
+            var n = k.indexOf(key);
+
+            if (n > -1 && v != value) {
+              k = k.replace(key, '');
+              k = k.replace('[', '');
+              k = k.replace(']', '');
+              var new_string = key + "[" + h + "]=" + v;
+              var old_string = key + "[" + k + "]=" + v;
+              url = url.replace(old_string, new_string);
+              h++;
+            } else if (n > -1) {
+              url = url.replace('&' + k + "=" + v, '');
+              url = url.replace('?' + k + "=" + v, '');
+            }
+          }
+        } else {
+          url = url.replace('?' + key + "[0]" + "=" + value, '');
+        }
+      }
+
+      this.setPageUrl(url);
     }
   }
 });
