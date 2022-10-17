@@ -50,6 +50,10 @@
 
         </div>
 
+        <div v-if="this.productList.data==0 && get_result" class="not_found_product_message">
+            محصولی برای نمایش یافت نشد
+        </div>
+
         <pagination align="center" :data="productList" @pagination-change-page="getProduct"></pagination>
 
     </div>
@@ -68,14 +72,14 @@ export default {
             noUiSlider:null,
             min_price:0,
             max_price:0,
-
-
+            get_result:false
         }
     },
     mixins:[myMixin],
     mounted() {
-        this.request_url=window.location.href.replace(this.$siteUrl,this.$siteUrl+'/getProduct/');
+        // this.request_url=window.location.href.replace(this.$siteUrl,this.$siteUrl+'/getProduct/');
         const app=this;
+        this.check_search_params();
         $(document).on('click','#price_filter_btn',function () {
             app.setFilterPrice();
         });
@@ -95,7 +99,47 @@ export default {
                 this.productList=response.data['product'];
                this.setRangeSlider(response.data.max_price);
                 $("#loading").hide();
+                this.get_result=true;
             });
+        },
+        check_search_params:function () {
+            let url=window.location.href;
+            const params=url.split('?');
+            if (params[1]!=undefined)
+            {
+                if (params[1].indexOf('&')>-1)
+                {
+                    let vars=params[1].split('&');
+                    for (let i in vars)
+                    {
+                        let k=vars[i].split('=')[0];
+                        let v=vars[i].split('=')[1];
+                        k=k.split('[');
+                        if (k.length>1)
+                        {
+                            if (k.length==3)
+                            {
+                                let data=k[0]+"["+k[1]+"_param_"+v;
+                                data="'"+data+"'";
+                                $('li[data='+data+'] .check_box').addClass('active');
+                                $('li[data='+data+']').parent().parent().slideDown();
+                                if ($('li[data='+data+']').length==1)
+                                {
+                                    this.add_filter_tag(data,k[0],v);
+                                }
+                            }
+                            else {
+
+                            }
+                        }
+                    }
+                }
+
+
+            }
+        },
+        add_filter_tag:function () {
+
         },
         setRangeSlider:function (price) {
             const app=this;
@@ -132,118 +176,29 @@ export default {
                 $("#max_price").text(app.number_format(values[1]));
             });
 
-            },
-        setFilterPrice:function () {
-            this.add_url_param('price[min]',this.min_price);
-            this.add_url_param('price[max]',this.max_price);
-            this.getProduct(1);
-        },
-        add_url_param:function (key,value) {
-            let params=new window.URLSearchParams(window.location.search);
-            let url=window.location.href;
-            if (params.get(key)!=null)
+
+            let search=new window.URLSearchParams(window.location.search);
+            const min=parseInt(search.get('price[min]')) !=null ? parseInt(search.get('price[min]')) : 0;
+            if (search.get('price[max]')!=null)
             {
-                let old_param=key+"="+params.get(key);
-                let new_param=key+"="+value;
-                url=url.replace(old_param,new_param);
+                this.noUiSlider.updateOptions({
+                    start: [min, parseInt(search.get('price[max]'))],
 
+                })
             }
-            else {
-                const url_params=url.split('?');
-                if (url_params[1]==undefined)
-                {
-                    url+="?"+key+"="+value;
-                }
-                else {
-                    url+="&"+key+"="+value;
-                }
-            }
-            this.setPageUrl(url);
-        },
-        setPageUrl:function (url) {
-            window.history.pushState('data','title',url);
-        },
-        getDiscountValue:function (price1,price2) {
-            let a=(price2/price1)*100;
-            a=100-a;
-            a=Math.round(a);
-            return a;
-        },
-        set_filter_event:function (el) {
-            let data=$(el).attr('data');
-            data=data.split('_');
-            if ($('.check_box',el).hasClass('active'))
+
+            if (search.get('price[min]')!=null && search.get('price[max]')==null)
             {
-                $('.check_box',el).removeClass('active');
-                this.remove_url_query_string(data[0],data[2]);
-            }
-            else {
-                $('.check_box',el).addClass('active');
-                this.add_url_query_string(data[0],data[2]);
-            }
-        },
-        add_url_query_string:function (key,value) {
-            let url=window.location.href;
-            let check=url.split(key);
-            const n=check.length-1;
-            const url_params=url.split('?');
-            if (url_params[1]==undefined)
-            {
-                url=url+"?"+key+"["+n+"]="+value;
-            }
-            else {
-                url=url+"&"+key+"["+n+"]="+value;
-            }
+                this.noUiSlider.updateOptions({
+                    start: [parseInt(search.get('price[min]')),slider.noUiSlider.get()[1]],
 
-            this.setPageUrl(url);
-            this.getProduct(1);
+                })
+            }
 
         },
-        remove_url_query_string:function (key,value) {
-            let url=window.location.href;
-            let check=url.split(key);
-            const params=url.split('?');
-            let h=0;
-
-            if (params[1]!=undefined)
-            {
-                if(params[1].indexOf('&')>1){
-
-                    let vars=params[1].split('&');
-                    for (let i in vars)
-                    {
-                        let k=vars[i].split('=')[0];
-                        let v=vars[i].split('=')[1];
-                        let n=k.indexOf(key);
-                        if (n>-1 && v!=value)
-                        {
-                           k=k.replace(key,'');
-                           k=k.replace('[','');
-                           k=k.replace(']','');
-                           const new_string=key+"["+h+"]="+v;
-                           const old_string=key+"["+k+"]="+v;
-                           url=url.replace(old_string,new_string);
-                           h++;
-                        }
-                        else if (n>-1)
-                        {
-
-                            url=url.replace('&'+k+"="+v,'');
-                            url=url.replace('?'+k+"="+v,'');
-                        }
-                    }
-                }
-                else {
 
 
-                    url=url.replace('?'+key+"[0]"+"="+value,'');
-                }
 
-            }
-
-
-            this.setPageUrl(url);
-        }
     }
 }
 </script>

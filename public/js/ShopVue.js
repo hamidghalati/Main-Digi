@@ -3048,6 +3048,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ProductBox",
@@ -3059,13 +3063,15 @@ __webpack_require__.r(__webpack_exports__);
       request_url: '',
       noUiSlider: null,
       min_price: 0,
-      max_price: 0
+      max_price: 0,
+      get_result: false
     };
   },
   mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   mounted: function mounted() {
-    this.request_url = window.location.href.replace(this.$siteUrl, this.$siteUrl + '/getProduct/');
+    // this.request_url=window.location.href.replace(this.$siteUrl,this.$siteUrl+'/getProduct/');
     var app = this;
+    this.check_search_params();
     $(document).on('click', '#price_filter_btn', function () {
       app.setFilterPrice();
     });
@@ -3087,8 +3093,39 @@ __webpack_require__.r(__webpack_exports__);
         _this.setRangeSlider(response.data.max_price);
 
         $("#loading").hide();
+        _this.get_result = true;
       });
     },
+    check_search_params: function check_search_params() {
+      var url = window.location.href;
+      var params = url.split('?');
+
+      if (params[1] != undefined) {
+        if (params[1].indexOf('&') > -1) {
+          var vars = params[1].split('&');
+
+          for (var i in vars) {
+            var k = vars[i].split('=')[0];
+            var v = vars[i].split('=')[1];
+            k = k.split('[');
+
+            if (k.length > 1) {
+              if (k.length == 3) {
+                var data = k[0] + "[" + k[1] + "_param_" + v;
+                data = "'" + data + "'";
+                $('li[data=' + data + '] .check_box').addClass('active');
+                $('li[data=' + data + ']').parent().parent().slideDown();
+
+                if ($('li[data=' + data + ']').length == 1) {
+                  this.add_filter_tag(data, k[0], v);
+                }
+              } else {}
+            }
+          }
+        }
+      }
+    },
+    add_filter_tag: function add_filter_tag() {},
     setRangeSlider: function setRangeSlider(price) {
       var app = this;
       var slider = document.querySelector('.price_range_slider');
@@ -3119,102 +3156,20 @@ __webpack_require__.r(__webpack_exports__);
         $("#min_price").text(app.number_format(values[0]));
         $("#max_price").text(app.number_format(values[1]));
       });
-    },
-    setFilterPrice: function setFilterPrice() {
-      this.add_url_param('price[min]', this.min_price);
-      this.add_url_param('price[max]', this.max_price);
-      this.getProduct(1);
-    },
-    add_url_param: function add_url_param(key, value) {
-      var params = new window.URLSearchParams(window.location.search);
-      var url = window.location.href;
+      var search = new window.URLSearchParams(window.location.search);
+      var min = parseInt(search.get('price[min]')) != null ? parseInt(search.get('price[min]')) : 0;
 
-      if (params.get(key) != null) {
-        var old_param = key + "=" + params.get(key);
-        var new_param = key + "=" + value;
-        url = url.replace(old_param, new_param);
-      } else {
-        var url_params = url.split('?');
-
-        if (url_params[1] == undefined) {
-          url += "?" + key + "=" + value;
-        } else {
-          url += "&" + key + "=" + value;
-        }
+      if (search.get('price[max]') != null) {
+        this.noUiSlider.updateOptions({
+          start: [min, parseInt(search.get('price[max]'))]
+        });
       }
 
-      this.setPageUrl(url);
-    },
-    setPageUrl: function setPageUrl(url) {
-      window.history.pushState('data', 'title', url);
-    },
-    getDiscountValue: function getDiscountValue(price1, price2) {
-      var a = price2 / price1 * 100;
-      a = 100 - a;
-      a = Math.round(a);
-      return a;
-    },
-    set_filter_event: function set_filter_event(el) {
-      var data = $(el).attr('data');
-      data = data.split('_');
-
-      if ($('.check_box', el).hasClass('active')) {
-        $('.check_box', el).removeClass('active');
-        this.remove_url_query_string(data[0], data[2]);
-      } else {
-        $('.check_box', el).addClass('active');
-        this.add_url_query_string(data[0], data[2]);
+      if (search.get('price[min]') != null && search.get('price[max]') == null) {
+        this.noUiSlider.updateOptions({
+          start: [parseInt(search.get('price[min]')), slider.noUiSlider.get()[1]]
+        });
       }
-    },
-    add_url_query_string: function add_url_query_string(key, value) {
-      var url = window.location.href;
-      var check = url.split(key);
-      var n = check.length - 1;
-      var url_params = url.split('?');
-
-      if (url_params[1] == undefined) {
-        url = url + "?" + key + "[" + n + "]=" + value;
-      } else {
-        url = url + "&" + key + "[" + n + "]=" + value;
-      }
-
-      this.setPageUrl(url);
-      this.getProduct(1);
-    },
-    remove_url_query_string: function remove_url_query_string(key, value) {
-      var url = window.location.href;
-      var check = url.split(key);
-      var params = url.split('?');
-      var h = 0;
-
-      if (params[1] != undefined) {
-        if (params[1].indexOf('&') > 1) {
-          var vars = params[1].split('&');
-
-          for (var i in vars) {
-            var k = vars[i].split('=')[0];
-            var v = vars[i].split('=')[1];
-            var n = k.indexOf(key);
-
-            if (n > -1 && v != value) {
-              k = k.replace(key, '');
-              k = k.replace('[', '');
-              k = k.replace(']', '');
-              var new_string = key + "[" + h + "]=" + v;
-              var old_string = key + "[" + k + "]=" + v;
-              url = url.replace(old_string, new_string);
-              h++;
-            } else if (n > -1) {
-              url = url.replace('&' + k + "=" + v, '');
-              url = url.replace('?' + k + "=" + v, '');
-            }
-          }
-        } else {
-          url = url.replace('?' + key + "[0]" + "=" + value, '');
-        }
-      }
-
-      this.setPageUrl(url);
     }
   }
 });
@@ -12574,6 +12529,12 @@ var render = function () {
           ]),
         ])
       }),
+      _vm._v(" "),
+      this.productList.data == 0 && _vm.get_result
+        ? _c("div", { staticClass: "not_found_product_message" }, [
+            _vm._v("\n            محصولی برای نمایش یافت نشد\n        "),
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("pagination", {
         attrs: { align: "center", data: _vm.productList },
@@ -25875,6 +25836,103 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return format.split('').reverse().join('');
+    },
+    setFilterPrice: function setFilterPrice() {
+      this.add_url_param('price[min]', this.min_price);
+      this.add_url_param('price[max]', this.max_price);
+      this.getProduct(1);
+    },
+    add_url_param: function add_url_param(key, value) {
+      var params = new window.URLSearchParams(window.location.search);
+      var url = window.location.href;
+
+      if (params.get(key) != null) {
+        var old_param = key + "=" + params.get(key);
+        var new_param = key + "=" + value;
+        url = url.replace(old_param, new_param);
+      } else {
+        var url_params = url.split('?');
+
+        if (url_params[1] == undefined) {
+          url += "?" + key + "=" + value;
+        } else {
+          url += "&" + key + "=" + value;
+        }
+      }
+
+      this.setPageUrl(url);
+    },
+    setPageUrl: function setPageUrl(url) {
+      window.history.pushState('data', 'title', url);
+    },
+    getDiscountValue: function getDiscountValue(price1, price2) {
+      var a = price2 / price1 * 100;
+      a = 100 - a;
+      a = Math.round(a);
+      return a;
+    },
+    set_filter_event: function set_filter_event(el) {
+      var data = $(el).attr('data');
+      data = data.split('_');
+
+      if ($('.check_box', el).hasClass('active')) {
+        $('.check_box', el).removeClass('active');
+        this.remove_url_query_string(data[0], data[2]);
+      } else {
+        $('.check_box', el).addClass('active');
+        this.add_url_query_string(data[0], data[2]);
+      }
+    },
+    add_url_query_string: function add_url_query_string(key, value) {
+      var url = window.location.href;
+      var check = url.split(key);
+      var n = check.length - 1;
+      var url_params = url.split('?');
+
+      if (url_params[1] == undefined) {
+        url = url + "?" + key + "[" + n + "]=" + value;
+      } else {
+        url = url + "&" + key + "[" + n + "]=" + value;
+      }
+
+      this.setPageUrl(url);
+      this.getProduct(1);
+    },
+    remove_url_query_string: function remove_url_query_string(key, value) {
+      var url = window.location.href;
+      var check = url.split(key);
+      var params = url.split('?');
+      var h = 0;
+
+      if (params[1] != undefined) {
+        if (params[1].indexOf('&') > -1) {
+          var vars = params[1].split('&');
+
+          for (var i in vars) {
+            var k = vars[i].split('=')[0];
+            var v = vars[i].split('=')[1];
+            var n = k.indexOf(key);
+
+            if (n > -1 && v != value) {
+              k = k.replace(key, '');
+              k = k.replace('[', '');
+              k = k.replace(']', '');
+              var new_string = key + "[" + h + "]=" + v;
+              var old_string = key + "[" + k + "]=" + v;
+              url = url.replace(old_string, new_string);
+              h++;
+            } else if (n > -1) {
+              url = url.replace('&' + k + "=" + v, '');
+              url = url.replace('?' + k + "=" + v, '');
+            }
+          }
+        } else {
+          url = url.replace('?' + key + "[0]" + "=" + value, '');
+          url = url.replace('&' + key + "[0]" + "=" + value, '');
+        }
+      }
+
+      this.setPageUrl(url);
     }
   }
 });

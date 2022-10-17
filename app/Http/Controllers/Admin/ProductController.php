@@ -101,6 +101,11 @@ class ProductController extends CustomController
         $data=$request->all();
         $use_for_gift_cart=$request->has('use_for_gift_cart') ? 'yes' : 'no';
         $product=ProductsModel::findOrFail($id);
+//        $oldData=$product;
+        $oldData=[
+          'cat_id'=>$product->cat_id,
+          'brand_id'=>$product->brand_id,
+        ];
         $product_color=$request->get('product_color',array());
         $product_url=get_url($request->get('title'));
         $product->product_url=$product_url;
@@ -124,6 +129,8 @@ class ProductController extends CustomController
                 'cat_id'=>$product->cat_id
             ]);
         }
+
+        set_cat_brand($product,$oldData);
 
         return redirect('admin/products')
             ->with(['message'=>'ویرایش محصول با موفقیت انجام شد','header'=>'ویرایش محصول','alerts'=>'info']);

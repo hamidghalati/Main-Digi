@@ -1,6 +1,7 @@
 <?php
 
-    use App\CategoriesModel;
+use App\CatBrand;
+use App\CategoriesModel;
 use App\GiftCart;
 use App\Lib\JDF;
     use App\ProductPriceModel;
@@ -946,6 +947,7 @@ function getCatList()
     }
 
 }
+
 function get_cat_url($cat)
 {
     if (!empty($cat->search_url))
@@ -1085,9 +1087,74 @@ function CheckGiftCart($product,$user_id,$credit_cart,$order_id)
 
     }
 }
+function set_cat_brand($product,$oldData){
+        if ($oldData)
+        {
+//            if ($oldData->cat_id!=$product->cat_id)
+//            {
+//                 check_has_cat_brand($product->cat_id,$product->brand_id);
+//
+//            }
+//            elseif ($oldData->brand_id!=$product->brand_id)
+//            {
+//                 check_has_cat_brand($product->cat_id,$product->brand_id);
+//            }
+//
+            if ($oldData['cat_id']!=$product->cat_id)
+            {
+                 check_has_cat_brand($product->cat_id,$product->brand_id);
+                remove_cat_brand($oldData['cat_id'],$oldData['brand_id']);
+            }
+            elseif ($oldData['brand_id']!=$product->brand_id)
+            {
+                 check_has_cat_brand($product->cat_id,$product->brand_id);
+                remove_cat_brand($oldData['cat_id'],$oldData['brand_id']);
+            }
+        }
+        else
+        {
+            check_has_cat_brand($product->cat_id,$product->brand_id);
+        }
+}
 
+function add_cat_brand($cat_id,$brand_id)
+{
+    $CatBrand=new CatBrand();
+    $CatBrand->product_count=1;
+    $CatBrand->cat_id=$cat_id;
+    $CatBrand->brand_id=$brand_id;
+    $CatBrand->save();
 
+}
 
+function check_has_cat_brand($cat_id,$brand_id)
+{
+    $row=CatBrand::where(['cat_id'=>$cat_id,'brand_id'=>$brand_id])->first();
+    if ($row)
+    {
+        $product_count=$row->product_count+1;
+        $row->product_count=$product_count;
+        $row->update();
+    }
+    else{
+        add_cat_brand($cat_id,$brand_id);
+    }
+}
+function remove_cat_brand($cat_id,$brand_id)
+{
+    $row=CatBrand::where(['cat_id'=>$cat_id,'brand_id'=>$brand_id])->first();
+    if ($row && $row->product_count>2)
+    {
+        $product_count=$row->product_count-1;
+        $row->product_count=$product_count;
+        $row->update();
+    }
+    else
+    {
+        $row->delete();
+    }
+
+}
 
 
 

@@ -2647,7 +2647,15 @@ del {
     padding-left: 5px;
     color: grey;
 }
-
+.not_found_product_message{
+    width: 95%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    border: 2px dashed grey;
+}
 
 
 
