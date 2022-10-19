@@ -3088,6 +3088,7 @@ __webpack_require__.r(__webpack_exports__);
     // this.request_url=window.location.href.replace(this.$siteUrl,this.$siteUrl+'/getProduct/');
     var app = this;
     this.check_search_params();
+    this.set_product_sort();
     $(document).on('click', '#price_filter_btn', function () {
       app.setFilterPrice();
     });
@@ -3103,7 +3104,7 @@ __webpack_require__.r(__webpack_exports__);
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       $("#loading").show();
       this.request_url = window.location.href.replace(this.$siteUrl, this.$siteUrl + '/getProduct/');
-      this.axios.get(this.request_url + "?page=" + page).then(function (response) {
+      this.axios.get(this.get_request_url(this.request_url, page)).then(function (response) {
         _this.productList = response.data['product'];
 
         _this.setRangeSlider(response.data.max_price);
@@ -3111,110 +3112,6 @@ __webpack_require__.r(__webpack_exports__);
         $("#loading").hide();
         _this.get_result = true;
       });
-    },
-    check_search_params: function check_search_params() {
-      var url = window.location.href;
-      var params = url.split('?');
-
-      if (params[1] != undefined) {
-        if (params[1].indexOf('&') > -1) {
-          var vars = params[1].split('&');
-
-          for (var i in vars) {
-            var k = vars[i].split('=')[0];
-            var v = vars[i].split('=')[1];
-            k = k.split('[');
-            this.add_active_filter(k, v);
-          }
-        } else {
-          var _k = params[1].split('=')[0];
-          var _v = params[1].split('=')[1];
-          _k = _k.split('[');
-          this.add_active_filter(_k, _v);
-        }
-      }
-    },
-    add_filter_tag: function add_filter_tag() {},
-    setRangeSlider: function setRangeSlider(price) {
-      var app = this;
-      var slider = document.querySelector('.price_range_slider');
-
-      if (this.noUiSlider == null) {
-        this.noUiSlider = noUiSlider.create(slider, {
-          start: [0, price],
-          connect: true,
-          direction: 'rtl',
-          range: {
-            'min': 0,
-            'max': price
-          },
-          format: {
-            from: function from(value) {
-              return parseInt(value);
-            },
-            to: function to(value) {
-              return parseInt(value);
-            }
-          }
-        });
-      }
-
-      slider.noUiSlider.on('update', function (values, handle) {
-        app.min_price = values[0];
-        app.max_price = values[1];
-        $("#min_price").text(app.number_format(values[0]));
-        $("#max_price").text(app.number_format(values[1]));
-      });
-      var search = new window.URLSearchParams(window.location.search);
-      var min = parseInt(search.get('price[min]')) != null ? parseInt(search.get('price[min]')) : 0;
-
-      if (search.get('price[max]') != null) {
-        this.noUiSlider.updateOptions({
-          start: [min, parseInt(search.get('price[max]'))]
-        });
-      }
-
-      if (search.get('price[min]') != null && search.get('price[max]') == null) {
-        this.noUiSlider.updateOptions({
-          start: [parseInt(search.get('price[min]')), slider.noUiSlider.get()[1]]
-        });
-      }
-    },
-    add_active_filter: function add_active_filter(k, v) {
-      if (k.length > 1) {
-        var data = "";
-
-        if (k.length == 3) {
-          var _data = k[0] + "[" + k[1] + "_param_" + v;
-
-          _data = "'" + _data + "'";
-          $('li[data=' + _data + '] .check_box').addClass('active');
-          $('li[data=' + _data + ']').parent().parent().slideDown();
-
-          if ($('li[data=' + _data + ']').length == 1) {
-            this.add_filter_tag(_data, k[0], v);
-          }
-        } else {
-          data = k[0] + "_param_" + v;
-          $('li[data=' + data + '] .check_box').addClass('active');
-          $('li[data=' + data + ']').parent().parent().slideDown();
-
-          if ($('li[data=' + data + ']').length == 1) {
-            this.add_filter_tag(data, k[0], v);
-          }
-        } // $('li[data='+data+'] .check_box').addClass('active');
-        // $('li[data='+data+']').parent().parent().slideDown();
-        // if ($('li[data='+data+']').length==1)
-        // {
-        //     this.add_filter_tag(data,k[0],v);
-        // }
-
-      }
-    },
-    set_sort: function set_sort(value) {
-      this.sort = value;
-      this.add_url_param('sortby', value);
-      this.getProduct(1);
     }
   }
 });
@@ -12678,37 +12575,31 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "" } }, [
-      _c("span", [_vm._v("پر بازدیدترین")]),
-    ])
+    return _c("a", [_c("span", [_vm._v("پر بازدیدترین")])])
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "" } }, [
-      _c("span", [_vm._v("محبوب ترین")]),
-    ])
+    return _c("a", [_c("span", [_vm._v("محبوب ترین")])])
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "" } }, [_c("span", [_vm._v("جدیدترین")])])
+    return _c("a", [_c("span", [_vm._v("جدیدترین")])])
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "" } }, [
-      _c("span", [_vm._v("ارزان ترین")]),
-    ])
+    return _c("a", [_c("span", [_vm._v("ارزان ترین")])])
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "" } }, [_c("span", [_vm._v("گران ترین")])])
+    return _c("a", [_c("span", [_vm._v("گران ترین")])])
   },
   function () {
     var _vm = this
@@ -26002,6 +25893,105 @@ __webpack_require__.r(__webpack_exports__);
 
       return format.split('').reverse().join('');
     },
+    check_search_params: function check_search_params() {
+      var url = window.location.href;
+      var params = url.split('?');
+
+      if (params[1] != undefined) {
+        if (params[1].indexOf('&') > -1) {
+          var vars = params[1].split('&');
+
+          for (var i in vars) {
+            var k = vars[i].split('=')[0];
+            var v = vars[i].split('=')[1];
+            k = k.split('[');
+            this.add_active_filter(k, v);
+          }
+        } else {
+          var _k = params[1].split('=')[0];
+          var _v = params[1].split('=')[1];
+          _k = _k.split('[');
+          this.add_active_filter(_k, _v);
+        }
+      }
+    },
+    add_filter_tag: function add_filter_tag() {},
+    setRangeSlider: function setRangeSlider(price) {
+      var app = this;
+      var slider = document.querySelector('.price_range_slider');
+
+      if (this.noUiSlider == null) {
+        this.noUiSlider = noUiSlider.create(slider, {
+          start: [0, price],
+          connect: true,
+          direction: 'rtl',
+          range: {
+            'min': 0,
+            'max': price
+          },
+          format: {
+            from: function from(value) {
+              return parseInt(value);
+            },
+            to: function to(value) {
+              return parseInt(value);
+            }
+          }
+        });
+      }
+
+      slider.noUiSlider.on('update', function (values, handle) {
+        app.min_price = values[0];
+        app.max_price = values[1];
+        $("#min_price").text(app.number_format(values[0]));
+        $("#max_price").text(app.number_format(values[1]));
+      });
+      var search = new window.URLSearchParams(window.location.search);
+      var min = parseInt(search.get('price[min]')) != null ? parseInt(search.get('price[min]')) : 0;
+
+      if (search.get('price[max]') != null) {
+        this.noUiSlider.updateOptions({
+          start: [min, parseInt(search.get('price[max]'))]
+        });
+      }
+
+      if (search.get('price[min]') != null && search.get('price[max]') == null) {
+        this.noUiSlider.updateOptions({
+          start: [parseInt(search.get('price[min]')), slider.noUiSlider.get()[1]]
+        });
+      }
+    },
+    add_active_filter: function add_active_filter(k, v) {
+      if (k.length > 1) {
+        var data = "";
+
+        if (k.length == 3) {
+          var _data = k[0] + "[" + k[1] + "_param_" + v;
+
+          _data = "'" + _data + "'";
+          $('li[data=' + _data + '] .check_box').addClass('active');
+          $('li[data=' + _data + ']').parent().parent().slideDown();
+
+          if ($('li[data=' + _data + ']').length == 1) {
+            this.add_filter_tag(_data, k[0], v);
+          }
+        } else {
+          data = k[0] + "_param_" + v;
+          $('li[data=' + data + '] .check_box').addClass('active');
+          $('li[data=' + data + ']').parent().parent().slideDown();
+
+          if ($('li[data=' + data + ']').length == 1) {
+            this.add_filter_tag(data, k[0], v);
+          }
+        } // $('li[data='+data+'] .check_box').addClass('active');
+        // $('li[data='+data+']').parent().parent().slideDown();
+        // if ($('li[data='+data+']').length==1)
+        // {
+        //     this.add_filter_tag(data,k[0],v);
+        // }
+
+      }
+    },
     setFilterPrice: function setFilterPrice() {
       this.add_url_param('price[min]', this.min_price);
       this.add_url_param('price[max]', this.max_price);
@@ -26104,6 +26094,34 @@ __webpack_require__.r(__webpack_exports__);
 
       this.setPageUrl(url);
       this.getProduct(1);
+    },
+    set_sort: function set_sort(value) {
+      this.sort = value;
+      this.add_url_param('sortby', value);
+      this.getProduct(1);
+    },
+    get_request_url: function get_request_url(url, page) {
+      var url_param = url.split('?');
+
+      if (url_param[1] == undefined) {
+        url = url + "?page=" + page;
+      } else {
+        url = url + "&page=" + page;
+      }
+
+      return url;
+    },
+    set_product_sort: function set_product_sort() {
+      var params = new window.URLSearchParams(window.location.search);
+      var url = window.location.href;
+
+      if (params.get("sortby") != null) {
+        var sortby = parseInt(params.get("sortby"));
+
+        if (sortby >= 21 && sortby <= 25) {
+          this.sort = sortby;
+        }
+      }
     }
   }
 });

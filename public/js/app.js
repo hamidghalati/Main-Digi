@@ -48986,7 +48986,7 @@ __webpack_require__(/*! ../../node_modules/bootstrap-select/dist/js/bootstrap-se
 __webpack_require__(/*! ../../node_modules/bootstrap-select/dist/js/i18n/defaults-fa_IR */ "./node_modules/bootstrap-select/dist/js/i18n/defaults-fa_IR.js");
 
 
-
+ // Vue.config.productionTip = false;
 
 /***/ }),
 

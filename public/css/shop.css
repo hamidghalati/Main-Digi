@@ -2693,9 +2693,29 @@ del {
     border-radius: 4px;
     -webkit-border-radius: 4px;
 }
+.color_div{
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+}
+.color_filter_ul li{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
 
-
-
+}
+.item_box #search_input{
+    font-size: 13px;
+    width: 95%;
+    margin: 10px auto;
+    background: #f8f8f8;
+    border: 1px solid transparent;
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
 
 
 

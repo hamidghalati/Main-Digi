@@ -28,6 +28,45 @@
                 </div>
             @endif
 
+                <div class="item_box">
+                    <div class="title_box">
+                        <label for="">  جستجو در نتایج :</label>
+                        <span class="fa fa-angle-down"></span>
+                    </div>
+                    <div>
+                        <input type="text" @if(array_key_exists('string',$_GET))
+                            value="{{ $_GET['string'] }}" @endif id="search_input" placeholder="نام محصول یا برند مورد نظر خود را وارد نمایید">
+                    </div>
+                </div>
+
+            @if(sizeof($colors)>1)
+                <div class="item_box">
+                    <div class="title_box">
+                        <label for="">رنگ ها</label>
+                        <span class="fa fa-angle-down"></span>
+                    </div>
+                    <div>
+                        <div class="filter_box" style="display: block">
+                            <ul class="list-inline product_cat_ul color_filter_ul">
+                                @foreach($colors as $key=>$value)
+
+                                    <li data="color_param_{{$value->id}}">
+                                        <div>
+                                            <span class="check_box"></span>
+                                            <span class="title">{{$value->name}}</span>
+
+                                        </div>
+                                        <div>
+                                            <div style="background:<?= $value->code; ?> @if($value->name=='سفید') border:1px solid black @endif  " class="color_div"></div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <div class="item_box">
 
                 <div class="title_box">
@@ -68,7 +107,7 @@
                             <div class="filter_box">
                                 <ul class="list-inline product_cat_ul">
                                     @foreach($value->getChild as $key2=>$value2)
-                                        <?php $filter_key='attribute['.$value->id.']' ?>
+                                            <?php $filter_key = 'attribute[' . $value->id . ']' ?>
                                         <li data="{{$filter_key}}_param_{{$value2->id}}">
                                             <span class="check_box"></span>
                                             <span class="title">{{$value2->title}}</span>
@@ -80,7 +119,6 @@
                     </div>
                 @endforeach
             @endif
-
 
 
         </div>
@@ -95,7 +133,6 @@
 @section('header')
     <link rel="stylesheet" href="{{asset('css/nouislider.min.css')}}">
     <script type="text/javascript" src="{{asset('js/nouislider.min.js')}}"></script>
-
 
 @endsection
 @section('footer')

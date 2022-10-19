@@ -5,11 +5,11 @@
         <div class="header">
             <ul class="list-inline">
                 <li><i class="fa fa-sort-amount-asc icon-sort"></i>مرتب سازی بر اساس :</li>
-                <li :class="sort==21 ? 'active'  : ''" v-on:click="set_sort(21)"><a href=""><span>پر بازدیدترین</span></a></li>
-                <li :class="sort==22 ? 'active'  : ''" v-on:click="set_sort(22)"><a href=""><span>محبوب ترین</span></a></li>
-                <li :class="sort==23 ? 'active'  : ''" v-on:click="set_sort(23)"><a href=""><span>جدیدترین</span></a></li>
-                <li :class="sort==24 ? 'active'  : ''" v-on:click="set_sort(24)"><a href=""><span>ارزان ترین</span></a></li>
-                <li :class="sort==25 ? 'active'  : ''" v-on:click="set_sort(25)"><a href=""><span>گران ترین</span></a></li>
+                <li :class="sort==21 ? 'active'  : ''" v-on:click="set_sort(21)"><a><span>پر بازدیدترین</span></a></li>
+                <li :class="sort==22 ? 'active'  : ''" v-on:click="set_sort(22)"><a><span>محبوب ترین</span></a></li>
+                <li :class="sort==23 ? 'active'  : ''" v-on:click="set_sort(23)"><a><span>جدیدترین</span></a></li>
+                <li :class="sort==24 ? 'active'  : ''" v-on:click="set_sort(24)"><a><span>ارزان ترین</span></a></li>
+                <li :class="sort==25 ? 'active'  : ''" v-on:click="set_sort(25)"><a><span>گران ترین</span></a></li>
             </ul>
         </div>
 
@@ -96,6 +96,7 @@ export default {
         // this.request_url=window.location.href.replace(this.$siteUrl,this.$siteUrl+'/getProduct/');
         const app=this;
         this.check_search_params();
+        this.set_product_sort();
         $(document).on('click','#price_filter_btn',function () {
             app.setFilterPrice();
         });
@@ -111,144 +112,14 @@ export default {
         getProduct:function (page=1) {
             $("#loading").show();
             this.request_url=window.location.href.replace(this.$siteUrl,this.$siteUrl+'/getProduct/');
-            this.axios.get(this.request_url+"?page="+page).then(response=>{
+            this.axios.get(this.get_request_url(this.request_url,page)).then(response=>{
                 this.productList=response.data['product'];
                this.setRangeSlider(response.data.max_price);
                 $("#loading").hide();
                 this.get_result=true;
             });
         },
-        check_search_params:function () {
-            let url=window.location.href;
-            const params=url.split('?');
-            if (params[1]!=undefined)
-            {
-                if (params[1].indexOf('&')>-1)
-                {
 
-
-                    let vars=params[1].split('&');
-                    for (let i in vars)
-                    {
-                        let k=vars[i].split('=')[0];
-                        let v=vars[i].split('=')[1];
-                        k=k.split('[');
-
-                        this.add_active_filter(k,v);
-
-                    }
-
-                }
-
-                else {
-
-                    let k=params[1].split('=')[0];
-                    let v=params[1].split('=')[1];
-                    k=k.split('[');
-                    this.add_active_filter(k,v);
-
-
-                }
-
-
-            }
-        },
-        add_filter_tag:function () {
-
-        },
-        setRangeSlider:function (price) {
-            const app=this;
-            var slider = document.querySelector('.price_range_slider');
-            if (this.noUiSlider==null)
-            {
-
-                this.noUiSlider=noUiSlider.create(slider, {
-                    start: [0, price],
-                    connect:true,
-                    direction:'rtl',
-                    range: {
-                        'min': 0,
-                        'max': price
-                    },
-                    format:{
-                        from:function (value) {
-                            return parseInt(value);
-                        },
-                        to:function (value) {
-                            return parseInt(value);
-                        }
-
-                    }
-                });
-
-
-            }
-
-            slider.noUiSlider.on('update',function (values,handle) {
-                app.min_price=values[0];
-                app.max_price=values[1];
-                $("#min_price").text(app.number_format(values[0]));
-                $("#max_price").text(app.number_format(values[1]));
-            });
-
-
-            let search=new window.URLSearchParams(window.location.search);
-            const min=parseInt(search.get('price[min]')) !=null ? parseInt(search.get('price[min]')) : 0;
-            if (search.get('price[max]')!=null)
-            {
-                this.noUiSlider.updateOptions({
-                    start: [min, parseInt(search.get('price[max]'))],
-
-                })
-            }
-
-            if (search.get('price[min]')!=null && search.get('price[max]')==null)
-            {
-                this.noUiSlider.updateOptions({
-                    start: [parseInt(search.get('price[min]')),slider.noUiSlider.get()[1]],
-
-                })
-            }
-
-        },
-        add_active_filter:function (k,v) {
-            if (k.length>1)
-            {
-                let data="";
-                if (k.length==3)
-                {
-                    let data=k[0]+"["+k[1]+"_param_"+v;
-                    data="'"+data+"'";
-                    $('li[data='+data+'] .check_box').addClass('active');
-                    $('li[data='+data+']').parent().parent().slideDown();
-                     if ($('li[data='+data+']').length==1)
-                {
-                    this.add_filter_tag(data,k[0],v);
-                }
-                }
-                else {
-                     data=k[0]+"_param_"+v;
-                    $('li[data='+data+'] .check_box').addClass('active');
-                    $('li[data='+data+']').parent().parent().slideDown();
-                     if ($('li[data='+data+']').length==1)
-                {
-                    this.add_filter_tag(data,k[0],v);
-                }
-                }
-
-                // $('li[data='+data+'] .check_box').addClass('active');
-                // $('li[data='+data+']').parent().parent().slideDown();
-                // if ($('li[data='+data+']').length==1)
-                // {
-                //     this.add_filter_tag(data,k[0],v);
-                // }
-            }
-        },
-        set_sort:function (value) {
-            this.sort=value;
-            this.add_url_param('sortby',value);
-            this.getProduct(1);
-        }
 
 
 
