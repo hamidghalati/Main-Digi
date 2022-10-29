@@ -9,8 +9,11 @@ class SearchProduct
     protected $max_price = 0;
     protected $attribute;
     protected $brands = null;
-    protected $sort;
+    protected $sort=21;
     protected $colors;
+    protected $search_text=null;
+    protected $has_product=0;
+    protected $has_ready_to_shipment=0;
 
     public function __construct($request)
     {
@@ -19,6 +22,9 @@ class SearchProduct
         $this->sort=$request->get('sortby',21);
         $this->brands = $request->get('brand', null);
         $this->colors = $request->get('color', null);
+        $this->search_text=$request->get('string',null);
+        $this->has_product=$request->get('has_product',0);
+        $this->has_ready_to_shipment=$request->get('has_ready_to_shipment',0);
     }
 
     public function set_product_category($catList)
@@ -64,12 +70,27 @@ class SearchProduct
             });
         }
 
+        if ($this->search_text!=null)
+        {
+            $product=$product->where('title','like','%'.$this->search_text.'%');
+        }
+
         if ($this->max_price != 0) {
             $product = $product->where('price', '<=', $this->max_price);
         }
 
         if ($this->min_price > 0) {
             $product = $product->where('price', '>=', $this->min_price);
+        }
+
+        if ($this->has_product==1)
+        {
+            $product=$product->where('status','=',1);
+        }
+
+        if ($this->has_ready_to_shipment==1)
+        {
+            $product=$product->where('ready_to_shipment','=',0);
         }
 
 

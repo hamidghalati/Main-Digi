@@ -11,7 +11,8 @@ class ProductsModel extends Model
     use SoftDeletes;
     protected $table='products';
     protected $fillable=['id','title','ename','product_url','show','view','keywords','description',
-        'special','cat_id','brand_id','image_url','tozihat','status','price','discount_price','order_number','use_for_gift_cart'];
+        'special','cat_id','brand_id','image_url','tozihat','status','price','discount_price',
+        'order_number','use_for_gift_cart','ready_to_shipment'];
 
     public static function ProductStatus(){
         $array=array();

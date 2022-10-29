@@ -88,7 +88,8 @@ export default {
             min_price:0,
             max_price:0,
             get_result:false,
-            sort:21
+            sort:21,
+            search_string:''
         }
     },
     mixins:[myMixin],
@@ -97,12 +98,25 @@ export default {
         const app=this;
         this.check_search_params();
         this.set_product_sort();
+        this.set_search_string();
         $(document).on('click','#price_filter_btn',function () {
             app.setFilterPrice();
         });
         $(document).on('click','.product_cat_ul li',function () {
           app.set_filter_event(this);
         });
+        $(document).on('keyup','#search_input',function (event) {
+            app.search_product(event,this);
+        });
+        $(document).on('toggle','#product_status',function (e,action) {
+             app.set_product_status(e,action);
+
+        });
+        $(document).on('toggle','#send_status',function (e,action) {
+             app.set_send_status(e,action);
+
+        });
+
         this.getProduct();
 
 
@@ -119,6 +133,7 @@ export default {
                 this.get_result=true;
             });
         },
+
 
 
 

@@ -3080,7 +3080,8 @@ __webpack_require__.r(__webpack_exports__);
       min_price: 0,
       max_price: 0,
       get_result: false,
-      sort: 21
+      sort: 21,
+      search_string: ''
     };
   },
   mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -3089,11 +3090,21 @@ __webpack_require__.r(__webpack_exports__);
     var app = this;
     this.check_search_params();
     this.set_product_sort();
+    this.set_search_string();
     $(document).on('click', '#price_filter_btn', function () {
       app.setFilterPrice();
     });
     $(document).on('click', '.product_cat_ul li', function () {
       app.set_filter_event(this);
+    });
+    $(document).on('keyup', '#search_input', function (event) {
+      app.search_product(event, this);
+    });
+    $(document).on('toggle', '#product_status', function (e, action) {
+      app.set_product_status(e, action);
+    });
+    $(document).on('toggle', '#send_status', function (e, action) {
+      app.set_send_status(e, action);
     });
     this.getProduct();
   },
@@ -25915,7 +25926,15 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     },
-    add_filter_tag: function add_filter_tag() {},
+    add_filter_tag: function add_filter_tag(data, k, v) {
+      data = data.toString().replace(",", '_').replace(",", '_');
+      data = data.toString().replace("''", '').replace("", '');
+      data = "'" + data + "'";
+      var el = "li[data=" + data + "]";
+      var title = $(el).parent().parent().parent().parent().find('.title_box label').text();
+      var html = '<div class="selected_filter_item" data-key="' + k + '" data-value="' + v + '">' + '<span>' + title + ":" + $(el).find('.title').text() + '</span>' + '<span class="fa fa-close"></span>' + '</div>';
+      $("#selected_filter_box").append(html);
+    },
     setRangeSlider: function setRangeSlider(price) {
       var app = this;
       var slider = document.querySelector('.price_range_slider');
@@ -26002,7 +26021,7 @@ __webpack_require__.r(__webpack_exports__);
       var url = window.location.href;
 
       if (params.get(key) != null) {
-        var old_param = key + "=" + params.get(key);
+        var old_param = key + "=" + encodeURIComponent(params.get(key));
         var new_param = key + "=" + value;
         url = url.replace(old_param, new_param);
       } else {
@@ -26036,6 +26055,7 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         $('.check_box', el).addClass('active');
         this.add_url_query_string(data[0], data[2]);
+        this.add_filter_tag(data, data[0], data[2]);
       }
     },
     add_url_query_string: function add_url_query_string(key, value) {
@@ -26121,6 +26141,63 @@ __webpack_require__.r(__webpack_exports__);
         if (sortby >= 21 && sortby <= 25) {
           this.sort = sortby;
         }
+      }
+    },
+    search_product: function search_product(event, el) {
+      if (event.keyCode == 13) {
+        var search_text = $(el).val();
+
+        if (search_text.trim().length == 0) {
+          if (this.search_string != "") {
+            this.remove_url_params('string', this.search_string);
+            this.search_string = '';
+            this.getProduct(1);
+          }
+        } else {
+          if (search_text.trim().length > 1) {
+            this.search_string = search_text;
+            this.add_url_param('string', search_text);
+            this.getProduct(1);
+          }
+        }
+      }
+    },
+    remove_url_params: function remove_url_params(key, value) {
+      var params = new window.URLSearchParams(window.location.search);
+      var url = window.location.href;
+
+      if (params.get(key) != null) {
+        value = encodeURIComponent(value);
+        url = url.replace('&' + key + "=" + value, '');
+        url = url.replace('?' + key + "=" + value, '');
+        this.setPageUrl(url);
+        this.getProduct(1);
+      }
+    },
+    set_search_string: function set_search_string() {
+      var params = new window.URLSearchParams(window.location.search);
+      var url = window.location.href;
+
+      if (params.get('string') != null) {
+        this.search_string = params.get('string');
+      }
+    },
+    set_product_status: function set_product_status(e, action) {
+      if (action) {
+        this.add_url_param('has_product', 1);
+        this.getProduct(1);
+      } else {
+        this.remove_url_params('has_product', 1);
+        this.getProduct(1);
+      }
+    },
+    set_send_status: function set_send_status(e, action) {
+      if (action) {
+        this.add_url_param('has_ready_to_shipment', 1);
+        this.getProduct(1);
+      } else {
+        this.remove_url_params('has_ready_to_shipment', 1);
+        this.getProduct(1);
       }
     }
   }

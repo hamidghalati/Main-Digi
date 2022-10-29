@@ -819,6 +819,10 @@ function update_product_price($product)
 {
     $warrenty=ProductWarranty::where('product_id',$product->id)
     ->where('product_number','>',0)->orderBy('price2','asc')->first();
+
+    $warrenty2=ProductWarranty::where('product_id',$product->id)
+        ->where('product_number','>',0)->orderBy('send_time','asc')->first();
+
     if($warrenty)
     {
         $product->price=$warrenty->price2;
@@ -833,6 +837,7 @@ function update_product_price($product)
         }
 
         $product->status=1;
+        $product->ready_to_shipment=$warrenty2->send_time;
         $product->update();
     }
     else

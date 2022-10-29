@@ -2716,9 +2716,37 @@ del {
     border-radius: 5px;
     -webkit-border-radius: 5px;
 }
-
-
-
+.toggle_box{
+    display: flex;
+    align-items: center;
+}
+.toggle_box #product_status{
+    margin: 10px;
+}
+.toggle_box #send_status{
+    margin: 10px;
+}
+/*.toggle_box span{*/
+/*    font-size: 13px;*/
+/*}*/
+.toggle-light .toggle-on, .toggle-light .toggle-select .toggle-inner .active {
+    background: #3FB8AF;;
+}
+#selected_filter_box{
+    display: flex;
+    flex-wrap: wrap;
+}
+.selected_filter_item{
+    border: 1px solid #eee;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    padding: 5px;
+    display: table;
+    color: #5a5a5a;
+    margin: 5px;
+    font-size: 13px;
+    cursor: pointer;
+}
 
 
 

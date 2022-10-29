@@ -5,6 +5,14 @@
         <div class="col-3">
 
 
+            <div class="item_box" id="filter_div" @if(sizeof($_GET)==0 || sizeof($_GET)==1 && array_key_exists('page',$_GET)) style="display: none" @endif>
+                <div class="title_box">
+                    <label for="">لیبل های اعمال شده</label>
+                    <span id="remove_all_filter">حذف</span>
+                </div>
+                <div id="selected_filter_box"></div>
+            </div>
+
             @if(isset($brands))
                 <div class="item_box">
                     <div class="title_box">
@@ -28,16 +36,29 @@
                 </div>
             @endif
 
-                <div class="item_box">
-                    <div class="title_box">
-                        <label for="">  جستجو در نتایج :</label>
-                        <span class="fa fa-angle-down"></span>
-                    </div>
-                    <div>
-                        <input type="text" @if(array_key_exists('string',$_GET))
-                            value="{{ $_GET['string'] }}" @endif id="search_input" placeholder="نام محصول یا برند مورد نظر خود را وارد نمایید">
-                    </div>
+            <div class="item_box">
+                <div class="title_box">
+                    <label for=""> جستجو در نتایج :</label>
+                    <span class="fa fa-angle-down"></span>
                 </div>
+                <div>
+                    <input type="text" @if(array_key_exists('string',$_GET))
+                        value="{{ $_GET['string'] }}" @endif id="search_input"
+                           placeholder="نام محصول یا برند مورد نظر خود را وارد نمایید">
+                </div>
+            </div>
+
+            <div class="item_box toggle_box">
+                <div class="toggle-light" id="product_status"></div>
+                <span>فقط کالاهای موجود</span>
+            </div>
+
+            <div class="item_box toggle_box">
+                <div class="toggle-light" id="send_status"></div>
+                <span>فقط کالاهای آماده ارسال</span>
+            </div>
+
+
 
             @if(sizeof($colors)>1)
                 <div class="item_box">
@@ -57,7 +78,9 @@
 
                                         </div>
                                         <div>
-                                            <div style="background:<?= $value->code; ?> @if($value->name=='سفید') border:1px solid black @endif  " class="color_div"></div>
+                                            <div
+                                                style="background:<?= $value->code ?> @if($value->name=='سفید') border: 1px solid black;  @endif  "
+                                                class="color_div"></div>
                                         </div>
                                     </li>
                                 @endforeach
@@ -132,9 +155,31 @@
 @endsection
 @section('header')
     <link rel="stylesheet" href="{{asset('css/nouislider.min.css')}}">
+    <link rel="stylesheet" href="{{url('css/toggles-full.css')}}">
     <script type="text/javascript" src="{{asset('js/nouislider.min.js')}}"></script>
 
 @endsection
 @section('footer')
+    <script type="text/javascript" src="{{url('js/toggles.min.js')}}"></script>
+    <script>
+        $('#send_status').toggles({
+            type: 'Light',
+            text: {'on': 'آماده ارسال', 'off': 'در حال آماده'},
+            width: 85,
+            direction: 'rtl',
+            on: false
 
+        });
+
+        $('#product_status').toggles({
+            type: 'Light',
+            text: {'on': 'موجود', 'off': 'ناموجود'},
+            width: 85,
+            direction: 'rtl',
+            on: false
+        });
+
+        // $('.toggle').toggles({click:false});
+
+    </script>
 @endsection

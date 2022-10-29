@@ -89,7 +89,7 @@
 
                                     @if(!$value->trashed())
                                         <a class="btn btn-info"
-                                           href="{{url('admin/Product_warranties/create?product_id='.$value->id)}}">
+                                           href="{{url('admin/Product_warranties?product_id='.$value->id)}}">
                                             <span data-toggle="tooltip" data-placement="top" title="اضافه کردن تنوع قیمت"><i class="fa fa-credit-card"></i></span>
 
                                         </a>
