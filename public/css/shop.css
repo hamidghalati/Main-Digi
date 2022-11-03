@@ -2747,6 +2747,11 @@ del {
     font-size: 13px;
     cursor: pointer;
 }
+#selected_filter_item_remove{
+    padding-right: 10px!important;
+    padding-left: 10px!important;
+
+}
 
 
 

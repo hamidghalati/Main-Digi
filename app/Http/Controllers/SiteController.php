@@ -170,9 +170,10 @@ class SiteController extends Controller
             ->where('url', $cat_url)
             ->firstOrFail();
         $filter = CategoriesModel::getCatFilter($category);
-        $brands = CatBrand::with('getBrand')->get();
+        $brands = CatBrand::with('getBrand')->where('cat_id', $category->id)->get();
+
         $colors = [];
-        $checkHasColor = DB::table('product_color')->where('cat_id', $category->id)->get();
+        $checkHasColor = DB::table('product_color')->where('cat_id', $category->id)->first();
         if ($checkHasColor) {
             $colors = ColorModel::get();
         }

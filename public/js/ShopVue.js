@@ -3106,6 +3106,15 @@ __webpack_require__.r(__webpack_exports__);
     $(document).on('toggle', '#send_status', function (e, action) {
       app.set_send_status(e, action);
     });
+    $(document).on('click', '.selected_filter_item', function () {
+      app.remove_filter_item(this);
+    }); // $(document).on('click','.product_status_filter',function () {
+    //     app.remove_product_status(this);
+    // });
+    // $(document).on('click','.send_status_filter',function () {
+    //     app.remove_send_status_filter(this);
+    // });
+
     this.getProduct();
   },
   methods: {
@@ -25927,12 +25936,13 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     add_filter_tag: function add_filter_tag(data, k, v) {
+      $('#filter_div').show();
       data = data.toString().replace(",", '_').replace(",", '_');
       data = data.toString().replace("''", '').replace("", '');
       data = "'" + data + "'";
       var el = "li[data=" + data + "]";
       var title = $(el).parent().parent().parent().parent().find('.title_box label').text();
-      var html = '<div class="selected_filter_item" data-key="' + k + '" data-value="' + v + '">' + '<span>' + title + ":" + $(el).find('.title').text() + '</span>' + '<span class="fa fa-close"></span>' + '</div>';
+      var html = '<div class="selected_filter_item" data-key="' + k + '" data-value="' + v + '">' + '<span>' + title + ":" + $(el).find('.title').text() + '</span>' + '<i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
       $("#selected_filter_box").append(html);
     },
     setRangeSlider: function setRangeSlider(price) {
@@ -25983,32 +25993,28 @@ __webpack_require__.r(__webpack_exports__);
     add_active_filter: function add_active_filter(k, v) {
       if (k.length > 1) {
         var data = "";
+        var filter_key = k[0];
 
         if (k.length == 3) {
-          var _data = k[0] + "[" + k[1] + "_param_" + v;
-
-          _data = "'" + _data + "'";
-          $('li[data=' + _data + '] .check_box').addClass('active');
-          $('li[data=' + _data + ']').parent().parent().slideDown();
-
-          if ($('li[data=' + _data + ']').length == 1) {
-            this.add_filter_tag(_data, k[0], v);
-          }
+          data = k[0] + "[" + k[1] + "_param_" + v;
+          data = "'" + data + "'";
+          filter_key = k[0] + "[" + k[1];
         } else {
           data = k[0] + "_param_" + v;
-          $('li[data=' + data + '] .check_box').addClass('active');
-          $('li[data=' + data + ']').parent().parent().slideDown();
+        }
 
-          if ($('li[data=' + data + ']').length == 1) {
-            this.add_filter_tag(data, k[0], v);
-          }
-        } // $('li[data='+data+'] .check_box').addClass('active');
-        // $('li[data='+data+']').parent().parent().slideDown();
-        // if ($('li[data='+data+']').length==1)
-        // {
-        //     this.add_filter_tag(data,k[0],v);
-        // }
+        $('li[data=' + data + '] .check_box').addClass('active');
+        $('li[data=' + data + ']').parent().parent().slideDown();
 
+        if ($('li[data=' + data + ']').length == 1) {
+          this.add_filter_tag(data, filter_key, v);
+        }
+      } else {
+        if (k == "has_product") {
+          this.set_enable_product_status_toggle();
+        } else if (k == "has_ready_to_shipment") {
+          this.set_enable_status_toggle();
+        }
       }
     },
     setFilterPrice: function setFilterPrice() {
@@ -26052,6 +26058,7 @@ __webpack_require__.r(__webpack_exports__);
       if ($('.check_box', el).hasClass('active')) {
         $('.check_box', el).removeClass('active');
         this.remove_url_query_string(data[0], data[2]);
+        this.remove_filter_tag(data[0], data[2]);
       } else {
         $('.check_box', el).addClass('active');
         this.add_url_query_string(data[0], data[2]);
@@ -26170,6 +26177,13 @@ __webpack_require__.r(__webpack_exports__);
         value = encodeURIComponent(value);
         url = url.replace('&' + key + "=" + value, '');
         url = url.replace('?' + key + "=" + value, '');
+        this.remove_filter_tag(key, value);
+        var url_params = url.split('?');
+
+        if (url_params[1] == undefined) {
+          url = url.replace('&', '?');
+        }
+
         this.setPageUrl(url);
         this.getProduct(1);
       }
@@ -26186,18 +26200,110 @@ __webpack_require__.r(__webpack_exports__);
       if (action) {
         this.add_url_param('has_product', 1);
         this.getProduct(1);
+
+        if (!$("#selected_filter_box").find('div').hasClass('product_status_filter')) {
+          $("#filter_div").show();
+          var html = '<div class="selected_filter_item product_status_filter">' + '<span>فقط کالاهای موجود</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
+          $('#selected_filter_box').append(html);
+        }
       } else {
         this.remove_url_params('has_product', 1);
         this.getProduct(1);
+        $('.product_status_filter').remove();
+
+        if ($('#selected_filter_box div').length == 0) {
+          $("#filter_div").hide();
+        }
       }
     },
     set_send_status: function set_send_status(e, action) {
       if (action) {
         this.add_url_param('has_ready_to_shipment', 1);
         this.getProduct(1);
+
+        if (!$("#selected_filter_box").find('div').hasClass('send_status_filter')) {
+          $("#filter_div").show();
+          var html = '<div class="selected_filter_item send_status_filter">' + '<span>کالاهای آماده ارسال</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
+          $('#selected_filter_box').append(html);
+        }
       } else {
         this.remove_url_params('has_ready_to_shipment', 1);
         this.getProduct(1);
+        $('.send_status_filter').remove();
+
+        if ($('#selected_filter_box div').length == 0) {
+          $("#filter_div").hide();
+        }
+      }
+    },
+    remove_filter_tag: function remove_filter_tag(k, v) {
+      $('.selected_filter_item[data-key="' + k + '"][data-value=' + v + ']').remove();
+
+      if ($('#selected_filter_box div').length == 0) {
+        $("#filter_div").hide();
+      }
+    },
+    remove_filter_item: function remove_filter_item(el) {
+      var key = $(el).attr('data-key');
+      var value = $(el).attr('data-value');
+
+      if (key && value) {
+        this.remove_url_query_string(key, value);
+        $(el).remove();
+        var data = key + "_param_" + value;
+        $('li[data="' + data + '"] .check_box').removeClass('active');
+
+        if ($('#selected_filter_box div').length == 0) {
+          $("#filter_div").hide();
+        }
+      } else if ($(el).hasClass('product_status_filter')) {
+        this.remove_product_status(el);
+      } else if ($(el).hasClass('send_status_filter')) {
+        this.remove_send_status_filter(el);
+      }
+    },
+    remove_product_status: function remove_product_status(el) {
+      $(el).remove();
+      this.remove_url_params('has_product', '1');
+      $('#product_status').unbind('click');
+      $('#product_status').toggles({
+        type: 'Light',
+        text: {
+          'on': 'موجود',
+          'off': 'ناموجود'
+        },
+        width: 85,
+        direction: 'rtl',
+        on: false
+      });
+    },
+    remove_send_status_filter: function remove_send_status_filter(el) {
+      $(el).remove();
+      this.remove_url_params('has_ready_to_shipment', '1');
+      $('#send_status').unbind('click');
+      $('#send_status').toggles({
+        type: 'Light',
+        text: {
+          'on': 'آماده ارسال',
+          'off': 'در حال آماده'
+        },
+        width: 85,
+        direction: 'rtl',
+        on: false
+      });
+    },
+    set_enable_product_status_toggle: function set_enable_product_status_toggle() {
+      if (!$("#selected_filter_box").find('div').hasClass('product_status_filter')) {
+        $("#filter_div").show();
+        var html = '<div class="selected_filter_item product_status_filter">' + '<span>فقط کالاهای موجود</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
+        $('#selected_filter_box').append(html);
+      }
+    },
+    set_enable_status_toggle: function set_enable_status_toggle() {
+      if (!$("#selected_filter_box").find('div').hasClass('send_status_filter')) {
+        $("#filter_div").show();
+        var html = '<div class="selected_filter_item send_status_filter">' + '<span>کالاهای آماده ارسال</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
+        $('#selected_filter_box').append(html);
       }
     }
   }

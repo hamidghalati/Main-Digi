@@ -114,8 +114,17 @@ export default {
         });
         $(document).on('toggle','#send_status',function (e,action) {
              app.set_send_status(e,action);
-
         });
+        $(document).on('click','.selected_filter_item',function () {
+           app.remove_filter_item(this);
+        });
+        // $(document).on('click','.product_status_filter',function () {
+        //     app.remove_product_status(this);
+        // });
+        // $(document).on('click','.send_status_filter',function () {
+        //     app.remove_send_status_filter(this);
+        // });
+
 
         this.getProduct();
 

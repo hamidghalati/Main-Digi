@@ -13,7 +13,7 @@
                 <div id="selected_filter_box"></div>
             </div>
 
-            @if(isset($brands))
+            @if(isset($brands) && sizeof($brands)>0)
                 <div class="item_box">
                     <div class="title_box">
                         <label for="">برند</label>
