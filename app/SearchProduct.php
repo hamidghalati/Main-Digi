@@ -4,11 +4,11 @@ namespace App;
 
 class SearchProduct
 {
-    protected $category = array();
+    public $category = array();
     protected $min_price = 0;
     protected $max_price = 0;
     protected $attribute;
-    protected $brands = null;
+    public $brands = null;
     protected $sort=21;
     protected $colors;
     protected $search_text=null;
@@ -20,7 +20,6 @@ class SearchProduct
         $this->setMinAndMaxPrice($request->all());
         $this->attribute = $request->get('attribute', null);
         $this->sort=$request->get('sortby',21);
-        $this->brands = $request->get('brand', null);
         $this->colors = $request->get('color', null);
         $this->search_text=$request->get('string',null);
         $this->has_product=$request->get('has_product',0);
@@ -32,6 +31,10 @@ class SearchProduct
         $this->category[$catList->id] = $catList->id;
         foreach ($catList->getChild as $key => $value) {
             $this->category[$value->id] = $value->id;
+
+            foreach ($value->getChild as $key2 => $value2) {
+                $this->category[$value2->id] = $value2->id;
+            }
         }
     }
 
@@ -39,8 +42,7 @@ class SearchProduct
     {
         $product2 = ProductsModel::orderBy('price', 'DESC');
 
-        $product = ProductsModel::with(['getProductColor.getColor', 'getFirstProductPrice'])
-            ->select(['id', 'title', 'product_url', 'price', 'discount_price', 'special', 'image_url', 'brand_id', 'status']);
+        $product = ProductsModel::select(['id', 'title', 'product_url', 'price', 'discount_price', 'special', 'image_url', 'brand_id', 'status']);
 
         if (is_array($this->category) && sizeof($this->category) > 0) {
             $product = $product->whereIn('cat_id', $this->category);
@@ -97,15 +99,20 @@ class SearchProduct
         $sort = $this->get_sort();
         $product = $product->orderBy($sort[0], $sort[1]);
 
-        $product = $product->paginate(12);
+        $count=$product->count();
+
+        $product = $product->with(['getProductColor.getColor', 'getFirstProductPrice'])
+            ->paginate(12);
 
         $max_price = $product2->first();
         $max_price = $max_price ? $max_price->price : 0;
 
 
+
         return [
             'product' => $product,
-            'max_price' => $max_price
+            'max_price' => $max_price,
+            'count'=>$count
         ];
 
 

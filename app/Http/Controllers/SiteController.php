@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BrandsModel;
 use App\Cart;
 use App\CatBrand;
 use App\CategoriesModel;
@@ -167,6 +168,9 @@ class SiteController extends Controller
     public function cat_product($cat_url, Request $request)
     {
         $category = CategoriesModel::with('getParent.getParent')
+            ->with(['getChild'=>function($query){
+                $query->whereNull('search_url');
+            }])
             ->where('url', $cat_url)
             ->firstOrFail();
         $filter = CategoriesModel::getCatFilter($category);
@@ -183,13 +187,33 @@ class SiteController extends Controller
 
     public function get_cat_product($cat_id, Request $request)
     {
-        $category = CategoriesModel::with('getChild')
+        $category = CategoriesModel::with('getChild.getChild')
             ->where('url', $cat_id)
             ->whereNull('search_url')
             ->firstOrFail();
         $searchProduct = new SearchProduct($request);
         $searchProduct->set_product_category($category);
+        $searchProduct->brands = $request->get('brand', null);
+
         $result = $searchProduct->getProduct();
+        return $result;
+    }
+
+    public function brand_product($brand_name)
+    {
+        $brand=BrandsModel::with('getCat.getCategory')->where('brand_ename',$brand_name)->firstOrFail();
+        return view('shop.brand_product',['brand'=>$brand]);
+
+    }
+
+    public function get_brand_product($brand_name,Request $request)
+    {
+        $brand=BrandsModel::where('brand_ename',$brand_name)->firstOrFail();
+        $searchProduct = new SearchProduct($request);
+        $searchProduct->brands = $brand->id;
+        $searchProduct->category=$request->get('category');
+        $result = $searchProduct->getProduct();
+
         return $result;
     }
 

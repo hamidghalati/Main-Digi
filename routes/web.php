@@ -132,8 +132,11 @@ Route::get('main/{cat_url}','SiteController@show_child_cat_list');
 
 //search
 Route::get('search/{cat_url}','SiteController@cat_product');
-
 Route::get('getProduct/search/{cat_url}','SiteController@get_cat_product');
+
+//Brand
+Route::get('brands/{brand_name}','SiteController@brand_product');
+Route::get('getProduct/brands/{brand_name}','SiteController@get_brand_product');
 
 
 Route::get('shipping','ShoppingController@shipping');

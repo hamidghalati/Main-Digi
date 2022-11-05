@@ -45,4 +45,9 @@ class BrandsModel extends Model
             }
         });
     }
+
+    public function getCat()
+    {
+        return $this->hasOne(CatBrand::class,'brand_id','id');
+    }
 }

@@ -18987,44 +18987,48 @@ __webpack_require__.r(__webpack_exports__);
       var slider = document.querySelector('.price_range_slider');
 
       if (this.noUiSlider == null) {
-        this.noUiSlider = noUiSlider.create(slider, {
-          start: [0, price],
-          connect: true,
-          direction: 'rtl',
-          range: {
-            'min': 0,
-            'max': price
-          },
-          format: {
-            from: function from(value) {
-              return parseInt(value);
+        if (parseInt(price) > 0) {
+          this.noUiSlider = noUiSlider.create(slider, {
+            start: [0, price],
+            connect: true,
+            direction: 'rtl',
+            range: {
+              'min': 0,
+              'max': price
             },
-            to: function to(value) {
-              return parseInt(value);
+            format: {
+              from: function from(value) {
+                return parseInt(value);
+              },
+              to: function to(value) {
+                return parseInt(value);
+              }
             }
-          }
-        });
+          });
+        }
       }
 
-      slider.noUiSlider.on('update', function (values, handle) {
-        app.min_price = values[0];
-        app.max_price = values[1];
-        $("#min_price").text(app.number_format(values[0]));
-        $("#max_price").text(app.number_format(values[1]));
-      });
-      var search = new window.URLSearchParams(window.location.search);
-      var min = parseInt(search.get('price[min]')) != null ? parseInt(search.get('price[min]')) : 0;
-
-      if (search.get('price[max]') != null) {
-        this.noUiSlider.updateOptions({
-          start: [min, parseInt(search.get('price[max]'))]
+      if (slider.noUiSlider != undefined) {
+        slider.noUiSlider.on('update', function (values, handle) {
+          app.min_price = values[0];
+          app.max_price = values[1];
+          $("#min_price").text(app.number_format(values[0]));
+          $("#max_price").text(app.number_format(values[1]));
         });
-      }
+        var search = new window.URLSearchParams(window.location.search);
+        var min = parseInt(search.get('price[min]')) != null ? parseInt(search.get('price[min]')) : 0;
 
-      if (search.get('price[min]') != null && search.get('price[max]') == null) {
-        this.noUiSlider.updateOptions({
-          start: [parseInt(search.get('price[min]')), slider.noUiSlider.get()[1]]
-        });
+        if (search.get('price[max]') != null) {
+          this.noUiSlider.updateOptions({
+            start: [min, parseInt(search.get('price[max]'))]
+          });
+        }
+
+        if (search.get('price[min]') != null && search.get('price[max]') == null) {
+          this.noUiSlider.updateOptions({
+            start: [parseInt(search.get('price[min]')), slider.noUiSlider.get()[1]]
+          });
+        }
       }
     },
     add_active_filter: function add_active_filter(k, v) {

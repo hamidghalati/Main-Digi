@@ -2668,6 +2668,7 @@ del {
     background-color: white;
     width: 100%;
     min-height: 300px;
+    margin-top: 20px;
 }
 .product_list_box .header{
     width: 100%;
@@ -2752,6 +2753,90 @@ del {
     padding-left: 10px!important;
 
 }
+.search_category_ul{
+    margin-right: 20px;
+}
+.search_category_ul .parent:before{
+    content: "\F104";
+    font-family: FontAwesome;
+    padding-left: 5px;
+}
+.search_category_ul li{
+    list-style: none;
+}
+.search_category_ul li a{
+    font-size: 13px;
+}
+.search_category_ul li ul{
+    padding-right: 10px;
+}
+#product_box .col-3{
+    flex: 0 0 23%;
+    max-width: 23%;
+    padding-right: 0!important;
+}
+#product_box .col-9{
+    flex: 0 0 77%;
+    max-width: 77%;
+    padding: 0!important;
+}
+#brand_search{
+    width: 95%;
+    margin: 15px auto;
+    font-size: 13px!important;
+    display: block;
+    padding: 7px 25px;
+}
+/*#brand_search:focus{*/
+/*    box-shadow: none!important;*/
+/*    border: none!important;*/
+/*}*/
+.filter_brand_div{
+    position: relative;
+}
+.filter_brand_div::before{
+    content: "\F002";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 22px;
+    right: 5%;
+}
+.shop_name{
+    height: 50px;
+    align-items: center;
+    display: flex;
+    border-top: 1px solid #dedede;
+    padding-right: 15px;
+}
+.brand_info img{
+    display: block;
+    margin:20px auto;
+}
+.brand_info p{
+    text-align: center;
+}
+.brand_info p a{
+    font-size: 12px;
+    color: #7a7a7a;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

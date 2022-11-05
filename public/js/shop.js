@@ -230,6 +230,23 @@ $(document).ready(function () {
         }
     }
 
+    $("#brand_search").on('keyup',function () {
+        const input=$(this).val().toLowerCase();
+        const li=$(this).parent().find('.product_cat_ul li');
+        for (let  i=0;i<li.length;i++)
+        {
+
+            if (li[i].innerText.toLowerCase().indexOf(input)>-1)
+            {
+                li[i].style.display='block';
+            }
+            else {
+                li[i].style.display='none';
+            }
+
+        }
+    });
+
 
 });
 

@@ -13,6 +13,26 @@
                 <div id="selected_filter_box"></div>
             </div>
 
+            @if(isset($category)&& sizeof($category->getChild)>0)
+                <div class="item_box">
+                    <div class="title_box">
+                        <label for="">دسته بندی</label>
+                    </div>
+                    <ul class="search_category_ul">
+                        <li class="parent">
+                            <a href="{{ url('search/'.$category->url) }}">{{$category->name}}</a>
+                            <ul>
+                                @foreach($category->getChild as $cat)
+                                    <li>
+                                        <a href="{{ url('search/'.$cat->url) }}">{{$cat->name}}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            @endif
+
             @if(isset($brands) && sizeof($brands)>0)
                 <div class="item_box">
                     <div class="title_box">
@@ -20,8 +40,12 @@
                         <span class="fa fa-angle-down"></span>
                     </div>
                     <div>
-                        <div class="filter_box" style="display: block">
-                            <ul class="list-inline product_cat_ul">
+                        <div class="filter_box filter_brand_div" style="display: block">
+
+                            <input class="form-control" type="text" id="brand_search"
+                                   placeholder="جستجوی نام برند">
+
+                            <ul class="list-inline product_cat_ul brand_list">
                                 @foreach($brands as $key=>$value)
 
                                     <li data="brand_param_{{$value->brand_id}}">
@@ -147,6 +171,28 @@
         </div>
 
         <div class="col-9">
+            <div style="display: flex;justify-content: space-between;align-items: center">
+                <ul class="list-inline map_ul">
+                    <li>
+                        <a href="{{url('/')}}">فروشگاه</a>
+                        @if(isset($category))  /  @endif
+                    </li>
+                    @if(isset($category))
+                        @if($category->getParent->getParent->name !="-" )
+                            <li><a href="{{url('main/'.$category->getParent->getParent->url)}}">{{$category->getParent->getParent->name}}</a> / </li>
+                        @endif
+{{--                            @if($category->getParent->name !="-")  /  @endif--}}
+
+                            @if($category->getParent->name !="-")
+                                <li><a href="{{url('search/'.$category->getParent->url)}}">{{$category->getParent->name}}</a> / </li>
+                            @endif
+                        <li><a href="{{url()->current()}}">{{$category->name}}</a></li>
+                    @endif
+                </ul>
+                <div id="product_count">
+
+                </div>
+            </div>
             <product-box></product-box>
         </div>
 

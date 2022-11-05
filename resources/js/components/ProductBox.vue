@@ -61,6 +61,10 @@
 
                 </div>
 
+                <div class="shop_name" v-if="product.status==1">
+                    فروشنده : حمیدرضا سمیعی نیا
+                </div>
+
             </div>
 
             <div v-if="this.productList.data==0 && get_result" class="not_found_product_message">
@@ -140,6 +144,12 @@ export default {
                this.setRangeSlider(response.data.max_price);
                 $("#loading").hide();
                 this.get_result=true;
+
+                if (response.data['count']!=undefined)
+                {
+                    $("#product_count").text(this.replaceNumber(response.data['count'])+" کالا ")
+                }
+
             });
         },
 
