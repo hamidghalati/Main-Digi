@@ -38,6 +38,27 @@ class SearchProduct
         }
     }
 
+    public function set_brand_category($cat_id)
+    {
+
+      if (is_array($cat_id))
+      {
+          $j=0;
+          foreach ($cat_id  as  $k=>$v)
+          {
+              $this->category[$j]=$v;
+              $j++;
+          }
+          $category=CategoriesModel::whereIn('parent_id',$cat_id)->get();
+          foreach ($category as $key=>$value)
+          {
+              $this->category[$j]=$value->id;
+              $j++;
+          }
+      }
+
+    }
+
     public function getProduct()
     {
         $product2 = ProductsModel::orderBy('price', 'DESC');

@@ -3071,6 +3071,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ProductBox",
@@ -3085,7 +3108,8 @@ __webpack_require__.r(__webpack_exports__);
       max_price: 0,
       get_result: false,
       sort: 21,
-      search_string: ''
+      search_string: '',
+      compare_list: []
     };
   },
   mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -3127,7 +3151,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       $("#loading").show();
-      this.request_url = window.location.href.replace(this.$siteUrl, this.$siteUrl + '/getProduct/');
+      this.request_url = window.location.href.replace(this.$siteUrl, this.$siteUrl + 'getProduct/');
       this.axios.get(this.get_request_url(this.request_url, page)).then(function (response) {
         _this.productList = response.data['product'];
 
@@ -3140,6 +3164,39 @@ __webpack_require__.r(__webpack_exports__);
           $("#product_count").text(_this.replaceNumber(response.data['count']) + " کالا ");
         }
       });
+    },
+    add_compare_list: function add_compare_list(product) {
+      var result = this.has_compare_list(product.id, 'ok');
+
+      if (result.status == 'ok') {
+        this.$delete(this.compare_list, result.key);
+      } else {
+        if (this.compare_list.length < 4) {
+          this.compare_list.push({
+            product_id: product.id,
+            title: product.title,
+            pic: product.image_url
+          });
+        }
+      }
+    },
+    has_compare_list: function has_compare_list(product_id, object) {
+      var result = false;
+
+      for (var i = 0; i < this.compare_list.length; i++) {
+        if (this.compare_list[i].product_id == product_id) {
+          if (object == 'ok') {
+            result = {
+              'status': 'ok',
+              'key': i
+            };
+          } else {
+            result = true;
+          }
+        }
+      }
+
+      return result;
     }
   }
 });
@@ -12375,226 +12432,272 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "product_list_box" }, [
-    _c("div", { staticClass: "header" }, [
-      _c("ul", { staticClass: "list-inline" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "li",
-          {
-            class: _vm.sort == 21 ? "active" : "",
-            on: {
-              click: function ($event) {
-                return _vm.set_sort(21)
+  return _c("div", [
+    _c("div", { staticClass: "product_list_box" }, [
+      _c("div", { staticClass: "header" }, [
+        _c("ul", { staticClass: "list-inline" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "li",
+            {
+              class: _vm.sort == 21 ? "active" : "",
+              on: {
+                click: function ($event) {
+                  return _vm.set_sort(21)
+                },
               },
             },
-          },
-          [_vm._m(1)]
-        ),
-        _vm._v(" "),
-        _c(
-          "li",
-          {
-            class: _vm.sort == 22 ? "active" : "",
-            on: {
-              click: function ($event) {
-                return _vm.set_sort(22)
+            [_vm._m(1)]
+          ),
+          _vm._v(" "),
+          _c(
+            "li",
+            {
+              class: _vm.sort == 22 ? "active" : "",
+              on: {
+                click: function ($event) {
+                  return _vm.set_sort(22)
+                },
               },
             },
-          },
-          [_vm._m(2)]
-        ),
-        _vm._v(" "),
-        _c(
-          "li",
-          {
-            class: _vm.sort == 23 ? "active" : "",
-            on: {
-              click: function ($event) {
-                return _vm.set_sort(23)
+            [_vm._m(2)]
+          ),
+          _vm._v(" "),
+          _c(
+            "li",
+            {
+              class: _vm.sort == 23 ? "active" : "",
+              on: {
+                click: function ($event) {
+                  return _vm.set_sort(23)
+                },
               },
             },
-          },
-          [_vm._m(3)]
-        ),
-        _vm._v(" "),
-        _c(
-          "li",
-          {
-            class: _vm.sort == 24 ? "active" : "",
-            on: {
-              click: function ($event) {
-                return _vm.set_sort(24)
+            [_vm._m(3)]
+          ),
+          _vm._v(" "),
+          _c(
+            "li",
+            {
+              class: _vm.sort == 24 ? "active" : "",
+              on: {
+                click: function ($event) {
+                  return _vm.set_sort(24)
+                },
               },
             },
-          },
-          [_vm._m(4)]
-        ),
-        _vm._v(" "),
-        _c(
-          "li",
-          {
-            class: _vm.sort == 25 ? "active" : "",
-            on: {
-              click: function ($event) {
-                return _vm.set_sort(25)
+            [_vm._m(4)]
+          ),
+          _vm._v(" "),
+          _c(
+            "li",
+            {
+              class: _vm.sort == 25 ? "active" : "",
+              on: {
+                click: function ($event) {
+                  return _vm.set_sort(25)
+                },
               },
             },
-          },
-          [_vm._m(5)]
-        ),
+            [_vm._m(5)]
+          ),
+        ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "product_list" },
+        [
+          _vm._l(this.productList.data, function (product) {
+            return _c("div", { staticClass: "product_div" }, [
+              _c("div", { staticClass: "image_div" }, [
+                _c(
+                  "ul",
+                  { staticClass: "color_box list-inline" },
+                  [
+                    _vm._l(product.get_product_color, function (color, key) {
+                      return color.get_color != null && key < 3
+                        ? _c("li", [
+                            _c("label", {
+                              style: { background: color.get_color.code },
+                              attrs: { for: "" },
+                            }),
+                          ])
+                        : _vm._e()
+                    }),
+                    _vm._v(" "),
+                    product.get_product_color.length > 3
+                      ? _c("li", [_c("span", { staticClass: "fa fa-plus" })])
+                      : _vm._e(),
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    attrs: {
+                      href:
+                        _vm.$siteUrl +
+                        "product/dkp-" +
+                        product.id +
+                        "/" +
+                        product.product_url,
+                    },
+                  },
+                  [
+                    _c("img", {
+                      attrs: {
+                        src: _vm.$siteUrl + "files/thumb/" + product.image_url,
+                        alt: "",
+                      },
+                    }),
+                  ]
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "info" }, [
+                _c(
+                  "a",
+                  {
+                    attrs: {
+                      href:
+                        _vm.$siteUrl +
+                        "product/dkp-" +
+                        product.id +
+                        "/" +
+                        product.product_url,
+                    },
+                  },
+                  [
+                    _c("p", { staticClass: "title" }, [
+                      _vm._v(_vm._s(product.title)),
+                    ]),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "compare_tag" }, [
+                  _c(
+                    "p",
+                    {
+                      on: {
+                        click: function ($event) {
+                          return _vm.add_compare_list(product)
+                        },
+                      },
+                    },
+                    [
+                      _c("span", {
+                        class: [
+                          _vm.has_compare_list(product.id, "no")
+                            ? "check_box active"
+                            : "check_box",
+                        ],
+                      }),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("مقایسه")]),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                product.status == 1 && product.get_first_product_price != null
+                  ? _c("div", { staticClass: "price" }, [
+                      _c("div", { staticClass: "discount_div" }, [
+                        product.get_first_product_price.price1 !=
+                        product.get_first_product_price.price2
+                          ? _c("div", [
+                              _c("del", [
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(
+                                      _vm.replaceNumber(
+                                        _vm.number_format(
+                                          product.get_first_product_price.price1
+                                        )
+                                      )
+                                    ) +
+                                    " تومان\n                                "
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "discount-badge" }, [
+                                _vm._v(
+                                  "\n                            %" +
+                                    _vm._s(
+                                      _vm.getDiscountValue(
+                                        product.get_first_product_price.price1,
+                                        product.get_first_product_price.price2
+                                      )
+                                    ) +
+                                    "\n                        "
+                                ),
+                              ]),
+                            ])
+                          : _vm._e(),
+                      ]),
+                      _vm._v(" "),
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(
+                            _vm.replaceNumber(
+                              _vm.number_format(
+                                product.get_first_product_price.price2
+                              )
+                            )
+                          ) + " تومان "
+                        ),
+                      ]),
+                    ])
+                  : _c("div", { staticClass: "product_status" }, [
+                      _vm._m(6, true),
+                    ]),
+              ]),
+              _vm._v(" "),
+              product.status == 1
+                ? _c("div", { staticClass: "shop_name" }, [
+                    _vm._v(
+                      "\n                    فروشنده : حمیدرضا سمیعی نیا\n                "
+                    ),
+                  ])
+                : _vm._e(),
+            ])
+          }),
+          _vm._v(" "),
+          this.productList.data == 0 && _vm.get_result
+            ? _c("div", { staticClass: "not_found_product_message" }, [
+                _vm._v(
+                  "\n                محصولی برای نمایش یافت نشد\n            "
+                ),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("pagination", {
+            attrs: { align: "center", data: _vm.productList },
+            on: { "pagination-change-page": _vm.getProduct },
+          }),
+        ],
+        2
+      ),
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "product_list" },
-      [
-        _vm._l(this.productList.data, function (product) {
-          return _c("div", { staticClass: "product_div" }, [
-            _c("div", { staticClass: "image_div" }, [
-              _c(
-                "ul",
-                { staticClass: "color_box list-inline" },
-                [
-                  _vm._l(product.get_product_color, function (color, key) {
-                    return color.get_color != null && key < 3
-                      ? _c("li", [
-                          _c("label", {
-                            style: { background: color.get_color.code },
-                            attrs: { for: "" },
-                          }),
-                        ])
-                      : _vm._e()
-                  }),
-                  _vm._v(" "),
-                  product.get_product_color.length > 3
-                    ? _c("li", [_c("span", { staticClass: "fa fa-plus" })])
-                    : _vm._e(),
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  attrs: {
-                    href:
-                      _vm.$siteUrl +
-                      "product/dkp-" +
-                      product.id +
-                      "/" +
-                      product.product_url,
-                  },
-                },
-                [
-                  _c("img", {
-                    attrs: {
-                      src: _vm.$siteUrl + "files/thumb/" + product.image_url,
-                      alt: "",
-                    },
-                  }),
-                ]
-              ),
-            ]),
+    _c("div", { staticClass: "compare_product_list" }, [
+      _c(
+        "ul",
+        _vm._l(_vm.compare_list, function (item) {
+          return _c("li", [
+            _c("img", {
+              attrs: { src: _vm.$siteUrl + "files/thumb/" + item.pic, alt: "" },
+            }),
             _vm._v(" "),
-            _c("div", { staticClass: "info" }, [
-              _c(
-                "a",
-                {
-                  attrs: {
-                    href:
-                      _vm.$siteUrl +
-                      "product/dkp-" +
-                      product.id +
-                      "/" +
-                      product.product_url,
-                  },
-                },
-                [
-                  _c("p", { staticClass: "title" }, [
-                    _vm._v(_vm._s(product.title)),
-                  ]),
-                ]
-              ),
-              _vm._v(" "),
-              product.status == 1 && product.get_first_product_price != null
-                ? _c("div", { staticClass: "price" }, [
-                    _c("div", { staticClass: "discount_div" }, [
-                      product.get_first_product_price.price1 !=
-                      product.get_first_product_price.price2
-                        ? _c("div", [
-                            _c("del", [
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(
-                                    _vm.replaceNumber(
-                                      _vm.number_format(
-                                        product.get_first_product_price.price1
-                                      )
-                                    )
-                                  ) +
-                                  " تومان\n                            "
-                              ),
-                            ]),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "discount-badge" }, [
-                              _vm._v(
-                                "\n                            %" +
-                                  _vm._s(
-                                    _vm.getDiscountValue(
-                                      product.get_first_product_price.price1,
-                                      product.get_first_product_price.price2
-                                    )
-                                  ) +
-                                  "\n                        "
-                              ),
-                            ]),
-                          ])
-                        : _vm._e(),
-                    ]),
-                    _vm._v(" "),
-                    _c("span", [
-                      _vm._v(
-                        _vm._s(
-                          _vm.replaceNumber(
-                            _vm.number_format(
-                              product.get_first_product_price.price2
-                            )
-                          )
-                        ) + " تومان "
-                      ),
-                    ]),
-                  ])
-                : _c("div", { staticClass: "product_status" }, [
-                    _vm._m(6, true),
-                  ]),
-            ]),
+            _c("span", [_vm._v(_vm._s(item.title))]),
             _vm._v(" "),
-            product.status == 1
-              ? _c("div", { staticClass: "shop_name" }, [
-                  _vm._v(
-                    "\n                فروشنده : حمیدرضا سمیعی نیا\n            "
-                  ),
-                ])
-              : _vm._e(),
+            _c("span", { staticClass: "fa fa-close" }),
           ])
         }),
-        _vm._v(" "),
-        this.productList.data == 0 && _vm.get_result
-          ? _c("div", { staticClass: "not_found_product_message" }, [
-              _vm._v("\n            محصولی برای نمایش یافت نشد\n        "),
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("pagination", {
-          attrs: { align: "center", data: _vm.productList },
-          on: { "pagination-change-page": _vm.getProduct },
-        }),
-      ],
-      2
-    ),
+        0
+      ),
+    ]),
   ])
 }
 var staticRenderFns = [

@@ -211,7 +211,8 @@ class SiteController extends Controller
         $brand=BrandsModel::where('brand_ename',$brand_name)->firstOrFail();
         $searchProduct = new SearchProduct($request);
         $searchProduct->brands = $brand->id;
-        $searchProduct->category=$request->get('category');
+//        $searchProduct->category=$request->get('category');
+        $searchProduct->set_brand_category($request->get('category',array()));
         $result = $searchProduct->getProduct();
 
         return $result;
@@ -219,3 +220,16 @@ class SiteController extends Controller
 
 
 }
+
+
+
+
+
+
+//$brand=BrandsModel::where('brand_ename',$brand_name)->firstOrFail();
+//$searchProduct = new SearchProduct($request);
+//$searchProduct->brands = $brand->id;
+//$searchProduct->set_brand_category($request->get('category'));
+//$result = $searchProduct->getProduct();
+//
+//return $result;

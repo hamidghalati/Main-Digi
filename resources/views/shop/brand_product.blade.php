@@ -12,10 +12,10 @@
                 </div>
             </div>
 
-{{--            @if(sizeof($brand->getCat)>0)--}}
+            @if(sizeof($brand->getCat)>0)
                 <div class="item_box">
                     <div class="title_box">
-                        <label for="">برند</label>
+                        <label for="">دسته بندی</label>
                         <span class="fa fa-angle-down"></span>
                     </div>
                     <div>
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-{{--            @endif--}}
+            @endif
 
             <div class="item_box">
                 <div class="title_box">
@@ -91,6 +91,20 @@
 
         </div>
         <div class="col-9">
+            <div style="display: flex;justify-content: space-between;align-items: center">
+                <ul class="list-inline map_ul">
+                    <li>
+                        <a href="{{url('/')}}">فروشگاه</a>
+                        /
+                    </li>
+                    <li><a href="{{url('brands/'.$brand->brand_ename)}}">{{$brand->brand_name}}</a> </li>
+
+
+                </ul>
+                <div id="product_count">
+
+                </div>
+            </div>
             <product-box></product-box>
         </div>
 
