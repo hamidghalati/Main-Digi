@@ -45,7 +45,7 @@
                             <p v-on:click="add_compare_list(product)">
                                 <span
                                     :class="[has_compare_list(product.id,'no') ? 'check_box active' : 'check_box']"></span>
-                                <span>مقایسه</span>
+                                <span style="padding-right: 5px">مقایسه</span>
                             </p>
                         </div>
 
@@ -88,15 +88,25 @@
             </div>
         </div>
 
-        <div class="compare_product_list">
+        <div class="compare_product_list" v-if="compare_list.length>0 && show_compare" v-on:mouseleave="show_compare=false">
             <ul>
                 <li v-for="item in compare_list">
                     <img v-bind:src="$siteUrl+'files/thumb/'+item.pic" alt="">
                     <span>{{ item.title }}</span>
-                    <span class="fa fa-close"></span>
+                    <span  v-on:click="remove_product_compare_list(item.product_id)"><i class="text-danger fa fa-close"></i></span>
                 </li>
             </ul>
         </div>
+
+        <a v-bind:href="compare_link" id="compare_list" v-if="compare_list.length>0" v-on:mousemove="show_compare=true" >
+            <div>
+                <span>مقایسه</span>
+                <span>{{ replaceNumber(compare_list.length) }}</span>
+                <span>کالا</span>
+            </div>
+        </a>
+
+
     </div>
 
 
@@ -117,7 +127,9 @@ export default {
             get_result: false,
             sort: 21,
             search_string: '',
-            compare_list: []
+            compare_list: [],
+            show_compare:false,
+            compare_link:''
         }
     },
     mixins: [myMixin],
@@ -179,12 +191,16 @@ export default {
             const result = this.has_compare_list(product.id, 'ok')
             if (result.status=='ok') {
                 this.$delete(this.compare_list, result.key);
-            } else {
+            }
+            else
+            {
 
                 if (this.compare_list.length < 4) {
+                    this.set_compare_link(product.id);
                     this.compare_list.push({product_id: product.id, title: product.title, pic: product.image_url});
                 }
             }
+
 
         },
         has_compare_list: function (product_id, object) {
@@ -202,6 +218,20 @@ export default {
                 }
             }
             return result;
+        },
+        remove_product_compare_list:function (product_id) {
+            const result = this.has_compare_list(product_id, 'ok')
+            if (result.status=='ok') {
+                this.$delete(this.compare_list, result.key);
+            }
+            this.compare_link=this.compare_link.replace("/dkp-"+product_id,'');
+        },
+        set_compare_link:function (product_id) {
+            if (this.compare_link=='')
+            {
+                this.compare_link=this.$siteUrl+"compare"
+            }
+            this.compare_link+="/dkp-"+product_id;
         }
 
 

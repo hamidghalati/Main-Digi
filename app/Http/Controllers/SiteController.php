@@ -214,8 +214,21 @@ class SiteController extends Controller
 //        $searchProduct->category=$request->get('category');
         $searchProduct->set_brand_category($request->get('category',array()));
         $result = $searchProduct->getProduct();
-
         return $result;
+    }
+
+    public function compare($product1,$product2=null,$product3=null,$product4=null)
+    {
+        $products_id=get_compare_product_id(array($product1,$product2,$product3,$product4));
+        $products=ProductsModel::with(['getItemValue','Gallery'])->whereIn('id',$products_id)->get();
+        if(sizeof($products)>0)
+        {
+            $items=ItemModel::getCategoryItem($products[0]->cat_id);
+        }
+        return view('shop.compare',[
+           'items'=>$items,
+           'products'=>$products
+        ]);
     }
 
 

@@ -2821,7 +2821,7 @@ del {
 }
 .compare_product_list{
     position: fixed;
-    bottom: 20px;
+    bottom: 15px;
     left: 35px;
     background: white;
     border: 1px solid #eaeced;
@@ -2839,14 +2839,76 @@ del {
 .compare_product_list ul li img{
     width: 55px;
 }
+#compare_list div{
+    position: fixed;
+    bottom: 25px;
+    left: 45px;
+    z-index: 200;
+    background: #2196F3;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    cursor: pointer;
+}
+.compare_item_list{
+    width: 96%;
+    margin: auto;
+    padding-bottom: 20px;
+    position: relative;
+}
+.compare_ul li{
+    list-style: none;
+}
+.compare_ul .title{
+    background-color: #f0f2f3;
+    padding: 10px;
+}
+.compare_ul .value{
+    display: inline-flex;
+    width: 100%;
+}
+.compare_ul .value div{
+    width: 25%;
+    padding: 15px;
+}
+.compare_title{
+    padding-right: 12px;
+}
+.compare_title:before{
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-color: transparent #00bfd6 transparent transparent;
+    border-style: solid;
+    border-width: 7px 7px 7px 0;
+}
+.left_border{
+    border-left: 1px solid #eaeced;
+}
+.compare_gallery_pic{
+    margin: auto;
+    /*width: 100%;*/
+    max-height: 100%;
+    display: block;
 
-
-
-
-
-
-
-
+}
+.compare_product_gallery{
+    width: 100%;
+    display: inline-flex;
+    z-index: 10;
+    background: white;
+}
+.gallery_box{
+    width: 25%;
+    border-left: 1px solid #eaeced;
+    height: 360px;
+}
+.gallery_box .swiper-slide{
+    height: 150px;
+}
 
 
 

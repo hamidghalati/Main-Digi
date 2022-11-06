@@ -3094,6 +3094,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ProductBox",
@@ -3109,7 +3119,9 @@ __webpack_require__.r(__webpack_exports__);
       get_result: false,
       sort: 21,
       search_string: '',
-      compare_list: []
+      compare_list: [],
+      show_compare: false,
+      compare_link: ''
     };
   },
   mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -3172,6 +3184,7 @@ __webpack_require__.r(__webpack_exports__);
         this.$delete(this.compare_list, result.key);
       } else {
         if (this.compare_list.length < 4) {
+          this.set_compare_link(product.id);
           this.compare_list.push({
             product_id: product.id,
             title: product.title,
@@ -3197,6 +3210,22 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return result;
+    },
+    remove_product_compare_list: function remove_product_compare_list(product_id) {
+      var result = this.has_compare_list(product_id, 'ok');
+
+      if (result.status == 'ok') {
+        this.$delete(this.compare_list, result.key);
+      }
+
+      this.compare_link = this.compare_link.replace("/dkp-" + product_id, '');
+    },
+    set_compare_link: function set_compare_link(product_id) {
+      if (this.compare_link == '') {
+        this.compare_link = this.$siteUrl + "compare";
+      }
+
+      this.compare_link += "/dkp-" + product_id;
     }
   }
 });
@@ -12596,7 +12625,9 @@ var render = function () {
                         ],
                       }),
                       _vm._v(" "),
-                      _c("span", [_vm._v("مقایسه")]),
+                      _c("span", { staticStyle: { "padding-right": "5px" } }, [
+                        _vm._v("مقایسه"),
+                      ]),
                     ]
                   ),
                 ]),
@@ -12681,23 +12712,76 @@ var render = function () {
       ),
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "compare_product_list" }, [
-      _c(
-        "ul",
-        _vm._l(_vm.compare_list, function (item) {
-          return _c("li", [
-            _c("img", {
-              attrs: { src: _vm.$siteUrl + "files/thumb/" + item.pic, alt: "" },
-            }),
-            _vm._v(" "),
-            _c("span", [_vm._v(_vm._s(item.title))]),
-            _vm._v(" "),
-            _c("span", { staticClass: "fa fa-close" }),
-          ])
-        }),
-        0
-      ),
-    ]),
+    _vm.compare_list.length > 0 && _vm.show_compare
+      ? _c(
+          "div",
+          {
+            staticClass: "compare_product_list",
+            on: {
+              mouseleave: function ($event) {
+                _vm.show_compare = false
+              },
+            },
+          },
+          [
+            _c(
+              "ul",
+              _vm._l(_vm.compare_list, function (item) {
+                return _c("li", [
+                  _c("img", {
+                    attrs: {
+                      src: _vm.$siteUrl + "files/thumb/" + item.pic,
+                      alt: "",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v(_vm._s(item.title))]),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      on: {
+                        click: function ($event) {
+                          return _vm.remove_product_compare_list(
+                            item.product_id
+                          )
+                        },
+                      },
+                    },
+                    [_c("i", { staticClass: "text-danger fa fa-close" })]
+                  ),
+                ])
+              }),
+              0
+            ),
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.compare_list.length > 0
+      ? _c(
+          "a",
+          {
+            attrs: { href: _vm.compare_link, id: "compare_list" },
+            on: {
+              mousemove: function ($event) {
+                _vm.show_compare = true
+              },
+            },
+          },
+          [
+            _c("div", [
+              _c("span", [_vm._v("مقایسه")]),
+              _vm._v(" "),
+              _c("span", [
+                _vm._v(_vm._s(_vm.replaceNumber(_vm.compare_list.length))),
+              ]),
+              _vm._v(" "),
+              _c("span", [_vm._v("کالا")]),
+            ]),
+          ]
+        )
+      : _vm._e(),
   ])
 }
 var staticRenderFns = [

@@ -138,6 +138,11 @@ Route::get('getProduct/search/{cat_url}','SiteController@get_cat_product');
 Route::get('brands/{brand_name}','SiteController@brand_product');
 Route::get('getProduct/brands/{brand_name}','SiteController@get_brand_product');
 
+//compare_Brand
+Route::get('compare/{product_id1}','SiteController@compare');
+Route::get('compare/{product_id1}/{product_id2}','SiteController@compare');
+Route::get('compare/{product_id1}/{product_id2}/{product_id3}','SiteController@compare');
+Route::get('compare/{product_id1}/{product_id2}/{product_id3}/{product_id4}','SiteController@compare');
 
 Route::get('shipping','ShoppingController@shipping');
 Route::get('shipping/getSendData/{city_id}','ShoppingController@getSendData');

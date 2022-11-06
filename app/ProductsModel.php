@@ -93,6 +93,16 @@ class ProductsModel extends Model
             ->select('id','product_id','price1','price2','offers_last_time','offers');
     }
 
+    public function getItemValue()
+    {
+        return $this->hasMany(ItemValueModel::class,'product_id','id');
+    }
+
+    public function Gallery()
+    {
+        return $this->hasMany(ProductGalleryModel::class,'product_id','id')->orderBy('position','asc');
+    }
+
 
 
 
