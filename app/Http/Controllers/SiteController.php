@@ -219,16 +219,48 @@ class SiteController extends Controller
 
     public function compare($product1,$product2=null,$product3=null,$product4=null)
     {
+        $items=[];
+
         $products_id=get_compare_product_id(array($product1,$product2,$product3,$product4));
-        $products=ProductsModel::with(['getItemValue','Gallery'])->whereIn('id',$products_id)->get();
+        $products=ProductsModel::with(['getItemValue','Gallery'])
+            ->whereIn('id',$products_id)
+            ->select(['id','title','cat_id','price','product_url'])
+            ->get();
         if(sizeof($products)>0)
         {
             $items=ItemModel::getCategoryItem($products[0]->cat_id);
+            $category=CategoriesModel::where('id',$products[0]->cat_id)->firstOrFail();
+            return view('shop.compare',[
+                'items'=>$items,
+                'products'=>$products,
+                'category'=>$category
+            ]);
         }
-        return view('shop.compare',[
-           'items'=>$items,
-           'products'=>$products
-        ]);
+        else{
+            return redirect('/');
+        }
+
+    }
+
+    public function get_compare_products(Request $request)
+    {
+        $brand_id=$request->get('brand_id',0);
+        $cat_id=$request->get('cat_id',0);
+        $products=ProductsModel::where('cat_id',$cat_id)
+            ->select(['id','price','image_url','title']);
+        if ($brand_id>0)
+        {
+            $products=$products->where('brand_id',$brand_id);
+        }
+        $products=$products->orderBy('order_number','DESC')->paginate(10);
+        return $products;
+    }
+
+    public function getCatBrand(Request  $request)
+    {
+        $cat_id=$request->get('cat_id',0);
+        $brands = CatBrand::with('getBrand')->where('cat_id', $cat_id)->get();
+        return $brands;
     }
 
 

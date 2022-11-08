@@ -10,6 +10,7 @@ import AddressList from "./components/AddressList";
 import GiftCart from "./components/GiftCart";
 import DiscountBox from "./components/DiscountBox";
 import ProductBox from "./components/ProductBox";
+import CompareProductList from "./components/CompareProductList";
 
 
 
@@ -27,7 +28,8 @@ const app = new Vue({
         AddressList,
         GiftCart,
         DiscountBox,
-        ProductBox
+        ProductBox,
+        CompareProductList
 
     }
 });

@@ -64,6 +64,7 @@ Route::prefix('admin')->group(function (){
 
 
 
+
     //Item category
     Route::get('category/{id}/items','Admin\ItemController@items');
     Route::post('category/{id}/items','Admin\ItemController@add_items');
@@ -143,6 +144,10 @@ Route::get('compare/{product_id1}','SiteController@compare');
 Route::get('compare/{product_id1}/{product_id2}','SiteController@compare');
 Route::get('compare/{product_id1}/{product_id2}/{product_id3}','SiteController@compare');
 Route::get('compare/{product_id1}/{product_id2}/{product_id3}/{product_id4}','SiteController@compare');
+
+//compare-brand-list
+Route::post('get_compare_products','SiteController@get_compare_products');
+Route::post('/site/getCatBrand','SiteController@getCatBrand');
 
 Route::get('shipping','ShoppingController@shipping');
 Route::get('shipping/getSendData/{city_id}','ShoppingController@getSendData');
