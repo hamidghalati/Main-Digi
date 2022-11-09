@@ -254,6 +254,15 @@ $(document).ready(function () {
        window.location=url;
     });
 
+    check_has_compare_list();
+
+    $('.product_list').hover(function () {
+        $('.compare_tag p',this).show();
+    },function () {
+        $('.compare_tag p',this).hide();
+    });
+
+
 
 });
 
@@ -455,6 +464,34 @@ function validate_login_password(password)
         return true;
     }
 }
+
+check_has_compare_list=function () {
+    const check_has_compare_list=document.getElementsByClassName('compare_product_gallery');
+    if (check_has_compare_list.length>0)
+    {
+        $(window).scroll(function (e) {
+           if ($(document).scrollTop()>200)
+            {
+                $('.compare_product_gallery').css('border-bottom','3px solid #2196F3');
+                $('.compare_product_gallery .btn-primary').hide();
+                $('.compare_product_gallery .btn-dark').hide();
+                $('.gallery_box').css('height','320px');
+                $('.gallery_box img').css('width','40%');
+                $('.compare_add').css('height','320px');
+            }
+           else {
+               $('.compare_product_gallery').css('border-bottom','0');
+               $('.compare_product_gallery .btn-primary').show();
+               $('.compare_product_gallery .btn-dark').show();
+               $('.gallery_box').css('height','360px');
+               $('.gallery_box img').css('width','50%');
+               $('.compare_add').css('height','360px');
+           }
+        });
+    }
+}
+
+
 
 
 

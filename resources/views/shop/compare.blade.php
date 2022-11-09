@@ -2,8 +2,13 @@
 @section('content')
 
     <div class="content">
+        <p style="padding-top: 20px">لیست مقایسه {{ $category->name }}</p>
         <div class="compare_item_list">
+
             <div class="content">
+
+
+
                 <div class="compare_box">
                     <div class="compare_product_gallery">
                         @foreach($products as $key=>$value)
@@ -90,7 +95,7 @@
     <link rel="stylesheet" href="{{asset('css/swiper.min.css')}}">
 @endsection
 @section('footer')
-
+    <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
     <script>
 
         const swiper = new Swiper('.swiper-container', {

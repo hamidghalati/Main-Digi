@@ -246,11 +246,16 @@ class SiteController extends Controller
     {
         $brand_id=$request->get('brand_id',0);
         $cat_id=$request->get('cat_id',0);
+        $search_text=$request->get('search_text');
         $products=ProductsModel::where('cat_id',$cat_id)
             ->select(['id','price','image_url','title']);
         if ($brand_id>0)
         {
             $products=$products->where('brand_id',$brand_id);
+        }
+        if ($search_text)
+        {
+            $products=$products->where('title','like','%'.$search_text.'%');
         }
         $products=$products->orderBy('order_number','DESC')->paginate(10);
         return $products;
@@ -262,6 +267,7 @@ class SiteController extends Controller
         $brands = CatBrand::with('getBrand')->where('cat_id', $cat_id)->get();
         return $brands;
     }
+
 
 
 }

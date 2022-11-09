@@ -6,7 +6,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" style="padding-right: 40px!important;height: 45px!important;font-size: 15px!important; text-align: right!important;" v-model="search_text" placeholder="نام کالای مورد نظر خود را وارد کنید">
+                        <input type="text" class="form-control" v-on:keyup.enter="search_product"
+                               style="padding-right: 40px!important;height: 45px!important;font-size: 15px!important; text-align: right!important;"
+                               v-model="search_text" placeholder="نام کالای مورد نظر خود را وارد کنید">
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-secondary" type="button" data-toggle="dropdown">
                                 <span>{{brand_text}}</span>
@@ -56,7 +58,8 @@ export default {
             brandList:[],
             product_fail_request_count:0,
             brand_fail_request_count:0,
-            brand_text:'تمام برندها'
+            brand_text:'تمام برندها',
+            old_search_text:''
         }
     },
     props:['cat_id'],
@@ -71,6 +74,7 @@ export default {
             const formData=new FormData();
             formData.append('brand_id',this.brand_id);
             formData.append('cat_id',this.cat_id);
+            formData.append('search_text',this.search_text);
 
             this.axios.post(url,formData).then(response=>{
                 this.productList=response.data;
@@ -110,6 +114,17 @@ export default {
             this.brand_id=brand_id;
             this.brand_text=brand_text;
             this.getProduct(1);
+        },
+        search_product:function () {
+            if (this.search_text.trim().length>1)
+            {
+                this.old_search_text=this.search_text;
+                this.getProduct(1);
+            }
+            else if (this.search_text.trim()=='' && this.old_search_text.trim().length>1)
+            {
+                this.getProduct(1);
+            }
         }
     }
 }

@@ -2905,6 +2905,8 @@ del {
     z-index: 10;
     background: white;
     margin-bottom: 40px;
+    position: sticky;
+    top:0;
 }
 .compare_box{
     width: 96%;
@@ -3045,6 +3047,52 @@ del {
     font-size: 14px;
     text-align: right;
 }
+.compare_title{
+    position: relative;
+    margin-right: 0;
+    padding: 10px;
+}
+.compare_title:before{
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-color: transparent #00bfd6 transparent transparent;
+    border-style: solid;
+    border-width: 7px;
+    top: 15px;
+}
+/*.compare_tag*/
+/*{*/
+/*    height: 30px;*/
+/*}*/
+.compare_tag p{
+    display: none;
+    /*width: 80px;*/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

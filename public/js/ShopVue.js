@@ -2516,6 +2516,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CompareProductList",
   data: function data() {
@@ -2528,7 +2530,8 @@ __webpack_require__.r(__webpack_exports__);
       brandList: [],
       product_fail_request_count: 0,
       brand_fail_request_count: 0,
-      brand_text: 'تمام برندها'
+      brand_text: 'تمام برندها',
+      old_search_text: ''
     };
   },
   props: ['cat_id'],
@@ -2545,6 +2548,7 @@ __webpack_require__.r(__webpack_exports__);
       var formData = new FormData();
       formData.append('brand_id', this.brand_id);
       formData.append('cat_id', this.cat_id);
+      formData.append('search_text', this.search_text);
       this.axios.post(url, formData).then(function (response) {
         _this.productList = response.data;
       })["catch"](function (error) {
@@ -2584,6 +2588,14 @@ __webpack_require__.r(__webpack_exports__);
       this.brand_id = brand_id;
       this.brand_text = brand_text;
       this.getProduct(1);
+    },
+    search_product: function search_product() {
+      if (this.search_text.trim().length > 1) {
+        this.old_search_text = this.search_text;
+        this.getProduct(1);
+      } else if (this.search_text.trim() == '' && this.old_search_text.trim().length > 1) {
+        this.getProduct(1);
+      }
     }
   }
 });
@@ -12021,6 +12033,15 @@ var render = function () {
                   },
                   domProps: { value: _vm.search_text },
                   on: {
+                    keyup: function ($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.search_product.apply(null, arguments)
+                    },
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
