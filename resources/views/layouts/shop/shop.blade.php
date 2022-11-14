@@ -44,7 +44,17 @@
                 <div class="header_action">
                     <div class="dropdown">
                         <div class="index_auth_div" role="button" data-toggle="dropdown">
-                            <span>ورود | ثبت نام</span>
+                            <span>
+                                @if(Auth::check())
+                                    @if(!empty(Auth::user()->name))
+                                        {{(Auth::user()->name)}}
+                                    @else
+                                        {{replace_number(Auth::user()->mobile)}}
+                                    @endif
+                                @else
+                                    ورود | ثبت نام
+                                @endif
+                            </span>
                             <span class="mdi mdi-menu-down"></span>
                         </div>
 
@@ -69,6 +79,7 @@
                             <a href="{{url('user/profile/orders')}}" class="dropdown-item order">پیگیری سفارشات</a>
 
                             @if(Auth::check())
+                                    <form method="post" action="{{url('logout')}}" id="logout_form">@csrf</form>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item logout">خروج از حساب کاربری</a>
                             @endif

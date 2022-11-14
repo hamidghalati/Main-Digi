@@ -20,7 +20,7 @@
                             </a>
                         </li>
                         <li data-toggle="tooltip" data-placement="left" title="مقایسه">
-                            <a href="">
+                            <a href="{{url('compare/dkp-'.$product->id)}}">
                                 <i class="fa fa-rocket" aria-hidden="true"></i>
                             </a>
                         </li>

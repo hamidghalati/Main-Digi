@@ -256,6 +256,10 @@ $(document).ready(function () {
 
     check_has_compare_list();
 
+    $(".logout").click(function () {
+       $("#logout_form").submit();
+    });
+
 
 
 
