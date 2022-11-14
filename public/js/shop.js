@@ -256,11 +256,7 @@ $(document).ready(function () {
 
     check_has_compare_list();
 
-    $('.product_list').hover(function () {
-        $('.compare_tag p',this).show();
-    },function () {
-        $('.compare_tag p',this).hide();
-    });
+
 
 
 

@@ -193,7 +193,7 @@
 
                 </div>
             </div>
-            <product-box></product-box>
+            <product-box :compare="'yes'"></product-box>
         </div>
 
     </div>
@@ -226,6 +226,8 @@
         });
 
         // $('.toggle').toggles({click:false});
+
+
 
     </script>
 @endsection

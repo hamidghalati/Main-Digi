@@ -3063,15 +3063,22 @@ del {
     border-width: 7px;
     top: 15px;
 }
-/*.compare_tag*/
-/*{*/
-/*    height: 30px;*/
-/*}*/
+.compare_tag
+{
+    height: 30px;
+}
 .compare_tag p{
     display: none;
     /*width: 80px;*/
 }
-
+.empty_compare_list{
+    position: absolute;
+    bottom: 5px;
+    right: 20px;
+    font-size: 14px;
+    color: red;
+    cursor: pointer;
+}
 
 
 
@@ -3125,7 +3132,7 @@ del {
     .slider .col-3{display: none!important;}
     .slider .col-9{width: 100%;min-width: 100%;padding: 0!important;}
     .slider .col-10{padding-left: 0!important;}
-    .product_div{width: 25%!important;}
+    .product_list_div .product_div{width: 25%!important;}
     product_div img{width: 60%!important;}
 }
 

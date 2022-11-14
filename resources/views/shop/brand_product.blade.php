@@ -107,7 +107,7 @@
 
                 </div>
             </div>
-            <product-box></product-box>
+            <product-box :compare="'no'"></product-box>
         </div>
 
     </div>
