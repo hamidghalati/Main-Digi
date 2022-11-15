@@ -112,6 +112,8 @@ Route::prefix('admin')->group(function (){
     Route::post('order/change_status','Admin\OrdersController@change_status');
 
 
+    ///ReView
+    create_crud_route('product/review','ReviewController');
 
 });
 
@@ -157,6 +159,8 @@ Route::get('order/payment','ShoppingController@order_payment');
 Route::get('order/verify','ShoppingController@verify');
 Route::post('site/check_gift_cart','ShoppingController@check_gift_cart');
 Route::post('site/check_discount_code','ShoppingController@check_discount_code');
+
+
 
 
 

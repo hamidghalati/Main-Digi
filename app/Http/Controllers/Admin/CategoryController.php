@@ -17,7 +17,6 @@ class CategoryController extends CustomController
 
     public function index(Request $request)
     {
-
         $category=CategoriesModel::getData($request->all());
         $trash_count=CategoriesModel::onlyTrashed()->count();
         return view('admin.category.index',['category'=>$category,'trash_count'=>$trash_count,'req'=>$request]);
