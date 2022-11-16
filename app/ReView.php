@@ -18,7 +18,7 @@ class ReView extends Model
     public static function getData($request)
     {
         $string='?';
-        $review=self::orderBy('id','DESc');
+        $review=self::orderBy('id','DESc')->whereNotNull('title');
         if (inTrashed($request)){
             $review=$review->onlyTrashed();
             $string=create_paginate_url($string,'trashed=true');
@@ -27,4 +27,6 @@ class ReView extends Model
         $review->withPath($string);
         return $review;
     }
+
+
 }

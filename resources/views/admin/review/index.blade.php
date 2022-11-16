@@ -12,11 +12,12 @@
 
             @include('include.alert')
 
+            <a  class="btn btn-primary" href="{{url('admin/product/review/primary?product_id='.$product->id)}}">افزودن توضیحات اولیه</a>
 
 
             <form method="post"  id="data_form">
                 @csrf
-                <table class="table table-striped">
+                <table class="table table-striped" style="margin-top: 20px">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -35,7 +36,7 @@
                             <td>
 
                                 <div class="pretty p-icon p-smooth">
-                                    <input type="checkbox" name="review_id[]" value="{{$value->id}}" class="check_box" />
+                                    <input type="checkbox" name="product/review_id[]" value="{{$value->id}}" class="check_box" />
                                     <div class="state p-danger-o">
                                         <i class="icon fa fa-close"></i>
                                         <label></label>

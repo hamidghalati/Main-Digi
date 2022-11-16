@@ -77,6 +77,11 @@ class AdminController extends Controller
         }
     }
 
+    public function file_manager()
+    {
+        return view('admin.file_manager');
+    }
+
 
 
 
