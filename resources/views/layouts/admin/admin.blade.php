@@ -64,6 +64,12 @@
 
             ]
         ];
+        $sideBarMenu[4]=[
+            'label'=>'مدیریت فایل ها',
+            'icon'=>'fa fa-folder-open',
+            'access'=>'file_manager',
+            'url'=>url('admin/file_manager')
+        ];
             ?>
         <span class="fa fa-bars" id="sidebarToggle"></span>
         <ul id="sidebar_menu">

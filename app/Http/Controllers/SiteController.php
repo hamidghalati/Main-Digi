@@ -10,6 +10,7 @@ use App\ColorModel;
 use App\ItemValueModel;
 use App\ProductsModel;
 use App\ProductWarranty;
+use App\ReView;
 use App\SearchProduct;
 use App\SliderModel;
 use App\ItemModel;
@@ -63,12 +64,14 @@ class SiteController extends Controller
         $product_item_count = ItemValueModel::where('product_id', $product->id)->count();
         $relate_product = ProductsModel::where(['cat_id' => $product->cat_id, 'brand_id' => $product->brand_id])
             ->where('id', '!=', $product->id)->limit(15)->get();
+        $review=ReView::where('product_id',$product->id)->get();
+
         return view('shop.show_product', [
             'product' => $product,
             'product_item' => $product_item,
             'product_item_count' => $product_item_count,
-            'relate_product' => $relate_product
-
+            'relate_product' => $relate_product,
+            'review'=>$review
         ]);
     }
 

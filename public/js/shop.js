@@ -260,6 +260,20 @@ $(document).ready(function () {
        $("#logout_form").submit();
     });
 
+    $(".expert_button").click(function () {
+       const display=$(this).parent().find('.content').css('display');
+       if (display=='block')
+       {
+           $(this).parent().find('.content').css('display','none');
+           $(this).addClass('plus_btn');
+       }
+       else
+       {
+           $(this).parent().find('.content').css('display','block');
+           $(this).removeClass('plus_btn');
+       }
+    });
+
 
 
 
