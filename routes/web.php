@@ -120,8 +120,13 @@ Route::prefix('admin')->group(function () {
 
 });
 
+//comments
+Route::get('product/comment/{product_id}','SiteController@comment_form')->middleware('auth');
+
+
 Route::get('product/{product_id}/{product_url}', 'SiteController@show_product');
 Route::get('product/{product_id}', 'SiteController@show_product');
+
 
 //ajax
 Route::post('site/change_color', 'SiteController@change_color');
@@ -131,6 +136,7 @@ Route::get('Cart', 'SiteController@show_cart');
 
 Route::post('site/cart/remove_product', 'SiteController@remove_product');
 Route::post('site/cart/change_product_cart', 'SiteController@change_product_cart');
+
 
 
 //main
@@ -154,6 +160,8 @@ Route::get('compare/{product_id1}/{product_id2}/{product_id3}/{product_id4}', 'S
 Route::post('get_compare_products', 'SiteController@get_compare_products');
 Route::post('/site/getCatBrand', 'SiteController@getCatBrand');
 
+
+
 Route::get('shipping', 'ShoppingController@shipping');
 Route::get('shipping/getSendData/{city_id}', 'ShoppingController@getSendData');
 //payment
@@ -162,6 +170,8 @@ Route::get('order/payment', 'ShoppingController@order_payment');
 Route::get('order/verify', 'ShoppingController@verify');
 Route::post('site/check_gift_cart', 'ShoppingController@check_gift_cart');
 Route::post('site/check_discount_code', 'ShoppingController@check_discount_code');
+
+
 
 
 Route::prefix('user')->middleware(['auth'])->group(function () {

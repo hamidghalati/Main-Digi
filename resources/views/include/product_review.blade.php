@@ -8,8 +8,13 @@
 
     @if(!empty($product->tozihat))
         <div class="tozihat">
-            <div>
-                {!! $product->tozihat !!}
+            <div class="content">
+                <div>
+                    {!! $product->tozihat !!}
+                </div>
+                <a class="more_content">
+                    <span>ادامه مطلب</span>
+                </a>
             </div>
         </div>
     @endif

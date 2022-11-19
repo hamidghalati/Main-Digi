@@ -3243,10 +3243,16 @@ element.style {
     bottom: 10px;
 }
 .tozihat{
-    padding-right: 300px;
-    /*min-height: 260px;*/
-    text-align: justify;
-    line-height: 35px;
+
+    margin-bottom: 50px;
+    background: #fcfcfc;
+    padding-bottom: 40px;
+    padding-left: 20px;
+
+    /*padding-right: 300px;*/
+    /*!*min-height: 260px;*!*/
+    /*text-align: justify;*/
+    /*line-height: 35px;*/
 
 }
 .tozihat::after{
@@ -3256,21 +3262,275 @@ element.style {
     content: "";
     top: 110px;
     right: 81px;
-    background: url("../files/images/whats-icon.jpg") no-repeat;
-
+    background: url("../files/images/Crystal_Clear_app_kedit_green-pencil.svg") no-repeat;
 
 }
-
 .review_box .headline{
     color: #6f6f6f;
     letter-spacing: -0.3px;
     font-weight: 500;
     line-height: 40px;
-
 }
 .review_box .headline span{
     display: block;
     font-size: 15px;
+}
+.tozihat .content{
+padding-right: 300px;
+    text-align: justify;
+    line-height: 35px;
+
+    position: relative;
+}
+.tozihat .content div{
+    max-height: 250px;
+    overflow: hidden;
+}
+.more_content{
+    position: absolute;
+    width: calc(100% - 300px);
+    text-align: center;
+    bottom: 0;
+    background: #fcfcfc;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+.more_content::after{
+    content: "";
+    position: absolute;
+    right: 0;
+    left: 0;
+    opacity: 1;
+    bottom: 30px;
+    height: 105px;
+    z-index: 1;
+    background: -webkit-gradient(linear,left top,left bottom,from(hsla(0,0%,100%,0)));
+    background: linear-gradient(180deg,hsla(0,0%,100%,0),hsla(0,0%,98.8%,.99)99%,#fcfcfc);
+}
+.more_content span{
+    border-bottom: 1px dashed #2196F3;
+    display: table;
+    font-size: 14px;
+    color: #2196F3;
+}
+.show_short_content::after{
+    content: "";
+    height: 0!important;
+}
+.show_short_content{
+    background: none;
+    bottom: -25px;
+}
+.product_info{
+    width: 100%;
+    background: white;
+    display: inline-flex;
+}
+#score_box .col-md-4 img{
+    width: 85%;
+    margin: 50px auto;
+    display: block;
+}
+.score_box_header{
+    padding: 20px 0;
+    border-bottom: 1px solid #f2f2f2;
+}
+.score_box_header .ttitle{
+    font-size: 15px;
+    line-height: 32px;
+    color: #494949;
+}
+.score_box_header .ttitle p{
+    padding-right: 20px;
+}
+.range_box{
+    position: relative;
+    margin-top: 30px;
+}
+.range_box input[type="range"]
+{
+    width: 295px!important;
+    position: absolute;
+    top: 25px;
+    right: -10px;
+    z-index: 10;
+    margin-top: 10px;
+    background: transparent;
+
+}
+#comment_form{
+    width: 100%;
+}
+.range_box input[type="range"]::-moz-range-thumb{
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    z-index: 2;
+    background-color: #35ccde;
+    cursor: pointer;
+    border: 2px solid #fcfcfc;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+.range_box input[type="range"]::-moz-focus-outer{
+    border: 0;
+}
+/*.range_box input[type="range"]::-webkit-scrollbar-thumb{*/
+/*    position: absolute;*/
+/*    width: 19px;*/
+/*    height: 19px;*/
+/*    z-index: 2;*/
+/*    background-color: #35ccde;*/
+/*    cursor: pointer;*/
+/*    border: 2px solid #fcfcfc;*/
+/*    border-radius: 50%;*/
+/*    -webkit-border-radius: 50%;*/
+/*}*/
+.range_slider_div{
+    width: 280px;
+    background: #d5d5d5;
+    position: relative;
+    height: 5px;
+    margin-top: 10px;
+}
+
+.range_slider_div::before{
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    content: attr(data-rate-title);
+    margin-right: 27px;
+    width: 40px;
+}
+
+.range_box label{
+    font-size: 14px;
+}
+.js-slider-step{
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    z-index: 2;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    background-color: silver;
+    cursor: pointer;
+    border: 2px solid #fcfcfc;
+    top: 59%;
+    transform: translateY(-50%);
+    right: -10px;
+}
+.slider_step_three{
+    right: calc(25% - 6px);
+}
+.slider_step_four{
+    right: calc(50% - 6px);
+}
+.slider_step_five{
+    right: calc(75% - 6px);
+}
+.slider_step_six{
+    right: calc(100% - 6px);
+}
+.active_range_slider{
+    right: 0;
+    left: 50%;
+    position: absolute;
+    background-color: #35ccde;
+    height: 6px;
+}
+.active_range_step{
+    background-color: #35ccde!important;
+}
+
+.score_comment_form{
+    width: 95%;
+    margin: auto;
+}
+.positive_item{
+    padding-right: 20px;
+}
+.positive_item::before{
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    position: absolute;
+    right: 7px;
+    top: 6px;
+    background: #00bfd6;
+}
+.input_label{
+    width: 100%;
+}
+.negative_item{
+    padding-right: 20px;
+}
+.negative_item::before{
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    position: absolute;
+    right: 20px;
+    top: 6px;
+    background: #f33449;
+}
+.input_add_point{
+    margin-bottom: 20px;
+    position: relative;
+}
+.input_add_point input[type="text"]
+{
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid #c8c8c8;
+    color: #717171;
+    font-size: 14px;
+    padding: 11px 12px;
+    width: 100%;
+    letter-spacing: -.8px;
+}
+
+.score_comment_form textarea{
+    width: 100%;
+    height: 150px;
+    resize: none;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    -webkit-border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+    font-weight: 400;
+    padding: 10px;
+    margin-top: 10px;
+}
+.add_comment_btn{
+    font-size: 15px;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    line-height: 15px;
+    background-color: #ef4056;
+    border: 1px solid #d25d6b;
+    padding: 14px 31px;
+    color: #fff;
+}
+.add_comment_tozihat{
+    border-right: 1px solid #ededed;
+    padding: 4px 50px;
+}
+.add_comment_tozihat h4{
+    margin-bottom: 45px;
+    font-size: 20px;
+    line-height: 1.5;
+    letter-spacing: -.5px;
+}
+.add_comment_tozihat p{
+    text-align: justify;
 }
 
 

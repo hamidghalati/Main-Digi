@@ -274,6 +274,38 @@ $(document).ready(function () {
        }
     });
 
+    $('.more_content span').click(function () {
+        if ($(this).parent().hasClass('show_short_content'))
+        {
+            $('.tozihat .content div').css('max-height','250px');
+            $(this).text('ادامه مطلب');
+            $(this).parent().removeClass('show_short_content');
+        }
+        else {
+            $('.tozihat .content div').css('max-height','none');
+            $(this).text('نمایش کمتر');
+            $(this).parent().addClass('show_short_content');
+        }
+
+    });
+
+    $('.item_slider').on('input',function () {
+       const newValue=this.value;
+       const left=(100 - (newValue)*25)+'%';
+       $(this).parent().find('.range_slider_div .active_range_slider').css('left',left);
+
+       const Array=['slider_step_two','slider_step_three','slider_step_four','slider_step_five','slider_step_six'];
+       $(this).parent().find('.range_slider_div .js-slider-step').removeClass('active_range_step');
+       for (let i=0;i<newValue;i++)
+       {
+           $(this).parent().find('.range_slider_div .'+Array[i]).addClass('active_range_step');
+       }
+
+       const title=$(this).parent().find('.range_slider_div .'+Array[newValue]).attr('data-rate-title');
+       $(this).parent().find('.range_slider_div').attr('data-rate-title',title);
+
+    });
+
 
 
 

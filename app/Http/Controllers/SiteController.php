@@ -271,6 +271,13 @@ class SiteController extends Controller
         return $brands;
     }
 
+    public function comment_form($product_id)
+    {
+        $product=ProductsModel::findOrFail($product_id);
+        return view('shop.comment_form',['product'=>$product]);
+    }
+
+
 
 
 }
