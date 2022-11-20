@@ -3532,6 +3532,109 @@ padding-right: 300px;
 .add_comment_tozihat p{
     text-align: justify;
 }
+.input_add_point button{
+    width: 48px;
+    height: 100%;
+    background:none;
+    border: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 0;
+    cursor: pointer;
+    display: none;
+}
+.input_add_point button::before{
+   content: "\F0FE";
+    font-size: 22px;
+    font-family: FontAwesome;
+    position: absolute;
+    top: 7px;
+    left: 13px;
+    color: #878787;
+}
+#advantage_input_box div{
+    background-color: #edf6f7;
+    color: #3a8c96;
+}
+#disadvantage_input_box div{
+    background-color: #fff3f4;
+    color: #fb3449;
+}
+
+.score_comment_form .item_list div{
+    margin-top: 15px;
+    font-size: 14px;
+    line-height: 14px;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.validate_error_border{
+    border: 1px solid #ef5662!important;
+}
+#comment_content_error_message{
+
+}
+
+.feedback_hint_error {
+    background: #ef5662;
+    font-size: 13px;
+    color: #fff;
+    z-index: 100000;
+    padding: 9px 25px;
+    position: absolute;
+    right: 100%;
+    /*bottom: 100%;*/
+    margin-right: -150px;
+    margin-bottom: -25px;
+    white-space: nowrap;
+    display: none;
+
+    width: 170px!important;
+
+    bottom: 270px!important;
+}
+.feedback_hint_error::before {
+    border-color: #ef5662 transparent transparent transparent;
+    border-style: solid;
+    content: "";
+    border-width: 10px 12px 0;
+    position: absolute;
+    top: 100%;
+    right: 35px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

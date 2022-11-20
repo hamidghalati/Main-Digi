@@ -7,6 +7,7 @@ use App\Cart;
 use App\CatBrand;
 use App\CategoriesModel;
 use App\ColorModel;
+use App\Comment;
 use App\ItemValueModel;
 use App\ProductsModel;
 use App\ProductWarranty;
@@ -275,6 +276,12 @@ class SiteController extends Controller
     {
         $product=ProductsModel::findOrFail($product_id);
         return view('shop.comment_form',['product'=>$product]);
+    }
+
+    public function add_comment(Request $request)
+    {
+        $product=ProductsModel::findOrFail($product_id);
+        Comment::addComment($request);
     }
 
 
