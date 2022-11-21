@@ -16,6 +16,7 @@ class CreateCommentScoresTable extends Migration
         Schema::create('comment_scores', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('comment_id');
+            $table->Integer('product_id');
             $table->smallInteger('score1')->nullable();
             $table->smallInteger('score2')->nullable();
             $table->smallInteger('score3')->nullable();

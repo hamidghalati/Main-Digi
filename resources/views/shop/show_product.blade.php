@@ -3,6 +3,17 @@
 @section('content')
 
     <div class="content">
+        @if(Session::has('comment_status'))
+            <div class="alert @if(Session::get('comment_status')=='ok') alert-success @else alert-danger @endif">
+                @if(Session::get('comment_status')=='ok')
+                    نظر شما با موفقیت ثبت شد و بعد از تأیید، نمایش داده خواهد شد
+                @else
+                    خطا در ثبت اطلاعات، مجدداً تلاش نمایید
+                @endif
+            </div>
+        @endif
+
+
         <div class="product_info">
             <div class="product_image_box">
                 <offer-time></offer-time>

@@ -692,8 +692,6 @@ function uploade_file($request,$name,$directory,$pix='')
     }
 }
 
-
-
 function replace_number($number){
     $number=str_replace("0",'۰',$number);
     $number=str_replace("1",'۱',$number);
@@ -757,6 +755,7 @@ function create_crud_route($route_param,$controller,$show=false)
     Route::post($route_param.'/restore_item','Admin\\'.$controller.'@restore_item');
     Route::post($route_param.'/{category}','Admin\\'.$controller.'@restore');
 }
+
 function create_fit_pic($pic_url,$pic_name){
     $thumb=Image::make($pic_url);
     $thumb->resize(350,350);
@@ -847,7 +846,6 @@ function update_product_price($product)
         $product->update();
     }
 }
-
 
 function check_has_product_warranty($warranty){
     $v = verta();
@@ -1002,8 +1000,6 @@ function check_has_color_in_warranty_list($warranty_list,$color_id)
     return $r;
 }
 
-
-
 function get_first_color_id($warranty_list,$color_id)
 {
     if (sizeof($warranty_list)>0)
@@ -1029,6 +1025,7 @@ function getCartProductData($products,$product_id)
         }
     }
 }
+
 function getCartColorData($colors,$color_id)
 {
     foreach ($colors as $key=>$value)
@@ -1039,6 +1036,7 @@ function getCartColorData($colors,$color_id)
         }
     }
 }
+
 function getCartWarrantyData($warranties,$warranty_id)
 {
     foreach ($warranties as $key=>$value)
@@ -1092,6 +1090,7 @@ function CheckGiftCart($product,$user_id,$credit_cart,$order_id)
 
     }
 }
+
 function set_cat_brand($product,$oldData){
         if ($oldData)
         {
@@ -1152,6 +1151,7 @@ function check_has_cat_brand($cat_id,$brand_id)
         add_cat_brand($cat_id,$brand_id);
     }
 }
+
 function remove_cat_brand($cat_id,$brand_id)
 {
     $row=CatBrand::where(['cat_id'=>$cat_id,'brand_id'=>$brand_id])->first();
@@ -1169,6 +1169,7 @@ function remove_cat_brand($cat_id,$brand_id)
         }
     }
 }
+
 function get_compare_product_id($data)
 {
     $array=array();
@@ -1186,6 +1187,7 @@ function get_compare_product_id($data)
     }
     return $array;
 }
+
 function get_item_value($key,$products,$item_id)
 {
     $string='';
@@ -1202,6 +1204,43 @@ function get_item_value($key,$products,$item_id)
     return $string;
 }
 
+function getCommentItem($array)
+{
+    $string='';
+    foreach ($array as $key=>$value)
+    {
+        $string.=$value.'|[@#]|';
+    }
+    return $string;
+}
+
+function getCommentOrderId($product_id,$user_id)
+{
+    define('product_id',$product_id);
+    $order_id=0;
+    $order=\App\Order::whereHas('getOrderProduct',function (\Illuminate\Database\Eloquent\Builder $query){
+        $query->where('product_id',product_id);
+    })->where(['user_id'=>$user_id,'pay_status'=>'ok'])->select('id')->first();
+    return $order;
+}
+
+function addScore($array_score,$comment_id,$product_id)
+{
+    if (sizeof($array_score)==6)
+    {
+        $commentScore=new \App\CommentScore();
+        $commentScore->product_id=$product_id;
+        $commentScore->comment_id=$comment_id;
+        $commentScore->score1=$array_score[0];
+        $commentScore->score2=$array_score[1];
+        $commentScore->score3=$array_score[2];
+        $commentScore->score4=$array_score[3];
+        $commentScore->score5=$array_score[4];
+        $commentScore->score6=$array_score[5];
+        $commentScore->saveOrFail();
+
+    }
+}
 
 
 

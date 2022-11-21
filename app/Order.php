@@ -297,5 +297,10 @@ class Order extends Model
             ->withDefault(['code'=>'']);
     }
 
+    public function getOrderProduct()
+    {
+        return $this->hasMany(OrderProduct::class,'order_id','id');
+    }
+
 
 }

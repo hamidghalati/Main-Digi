@@ -278,10 +278,11 @@ class SiteController extends Controller
         return view('shop.comment_form',['product'=>$product]);
     }
 
-    public function add_comment(Request $request)
+    public function add_comment($product_id,Request $request)
     {
         $product=ProductsModel::findOrFail($product_id);
-        Comment::addComment($request);
+        $status=Comment::addComment($request,$product);
+        return redirect('product/dkp-'.$product->id.'/'.$product->product_url)->with('comment_status',$status['status']);
     }
 
 
