@@ -14,11 +14,15 @@
     ?>
 
     <div class="dropdown-menu text-right">
+        @if(!isset($remove_new_record))
         <a href="{{url($route.'/create').$create_param}}" class="dropdown-item">
             <span class="fa fa-pencil text-success "></span>
             <span class="text-break "> افزودن {{$title}} جدید  </span>
         </a>
+
         <hr>
+        @endif
+
         <a href="{{url($route.'?trashed=true'). $trash_param}}" class="dropdown-item">
             <span class="fa fa-trash text-info"></span>
             <span class="text-break t"> سطل زباله

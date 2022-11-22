@@ -741,15 +741,15 @@ function create_paginate_url($string,$text){
     return $string;
 }
 
-function create_crud_route($route_param,$controller,$show=false)
+function create_crud_route($route_param,$controller,$except=false)
 {
-    if ($show)
+    if ($except)
     {
         Route::resource($route_param,'Admin\\'.$controller);
     }
     else
     {
-        Route::resource($route_param,'Admin\\'.$controller)->except(['show']);
+        Route::resource($route_param,'Admin\\'.$controller)->except([$except]);
     }
     Route::post($route_param.'/remove_item','Admin\\'.$controller.'@remove_item');
     Route::post($route_param.'/restore_item','Admin\\'.$controller.'@restore_item');
@@ -1242,7 +1242,31 @@ function addScore($array_score,$comment_id,$product_id)
     }
 }
 
+function getScoreItem($score,$scoreType)
+{
 
+    $score=[
+        ['label'=>' کیفیت ساخت :', 'value'=>$score->score1,'type'=>getScoreType($score->score1,$scoreType)],
+        ['label'=>' نوآوری :', 'value'=>$score->score2,'type'=>getScoreType($score->score2,$scoreType)],
+        ['label'=>' سهولت استفاده :', 'value'=>$score->score3,'type'=>getScoreType($score->score3,$scoreType)],
+        ['label'=>' ارزش خرید به نسبت قیمت :', 'value'=>$score->score4,'type'=>getScoreType($score->score4,$scoreType)],
+        ['label'=>' امکانات و قابلیت ها :', 'value'=>$score->score5,'type'=>getScoreType($score->score5,$scoreType)],
+        ['label'=>' سهولت طراحی و ظاهر :', 'value'=>$score->score6,'type'=>getScoreType($score->score6,$scoreType)],
+    ];
+    return $score;
+}
+
+function getScoreType($score,$scoreType)
+{
+    if (array_key_exists($score,$scoreType))
+    {
+        return $scoreType[$score];
+    }
+    else
+    {
+        return '';
+    }
+}
 
 
 

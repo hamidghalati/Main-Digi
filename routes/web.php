@@ -37,7 +37,7 @@ Route::prefix('admin')->group(function () {
     create_crud_route('colors', 'ColorController');
 
     //Product
-    create_crud_route('products', 'ProductController', true);
+    create_crud_route('products', 'ProductController', ['show']);
 
     //warranties
     create_crud_route('warranties', 'WarrantyController');
@@ -63,6 +63,9 @@ Route::prefix('admin')->group(function () {
 
     //city
     create_crud_route('city', 'CityController');
+
+    //comment
+    create_crud_route('comments', 'CommentController',['create','store','edit','update']);
 
 
     //Item category
