@@ -154,6 +154,13 @@
             $('[data-toggle="tooltip"]').tooltip()
         });
 
+       const product_tozihat= $("#product_tozihat")[0].scrollHeight;
+       if (product_tozihat<250)
+       {
+           $('.more_content').hide();
+       }
+
+
 
     </script>
 @endsection

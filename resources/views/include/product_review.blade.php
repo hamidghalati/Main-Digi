@@ -9,7 +9,7 @@
     @if(!empty($product->tozihat))
         <div class="tozihat">
             <div class="content">
-                <div>
+                <div id="product_tozihat">
                     {!! $product->tozihat !!}
                 </div>
                 <a class="more_content">

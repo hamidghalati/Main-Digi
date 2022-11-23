@@ -1,3 +1,4 @@
+const site_url = 'http://127.0.0.1:8000/';
 let Toggle=false;
 let delete_url;
 let token;
@@ -159,7 +160,7 @@ hide_box=function () {
 
 $('.check_box').click(function () {
     send_array_data=false;
-    const $checkboxs=$('table tr td input[type="checkbox"]');
+    const $checkboxs=$('.panel_content input[type="checkbox"]');
     const $count=$checkboxs.filter(':checked').length;
     if ($count>0)
     {
@@ -181,7 +182,7 @@ $('.check_box').click(function () {
 
 $('.item_form').click(function () {
     send_array_data=true;
-    const $checkboxs=$('table tr td input[type="checkbox"]');
+    const $checkboxs=$('.panel_content input[type="checkbox"]');
     const $count=$checkboxs.filter(':checked').length;
     if ($count>0) {
         const href=window.location.href.split('?');
@@ -348,4 +349,54 @@ $('.show_filter_box').click(function () {
     }
 });
 
+$('.comment_status').click(function () {
+   const comment_id=$(this).attr('comment-id');
+   const status=$(this).attr('comment-status');
+   const el=$(this);
+   $("#loading").show();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    const url = site_url + "admin/comment/change_status";
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: "comment_id=" + comment_id ,
+        success: function (response) {
+            if (response=='ok') {
+
+                if (status==1)
+                {
+                    el.text('در انتظار تایید')
+                    el.attr('comment-status',0);
+                    el.parent().parent().parent().removeClass('Accepted').addClass('pending_approval');
+                }
+                else
+                {
+                    el.text(' تایید شده');
+                    el.attr('comment-status',1);
+                    el.parent().parent().parent().addClass('Accepted').removeClass('pending_approval');
+                }
+            }
+            else{
+                $("#server_error_box").show();
+                setTimeout(function () {
+                    $("#server_error_box").hide();
+                },5000);
+            }
+            $("#loading").hide();
+
+        },
+        error: function (jqXhr, textStatus, error) {
+            $("#server_error_box").show();
+            setTimeout(function () {
+                $("#server_error_box").hide();
+            },5000);
+            $("#loading").hide();
+        }
+    });
+
+});
 

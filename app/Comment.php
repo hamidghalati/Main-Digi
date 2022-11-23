@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Comment extends Model
 {
     use SoftDeletes;
+    protected $table='comments';
     protected $fillable=['user_id','product_id','title','content','time','order_id','like','dislike','advantage','disadvantage','status'];
 
     public static function addComment($request,$product)
@@ -101,6 +102,7 @@ class Comment extends Model
         return $e;
 
     }
+
     public function getDisadvantageAttribute($value)
     {
         $e=explode('|[@#]|',$value);

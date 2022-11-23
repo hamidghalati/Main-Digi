@@ -1044,3 +1044,20 @@ input.pdate{
 .comment_status{
     cursor: pointer;
 }
+.server_error_box{
+    position: fixed;
+    left: 20px;
+    bottom: 30px;
+    background-color: #ef5661;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    max-width: 280px;
+    font-size: 14px;
+    color: white;
+    display: none;
+    padding: 10px;
+}
+.server_error_box div{
+    display: flex;
+    align-items: center;
+}

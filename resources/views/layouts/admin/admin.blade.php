@@ -127,6 +127,13 @@
     <h6>لطفاً صبور باشید</h6>
 </div>
 
+<div class="server_error_box" id="server_error_box">
+    <div>
+        <span class="fa fa-warning"></span>
+        <span id="message">خطا در ارسال درخواست، مجدداً تلاش نمایید</span>
+    </div>
+</div>
+
 
 
 <script src="{{ asset('js/app.js') }}" ></script>

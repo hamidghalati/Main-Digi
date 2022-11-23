@@ -37,7 +37,7 @@ Route::prefix('admin')->group(function () {
     create_crud_route('colors', 'ColorController');
 
     //Product
-    create_crud_route('products', 'ProductController', ['show']);
+    create_crud_route('products', 'ProductController', []);
 
     //warranties
     create_crud_route('warranties', 'WarrantyController');
@@ -65,7 +65,8 @@ Route::prefix('admin')->group(function () {
     create_crud_route('city', 'CityController');
 
     //comment
-    create_crud_route('comments', 'CommentController',['create','store','edit','update']);
+    create_crud_route('comments', 'CommentController',['show','create','store','edit','update']);
+    Route::post('comment/change_status','Admin\CommentController@change_status');
 
 
     //Item category

@@ -741,16 +741,17 @@ function create_paginate_url($string,$text){
     return $string;
 }
 
-function create_crud_route($route_param,$controller,$except=false)
+function create_crud_route($route_param,$controller,$except=['show'])
 {
-    if ($except)
-    {
-        Route::resource($route_param,'Admin\\'.$controller);
-    }
-    else
-    {
-        Route::resource($route_param,'Admin\\'.$controller)->except([$except]);
-    }
+//    if ($except)
+//    {
+//        Route::resource($route_param,'Admin\\'.$controller);
+//    }
+//    else
+//    {
+//        Route::resource($route_param,'Admin\\'.$controller)->except($except);
+//    }
+    Route::resource($route_param,'Admin\\'.$controller)->except($except);
     Route::post($route_param.'/remove_item','Admin\\'.$controller.'@remove_item');
     Route::post($route_param.'/restore_item','Admin\\'.$controller.'@restore_item');
     Route::post($route_param.'/{category}','Admin\\'.$controller.'@restore');
