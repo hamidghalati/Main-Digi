@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Comment;
 use App\Http\Controllers\Controller;
+use DB;
 use Illuminate\Http\Request;
 
 class CommentController extends CustomController
@@ -29,6 +30,7 @@ class CommentController extends CustomController
             {
                 $status=$comment->status==1 ? 0 : 1;
                 $comment->status=$status;
+                DB::table('comment_scores')->where('comment_id',$comment->id)->update(['status'=>$status]);
                 if ($comment->update())
                 {
                     return 'ok';

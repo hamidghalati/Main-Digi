@@ -127,6 +127,7 @@ Route::prefix('admin')->group(function () {
 //comments
 Route::get('product/comment/{product_id}','SiteController@comment_form')->middleware('auth');
 Route::post('product/comment/{product_id}','SiteController@add_comment')->middleware('auth');
+Route::get('site/getComment','SiteController@getComment');
 
 
 Route::get('product/{product_id}/{product_url}', 'SiteController@show_product');

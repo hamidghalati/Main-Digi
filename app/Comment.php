@@ -110,4 +110,40 @@ class Comment extends Model
 
     }
 
+    public static function getProductCommentList($product_id)
+    {
+        $array=array();
+        $n=CommentScore::where(['product_id'=>$product_id,'status'=>1])->count();
+        $sum1=CommentScore::where(['product_id'=>$product_id])->sum('score1');
+        $sum2=CommentScore::where(['product_id'=>$product_id])->sum('score2');
+        $sum3=CommentScore::where(['product_id'=>$product_id])->sum('score3');
+        $sum4=CommentScore::where(['product_id'=>$product_id])->sum('score4');
+        $sum5=CommentScore::where(['product_id'=>$product_id])->sum('score5');
+        $sum6=CommentScore::where(['product_id'=>$product_id])->sum('score6');
+        if ($n>0)
+        {
+            $sum1/=$n;
+            $sum2/=$n;
+            $sum3/=$n;
+            $sum4/=$n;
+            $sum5/=$n;
+            $sum6/=$n;
+        }
+
+        $comments=Comment::with(['getUserInfo','getScore'])
+            ->whereHas('getScore')
+            ->where(['product_id'=>$product_id,'status'=>1]);
+        $comments=$comments->paginate(10);
+        $array['comment']=$comments;
+
+        $avg=$sum1+$sum2+$sum3+$sum4+$sum5+$sum6;
+        $avg/=6;
+        $array['avg']=round($avg);
+        $array['comment_count']=$n;
+
+        $array['avg_score']=[$sum1,$sum2,$sum3,$sum4,$sum5,$sum6];
+
+        return $array;
+    }
+
 }

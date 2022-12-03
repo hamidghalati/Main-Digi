@@ -285,6 +285,14 @@ class SiteController extends Controller
         return redirect('product/dkp-'.$product->id.'/'.$product->product_url)->with('comment_status',$status['status']);
     }
 
+    public function getComment(Request $request)
+    {
+        $product_id=$request->get('product_id',0);
+        $comments=Comment::getProductCommentList($product_id);
+        return $comments;
+    }
+
+
 
 
 

@@ -110,7 +110,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  data-toggle="tab" href="#comments" role="tab"  aria-selected="false">
+                    <a class="nav-link"  data-toggle="tab" id="comments" href="#product_comments" role="tab"  aria-selected="false">
                         <span class="fa fa-comments"></span>
                         <span>نظرات کاربران</span>
                     </a>
@@ -129,12 +129,19 @@
                 <div class="tab-pane fade" id="product_items" role="tabpanel" aria-labelledby="profile-tab">
                     @include('include.product_items')
                 </div>
-                <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="contact-tab">c</div>
+                <div class="tab-pane fade" id="product_comments" role="tabpanel" aria-labelledby="contact-tab">
+                    <comment-list auth="<?php echo Auth::check() ? 'ok' : 'no' ?>"
+                                  product_id="<?= $product->id ?>"
+                                  product_title="<?= $product->title ?>">
+                    </comment-list>
+                </div>
                 <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="contact-tab">d</div>
             </div>
         </div>
 
     </div>
+
+
 
 
 @endsection
@@ -145,7 +152,6 @@
 
 @endsection
 @section('footer')
-    <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
 
     <script>
 

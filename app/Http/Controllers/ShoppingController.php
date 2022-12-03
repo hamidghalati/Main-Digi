@@ -100,7 +100,7 @@ class ShoppingController extends Controller
     }
 
     public function verify(){
-        $order_id=74;
+        $order_id=82;
         DB::beginTransaction();
         try {
             $order=Order::with(['getProductRow','getOrderInfo','getAddress','getGiftCart'])
