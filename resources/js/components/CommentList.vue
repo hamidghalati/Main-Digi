@@ -56,7 +56,50 @@
 
                 </div>
 
-                <div class="col-md-7"></div>
+                <div class="col-md-7">
+                    <div class="comment_header_box">
+                        <span>{{ comment.title }}</span>
+                        <p>
+                            <span>توسط</span>
+                            <span v-if="comment.get_user_info==null">ناشناس</span>
+                            <span v-else>{{ comment.get_user_info.first_name+' '+comment.get_user_info.last_name  }}</span>
+                            <span>در تاریخ</span>
+                            {{ getDate(comment.time) }}
+                        </p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6" v-if="comment.advantage.length>1">
+                            <span class="evaluation_label">نقاط قوت</span>
+                            <ul class="evaluation_ul advantage">
+                                <li v-for="advantage in comment.advantage" v-if="advantage!=''">
+                                    <span>{{advantage}}</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-md-6" v-if="comment.advantage.length>1">
+                            <span class="evaluation_label">نقاط ضعف</span>
+                            <ul class="evaluation_ul disadvantage">
+                                <li v-for="disadvantage in comment.disadvantage" v-if="disadvantage!=''">
+                                    <span>{{disadvantage}}</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="comment_text">{{ comment.content }}</div>
+
+                    <div class="footer">
+                        <div>
+                            آیا این نظر برایتان مفید بود ؟
+                            <i class="mdi mdi-thumb-up-outline btn_like" v-on:click="like(key,comment.id)" v-bind:data-count="replaceNumber(comment.like)"></i>
+                            <i class="mdi mdi-thumb-down-outline btn_like dislike" v-on:click="dislike(key,comment.id)" v-bind:data-count="replaceNumber(comment.dislike)"></i>
+                        </div>
+                    </div>
+
+                </div>
 
             </div>
         </div>
@@ -91,6 +134,20 @@ export default {
               'معمولی',
               'خوب',
               'عالی'
+          ],
+          monthName:[
+              'فروردین',
+              'اردیبهشت',
+              'خرداد',
+              'تیر',
+              'مرداد',
+              'شهریور',
+              'مهر',
+              'آبان',
+              'آذر',
+              'دی',
+              'بهمن',
+              'اسفند'
           ]
       }
     },
@@ -177,7 +234,14 @@ export default {
             else {
                 window.location=this.$siteUrl+"/product/comment/"+this.product_id;
             }
-        }
+        },
+        getDate:function (time) {
+          time*=1000;
+          const date=new Date(time);
+          const jalai=this.gregorian_to_jalali(date.getFullYear(),(date.getMonth()+1),date.getDate());
+          const r=replaceNumber(jalai[2])+' '+this.monthName[(jalai[1]-1)]+' '+replaceNumber(jalai[0]);
+          return r;
+        },
 
 
     }

@@ -3679,16 +3679,42 @@ padding-right: 300px;
 .message_purchased{
     background-color: #fcf3f5;
     border: 1px solid #cfe3bb;
-    color: #b1b58b;
+    color: #b1d58b;
     display: table;
     padding: 10px 20px;
     margin-bottom: 15px;
     font-size: 14px;
 }
 .message_purchased a{
-    color: #444141;
+    color: #6666;
 }
-
+.evaluation_ul{
+    margin-top: 5px;
+    padding-right: 0!important;
+}
+.evaluation_ul li{
+    list-style: none;
+    position: relative;
+    font-size: 14px;
+}
+.evaluation_ul li span{
+    margin-right: 15px;
+}
+.evaluation_ul li::before{
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    content: "";
+    top: 9px;
+}
+.evaluation_ul.advantage li::before{
+    background-color: #00bfd6;
+}
+.evaluation_ul.disadvantage li::before{
+    background-color: #fb3449;
+}
 
 
 

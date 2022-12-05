@@ -114,12 +114,12 @@ class Comment extends Model
     {
         $array=array();
         $n=CommentScore::where(['product_id'=>$product_id,'status'=>1])->count();
-        $sum1=CommentScore::where(['product_id'=>$product_id])->sum('score1');
-        $sum2=CommentScore::where(['product_id'=>$product_id])->sum('score2');
-        $sum3=CommentScore::where(['product_id'=>$product_id])->sum('score3');
-        $sum4=CommentScore::where(['product_id'=>$product_id])->sum('score4');
-        $sum5=CommentScore::where(['product_id'=>$product_id])->sum('score5');
-        $sum6=CommentScore::where(['product_id'=>$product_id])->sum('score6');
+        $sum1=CommentScore::where(['product_id'=>$product_id,'status'=>1])->sum('score1');
+        $sum2=CommentScore::where(['product_id'=>$product_id,'status'=>1])->sum('score2');
+        $sum3=CommentScore::where(['product_id'=>$product_id,'status'=>1])->sum('score3');
+        $sum4=CommentScore::where(['product_id'=>$product_id,'status'=>1])->sum('score4');
+        $sum5=CommentScore::where(['product_id'=>$product_id,'status'=>1])->sum('score5');
+        $sum6=CommentScore::where(['product_id'=>$product_id,'status'=>1])->sum('score6');
         if ($n>0)
         {
             $sum1/=$n;

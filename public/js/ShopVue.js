@@ -2536,6 +2536,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CommentList",
@@ -2550,7 +2593,8 @@ __webpack_require__.r(__webpack_exports__);
       avg: 0,
       avg_score: [],
       scoreItem: ['کیفیت ساخت :', 'نوآوری :', 'سهولت استفاده :', 'ارزش خرید به نسبت قیمت :', 'امکانات و قابلیت ها :', 'سهولت طراحی و ظاهر :'],
-      scoreLabel: ['خیلی بد', 'بد', 'معمولی', 'خوب', 'عالی']
+      scoreLabel: ['خیلی بد', 'بد', 'معمولی', 'خوب', 'عالی'],
+      monthName: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند']
     };
   },
   mounted: function mounted() {
@@ -2624,6 +2668,13 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         window.location = this.$siteUrl + "/product/comment/" + this.product_id;
       }
+    },
+    getDate: function getDate(time) {
+      time *= 1000;
+      var date = new Date(time);
+      var jalai = this.gregorian_to_jalali(date.getFullYear(), date.getMonth() + 1, date.getDate());
+      var r = replaceNumber(jalai[2]) + ' ' + this.monthName[jalai[1] - 1] + ' ' + replaceNumber(jalai[0]);
+      return r;
     }
   }
 });
@@ -12445,7 +12496,109 @@ var render = function () {
                 : _vm._e(),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-7" }),
+            _c("div", { staticClass: "col-md-7" }, [
+              _c("div", { staticClass: "comment_header_box" }, [
+                _c("span", [_vm._v(_vm._s(comment.title))]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("span", [_vm._v("توسط")]),
+                  _vm._v(" "),
+                  comment.get_user_info == null
+                    ? _c("span", [_vm._v("ناشناس")])
+                    : _c("span", [
+                        _vm._v(
+                          _vm._s(
+                            comment.get_user_info.first_name +
+                              " " +
+                              comment.get_user_info.last_name
+                          )
+                        ),
+                      ]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("در تاریخ")]),
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(_vm.getDate(comment.time)) +
+                      "\n                    "
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                comment.advantage.length > 1
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c("span", { staticClass: "evaluation_label" }, [
+                        _vm._v("نقاط قوت"),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "ul",
+                        { staticClass: "evaluation_ul advantage" },
+                        _vm._l(comment.advantage, function (advantage) {
+                          return advantage != ""
+                            ? _c("li", [
+                                _c("span", [_vm._v(_vm._s(advantage))]),
+                              ])
+                            : _vm._e()
+                        }),
+                        0
+                      ),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                comment.advantage.length > 1
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c("span", { staticClass: "evaluation_label" }, [
+                        _vm._v("نقاط ضعف"),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "ul",
+                        { staticClass: "evaluation_ul disadvantage" },
+                        _vm._l(comment.disadvantage, function (disadvantage) {
+                          return disadvantage != ""
+                            ? _c("li", [
+                                _c("span", [_vm._v(_vm._s(disadvantage))]),
+                              ])
+                            : _vm._e()
+                        }),
+                        0
+                      ),
+                    ])
+                  : _vm._e(),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "comment_text" }, [
+                _vm._v(_vm._s(comment.content)),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "footer" }, [
+                _c("div", [
+                  _vm._v(
+                    "\n                        آیا این نظر برایتان مفید بود ؟\n                        "
+                  ),
+                  _c("i", {
+                    staticClass: "mdi mdi-thumb-up-outline btn_like",
+                    attrs: { "data-count": _vm.replaceNumber(comment.like) },
+                    on: {
+                      click: function ($event) {
+                        return _vm.like(key, comment.id)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("i", {
+                    staticClass: "mdi mdi-thumb-down-outline btn_like dislike",
+                    attrs: { "data-count": _vm.replaceNumber(comment.dislike) },
+                    on: {
+                      click: function ($event) {
+                        return _vm.dislike(key, comment.id)
+                      },
+                    },
+                  }),
+                ]),
+              ]),
+            ]),
           ]),
         ])
       }),
@@ -27656,6 +27809,31 @@ __webpack_require__.r(__webpack_exports__);
         var html = '<div class="selected_filter_item send_status_filter">' + '<span>کالاهای آماده ارسال</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
         $('#selected_filter_box').append(html);
       }
+    },
+    gregorian_to_jalali: function gregorian_to_jalali(gy, gm, gd) {
+      var g_d_m, jy, jm, jd, gy2, days;
+      g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+      gy2 = gm > 2 ? gy + 1 : gy;
+      days = 355666 + 365 * gy + ~~((gy2 + 3) / 4) - ~~((gy2 + 99) / 100) + ~~((gy2 + 399) / 400) + gd + g_d_m[gm - 1];
+      jy = -1595 + 33 * ~~(days / 12053);
+      days %= 12053;
+      jy += 4 * ~~(days / 1461);
+      days %= 1461;
+
+      if (days > 365) {
+        jy += ~~((days - 1) / 365);
+        days = (days - 1) % 365;
+      }
+
+      if (days < 186) {
+        jm = 1 + ~~(days / 31);
+        jd = 1 + days % 31;
+      } else {
+        jm = 7 + ~~((days - 186) / 30);
+        jd = 1 + (days - 186) % 30;
+      }
+
+      return [jy, jm, jd];
     }
   }
 });
