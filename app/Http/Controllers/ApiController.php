@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CityModel;
+use App\Comment;
 use App\ProvinceModel;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,32 @@ class ApiController extends Controller
         $province=ProvinceModel::orderBy('id','Asc')->get();
         return $province;
     }
+
     public function get_city($province_id)
     {
         $city=CityModel::where('province_id',$province_id)->orderBy('id','Asc')->get();
         return $city;
+    }
+
+    public function getComment(Request $request)
+    {
+        $product_id=$request->get('product_id',0);
+        $orderBy=$request->get('orderBy',1);
+        $comments=Comment::getProductCommentList($product_id,$orderBy);
+        return $comments;
+    }
+
+    public function likeComment(Request $request)
+    {
+        $comment_id=$request->get('comment_id');
+        $result=Comment::addUserScore($comment_id,"like");
+        return $result;
+    }
+
+    public function dislikeComment(Request $request)
+    {
+        $comment_id=$request->get('comment_id');
+        $result=Comment::addUserScore($comment_id,"dislike");
+        return $result;
     }
 }

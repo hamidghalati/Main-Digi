@@ -3715,12 +3715,74 @@ padding-right: 300px;
 .evaluation_ul.disadvantage li::before{
     background-color: #fb3449;
 }
+.comment_div{
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #fcfcfc;
+    border:1px solid #f3f3f3;
+    padding: 57px 30px 30px;
+    margin-bottom: 20px;
+}
+.comment_div .footer{
+    margin-top: 20px;
+}
+.comment_div .footer .btn_like{
+     font-size: 20px;
+     padding: 0 13px;
+    cursor: pointer;
+}
+.comment_div .footer .btn_like::before{
+    margin-left: 7px;
+    font-size: 15px;
+    content: attr(data-count);
+}
 
+.comment_div .footer .dislike{
+     font-size: 20px;
+    cursor: pointer;
+}
+.comment_div .footer .btn_dislike::before{
+    margin-left: 7px;
+    font-size: 15px;
+    content: attr(data-count);
+}
+.feq_filter{
+    display: flex;
+    border-bottom: 1px solid #eee;
+    justify-content: space-between;
+}
+.feq_filter p{
+    padding: 14px 19px;
+    margin-bottom: 0!important;
+}
+.feq_filter_item{
+    display: flex;
+    margin: 0!important;
+}
+.feq_filter_item::before{
+    display: inline-flex;
+    content: attr(data-title);
+    padding: 14px 19px;
+}
+.feq_filter_item .active::after{
+    background-color: #00bfd6;
+    position: absolute;
+    height: 1px;
+    content: "";
+    top: 100%;
+    right: 0;
+    left: 0;
+}
 
-
-
-
-
+.feq_filter_item li{
+    list-style: none;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding: 14px 19px;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+}
 
 
 

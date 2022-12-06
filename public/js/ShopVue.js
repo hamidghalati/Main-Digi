@@ -2579,6 +2579,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CommentList",
@@ -2592,9 +2613,12 @@ __webpack_require__.r(__webpack_exports__);
       comment_count: 0,
       avg: 0,
       avg_score: [],
+      getServerData: 'no',
+      ordering: 1,
       scoreItem: ['کیفیت ساخت :', 'نوآوری :', 'سهولت استفاده :', 'ارزش خرید به نسبت قیمت :', 'امکانات و قابلیت ها :', 'سهولت طراحی و ظاهر :'],
       scoreLabel: ['خیلی بد', 'بد', 'معمولی', 'خوب', 'عالی'],
-      monthName: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند']
+      monthName: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+      send: true
     };
   },
   mounted: function mounted() {
@@ -2611,13 +2635,14 @@ __webpack_require__.r(__webpack_exports__);
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       $("#loading").show();
-      var url = this.$siteUrl + "/site/getComment?page=" + page + "&product_id=" + this.product_id;
+      var url = this.$siteUrl + "/site/getComment?page=" + page + "&product_id=" + this.product_id + "&orderBy=" + this.ordering;
       this.axios.get(url).then(function (response) {
         $("#loading").hide();
         _this.list = response.data.comment;
         _this.avg = response.data.avg;
         _this.comment_count = response.data.comment_count;
         _this.avg_score = response.data.avg_score;
+        _this.getServerData = 'ok';
       })["catch"](function (reason) {
         $("#loading").hide();
       });
@@ -2675,6 +2700,56 @@ __webpack_require__.r(__webpack_exports__);
       var jalai = this.gregorian_to_jalali(date.getFullYear(), date.getMonth() + 1, date.getDate());
       var r = replaceNumber(jalai[2]) + ' ' + this.monthName[jalai[1] - 1] + ' ' + replaceNumber(jalai[0]);
       return r;
+    },
+    like: function like(key, comment_id) {
+      var _this2 = this;
+
+      if (this.auth == "no") {} else {
+        if (this.send) {
+          this.send = false;
+          var url = this.$siteUrl + "user/likeComment";
+          var formData = new FormData();
+          formData.append('comment_id', comment_id);
+          this.axios.post(url, formData).then(function (response) {
+            _this2.send = true;
+
+            if (response.data == "add") {
+              _this2.list.data[key].like = _this2.list.data[key].like + 1;
+            } else if (response.data == "remove") {
+              _this2.list.data[key].like = _this2.list.data[key].like - 1;
+            }
+          })["catch"](function (reason) {
+            _this2.send = true;
+          });
+        }
+      }
+    },
+    dislike: function dislike(key, comment_id) {
+      var _this3 = this;
+
+      if (this.auth == "no") {} else {
+        if (this.send) {
+          this.send = false;
+          var url = this.$siteUrl + "user/dislikeComment";
+          var formData = new FormData();
+          formData.append('comment_id', comment_id);
+          this.axios.post(url, formData).then(function (response) {
+            _this3.send = true;
+
+            if (response.data == "add") {
+              _this3.list.data[key].dislike = _this3.list.data[key].dislike + 1;
+            } else if (response.data == "remove") {
+              _this3.list.data[key].dislike = _this3.list.data[key].dislike - 1;
+            }
+          })["catch"](function (reason) {
+            _this3.send = true;
+          });
+        }
+      }
+    },
+    set_ordering: function set_ordering(type) {
+      this.ordering = type;
+      this.getList(1);
     }
   }
 });
@@ -12460,6 +12535,60 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
+      _vm.comment_count > 0 && _vm.getServerData == "ok"
+        ? _c("div", { staticClass: "feq_filter" }, [
+            _c("p", [_vm._v("نظرات کاربران")]),
+            _vm._v(" "),
+            _c(
+              "ul",
+              {
+                staticClass: "feq_filter_item",
+                attrs: { "data-title": "مرتب سازی بر اساس :" },
+              },
+              [
+                _c(
+                  "li",
+                  {
+                    class: [_vm.ordering == 1 ? "active" : ""],
+                    on: {
+                      click: function ($event) {
+                        return _vm.set_ordering(1)
+                      },
+                    },
+                  },
+                  [_vm._v("نظر خریداران")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  {
+                    class: [_vm.ordering == 2 ? "active" : ""],
+                    on: {
+                      click: function ($event) {
+                        return _vm.set_ordering(2)
+                      },
+                    },
+                  },
+                  [_vm._v("مفیدترین نظرات")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  {
+                    class: [_vm.ordering == 3 ? "active" : ""],
+                    on: {
+                      click: function ($event) {
+                        return _vm.set_ordering(3)
+                      },
+                    },
+                  },
+                  [_vm._v("جدیدترین نظرات")]
+                ),
+              ]
+            ),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _vm._l(_vm.list.data, function (comment, key) {
         return _c("div", { staticClass: "comment_div" }, [
           _c("div", { staticClass: "row" }, [
@@ -12577,31 +12706,82 @@ var render = function () {
                   _vm._v(
                     "\n                        آیا این نظر برایتان مفید بود ؟\n                        "
                   ),
-                  _c("i", {
-                    staticClass: "mdi mdi-thumb-up-outline btn_like",
-                    attrs: { "data-count": _vm.replaceNumber(comment.like) },
-                    on: {
-                      click: function ($event) {
-                        return _vm.like(key, comment.id)
+                  _c(
+                    "span",
+                    {
+                      staticClass: "btn_like",
+                      attrs: { "data-count": _vm.replaceNumber(comment.like) },
+                      on: {
+                        click: function ($event) {
+                          return _vm.like(key, comment.id)
+                        },
                       },
                     },
-                  }),
+                    [_c("i", { staticClass: "mdi mdi-thumb-up-outline" })]
+                  ),
                   _vm._v(" "),
-                  _c("i", {
-                    staticClass: "mdi mdi-thumb-down-outline btn_like dislike",
-                    attrs: { "data-count": _vm.replaceNumber(comment.dislike) },
-                    on: {
-                      click: function ($event) {
-                        return _vm.dislike(key, comment.id)
+                  _c(
+                    "span",
+                    {
+                      staticClass: "btn_like dislike",
+                      attrs: {
+                        "data-count": _vm.replaceNumber(comment.dislike),
+                      },
+                      on: {
+                        click: function ($event) {
+                          return _vm.dislike(key, comment.id)
+                        },
                       },
                     },
-                  }),
+                    [
+                      _c("i", {
+                        staticClass: "mdi mdi-thumb-down-outline",
+                        staticStyle: {
+                          "padding-top": "6px",
+                          position: "absolute",
+                        },
+                      }),
+                    ]
+                  ),
                 ]),
               ]),
             ]),
           ]),
         ])
       }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "paginate_div" },
+            [
+              _c("pagination", {
+                attrs: { data: _vm.list },
+                on: { "pagination-change-page": _vm.getList },
+              }),
+            ],
+            1
+          ),
+        ]),
+      ]),
+      _vm._v(" "),
+      _vm.comment_count == 0 && _vm.getServerData == "ok"
+        ? _c("div", [
+            _c(
+              "p",
+              {
+                staticStyle: {
+                  "text-align": "center",
+                  "padding-top": "30px",
+                  "padding-bottom": "20px",
+                  color: "red",
+                },
+              },
+              [_vm._v("تاکنون برای این محصول نظری ثبت نشده است")]
+            ),
+          ])
+        : _vm._e(),
     ],
     2
   )

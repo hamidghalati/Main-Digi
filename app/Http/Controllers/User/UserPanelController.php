@@ -38,4 +38,6 @@ class UserPanelController extends Controller
         $order_data=$order_data->getData();
         return view('UserPanel.show_order',['order'=>$order,'order_data'=>$order_data]);
     }
+
+
 }

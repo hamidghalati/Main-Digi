@@ -34,6 +34,15 @@
 
         </div>
 
+        <div class="feq_filter" v-if="comment_count>0 && getServerData=='ok'">
+            <p>نظرات کاربران</p>
+            <ul class="feq_filter_item" data-title="مرتب سازی بر اساس :">
+                <li :class="[ordering==1 ? 'active' : '']" v-on:click="set_ordering(1)">نظر خریداران</li>
+                <li :class="[ordering==2 ? 'active' : '']" v-on:click="set_ordering(2)">مفیدترین نظرات</li>
+                <li :class="[ordering==3 ? 'active' : '']" v-on:click="set_ordering(3)">جدیدترین نظرات</li>
+            </ul>
+        </div>
+
         <div class="comment_div" v-for="(comment,key) in list.data">
             <div class="row">
 
@@ -94,14 +103,26 @@
                     <div class="footer">
                         <div>
                             آیا این نظر برایتان مفید بود ؟
-                            <i class="mdi mdi-thumb-up-outline btn_like" v-on:click="like(key,comment.id)" v-bind:data-count="replaceNumber(comment.like)"></i>
-                            <i class="mdi mdi-thumb-down-outline btn_like dislike" v-on:click="dislike(key,comment.id)" v-bind:data-count="replaceNumber(comment.dislike)"></i>
+                            <span class="btn_like" v-on:click="like(key,comment.id)" v-bind:data-count="replaceNumber(comment.like)"><i class="mdi mdi-thumb-up-outline"></i></span>
+                            <span class="btn_like dislike" v-on:click="dislike(key,comment.id)" v-bind:data-count="replaceNumber(comment.dislike)"><i class="mdi mdi-thumb-down-outline" style="padding-top: 6px;position: absolute;"></i></span>
                         </div>
                     </div>
 
                 </div>
 
             </div>
+        </div>
+
+        <div class="col-12">
+            <div class="row">
+                <div class="paginate_div">
+                    <pagination :data="list" @pagination-change-page="getList"></pagination>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="comment_count==0 && getServerData=='ok'">
+            <p style="text-align: center;padding-top: 30px;padding-bottom: 20px;color: red">تاکنون برای این محصول نظری ثبت نشده است</p>
         </div>
 
     </div>
@@ -120,6 +141,8 @@ export default {
           comment_count:0,
           avg:0,
           avg_score:[],
+          getServerData:'no',
+          ordering:1,
           scoreItem:[
               'کیفیت ساخت :',
               'نوآوری :',
@@ -148,7 +171,8 @@ export default {
               'دی',
               'بهمن',
               'اسفند'
-          ]
+          ],
+          send:true
       }
     },
     mounted() {
@@ -163,13 +187,14 @@ export default {
     methods:{
         getList:function (page=1) {
             $("#loading").show();
-            const url=this.$siteUrl+"/site/getComment?page="+page+"&product_id="+this.product_id;
+            const url=this.$siteUrl+"/site/getComment?page="+page+"&product_id="+this.product_id+"&orderBy="+this.ordering;
             this.axios.get(url).then(response=>{
                 $("#loading").hide();
                 this.list=response.data.comment;
                 this.avg=response.data.avg;
                 this.comment_count=response.data.comment_count;
                 this.avg_score=response.data.avg_score;
+                this.getServerData='ok';
             }).catch(reason => {
                 $("#loading").hide();
             });
@@ -242,6 +267,68 @@ export default {
           const r=replaceNumber(jalai[2])+' '+this.monthName[(jalai[1]-1)]+' '+replaceNumber(jalai[0]);
           return r;
         },
+        like:function (key,comment_id) {
+            if (this.auth=="no")
+            {
+
+            }
+            else {
+                if (this.send)
+                {
+                    this.send=false;
+                    const url=this.$siteUrl+"user/likeComment";
+                    const formData=new FormData();
+                    formData.append('comment_id',comment_id);
+                    this.axios.post(url,formData).then(response=>{
+                        this.send=true;
+                        if (response.data=="add")
+                        {
+                            this.list.data[key].like=this.list.data[key].like+1;
+                        }
+                        else if (response.data=="remove")
+                        {
+                            this.list.data[key].like=this.list.data[key].like-1;
+                        }
+                    }).catch(reason => {
+                        this.send=true;
+                    });
+                }
+
+            }
+        },
+        dislike:function (key,comment_id) {
+            if (this.auth=="no")
+            {
+
+            }
+            else {
+                if (this.send)
+                {
+                    this.send=false;
+                    const url=this.$siteUrl+"user/dislikeComment";
+                    const formData=new FormData();
+                    formData.append('comment_id',comment_id);
+                    this.axios.post(url,formData).then(response=>{
+                        this.send=true;
+                        if (response.data=="add")
+                        {
+                            this.list.data[key].dislike=this.list.data[key].dislike+1;
+                        }
+                        else if (response.data=="remove")
+                        {
+                            this.list.data[key].dislike=this.list.data[key].dislike-1;
+                        }
+                    }).catch(reason => {
+                        this.send=true;
+                    });
+                }
+
+            }
+        },
+        set_ordering:function (type) {
+            this.ordering=type;
+            this.getList(1);
+        }
 
 
     }

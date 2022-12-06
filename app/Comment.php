@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -110,7 +111,7 @@ class Comment extends Model
 
     }
 
-    public static function getProductCommentList($product_id)
+    public static function getProductCommentList($product_id,$orderBy)
     {
         $array=array();
         $n=CommentScore::where(['product_id'=>$product_id,'status'=>1])->count();
@@ -133,6 +134,20 @@ class Comment extends Model
         $comments=Comment::with(['getUserInfo','getScore'])
             ->whereHas('getScore')
             ->where(['product_id'=>$product_id,'status'=>1]);
+
+        if ($orderBy==1)
+        {
+            $comments= $comments->orderBy('order_id','DESC');
+        }
+        else if ($orderBy==2)
+        {
+            $comments= $comments->orderBy('like','DESC');
+        }
+        else if ($orderBy==3)
+        {
+            $comments= $comments->orderBy('id','DESC');
+        }
+
         $comments=$comments->paginate(10);
         $array['comment']=$comments;
 
@@ -144,6 +159,42 @@ class Comment extends Model
         $array['avg_score']=[$sum1,$sum2,$sum3,$sum4,$sum5,$sum6];
 
         return $array;
+    }
+
+    public static function addUserScore($comment_id,$score_type)
+    {
+        $comment=Comment::find($comment_id);
+        if ($comment)
+        {
+            $user_id=Auth::user()->id;
+            $user_scored_status=DB::table('user_scored_status')
+                ->where(['user_id'=>$user_id,'row_id'=>$comment_id,'score_type'=>$score_type,'type'=>'comment'])
+                ->first();
+            if ($user_scored_status)
+            {
+                DB::table('user_scored_status')
+                    ->where(['user_id'=>$user_id,'row_id'=>$comment_id,'score_type'=>$score_type,'type'=>'comment'])
+                    ->delete();
+                $comment->$score_type=$comment->$score_type-1;
+                $comment->update();
+                return 'remove';
+            }
+            else{
+                DB::table('user_scored_status')
+                    ->insert([
+                        'user_id'=>$user_id,
+                        'row_id'=>$comment_id,
+                        'score_type'=>$score_type,
+                        'type'=>'comment'
+                    ]);
+                $comment->$score_type=$comment->$score_type+1;
+                $comment->update();
+                return 'add';
+            }
+        }
+        else{
+            return 'error';
+        }
     }
 
 }

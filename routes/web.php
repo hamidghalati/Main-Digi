@@ -127,7 +127,7 @@ Route::prefix('admin')->group(function () {
 //comments
 Route::get('product/comment/{product_id}','SiteController@comment_form')->middleware('auth');
 Route::post('product/comment/{product_id}','SiteController@add_comment')->middleware('auth');
-Route::get('site/getComment','SiteController@getComment');
+Route::get('site/getComment','ApiController@getComment');
 
 
 Route::get('product/{product_id}/{product_url}', 'SiteController@show_product');
@@ -181,13 +181,20 @@ Route::post('site/check_discount_code', 'ShoppingController@check_discount_code'
 
 
 Route::prefix('user')->middleware(['auth'])->group(function () {
+    //Address
     Route::post('/addAddress', 'UserController@addAddress');
+
+    //like
+    Route::post('/likeComment','ApiController@likeComment');
+    Route::post('/dislikeComment','ApiController@dislikeComment');
+
     Route::delete('/removeAddress/{address_id}', 'UserController@removeAddress');
 
     //user panel
     Route::get('/profile/gift-cart', 'User\UserPanelController@gift_cart');
     Route::get('/profile/orders', 'User\UserPanelController@orders');
     Route::get('/profile/orders/{order_id}', 'User\UserPanelController@show_orders');
+
 
 
 });
