@@ -166,7 +166,8 @@ Route::get('compare/{product_id1}/{product_id2}/{product_id3}/{product_id4}', 'S
 Route::post('get_compare_products', 'SiteController@get_compare_products');
 Route::post('/site/getCatBrand', 'SiteController@getCatBrand');
 
-
+//chart
+Route::get('site/getProductChartData/{product_id}', 'SiteController@getProductChartData');
 
 Route::get('shipping', 'ShoppingController@shipping');
 Route::get('shipping/getSendData/{city_id}', 'ShoppingController@getSendData');

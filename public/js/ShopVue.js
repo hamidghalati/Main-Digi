@@ -2600,6 +2600,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CommentList",
@@ -2704,47 +2713,57 @@ __webpack_require__.r(__webpack_exports__);
     like: function like(key, comment_id) {
       var _this2 = this;
 
-      if (this.auth == "no") {} else {
-        if (this.send) {
-          this.send = false;
-          var url = this.$siteUrl + "user/likeComment";
-          var formData = new FormData();
-          formData.append('comment_id', comment_id);
-          this.axios.post(url, formData).then(function (response) {
-            _this2.send = true;
+      if (this.send) {
+        $("#loading").show();
+        this.send = false;
+        var url = this.$siteUrl + "user/likeComment";
+        var formData = new FormData();
+        formData.append('comment_id', comment_id);
+        this.axios.post(url, formData).then(function (response) {
+          _this2.send = true;
+          $("#loading").hide();
 
-            if (response.data == "add") {
-              _this2.list.data[key].like = _this2.list.data[key].like + 1;
-            } else if (response.data == "remove") {
-              _this2.list.data[key].like = _this2.list.data[key].like - 1;
-            }
-          })["catch"](function (reason) {
-            _this2.send = true;
-          });
-        }
+          if (response.data == "add") {
+            _this2.list.data[key].like = _this2.list.data[key].like + 1;
+          } else if (response.data == "remove") {
+            _this2.list.data[key].like = _this2.list.data[key].like - 1;
+          }
+        })["catch"](function (error) {
+          _this2.send = true;
+          $("#loading").hide();
+
+          if (error.response.status == 401) {
+            $("#login_box").modal('show');
+          }
+        });
       }
     },
     dislike: function dislike(key, comment_id) {
       var _this3 = this;
 
-      if (this.auth == "no") {} else {
-        if (this.send) {
-          this.send = false;
-          var url = this.$siteUrl + "user/dislikeComment";
-          var formData = new FormData();
-          formData.append('comment_id', comment_id);
-          this.axios.post(url, formData).then(function (response) {
-            _this3.send = true;
+      if (this.send) {
+        $("#loading").show();
+        this.send = false;
+        var url = this.$siteUrl + "user/dislikeComment";
+        var formData = new FormData();
+        formData.append('comment_id', comment_id);
+        this.axios.post(url, formData).then(function (response) {
+          _this3.send = true;
+          $("#loading").hide();
 
-            if (response.data == "add") {
-              _this3.list.data[key].dislike = _this3.list.data[key].dislike + 1;
-            } else if (response.data == "remove") {
-              _this3.list.data[key].dislike = _this3.list.data[key].dislike - 1;
-            }
-          })["catch"](function (reason) {
-            _this3.send = true;
-          });
-        }
+          if (response.data == "add") {
+            _this3.list.data[key].dislike = _this3.list.data[key].dislike + 1;
+          } else if (response.data == "remove") {
+            _this3.list.data[key].dislike = _this3.list.data[key].dislike - 1;
+          }
+        })["catch"](function (error) {
+          _this3.send = true;
+          $("#loading").hide();
+
+          if (error.response.status == 401) {
+            $("#login_box").modal('show');
+          }
+        });
       }
     },
     set_ordering: function set_ordering(type) {
@@ -12519,7 +12538,7 @@ var render = function () {
             _vm._v(" "),
             _c("p", [
               _vm._v(
-                "\n                    برای ثبت نظر، لازم است ابتدا وارد حساب کاربری خود شوید.اگر این محصول را قبلاً از فروشگاه ما خریداری کرده اید، نظر شما به عنوان مالک محصول ثبت خواهد شد\n                "
+                "\n                    برای ثبت نظر، لازم است ابتدا وارد حساب کاربری خود شوید.اگر این محصول را قبلاً از فروشگاه ما\n                    خریداری کرده اید، نظر شما به عنوان مالک محصول ثبت خواهد شد\n                "
               ),
             ]),
             _vm._v(" "),
@@ -12778,7 +12797,7 @@ var render = function () {
                   color: "red",
                 },
               },
-              [_vm._v("تاکنون برای این محصول نظری ثبت نشده است")]
+              [_vm._v("تاکنون برای این محصول نظری\n            ثبت نشده است")]
             ),
           ])
         : _vm._e(),
