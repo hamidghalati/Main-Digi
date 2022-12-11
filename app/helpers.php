@@ -1224,37 +1224,161 @@ function get_product_price_changed($product_id)
         $date=$jdf->tr_num($jdf->jdate('Y-n-j',$value->time));
         $warranty_price[$date][$value->color_id]=$value->price;
         $seller[$date][$value->color_id]='حمیدرضا سمیعی';
-
     }
 
     for ($i=30;$i>=0;$i--)
     {
-        $timeStamp=strtotime('-'.$i.'day');
-        $date=$jdf->tr_num($jdf->jdate('Y-n-j',$value->time));
+        $timeStamp=strtotime('-'.$i.' day');
+        $date=$jdf->tr_num($jdf->jdate('Y-n-j',$timeStamp));
         if (array_key_exists($date,$warranty_price))
         {
             foreach ($productColor as $key=>$value)
             {
                 $color[$value->color_id]=['name'=>$value->getColor->name,'code'=>$value->getColor->code];
-                $size=array_key_exists($value->color_id,$price) ? $price[$value->color_id] : 0;
+                $size=array_key_exists($value->color_id,$price) ? sizeof($price[$value->color_id]) : 0;
                 $points[$date]=$date;
                 if (array_key_exists($value->color_id,$warranty_price[$date]))
                 {
+                    $price[$value->color_id][$size]['y']=$warranty_price[$date][$value->color_id];
+                    if ($warranty_price[$date][$value->color_id]==0)
+                    {
+                        $price[$value->color_id][$size]['y']=$price[$value->color_id][($size-1)]['y'];
+                        $price[$value->color_id][$size]['price']=0;
+                        $price[$value->color_id][$size]['has_product']='no';
+                        $price[$value->color_id][$size]['color']='gray';
 
+                        $zone_size=array_key_exists($value->color_id,$zone) ? sizeof($zone[$value->color_id]) : 0;
+                        $zone[$value->color_id][$zone_size]=['value'=>$size];
+
+                        if (sizeof($zone[$value->color_id])==1 && $i==0)
+                        {
+                            $zone[$value->color_id][$zone_size]['color']='gray';
+                        }
+                    }
+                    else
+                    {
+                        $price[$value->color_id][$size]['price']=$warranty_price[$date][$value->color_id];
+                        $price[$value->color_id][$size]['has_product']='ok';
+                        $price[$value->color_id][$size]['color']='#00bfd6';
+                        $price[$value->color_id][$size]['seller']='حمیدرضا سمیعی';
+
+                        if(array_key_exists($value->color_id,$zone))
+                        {
+                            $first=sizeof($zone[$value->color_id])-1;
+                            $end=$zone[$value->color_id][$first];
+
+                           if ($price[$value->color_id][$size-1]['price']==0)
+                           {
+                               $zone[$value->color_id][sizeof($zone[$value->color_id])]=['value'=>$zone,'color'=>'gray'];
+                           }
+                        }
+
+                    }
                 }
                 else{
+                    if (array_key_exists($value->color_id,$price) && array_key_exists(($size-1),$price[$value->color_id]))
+                    {
+                        if ($price[$value->color_id][$size-1]['price']==0)
+                        {
+                            $price[$value->color_id][$size]['y']=$price[$value->color_id][($size-1)]['y'];
+                            $price[$value->color_id][$size]['price']=0;
+                            $price[$value->color_id][$size]['has_product']='no';
+                            $price[$value->color_id][$size]['color']='gray';
+
+                            $zone_size=array_key_exists($value->color_id,$zone) ? sizeof($zone[$value->color_id]) : 0;
+                            $zone[$value->color_id][$zone_size]=['value'=>$size];
+                        }
+                        else{
+                            $price[$value->color_id][$size]['y']=$price[$value->color_id][$size-1]['y'];
+                            $price[$value->color_id][$size]['price']=$price[$value->color_id][$size-1]['price'];
+                            $price[$value->color_id][$size]['has_product']='ok';
+                            $price[$value->color_id][$size]['color']='#00bfd6';
+                            $price[$value->color_id][$size]['seller']='حمیدرضا سمیعی';
 
 
+                            if(array_key_exists($value->color_id,$zone))
+                            {
+                                $first=sizeof($zone[$value->color_id])-1;
+                                $end=$zone[$value->color_id][$first];
+
+                                if ($price[$value->color_id][$size-1]['price']==0)
+                                {
+                                    $zone[$value->color_id][sizeof($zone[$value->color_id])]=['value'=>$zone,'color'=>'gray'];
+                                }
+                            }
+
+
+                        }
+                    }
                 }
 
             }
         }
-        else{
+        else if (sizeof($price)){
+            $points[$date]=$date;
+            foreach ($productColor as $key=>$value){
+                $size=array_key_exists($value->color_id,$price) ? sizeof($price[$value->color_id]) : 0;
+                if (array_key_exists($value->color_id,$price) && array_key_exists(($size-1),$price[$value->color_id])){
+                    if ($price[$value->color_id][$size-1]['price']==0)
+                    {
+                        $price[$value->color_id][$size]['y']=$price[$value->color_id][($size-1)]['y'];
+                        $price[$value->color_id][$size]['price']=0;
+                        $price[$value->color_id][$size]['has_product']='no';
+                        $price[$value->color_id][$size]['color']='gray';
 
+                        if(array_key_exists($value->color_id,$zone))
+                        {
+                            $first=sizeof($zone[$value->color_id])-1;
+                            $end=$zone[$value->color_id][$first];
+
+                            if ($price[$value->color_id][$size-1]['price']==0)
+                            {
+                                $zone[$value->color_id][sizeof($zone[$value->color_id])]=['value'=>$zone,'color'=>'gray'];
+                            }
+                        }
+                    }
+                    else{
+                        $price[$value->color_id][$size]['y']=$price[$value->color_id][$size-1]['y'];
+                        $price[$value->color_id][$size]['price']=$price[$value->color_id][$size-1]['price'];
+                        $price[$value->color_id][$size]['has_product']='ok';
+                        $price[$value->color_id][$size]['color']='#00bfd6';
+                        $price[$value->color_id][$size]['seller']='حمیدرضا سمیعی';
+                    }
+                }
+
+            }
         }
     }
 
-    dd($points);
+   $i=0;
+    foreach ($points as $key=>$value)
+    {
+        $points[$i]=$value;
+        unset($points[$key]);
+        $i++;
+    }
+
+    $j=0;
+    foreach ($price as $key=>$value)
+    {
+        $price[$j]=$value;
+        unset($price[$key]);
+        $j++;
+    }
+
+    $k = 0;
+    foreach ($color as $key => $value) {
+        $color[$k] = $value;
+        unset($color[$key]);
+        $k++;
+    }
+
+    $array['price']=$price;
+    $array['points']=$points;
+    $array['color']=$color;
+    $array['zone']=$zone;
+
+    return $array;
 
 
 }

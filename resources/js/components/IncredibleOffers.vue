@@ -27,7 +27,7 @@
                 <td>{{item.get_product.title}}</td>
                 <td></td>
                 <td>{{item.get_warranty.name}}</td>
-                <td>
+                <td width="10%">
                     <span v-if="item.get_color.id>0" v-bind:style="[item.get_color.id>0 ? {background:item.get_color.code} : {}]" class="color_td">
                         <span v-if="item.get_color.id>0"  v-bind:style="[item.get_color.name=='سفید' ? {color:'black'} : {color: 'white'}]">
                     {{item.get_color.name}}

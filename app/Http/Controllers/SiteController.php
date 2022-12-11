@@ -287,7 +287,7 @@ class SiteController extends Controller
 
     public function getProductChartData($product_id)
     {
-        get_product_price_changed($product_id);
+       return get_product_price_changed($product_id);
     }
 
 

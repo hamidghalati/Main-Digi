@@ -5865,7 +5865,7 @@ var render = function () {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(item.get_warranty.name))]),
               _vm._v(" "),
-              _c("td", [
+              _c("td", { attrs: { width: "10%" } }, [
                 item.get_color.id > 0
                   ? _c(
                       "span",
