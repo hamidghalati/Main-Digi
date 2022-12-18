@@ -36,8 +36,8 @@
                             </a>
                         </li>
                         <li data-toggle="tooltip" data-placement="left" title="نمودار قیمت">
-                            <a href="">
-                                <i class="fa fa-line-chart" aria-hidden="true"></i>
+                            <a>
+                                <i class="fa fa-line-chart" id="line-chart" aria-hidden="true"></i>
                             </a>
                         </li>
                     </ul>
@@ -139,6 +139,8 @@
             </div>
         </div>
 
+        <vue-chart></vue-chart>
+
     </div>
 
 
@@ -154,8 +156,6 @@
 @section('footer')
 
     <script>
-
-
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         });
@@ -165,8 +165,6 @@
        {
            $('.more_content').hide();
        }
-
-
 
     </script>
 @endsection

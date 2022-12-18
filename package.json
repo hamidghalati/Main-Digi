@@ -36,6 +36,7 @@
         "fa-icons": "^0.2.0",
         "font-awesome": "^4.7.0",
         "font-awesome-icons": "^1.6.0",
+        "highcharts-vue": "^1.4.0",
         "icheck-bootstrap": "^3.0.1",
         "jalali-date": "^1.1.4",
         "jquery-ui": "^1.13.1",

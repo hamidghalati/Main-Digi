@@ -12,6 +12,7 @@ import DiscountBox from "./components/DiscountBox";
 import ProductBox from "./components/ProductBox";
 import CompareProductList from "./components/CompareProductList";
 import CommentList from "./components/CommentList";
+import VueChart from "./components/VueChart";
 
 
 
@@ -31,7 +32,8 @@ const app = new Vue({
         DiscountBox,
         ProductBox,
         CompareProductList,
-        CommentList
+        CommentList,
+        VueChart
 
     }
 });
