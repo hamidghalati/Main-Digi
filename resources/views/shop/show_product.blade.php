@@ -139,7 +139,7 @@
             </div>
         </div>
 
-        <vue-chart></vue-chart>
+        <vue-chart :product_id="{{ $product->id }}"></vue-chart>
 
     </div>
 

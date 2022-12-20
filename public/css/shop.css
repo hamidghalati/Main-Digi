@@ -3783,8 +3783,29 @@ padding-right: 300px;
     cursor: pointer;
     font-size: 16px;
 }
-
-
+.chart_ul{
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.chart_ul li{
+    list-style: none;
+    display: flex;
+    width: 250px;
+    font-size: 13px;
+    align-items: center;
+}
+.chart_color_div{
+    position: absolute;
+    height: 75px;
+    z-index: 10;
+    background: white;
+    width: 100%;
+    padding: 10px;
+    bottom: 0;
+}
+.chart_color_div ul{
+    margin: 0!important;
+}
 
 
 

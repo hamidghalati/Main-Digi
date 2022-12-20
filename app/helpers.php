@@ -1221,7 +1221,7 @@ function get_product_price_changed($product_id)
 
     foreach ($product_price as $key=>$value)
     {
-        $date=$jdf->tr_num($jdf->jdate('Y-n-j',$value->time));
+        $date=$jdf->tr_num($jdf->jdate('Y/n/j',$value->time));
         $warranty_price[$date][$value->color_id]=$value->price;
         $seller[$date][$value->color_id]='حمیدرضا سمیعی';
     }
@@ -1229,16 +1229,16 @@ function get_product_price_changed($product_id)
     for ($i=30;$i>=0;$i--)
     {
         $timeStamp=strtotime('-'.$i.' day');
-        $date=$jdf->tr_num($jdf->jdate('Y-n-j',$timeStamp));
+        $date=$jdf->tr_num($jdf->jdate('Y/n/j',$timeStamp));
         if (array_key_exists($date,$warranty_price))
         {
             foreach ($productColor as $key=>$value)
             {
-                $color[$value->color_id]=['name'=>$value->getColor->name,'code'=>$value->getColor->code];
                 $size=array_key_exists($value->color_id,$price) ? sizeof($price[$value->color_id]) : 0;
                 $points[$date]=$date;
                 if (array_key_exists($value->color_id,$warranty_price[$date]))
                 {
+                    $color[$value->color_id]=['name'=>$value->getColor->name,'code'=>$value->getColor->code,'id'=>$value->getColor->id];
                     $price[$value->color_id][$size]['y']=$warranty_price[$date][$value->color_id];
                     if ($warranty_price[$date][$value->color_id]==0)
                     {
@@ -1252,7 +1252,8 @@ function get_product_price_changed($product_id)
 
                         if (sizeof($zone[$value->color_id])==1 && $i==0)
                         {
-                            $zone[$value->color_id][$zone_size]['color']='gray';
+                            $zone[$value->color_id][($zone_size+1)]['value']=$zone[$value->color_id][$zone_size]['value'];
+                            $zone[$value->color_id][($zone_size+1)]['color']='gray';
                         }
                     }
                     else
@@ -1278,6 +1279,8 @@ function get_product_price_changed($product_id)
                 else{
                     if (array_key_exists($value->color_id,$price) && array_key_exists(($size-1),$price[$value->color_id]))
                     {
+                        $color[$value->color_id]=['name'=>$value->getColor->name,'code'=>$value->getColor->code,'id'=>$value->getColor->id];
+
                         if ($price[$value->color_id][$size-1]['price']==0)
                         {
                             $price[$value->color_id][$size]['y']=$price[$value->color_id][($size-1)]['y'];
@@ -1319,6 +1322,8 @@ function get_product_price_changed($product_id)
             foreach ($productColor as $key=>$value){
                 $size=array_key_exists($value->color_id,$price) ? sizeof($price[$value->color_id]) : 0;
                 if (array_key_exists($value->color_id,$price) && array_key_exists(($size-1),$price[$value->color_id])){
+                    $color[$value->color_id]=['name'=>$value->getColor->name,'code'=>$value->getColor->code,'id'=>$value->getColor->id];
+
                     if ($price[$value->color_id][$size-1]['price']==0)
                     {
                         $price[$value->color_id][$size]['y']=$price[$value->color_id][($size-1)]['y'];
