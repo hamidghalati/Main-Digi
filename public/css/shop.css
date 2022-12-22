@@ -3812,6 +3812,8 @@ padding-right: 300px;
     background-color: #eceff1;
     position: relative;
     line-height: 22px;
+    position: absolute;
+    width: 100%;
 }
 .c-footer nav{
     display: flex;
@@ -3828,23 +3830,23 @@ padding-right: 300px;
     margin: auto;
     font-family: 'IRANSans';
 }
-.card-footer-feature-item-1{
+.c-footer-feature-item-1{
     background: url("../files/images/express-delivery.svg")43% 8px no-repeat;
     background-size: 80px;
 }
-.card-footer-feature-item-2{
+.c-footer-feature-item-2{
     background: url("../files/images/support.svg")43% 8px no-repeat;
     background-size: 80px;
 }
-.card-footer-feature-item-3{
+.c-footer-feature-item-3{
     background: url("../files/images/cash-on-delivery.svg")43% 8px no-repeat;
     background-size: 80px;
 }
-.card-footer-feature-item-4{
+.c-footer-feature-item-4{
     background: url("../files/images/days-return.svg")43% 8px no-repeat;
     background-size: 80px;
 }
-.card-footer-feature-item-5{
+.c-footer-feature-item-5{
     background: url("../files/images/original-products.svg")43% 8px no-repeat;
     background-size: 80px;
 }
@@ -3866,10 +3868,80 @@ padding-right: 300px;
     color: #c6c6c6;
 }
 
+.input-group:not(.has-validation) > .form-control:not(:last-child), .input-group:not(.has-validation) > .custom-select:not(:last-child), .input-group:not(.has-validation) > .custom-file:not(:last-child) .custom-file-label, .input-group:not(.has-validation) > .custom-file:not(:last-child) .custom-file-label::after {
+    border-top-left-radius: 0!important;
+    border-bottom-left-radius: 0!important;
+}
+.input-group-prepend {
+    margin-left: -1px!important;
+    height: 37px!important;
+}
+.c-footer img{
 
+    margin-top: 10px;
+    width: 75px;
+    height: 75px;
+}
+.social_network h5{
+    color: #a1a3a8;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.social_network i{
+    font-size: 30px;
+    color: #a1a3a8;
+    margin-left: 35px;
+}
+.c-footer P{
+    text-align: center;
+    font-size: 14px;
+    border-top: 1px solid #cecece;
+    padding-top: 15px;
+}
 
+.promo_single{
+    text-align: center;
+    height: 465px;
+    margin-top: 20px;
+    background: white;
+    border: 1px solid rgba(0,192,214,0.29);
+    box-shadow: 1px 1px 4px 0 rgba(0,0,0,.03);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+.promo_single a{
+    display: none;
+}
 
-
+.promo_single img{
+    width: 70%;
+    margin: 42px auto;
+    display: block;
+}
+.promo_single .active{
+    display: block!important;
+}
+.promo_single_header{
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.promo-single-bar::after{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg,#ffd3db,#fb3449);
+    content: "";
+    animation: bar-fill 7s infinite;
+}
+@keyframes bar-fill {
+    0% {width: 0%}
+    100% {width: 100%}
+}
 
 
 

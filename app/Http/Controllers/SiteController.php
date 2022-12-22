@@ -44,12 +44,19 @@ class SiteController extends Controller
         $new_product = ProductsModel::where('status', 1)->orderby('id', 'DESC')->limit(10)->get();
         $best_selling_product = ProductsModel::where('status', 1)->orderby('order_number', 'DESC')->limit(10)->get();
 
+        $randomProduct=ProductsModel::where('status', 1)
+            ->inRandomOrder()
+            ->limit(10)
+            ->select(['id','title','price','image_url','product_url','discount_price'])
+            ->get();
+
 
         return view('shop.index', [
             'sliders' => $sliders,
             'incredible_offers' => $incredible_offers,
             'new_product' => $new_product,
-            'best_selling_product' => $best_selling_product
+            'best_selling_product' => $best_selling_product,
+            'randomProduct'=>$randomProduct
         ]);
     }
 

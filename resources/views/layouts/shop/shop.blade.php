@@ -110,19 +110,19 @@
     <footer class="c-footer">
         <nav>
             <a href="">
-                <div class="card-footer-feature-item-1">اﻣﮑﺎن ﺗﺤﻮﯾﻞ اﮐﺴﭙﺮس</div>
+                <div class="c-footer-feature-item-1">اﻣﮑﺎن ﺗﺤﻮﯾﻞ اﮐﺴﭙﺮس</div>
             </a>
             <a href="">
-                <div class="card-footer-feature-item-2">پشتیبانی 24 ساعته</div>
+                <div class="c-footer-feature-item-2">پشتیبانی 24 ساعته</div>
             </a>
             <a href="">
-                <div class="card-footer-feature-item-3">پرداخت در محل</div>
+                <div class="c-footer-feature-item-3">پرداخت در محل</div>
             </a>
             <a href="">
-                <div class="card-footer-feature-item-4">7 روز ضمانت بازگشت</div>
+                <div class="c-footer-feature-item-4">7 روز ضمانت بازگشت</div>
             </a>
             <a href="">
-                <div class="card-footer-feature-item-5">ضمانت اصل بودن کالا</div>
+                <div class="c-footer-feature-item-5">ضمانت اصل بودن کالا</div>
             </a>
         </nav>
         <div class="row">
@@ -158,20 +158,41 @@
                 </ul>
             </div>
             <div class="col-md-3">
-                <h6>با ثبت ایمیل، از جدید‌ترین تخفیف‌ها با‌خبر شوید</h6>
+                <h6 style="text-align: center;">با ثبت ایمیل، از جدید‌ترین تخفیف‌ها با‌خبر شوید</h6>
 {{--                <div class="form-group">--}}
 {{--                    <input type="text" class="form-control" placeholder="ایمیل شما">--}}
 {{--                    <button>ارسال</button>--}}
 {{--                </div>--}}
                 <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="ایمیل" aria-label="" aria-describedby="basic-addon1">
+
                     <div class="input-group-prepend">
-                        <button class="btn btn-outline-secondary" type="button">Button</button>
+                        <button class="btn btn-success" type="button">ارسال</button>
                     </div>
-                    <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                </div>
+
+                <div class="social_network">
+                    <h5>همراه ما باشید!</h5>
+                    <a href=""><i  class="mdi mdi-instagram"></i></a>
+                    <a href=""><i  class="mdi mdi-twitter"></i></a>
+                    <a href=""><i  class="mdi mdi-whatsapp"></i></a>
+                    <a href=""><i  class="mdi mdi-facebook"></i></a>
                 </div>
             </div>
-            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <h5 style="text-align: center;">مجوزهای فروشگاه</h5>
+                <div style="text-align: center;">
+                    <img src="{{url('files/images/enamad-full-star.png')}}" alt="">
+                    <img src="{{url('files/images/rezi.png')}}" alt="">
+                    <img src="{{url('files/images/kasbokar.png')}}" alt="">
+                </div>
+            </div>
         </div>
+
+        <p>
+            برای استفاده از مطالب {{ env('SHOP_NAME','') }}، داشتن «هدف غیرتجاری» و ذکر «منبع» کافیست. تمام حقوق اين وب‌سايت متعلق به {{ env('SHOP_NAME','') }} است.
+        </p>
+
     </footer>
 
 </div>

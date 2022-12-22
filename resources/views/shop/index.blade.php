@@ -32,9 +32,44 @@
         </div>
     </div>
 
+    <div class="row">
+        @if(sizeof($randomProduct)>1)
+            <div class="col-md-9">
+                @include('include.horizontal_product',['title'=>'جدیدترین محصولات فروشگاه','products'=>$new_product])
+            </div>
+            <div class="col-md-3 promo_single">
+                <div class="promo_single_header">
+                    <span>پیشنهادات لحظه ای برای شما</span>
+                </div>
+                @foreach($randomProduct as $key=>$value)
+                    <a data-swiper-slide-index="{{ $key }}" href="{{ url('product/dkp-'.$value->id.'/'.$value->product_url) }}" @if($key==0) class="active" @endif>
+                        <img src="{{ url('files/thumb/'.$value->image_url) }}" alt="">
+                        <p class="title">
+                            @if(strlen($value->title)>50)
+                                {{ mb_substr($value->title,0,33).'...' }}
+                            @else
+                                {{ $value->title }}
+                            @endif
+                        </p>
+                            <?php  $price1=$value->price+$value->discount_price;?>
+                        <p class="discount_price">
+                            @if(!empty($value->discount_price))
+                                <del>{{replace_number(number_format($price1))}}</del>
+                            @endif
+                        </p>
+                        <p class="price">
+                            {{replace_number(number_format($value->price)).'تومان'}}
+                        </p>
+                    </a>
+                @endforeach
+            </div>
+        @else
+            @include('include.horizontal_product',['title'=>'جدیدترین محصولات فروشگاه','products'=>$new_product])
+        @endif
+    </div>
+
     {{--        new product--}}
     <div class="row">
-        @include('include.horizontal_product',['title'=>'جدیدترین محصولات فروشگاه','products'=>$new_product])
         @include('include.horizontal_product',['title'=>'پرفروش ترین محصولات فروشگاه','products'=>$best_selling_product])
     </div>
 
