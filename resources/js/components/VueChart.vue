@@ -5,20 +5,27 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
-                   <div style="width: 97%;margin: 40px auto">
-                       <highcharts :options="chartOptions"></highcharts>
-                   </div>
+                <div v-if="this.chartOptions.series.length>0">
+                    <div style="width: 97%;margin: 40px auto">
+                        <highcharts :options="chartOptions"></highcharts>
+                    </div>
+                    <div class="chart_color_div">
+                        <ul class="color_ul">
+                            <li v-for="(color,key) in colors" v-bind:class="[color_key==key ? 'color_li active' : 'color_li']">
+                                <label v-on:click="change_series(key)">
+                                    <span class="ui-variant-shape" v-bind:style="{background:color.code}"></span>
+                                    <span class="color_name">{{ color.name }}</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div v-else style="height: 400px;display: flex;justify-content: center;align-items: center">
+                    <span>تغییرات قیمت طی یک ماه گذشته برای این محصول ثبت نشده است.</span>
+                </div>
 
-                   <div class="chart_color_div">
-                       <ul class="color_ul">
-                           <li v-for="(color,key) in colors" v-bind:class="[color_key==key ? 'color_li active' : 'color_li']">
-                               <label v-on:click="change_series(key)">
-                                   <span class="ui-variant-shape" v-bind:style="{background:color.code}"></span>
-                                   <span class="color_name">{{ color.name }}</span>
-                               </label>
-                           </li>
-                       </ul>
-                   </div>
+
+
 
 
             </div>
@@ -120,7 +127,7 @@ export default {
             {
                 $("#loading").show();
                 const app=this;
-                const url=this.$siteUrl+'/site/getProductChartData/'+this.product_id;
+                const url=this.$siteUrl+'/api/getProductChartData/'+this.product_id;
                 this.axios.get(url).then(response=>{
                     this.chartOptions['xAxis']['categories']=response.data.points;
                     this.colors=response.data.color;

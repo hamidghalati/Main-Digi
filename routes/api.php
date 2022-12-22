@@ -19,3 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('get_province','ApiController@get_province');
 Route::get('get_city/{province_id}','ApiController@get_city');
+
+//chart
+Route::get('getProductChartData/{product_id}','ApiController@getProductChartData');

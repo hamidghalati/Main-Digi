@@ -3162,7 +3162,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.chartOptions.series.length == 0) {
         $("#loading").show();
         var app = this;
-        var url = this.$siteUrl + '/site/getProductChartData/' + this.product_id;
+        var url = this.$siteUrl + '/api/getProductChartData/' + this.product_id;
         this.axios.get(url).then(function (response) {
           _this.chartOptions['xAxis']['categories'] = response.data.points;
           _this.colors = response.data.color;
@@ -4854,7 +4854,7 @@ var render = function render() {
     staticClass: "modal-dialog modal-lg"
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_c("div", {
+  }, [this.chartOptions.series.length > 0 ? _c("div", [_c("div", {
     staticStyle: {
       width: "97%",
       margin: "40px auto"
@@ -4884,7 +4884,14 @@ var render = function render() {
     }), _vm._v(" "), _c("span", {
       staticClass: "color_name"
     }, [_vm._v(_vm._s(color.name))])])]);
-  }), 0)])])])]);
+  }), 0)])]) : _c("div", {
+    staticStyle: {
+      height: "400px",
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    }
+  }, [_c("span", [_vm._v("تغییرات قیمت طی یک ماه گذشته برای این محصول ثبت نشده است.")])])])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

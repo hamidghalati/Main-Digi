@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -15,35 +15,33 @@
     <link href="{{ asset('css/shop.css') }}" rel="stylesheet">
 
 
-
-
     <title>فروشگاه من</title>
 </head>
 
 <body>
 
-    <div id="app">
-        <div class="header">
+<div id="app">
+    <div class="header">
 
-            <a href="{{url('/')}}">
-                <img src="{{asset('files/images/logo.svg')}}" alt="" class="shop_logo">
-            </a>
+        <a href="{{url('/')}}">
+            <img src="{{asset('files/images/logo.svg')}}" alt="" class="shop_logo">
+        </a>
 
-            <div class="header_row">
+        <div class="header_row">
 
-                <div class="input-group index_header_search">
-                    <input type="text" class="form-control" id="inlineFormInputGroup"
-                        placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید...">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <span class="mdi mdi-magnify"></span>
-                        </div>
+            <div class="input-group index_header_search">
+                <input type="text" class="form-control" id="inlineFormInputGroup"
+                       placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید...">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <span class="mdi mdi-magnify"></span>
                     </div>
                 </div>
+            </div>
 
-                <div class="header_action">
-                    <div class="dropdown">
-                        <div class="index_auth_div" role="button" data-toggle="dropdown">
+            <div class="header_action">
+                <div class="dropdown">
+                    <div class="index_auth_div" role="button" data-toggle="dropdown">
                             <span>
                                 @if(Auth::check())
                                     @if(!empty(Auth::user()->name))
@@ -55,16 +53,16 @@
                                     ورود | ثبت نام
                                 @endif
                             </span>
-                            <span class="mdi mdi-menu-down"></span>
-                        </div>
+                        <span class="mdi mdi-menu-down"></span>
+                    </div>
 
-                        <div class="dropdown-menu header-auth-box" aria-labelledby="dropdownMenuButton">
-                            @if(Auth::check())
+                    <div class="dropdown-menu header-auth-box" aria-labelledby="dropdownMenuButton">
+                        @if(Auth::check())
                             @if(Auth::user()->role_id>0 || Auth::user()->role=='admin')
-                            <a class="dropdown-item admin" href="{{url('admin')}}">پنل مدیریت</a>
+                                <a class="dropdown-item admin" href="{{url('admin')}}">پنل مدیریت</a>
 
                             @endif
-                            @else
+                        @else
                             <a class="btn btn-primary" href="{{url('login')}}">ورود به دیجی کالا</a>
                             <div class="register-link">
                                 <span>کاربر جدید هستید؟</span>
@@ -72,55 +70,122 @@
                             </div>
                             <div class="dropdown-divider"></div>
 
-                            @endif
-                            <a href="{{url('profile')}}" class="dropdown-item profile">
+                        @endif
+                        <a href="{{url('profile')}}" class="dropdown-item profile">
 
-                                پروفایل</a>
-                            <a href="{{url('user/profile/orders')}}" class="dropdown-item order">پیگیری سفارشات</a>
+                            پروفایل</a>
+                        <a href="{{url('user/profile/orders')}}" class="dropdown-item order">پیگیری سفارشات</a>
 
-                            @if(Auth::check())
-                                    <form method="post" action="{{url('logout')}}" id="logout_form">@csrf</form>
+                        @if(Auth::check())
+                            <form method="post" action="{{url('logout')}}" id="logout_form">@csrf</form>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item logout">خروج از حساب کاربری</a>
-                            @endif
+                        @endif
 
-                        </div>
-                    </div>
-                    <div class="header_divider"></div>
-
-                    <div class="cart-header-box">
-                        <div class="btn-cart">
-                            <span id="cart-product-count" data-counter="{{replace_number(\App\Cart::get_product_count())}}">سبد خرید</span>
-                        </div>
                     </div>
                 </div>
+                <div class="header_divider"></div>
 
-
+                <div class="cart-header-box">
+                    <div class="btn-cart">
+                        <span id="cart-product-count" data-counter="{{replace_number(\App\Cart::get_product_count())}}">سبد خرید</span>
+                    </div>
+                </div>
             </div>
-        </div>
 
-  @include('include.CategoryList',['catList'=>$catList])
-{{--        @include('include.Menu')--}}
-        <div class="container-fluid">
-            @yield('content')
-        </div>
 
+        </div>
     </div>
 
-
+    @include('include.CategoryList',['catList'=>$catList])
+    <div class="container-fluid">
+        @yield('content')
+    </div>
     <div id="loading">
         <span class="loader"></span>
         <h6>لطفاً صبور باشید</h6>
     </div>
 
 
-    <script src="{{ asset('js/ShopVue.js') }}" type="text/javascript"></script>
+    <footer class="c-footer">
+        <nav>
+            <a href="">
+                <div class="card-footer-feature-item-1">اﻣﮑﺎن ﺗﺤﻮﯾﻞ اﮐﺴﭙﺮس</div>
+            </a>
+            <a href="">
+                <div class="card-footer-feature-item-2">پشتیبانی 24 ساعته</div>
+            </a>
+            <a href="">
+                <div class="card-footer-feature-item-3">پرداخت در محل</div>
+            </a>
+            <a href="">
+                <div class="card-footer-feature-item-4">7 روز ضمانت بازگشت</div>
+            </a>
+            <a href="">
+                <div class="card-footer-feature-item-5">ضمانت اصل بودن کالا</div>
+            </a>
+        </nav>
+        <div class="row">
+            <div class="col-md-3">
+                <h6>راهنمای خرید از {{ env('SHOP_NAME','') }}</h6>
+                <ul>
+                    <li>
+                        <a href="">نحوه ثبت سفارش</a>
+                    </li>
+                    <li>
+                        <a href="">رویه ارسال سفارش</a>
+                    </li>
+                    <li>
+                        <a href="">شیوه های پرداخت</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h6>خدمات مشتریان</h6>
+                <ul>
+                    <li>
+                        <a href="">پاسخ به پرسش های متداول</a>
+                    </li>
+                    <li>
+                        <a href="">رویه بازگرداندن کالا</a>
+                    </li>
+                    <li>
+                        <a href="">شرایط استفاده</a>
+                    </li>
+                    <li>
+                        <a href="">حریم خصوصی</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h6>با ثبت ایمیل، از جدید‌ترین تخفیف‌ها با‌خبر شوید</h6>
+{{--                <div class="form-group">--}}
+{{--                    <input type="text" class="form-control" placeholder="ایمیل شما">--}}
+{{--                    <button>ارسال</button>--}}
+{{--                </div>--}}
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary" type="button">Button</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </footer>
 
-    <script src="{{ asset('js/shop.js') }}" type="text/javascript"></script>
+</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.0/slick.min.js"></script>
-    @yield('footer')
 
+
+
+
+<script src="{{ asset('js/ShopVue.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('js/shop.js') }}" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.0/slick.min.js"></script>
+@yield('footer')
 
 
 <script>
@@ -129,7 +194,7 @@
         speed: 900,
         slidesToShow: 2,
         slidesToScroll: 1,
-        rtl:true,
+        rtl: true,
         infinite: false,
 
     });
@@ -140,8 +205,6 @@
 </script>
 
 
-
-
- </body>
+</body>
 
 </html>

@@ -285,10 +285,7 @@ class SiteController extends Controller
         return redirect('product/dkp-'.$product->id.'/'.$product->product_url)->with('comment_status',$status['status']);
     }
 
-    public function getProductChartData($product_id)
-    {
-       return get_product_price_changed($product_id);
-    }
+
 
 
 

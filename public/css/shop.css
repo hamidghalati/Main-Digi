@@ -3806,12 +3806,65 @@ padding-right: 300px;
 .chart_color_div ul{
     margin: 0!important;
 }
-
-
-
-
-
-
+.c-footer{
+    margin-top: 50px;
+    padding: 50px 10px 0;
+    background-color: #eceff1;
+    position: relative;
+    line-height: 22px;
+}
+.c-footer nav{
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: auto;
+}
+.c-footer nav a div{
+    text-align: center;
+    padding-top: 80px;
+    font-size: 13px;
+    color: #606060;
+    padding-bottom: 20px;
+    margin: auto;
+    font-family: 'IRANSans';
+}
+.card-footer-feature-item-1{
+    background: url("../files/images/express-delivery.svg")43% 8px no-repeat;
+    background-size: 80px;
+}
+.card-footer-feature-item-2{
+    background: url("../files/images/support.svg")43% 8px no-repeat;
+    background-size: 80px;
+}
+.card-footer-feature-item-3{
+    background: url("../files/images/cash-on-delivery.svg")43% 8px no-repeat;
+    background-size: 80px;
+}
+.card-footer-feature-item-4{
+    background: url("../files/images/days-return.svg")43% 8px no-repeat;
+    background-size: 80px;
+}
+.card-footer-feature-item-5{
+    background: url("../files/images/original-products.svg")43% 8px no-repeat;
+    background-size: 80px;
+}
+.c-footer .row{
+    width: 98%;
+    border-top: 1px solid #cecece;
+    margin: auto!important;
+    padding-top: 20px;
+    color: #4a5f73;
+}
+.c-footer .row ul{
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.c-footer .row ul li{
+    font-size: 14px;
+    list-style: none;
+    line-height: 30px;
+    color: #c6c6c6;
+}
 
 
 

@@ -42,4 +42,9 @@ class ApiController extends Controller
         $result=Comment::addUserScore($comment_id,"dislike");
         return $result;
     }
+
+    public function getProductChartData($product_id)
+    {
+        return get_product_price_changed($product_id);
+    }
 }
