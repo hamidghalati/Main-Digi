@@ -104,7 +104,7 @@ class Cart
 
 
 
-        $products=ProductsModel::whereIn('id',$product_id)->select(['id','title','image_url','cat_id'])->get();
+        $products=ProductsModel::whereIn('id',$product_id)->select(['id','title','image_url','cat_id','product_url'])->get();
         $colors=ColorModel::whereIn('id',$color_id)->get();
         $warranties=WarrantyModel::whereIn('id',$warranty_id)->get();
 
@@ -127,6 +127,7 @@ class Cart
            {
                $cart_data['product'][$j]['product_id']=$product->id;
                $cart_data['product'][$j]['product_title']=$product->title;
+               $cart_data['product'][$j]['product_url']=$product->product_url;
                $cart_data['product'][$j]['product_image_url']=$product->image_url;
                $cart_data['product'][$j]['cat_id']=$product->cat_id;
                $cart_data['product'][$j]['warranty_name']=$warranty->name;

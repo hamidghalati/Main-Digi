@@ -292,6 +292,11 @@ class SiteController extends Controller
         return redirect('product/dkp-'.$product->id.'/'.$product->product_url)->with('comment_status',$status['status']);
     }
 
+    public function CartProductData()
+    {
+        return Cart::getCartData();
+    }
+
 
 
 

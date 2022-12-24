@@ -169,6 +169,9 @@ Route::post('/site/getCatBrand', 'SiteController@getCatBrand');
 //chart
 Route::get('site/getProductChartData/{product_id}', 'SiteController@getProductChartData');
 
+//show cart header
+Route::get('site/CartProductData', 'SiteController@CartProductData');
+
 Route::get('shipping', 'ShoppingController@shipping');
 Route::get('shipping/getSendData/{city_id}', 'ShoppingController@getSendData');
 //payment

@@ -13,6 +13,7 @@ import ProductBox from "./components/ProductBox";
 import CompareProductList from "./components/CompareProductList";
 import CommentList from "./components/CommentList";
 import VueChart from "./components/VueChart";
+import HeaderCart from "./components/HeaderCart";
 
 
 
@@ -33,7 +34,8 @@ const app = new Vue({
         ProductBox,
         CompareProductList,
         CommentList,
-        VueChart
+        VueChart,
+        HeaderCart
 
     }
 });

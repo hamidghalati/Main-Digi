@@ -87,9 +87,16 @@
                 <div class="header_divider"></div>
 
                 <div class="cart-header-box">
-                    <div class="btn-cart">
+                    <div class="btn-cart" data-toggle="dropdown">
                         <span id="cart-product-count" data-counter="{{replace_number(\App\Cart::get_product_count())}}">سبد خرید</span>
                     </div>
+                    @if(\App\Cart::get_product_count()>0)
+                        <div class="dropdown cart">
+                            <div class="dropdown-menu">
+                               <header-cart></header-cart>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
 

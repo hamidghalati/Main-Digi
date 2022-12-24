@@ -319,6 +319,11 @@ $(document).ready(function () {
         startPromoSingleSlide();
     }
 
+    $(".cart-header-box .dropdown-menu").on({"click":function (e) {
+            e.stopPropagation();
+        }
+    })
+
 
 });
 

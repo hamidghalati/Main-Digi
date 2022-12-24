@@ -10,7 +10,7 @@
                         <td>
                             <ul>
                                 <li class="title">
-                                    <a href="">{{product.product_title}}</a>
+                                    <a v-bind:href="$siteUrl+'product/dkp-'+product.product_id+'/'+product.product_url">{{product.product_title}}</a>
                                 </li>
                                 <li>{{product.warranty_name}}</li>
                                 <li v-if="product.color_name != undefined">
@@ -71,10 +71,12 @@
             </div>
         </div>
     </div>
+
     <div v-else class="cart_table empty_cart_div">
         <i class="fa fa-basket-shopping icon-basket"></i>
         <p class="empty-title">سبد خرید شما خالی می باشد!</p>
     </div>
+
     <div class="message_div" v-if="show_dialog_box">
         <div class="message_box">
             <p id="msg">آیا مایل به حذف این محصول هستید؟</p>
@@ -82,6 +84,7 @@
             <a  class="alert alert-danger" v-on:click="show_dialog_box=false;select_product=null;">خیر</a>
         </div>
     </div>
+
 </div>
 </template>
 
