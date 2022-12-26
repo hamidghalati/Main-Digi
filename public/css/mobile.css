@@ -1,0 +1,132 @@
+body {
+    direction: rtl;
+    text-align: right;
+    font-family: Yekan;
+    position: absolute;
+    width: 100%;
+    min-height: 700px;
+    background-color: #f5f5f5;
+    color: #515151;
+}
+
+@font-face {
+    font-family: 'Yekan';
+    src: url('../fonts/yekan/Yekan.eot');
+    src: url('../fonts/yekan/Yekan.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/yekan/Yekan.woff2') format('woff2'),
+    url('../fonts/yekan/Yekan.woff') format('woff'),
+    url('../fonts/yekan/Yekan.ttf') format('truetype'),
+    url('../fonts/yekan/Yekan.svg#Yekan') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IRANSans';
+
+    src: url('../fonts/Webfonts/Woff/IRANSansXFaNum-DemiBold.woff') format('woff'),
+    url('../fonts/Webfonts/Woff2/IRANSansXFaNum-DemiBold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+a {
+    text-decoration: none !important;
+    color: #000000;
+}
+
+.header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 16px;
+
+}
+#align-justify{
+    font-size: 20px!important;
+    color: grey;
+}
+.slider_box .swiper-container{
+    width: 100%;
+    height: 100%;
+}
+.slider_box img{
+    margin: 10px auto;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    display: block;
+    width: 100%;
+    max-height: 250px;
+}
+.slider_box .swiper-pagination-bullet-active {
+    opacity: 1;
+    background: #00bfd6!important;
+}
+.c-footer{
+    margin-top: 50px;
+    padding: 0 10px 0;
+    background-color:white;
+    position: relative;
+    line-height: 22px;
+    position: absolute;
+    width: 100%;
+}
+.c-footer-feature-item-1{
+    background: url("../files/images/express-delivery.svg")43% 8px no-repeat;
+    background-size: 80px;
+}
+.c-footer-feature-item-2{
+    background: url("../files/images/support.svg")43% 8px no-repeat;
+    background-size: 80px;
+}
+.c-footer-feature-item-3{
+    background: url("../files/images/cash-on-delivery.svg")43% 8px no-repeat;
+    background-size: 80px;
+}
+.c-footer-feature-item-4{
+    background: url("../files/images/days-return.svg")43% 8px no-repeat;
+    background-size: 80px;
+}
+.c-footer-feature-item-5{
+    background: url("../files/images/original-products.svg")43% 8px no-repeat;
+    background-size: 80px;
+}
+.c-footer .row{
+    width: 98%;
+    margin: auto!important;
+    padding-top: 20px;
+    border-bottom: 1px solid #ccecec;
+    color: #4a5f73;
+}
+.c-footer .row ul{
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.c-footer .row ul li{
+    font-size: 14px;
+    list-style: none;
+    line-height: 30px;
+    color: #c6c6c6;
+}
+.input-group:not(.has-validation) > .form-control:not(:last-child), .input-group:not(.has-validation) > .custom-select:not(:last-child), .input-group:not(.has-validation) > .custom-file:not(:last-child) .custom-file-label, .input-group:not(.has-validation) > .custom-file:not(:last-child) .custom-file-label::after {
+    border-top-left-radius: 0!important;
+    border-bottom-left-radius: 0!important;
+}
+.c-footer .mojavez{
+    text-align: center;
+}
+.c-footer .mojavez div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.c-footer .mojavez img{
+    max-width: 70px!important;
+    margin-bottom: 10px;
+    display: block;
+}

@@ -9,6 +9,7 @@ use App\CategoriesModel;
 use App\ColorModel;
 use App\Comment;
 use App\ItemValueModel;
+use App\Lib\MobileDetect;
 use App\ProductsModel;
 use App\ProductWarranty;
 use App\ReView;
@@ -23,9 +24,16 @@ use Session;
 
 class SiteController extends Controller
 {
+    protected $view='';
+
     public function __construct()
     {
         getCatList();
+        $detect=new MobileDetect();
+        if ($detect->isMobile() || $detect->isTablet())
+        {
+            $this->view='mobile.';
+        }
     }
 
     public function index()
@@ -51,7 +59,7 @@ class SiteController extends Controller
             ->get();
 
 
-        return view('shop.index', [
+        return view($this->view.'shop.index', [
             'sliders' => $sliders,
             'incredible_offers' => $incredible_offers,
             'new_product' => $new_product,

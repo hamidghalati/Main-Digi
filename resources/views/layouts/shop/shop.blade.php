@@ -93,7 +93,7 @@
                     @if(\App\Cart::get_product_count()>0)
                         <div class="dropdown cart">
                             <div class="dropdown-menu">
-                               <header-cart></header-cart>
+                                <header-cart></header-cart>
                             </div>
                         </div>
                     @endif
@@ -166,12 +166,13 @@
             </div>
             <div class="col-md-3">
                 <h6 style="text-align: center;">با ثبت ایمیل، از جدید‌ترین تخفیف‌ها با‌خبر شوید</h6>
-{{--                <div class="form-group">--}}
-{{--                    <input type="text" class="form-control" placeholder="ایمیل شما">--}}
-{{--                    <button>ارسال</button>--}}
-{{--                </div>--}}
+                {{--                <div class="form-group">--}}
+                {{--                    <input type="text" class="form-control" placeholder="ایمیل شما">--}}
+                {{--                    <button>ارسال</button>--}}
+                {{--                </div>--}}
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="ایمیل" aria-label="" aria-describedby="basic-addon1">
+                    <input type="text" class="form-control" placeholder="ایمیل" aria-label=""
+                           aria-describedby="basic-addon1">
 
                     <div class="input-group-prepend">
                         <button class="btn btn-success" type="button">ارسال</button>
@@ -180,10 +181,10 @@
 
                 <div class="social_network">
                     <h5>همراه ما باشید!</h5>
-                    <a href=""><i  class="mdi mdi-instagram"></i></a>
-                    <a href=""><i  class="mdi mdi-twitter"></i></a>
-                    <a href=""><i  class="mdi mdi-whatsapp"></i></a>
-                    <a href=""><i  class="mdi mdi-facebook"></i></a>
+                    <a href=""><i class="mdi mdi-instagram"></i></a>
+                    <a href=""><i class="mdi mdi-twitter"></i></a>
+                    <a href=""><i class="mdi mdi-whatsapp"></i></a>
+                    <a href=""><i class="mdi mdi-facebook"></i></a>
                 </div>
             </div>
             <div class="col-md-3">
@@ -197,15 +198,13 @@
         </div>
 
         <p>
-            برای استفاده از مطالب {{ env('SHOP_NAME','') }}، داشتن «هدف غیرتجاری» و ذکر «منبع» کافیست. تمام حقوق اين وب‌سايت متعلق به {{ env('SHOP_NAME','') }} است.
+            برای استفاده از مطالب {{ env('SHOP_NAME','') }}، داشتن «هدف غیرتجاری» و ذکر «منبع» کافیست. تمام حقوق اين
+            وب‌سايت متعلق به {{ env('SHOP_NAME','') }} است.
         </p>
 
     </footer>
 
 </div>
-
-
-
 
 
 <script src="{{ asset('js/ShopVue.js') }}" type="text/javascript"></script>
