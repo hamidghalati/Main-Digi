@@ -130,3 +130,114 @@ a {
     margin-bottom: 10px;
     display: block;
 }
+.product .title {
+    color: black !important;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+}
+.product img {
+    width: 116px;
+    margin: 10px auto;
+    display: block;
+}
+.discount-badge {
+    padding: 1px 5px;
+    color: white !important;
+    background: #ef5662;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 15px;
+    font-size: 13px;
+    letter-spacing: .5px;
+    position: absolute;
+    z-index: 2;
+    line-height: 1.2;
+    top: -10px;
+}
+.index_product_box{
+    padding: 15px;
+    background: white;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.09);
+}
+.index_product_box .box_title{
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.index_product_box .box_title h6{
+    font-weight: bold;
+}
+.product{
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.09);
+    border: 1px solid #f6f6f6;
+    margin: 10px 0;
+    padding: 7px 0;
+}
+.product .price{
+    text-align: center;
+    color: red;
+    font-size: 18px;
+}
+a:focus{
+    text-decoration: none;
+}
+
+.banners_div{
+width: 99%;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    margin: 15px auto;
+    display: block;
+}
+.banners_div img{
+    width: 100%;
+}
+.catBox{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: rgba(0,0,0,0.14);
+    z-index: 1000000000;
+    display: none;
+}
+.sidenav{
+  position: fixed;
+    width: 270px;
+    height: 100%;
+    overflow-y: auto;
+    transition: all 0.5s;
+    background: white;
+    top: 0;
+    right:-270px
+}
+.sidenav p{
+    text-align: center;
+}
+.sidenav img{
+    width: 120px;
+    margin: 20px auto;
+    display: block;
+}
+.sidenav ul li{
+    list-style: none;
+    color: #757575;
+    cursor: pointer;
+    font-size: 15px;
+}
+.sidenav ul li a{
+    color: #757575;
+    padding: 15px 25px;
+    display: block;
+}
+.sidenav ul li ul li{
+    padding: 10px 25px;
+}
+.sidenav ul li ul li a{
+    padding: 10px 25px;
+}
+.sidenav ul li ul{
+    display: none;
+}

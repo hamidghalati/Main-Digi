@@ -21,8 +21,12 @@
 <body>
 
 <div id="app">
-    <div>
 
+{{--     Menu   --}}
+    @include('mobile.CatList')
+{{--    End Menu --}}
+
+    <div>
         <div class="header">
             <span id="align-justify" class="fa fa-align-justify"></span>
             <a href="{{ url('/') }}">

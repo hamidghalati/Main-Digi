@@ -94,7 +94,7 @@
 
 
         const swiper = new Swiper('.swiper-container', {
-            slidesPerView: 'auto',
+            slidesPerView: 6,
             spaceBetween: 30,
             navigation: {
                 nextEl: '.slick-next',
@@ -114,7 +114,7 @@
         $('.product_list').slick({
 
             speed: 900,
-            slidesToShow: 2,
+            slidesToShow: 6,
             slidesToScroll: 1,
             rtl:true,
             infinite: false,
