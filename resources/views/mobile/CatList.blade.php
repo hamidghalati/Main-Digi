@@ -6,8 +6,8 @@
             @foreach($catList as $key=>$value)
                 <li>
                     <a class="parent_cat">
-                        <span class="fa fa-plus-circle"></span>
-                        {{ $value->name }}
+                        <i class="mdi mdi-plus-circle"></i>
+                        <span>{{ $value->name }}</span>
                     </a>
                     @if(sizeof($value->getChild)>0)
                         <div class="li_div">
@@ -15,7 +15,7 @@
                                 @foreach($value->getChild as $key2=>$value2)
                                     @if($value2->notShow==0)
                                         <li>
-                                            <a href="{{get_cat_url($value2)}}" class="child_cat">
+                                            <a @if(sizeof($value2->getChild)==0) href="{{get_cat_url($value2)}}" @endif class="child_cat">
                                                 <span>{{$value2->name}}</span>
                                             </a>
                                             <ul>
@@ -34,7 +34,7 @@
                                         @foreach($value2->getChild as $key3=>$value3)
                                             @if($value3->notShow==0)
                                                 <li>
-                                                    <a href="{{get_cat_url($value3)}}" class="child_cat">
+                                                    <a @if(sizeof($value3->getChild)==0) href="{{get_cat_url($value3)}}" @endif class="child_cat">
                                                         @if(sizeof($value3->getChild)>0)
                                                             <span class="fa fa-plus-circle"></span>
                                                         @endif
