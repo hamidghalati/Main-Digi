@@ -19,7 +19,8 @@ $(document).ready(function () {
    });
 
    $('.parent_cat').click(function () {
-      $(".li_div").hide();
+       $(".li_div").hide();
+      $(".parent_cat").find('.mdi-minus-circle').addClass('mdi-plus-circle').removeClass('mdi-minus-circle');
 
       if ($(this).find('i').hasClass('mdi-plus-circle'))
       {

@@ -23,6 +23,58 @@
         </div>
     </div>
 
+    @if(sizeof($incredible_offers)>0)
+        <img class="incredible_offers_image" src="{{ url('files/images/special_title_box.png') }}" alt="">
+        <div class="index_product_box">
+            <div class="product_box">
+                <div class="swiper-container products">
+                    <div class="swiper-wrapper">
+                        @foreach($incredible_offers as $key=>$value)
+                            <div class="swiper-slide product">
+                                <a href="{{url('product/dkp-'.$value->getProduct->id.'/'.$value->getProduct->product_url)}}">
+                                    <div style="position: relative">
+                                            <span class="discount-badge">
+
+                                         <?php
+
+                                                    $a = ($value->price2 / $value->price1) * 100;
+                                                    $a = 100 - $a;
+                                                    $a = round($a);
+                                                    ?>
+                                                {{'%'.replace_number($a)}}
+
+                                    </span>
+                                        <img src="{{url('files/thumb/'.$value->getProduct->image_url)}}" alt="">
+                                    </div>
+                                    <p class="title">
+                                        @if(strlen($value->getProduct->title)>33)
+                                            {{mb_substr($value->getProduct->title,0,20).'...'}}
+                                        @else
+                                            {{$value->getProduct->title}}
+                                        @endif
+                                    </p>
+                                    @if($value->product_number>0)
+                                        <del class="price_tag">
+                                        {{replace_number(number_format($value->price1)).'تومان'}}
+                                        </del>
+
+                                        <span class="price price_tag">
+                                        {{replace_number(number_format($value->price2)).'تومان'}}
+                                        </span>
+
+                                        <div class="offers_counter">
+                                            <counter second="<?= $value->offers_last_time-time()?>"></counter>
+                                        </div>
+                                    @endif
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="index_product_box">
         @include('include.mobile.horizontal_product_list',['title'=>'جدیدترین محصولات فروشگاه','products'=>$new_product])
     </div>
@@ -52,7 +104,7 @@
         });
 
         var product_slider = new Swiper('.products', {
-           slidesPerView:2,
+            slidesPerView: 2,
             spaceBetween: 10,
         });
     </script>

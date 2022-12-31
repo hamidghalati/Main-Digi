@@ -35,6 +35,33 @@
             <span></span>
         </div>
 
+        <div class="navbar">
+            <div class="input-group index_search_form">
+                <input type="text" class="form-control" id="inlineFormInputGroup"
+                       placeholder="جستجو .....">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <span class="mdi mdi-magnify"></span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a href="{{ url('Cart') }}" style="position: relative">
+                    @if(\App\Cart::get_product_count()>0)
+                        <span class="cart_product_count">{{ replace_number(\App\Cart::get_product_count()) }}</span>
+                    @endif
+                    <span class="mdi mdi-shopping-outline"></span>
+                </a>
+
+                @if(Auth::check())
+                    <a href="{{ url('profile') }}"><span class="fa fa-user"></span></a>
+                @else
+                    <a href="{{ url('profile') }}"><span class="fa fa-user"></span></a>
+                @endif
+
+            </div>
+        </div>
+
         <div class="container-fluid">
             @yield('content')
         </div>
