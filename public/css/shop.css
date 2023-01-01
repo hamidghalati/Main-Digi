@@ -4003,8 +4003,49 @@ padding-right: 300px;
     /*padding: 8px 6px;*/
     font-size: 13px;
 }
+.productPriceList{
+    background: white;
+    margin-top: 20px;
 
-
+}
+.warranty_list{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+.warranty_list div{
+    width: 20%!important;
+    display: flex;
+    font-size: 15px;
+    align-items: center;
+    cursor: pointer;
+}
+.warranty_list .price{
+    font-size: 16px;
+    justify-content: center;
+    color:#a0a0a0!important;
+}
+.productPriceList .active{
+    background: #f4fbff!important;
+    border: 1px solid #19bfd3 !important;
+}
+.product_send_time i{
+    font-size: 22px;
+    top: 5px;
+    position: relative;
+    color: cornflowerblue;
+}
+.btn-seller-add-cart{
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border: 2px solid #00bfd6;
+    padding: 10px 20px;
+    color: #00bfd6;
+    font-weight: 400;
+    font-size: 14px;
+    cursor: pointer;
+}
 
 
 

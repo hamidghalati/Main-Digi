@@ -1289,7 +1289,7 @@ function get_product_price_changed($product_id)
                             $price[$value->color_id][$size]['color']='gray';
 
                             $zone_size=array_key_exists($value->color_id,$zone) ? sizeof($zone[$value->color_id]) : 0;
-                            $zone[$value->color_id][$zone_size]=['value'=>$size];
+                            $zone[$value->color_id][$zone_size]=['value'=>$size,'color'=>'gray'];
                         }
                         else{
                             $price[$value->color_id][$size]['y']=$price[$value->color_id][$size-1]['y'];

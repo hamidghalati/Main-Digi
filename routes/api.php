@@ -22,3 +22,6 @@ Route::get('get_city/{province_id}','ApiController@get_city');
 
 //chart
 Route::get('getProductChartData/{product_id}','ApiController@getProductChartData');
+
+//other price
+Route::post('getWarranty/{product_id}','ApiController@getWarranty');

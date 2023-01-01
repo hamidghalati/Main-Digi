@@ -15,7 +15,7 @@
                            <td>
                                <ul>
                                    <li class="title">
-                                       <h4>  آیدی {{ product.product_id}}</h4>
+
                                        <a v-bind:href="$siteUrl+'product/dkp-'+product.product_id+'/'+product.product_url">{{product.product_title}}</a>
                                    </li>
                                    <li>

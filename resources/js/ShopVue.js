@@ -14,6 +14,7 @@ import CompareProductList from "./components/CompareProductList";
 import CommentList from "./components/CommentList";
 import VueChart from "./components/VueChart";
 import HeaderCart from "./components/HeaderCart";
+import OtherPrice from "./components/OtherPrice";
 
 
 
@@ -35,7 +36,8 @@ const app = new Vue({
         CompareProductList,
         CommentList,
         VueChart,
-        HeaderCart
+        HeaderCart,
+        OtherPrice
 
     }
 });

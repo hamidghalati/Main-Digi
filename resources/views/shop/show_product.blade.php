@@ -92,6 +92,8 @@
             </div>
         </div>
 
+        <other-price :product_id="{{ $product->id }}"></other-price>
+
         @include('include.horizontal_product',['title'=>' محصولات مرتبط','products'=>$relate_product])
 
 
