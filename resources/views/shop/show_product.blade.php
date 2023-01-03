@@ -32,12 +32,12 @@
                         </li>
                         <li data-toggle="tooltip" data-placement="left" title="مقایسه">
                             <a href="{{url('compare/dkp-'.$product->id)}}">
-                                <i class="fa fa-rocket" aria-hidden="true"></i>
+                                <i class="mdi mdi-rocket" aria-hidden="true"></i>
                             </a>
                         </li>
                         <li data-toggle="tooltip" data-placement="left" title="نمودار قیمت">
                             <a>
-                                <i class="fa fa-line-chart" id="line-chart" aria-hidden="true"></i>
+                                <i class="mdi mdi-chart-bar" id="line-chart" aria-hidden="true"></i>
                             </a>
                         </li>
                     </ul>

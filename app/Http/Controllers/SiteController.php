@@ -75,14 +75,14 @@ class SiteController extends Controller
         if ($product_url != null) {
             $where['product_url'] = $product_url;
         }
-        $product = ProductsModel::with('getBrand', 'getProductColor.getColor', 'getWarranty', 'getCat')->where($where)->firstOrFail();
+        $product = ProductsModel::with('getBrand','Gallery', 'getProductColor.getColor', 'getWarranty', 'getCat')->where($where)->firstOrFail();
         $product_item = ItemModel::getProductItem($product);
         $product_item_count = ItemValueModel::where('product_id', $product->id)->count();
         $relate_product = ProductsModel::where(['cat_id' => $product->cat_id, 'brand_id' => $product->brand_id])
             ->where('id', '!=', $product->id)->limit(15)->get();
         $review=ReView::where('product_id',$product->id)->get();
 
-        return view('shop.show_product', [
+        return view($this->view.'shop.show_product', [
             'product' => $product,
             'product_item' => $product_item,
             'product_item_count' => $product_item_count,
