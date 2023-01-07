@@ -49,19 +49,59 @@
                         <div class="swiper-pagination"></div>
                     </div>
                 @else
+                    <img class="product_image" src="{{ url('files/products/'.$product->image_url) }}" alt="">
                 @endif
             </div>
 
+            <div class="row">
+                <ul class="list-inline product_data_ul">
+                    <li>
+                        <span>برند : </span>
+                        <a href="{{url('brands/'.$product->getBrand->brand_ename)}}" class="data_link">
+                            <span>{{$product->getBrand->brand_name}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <span>دسته بندی : </span>
+                        <a href="{{url('search/'.$product->getCat->url)}}" class="data_link">
+                            <span>{{$product->getCat->name}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
+
+        <div class="product_item_box">
+            <div style="padding: 20px">
+                @if($product->status==1)
+
+                    <div id="warranty_box">
+                        @include('include.warranty',['color_id'=>0])
+                    </div>
+                @else
+                    <div class="product_unavailable">
+                        <span>ناموجود</span>
+                        <p>این محصول در حال حاضر ناموجود می باشد، می توانید از طریق لیست محصولات مرتبط، از محصولات مشابه این کالا دیدن نمایید.</p>
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        @if($product->status==1)
+            <mobile-other-price :product_id="{{ $product->id }}"></mobile-other-price>
+        @endif
+
+
     </div>
 @endsection
 @section('footer')
     <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
-    {{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>--}}
     <script>
         var sliders = new Swiper('#gallery', {
             pagination: {
-                el: '.swiper-pagination'
+                el: '.swiper-pagination',
+
             }
         });
 

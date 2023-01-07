@@ -99,7 +99,8 @@
     <script>
         var sliders = new Swiper('.slider_box .swiper-container', {
             pagination: {
-                el: '.swiper-pagination'
+                el: '.swiper-pagination',
+
             }
         });
 

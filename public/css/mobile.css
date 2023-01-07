@@ -422,3 +422,141 @@ width: 99%;
 .product_item_box .row{
     margin: 0!important;
 }
+.product_image{
+    display: block;
+    margin: auto;
+    max-height: 250px;
+    padding-bottom: 30px;
+}
+.product_data_ul {
+    display: flex;
+}
+
+.product_data_ul li {
+    padding: 10px;
+    font-size: 14px;
+}
+
+.data_link {
+    color: #1ca2db !important;
+    border-bottom: 1px dashed #1ca2db;
+}
+.color_ul {
+    display: flex
+}
+
+.color_ul li {
+    list-style: none;
+    border: 1px solid #ccc;
+    margin-left: 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    position: relative;
+    padding: 5px;
+}
+
+.color_ul li label {
+    cursor: pointer;
+    margin-bottom: 0 !important;
+}
+
+.ui-variant-shape {
+    width: 17px;
+    height: 17px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border: 1px solid #ccc;
+    position: absolute;
+    top: 7px;
+}
+
+.color_name {
+    padding-right: 25px;
+    padding-left: 10px;
+}
+
+.color_ul .active {
+    border-color: #1ca2db !important;
+}
+.info_item_product {
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+.info_item_product fa {
+    font-size: 20px !important;
+}
+
+.tooltip {
+    font-family: 'iransans' !important;
+
+}
+
+.tooltip-inner {
+    background: #68a5ff !important;
+    font-size: 12px !important;
+    text-align: justify !important;
+}
+
+.bs-tooltip-auto[x-placement^=bottom] .arrow::before,
+.bs-tooltip-bottom .arrow::before {
+    border-bottom-color: #68a5ff; /* blue */
+}
+
+.bs-tooltip-auto[x-placement^=top] .arrow::before,
+.bs-tooltip-top .arrow::before {
+    border-top-color: #68a5ff; /* blue */
+}
+
+.bs-tooltip-auto[x-placement^=right] .arrow::before,
+.bs-tooltip-right .arrow::before {
+    border-right-color: #68a5ff; /* blue */
+}
+
+.bs-tooltip-auto[x-placement^=left] .arrow::before,
+.bs-tooltip-left .arrow::before {
+    border-left-color: #68a5ff; /* blue */
+}
+
+.final_product_price {
+    font-family: IRANSans;
+    color: #fb3449;
+    font-size: 15px;
+    padding-top: 10px;
+    display: block;
+}
+
+.product_discount {
+    background: #ef5662;
+    height: 32px;
+    border-radius: 0 19px;
+    -webkit-border-radius: 0 19px 19px;
+    width: 60px;
+    position: relative;
+    margin: 30px 20px 0;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    line-height: 32px;
+}
+
+.product_discount::before {
+    content: attr(data-title);
+    font-size: 12px;
+    line-height: 22px;
+    color: #7f7f2f;
+    position: absolute;
+    bottom: 100%;
+    right: 12px;
+}
+.product_unavailable span{
+    font-weight: bold;
+    font-size: 20px;
+    color: #7a7a7a;
+    margin-bottom: 20px;
+    display: block;
+    text-align: center;
+}
+.product_unavailable p{
+    text-align: justify;
+}

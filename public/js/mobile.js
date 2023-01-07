@@ -1,3 +1,5 @@
+const site_url = 'http://127.0.0.1:8000/';
+
 $(document).ready(function () {
    $("#align-justify").on('click',function () {
        $('.catBox').show();
@@ -49,4 +51,35 @@ $(document).ready(function () {
        }
    });
 
+    $(document).on('click', '.color_li', function () {
+        const color_id = $(this).attr('data');
+        const product_id = $("#product_id").val();
+        change_color(color_id, product_id);
+
+    });
+
+
+
 });
+
+function change_color(color_id, product_id) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    const url = site_url + "site/change_color";
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: "color_id=" + color_id + "&product_id=" + product_id,
+        success: function (response) {
+            if (response) {
+                $("#warranty_box").html(response);
+                $("#offers_time").click();
+            }
+
+
+        }
+    });
+}
