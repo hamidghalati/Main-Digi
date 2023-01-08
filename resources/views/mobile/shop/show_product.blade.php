@@ -109,5 +109,9 @@
             slidesPerView: 2,
             spaceBetween: 10,
         });
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
 @endsection

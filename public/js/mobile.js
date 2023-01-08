@@ -58,6 +58,8 @@ $(document).ready(function () {
 
     });
 
+    set_mobile_data_right_value();
+
 
 
 });
@@ -82,4 +84,9 @@ function change_color(color_id, product_id) {
 
         }
     });
+}
+
+function set_mobile_data_right_value(){
+    const width=$(window).width();
+    $(".mobile_data_box").css('right','-'+width+'px');
 }

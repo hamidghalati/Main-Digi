@@ -90,7 +90,7 @@
     <div style="display: inline-flex;width: 100%">
         <div>
             @if($product_price2!=$product_price1)
-                <del>{{replace_number(number_format($product_price1))}}</del>
+                <del style="font-family: iransans;">{{replace_number(number_format($product_price1))}}</del>
             @endif
             <span class="final_product_price">{{replace_number(number_format($product_price2))}}تومان</span>
         </div>
