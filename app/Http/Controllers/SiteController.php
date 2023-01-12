@@ -163,7 +163,7 @@ class SiteController extends Controller
     public function show_cart()
     {
         $cart_data = Cart::getCartData();
-        return view('shop.cart', ['cart_data' => $cart_data]);
+        return view($this->view.'shop.cart', ['cart_data' => $cart_data]);
     }
 
     public function remove_product(Request $request)

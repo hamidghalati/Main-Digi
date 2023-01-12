@@ -30,7 +30,19 @@
                             <p v-else>{{product.product_count}}</p>
                         </td>
                         <td>
-                            {{ product.price2 }} تومان
+                           <span v-if="check_has_off(product)">
+                               <div class="discount_cart_div">
+                                   <del style="color: red">{{ replaceNumber(number_format(product.price1)) }} تومان</del>
+                                   <p style="color: red;font-size: 10px;">
+                                       <span>تخفیف شگفت انگیز</span>
+                                       {{ replaceNumber(number_format(product.price1-product.int_price)) }} تومان
+                                   </p>
+                                   <p style="font-size: 16px">{{ replaceNumber(number_format(product.int_price)) }} تومان</p>
+
+                               </div>
+                           </span>
+                            <span v-else> {{ product.price2 }} تومان</span>
+
                         </td>
                     </tr>
                 </table>
@@ -120,14 +132,28 @@ export default {
             {
                 formData.append('color_id',this.select_product.color_id);
             }
+            $("#loading").show();
             this.axios.post(url,formData).then(response=>{
+                $("#loading").hide();
                 if (response.data != 'error')
                 {
                     this.CartProduct=response.data;
+
+                    if(this.CartProduct.product)
+                    {
+                        $('.cart_product_count').text(this.replaceNumber(this.CartProduct.product.length));
+                    }
+                    else {
+                        $('.cart_product_count').hide();
+                    }
+
                 }
+            }).catch(error=>{
+                $("#loading").hide();
             });
         },
         change_product_count:function (product) {
+            $("#loading").show();
             // product.product_count;
             const url=this.$siteUrl+"site/cart/change_product_cart";
             const formData=new FormData();
@@ -139,11 +165,25 @@ export default {
                 formData.append('color_id',product.color_id);
             }
             this.axios.post(url,formData).then(response=>{
+                $("#loading").hide();
                 if (response.data != 'error')
                 {
                     this.CartProduct=response.data;
                 }
+            }).catch(error=>{
+                $("#loading").hide();
             });
+        },
+        check_has_off:function (product) {
+            let time=Date.now();
+            time=parseInt(time/1000);
+            if (product.offers_last_time>time && product.int_price<product.price1){
+                return true;
+            }
+            else {
+                return  false;
+            }
+
         }
     }
 }

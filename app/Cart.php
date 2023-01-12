@@ -148,6 +148,8 @@ class Cart
                $cart_data['product'][$j]['price1']=$product_number*$v->price1;
                if ($type=='cart')
                {
+                   $cart_data['product'][$j]['offers_last_time']=$v->offers_last_time;
+                   $cart_data['product'][$j]['int_price']=$product_number*$v->price2;
                    $cart_data['product'][$j]['price2']=number_format($product_number*$v->price2);
                }
                else

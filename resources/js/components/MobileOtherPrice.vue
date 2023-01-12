@@ -20,7 +20,7 @@
             </div>
 
 
-            <div v-if="warrantyList.length>1" class="productPriceList">
+            <div v-if="warrantyList.length>1" class="productPriceList content">
                 <div :class="[key==0 ? 'warranty_list active' : 'warranty_list']" v-for="(warranty,key) in warrantyList">
                     <div>
                         <span style="margin-left: 10px" class="fa fa-home"></span>
@@ -141,10 +141,12 @@ export default {
             this.show_box=true;
             this.$nextTick(function () {
                 $('body').css('overflow-y','hidden');
+                $("#product_item").css('display','none');
                 const width=$(window).width();
-                $(".mobile_data_box").css('right','-'+width+'px');
+                const right="-"+width+"px";
+                $(".mobile_data_box").css({'right':right});
                 setTimeout(function () {
-                    $(".mobile_data_box").css('right',0);
+                    $(".mobile_data_box").css('right','0');
                 },100)
             });
         }

@@ -9,6 +9,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     @yield('header')
 
     <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
@@ -66,6 +67,13 @@
             @yield('content')
         </div>
 
+
+        <div id="loading">
+            <span class="loader"></span>
+            <h6>لطفاً صبور باشید</h6>
+        </div>
+
+
         @include('mobile.footer')
 
     </div>
@@ -94,6 +102,14 @@
         $('[data-toggle="tooltip"]').tooltip()
     });
 
+
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".example1").pDatepicker();
+    });
 </script>
 
 

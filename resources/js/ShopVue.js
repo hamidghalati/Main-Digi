@@ -16,6 +16,7 @@ import VueChart from "./components/VueChart";
 import HeaderCart from "./components/HeaderCart";
 import OtherPrice from "./components/OtherPrice";
 import MobileOtherPrice from "./components/MobileOtherPrice";
+import MobileShoppingCart from "./components/MobileShoppingCart";
 
 
 
@@ -39,7 +40,8 @@ const app = new Vue({
         VueChart,
         HeaderCart,
         OtherPrice,
-        MobileOtherPrice
+        MobileOtherPrice,
+        MobileShoppingCart
 
     }
 });

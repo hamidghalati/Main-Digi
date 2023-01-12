@@ -43,6 +43,7 @@
         "jquery-ui": "^1.13.1",
         "mdi-icons": "^1.0.1",
         "owl.carousel": "^2.3.4",
+        "persian-datepicker": "^1.2.0",
         "pretty-checkbox": "^3.0.3",
         "shetabit-laravel-vue-pagination": "^2.3.2",
         "slick-carousel": "^1.8.1",

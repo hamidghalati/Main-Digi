@@ -92,8 +92,34 @@
             <mobile-other-price :product_id="{{ $product->id }}"></mobile-other-price>
         @endif
 
+        @if($product->status==1)
+            <div class="add_product_link">
+                <span>افزودن محصول به سبد خرید</span>
+                <i class="mdi mdi-shopping-outline"></i>
+            </div>
+        @endif
+
+        @if($product_item_count>0)
+            <div class="product_item_box">
+                <div style="padding: 15px">
+                    <div class="item_box">
+                        <span>مشخصات فنی</span>
+                        <a id="show_more_item_product">
+                            <span>بیشتر</span>
+                            <i class="mdi mdi-chevron-left"></i>
+                        </a>
+                    </div>
+                    @include('include.show_important_item',['remove_title'=>true])
+                </div>
+
+            </div>
+        @endif
 
     </div>
+
+    @include('mobile.product_item_list')
+
+
 @endsection
 @section('footer')
     <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
