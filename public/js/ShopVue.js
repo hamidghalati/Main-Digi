@@ -2681,6 +2681,344 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MobileAddressForm.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MobileAddressForm.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _myMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../myMixin */ "./resources/js/myMixin.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "AddressForm",
+  data: function data() {
+    return {
+      id: 0,
+      name: '',
+      mobile: '',
+      province_id: '',
+      city_id: '',
+      address: '',
+      zip_code: '',
+      show_box: false,
+      error_name_message: false,
+      error_mobile_message: false,
+      error_province_id_message: false,
+      error_city_id_message: false,
+      error_address_message: false,
+      error_zip_code_message: false,
+      province: [],
+      city: [],
+      title: 'ثبت آدرس'
+    };
+  },
+  mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mounted: function mounted() {
+    this.getProvince();
+  },
+  methods: {
+    getProvince: function getProvince() {
+      var _this = this;
+      this.axios.get(this.$siteUrl + '/api/get_province').then(function (response) {
+        _this.province = response.data;
+      });
+    },
+    getCity: function getCity(id) {
+      var _this2 = this;
+      if (this.province_id != '') {
+        this.city_id = id;
+        this.city = [];
+        this.axios.get(this.$siteUrl + '/api/get_city/' + this.province_id).then(function (response) {
+          _this2.city = response.data;
+          setTimeout(function () {
+            $("#city_id").selectpicker('refresh');
+          }, 100);
+        });
+      }
+    },
+    add_address: function add_address() {
+      var _this3 = this;
+      var validateName = this.validateName();
+      var validateMobileNumber = this.validateMobileNumber();
+      var validateَAddress = this.validateAddress();
+      var validateZipCode = this.validateZipCode();
+      var validateProvince = this.validateProvince();
+      var validateCity = this.validateCity();
+      if (validateName && validateMobileNumber && validateَAddress && validateZipCode && validateProvince && validateCity) {
+        $("#loading").show();
+        var lat = $("#lat").val();
+        var lng = $("#lng").val();
+        var formData = new FormData();
+        formData.append('id', this.id);
+        formData.append('name', this.name);
+        formData.append('mobile', this.mobile);
+        formData.append('address', this.address);
+        formData.append('zip_code', this.zip_code);
+        formData.append('province_id', this.province_id);
+        formData.append('city_id', this.city_id);
+        formData.append('lat', lat);
+        formData.append('lng', lng);
+        var url = this.$siteUrl + '/user/addAddress';
+        this.axios.post(url, formData).then(function (response) {
+          $("#loading").hide();
+          if (response.data != "error") {
+            _this3.$emit('setData', response.data);
+            $("#myModal").modal('hide');
+          }
+        })["catch"](function (error) {
+          $("#loading").hide();
+        });
+      }
+    },
+    validateName: function validateName() {
+      if (this.name.toString().trim() == "") {
+        this.error_name_message = 'نام و نام خانوادگی نمی تواند خالی باشد';
+        return false;
+      } else if (this.name.toString().trim().length < 3) {
+        this.error_name_message = 'نام و نام خانوادگی حداقل شامل 3 کاراکتر باشد';
+        return false;
+      } else {
+        this.error_name_message = false;
+        return true;
+      }
+    },
+    validateMobileNumber: function validateMobileNumber() {
+      if (this.mobile.toString().trim() == "") {
+        this.error_mobile_message = 'شماره موبایل نمی تواند خالی باشد';
+        return false;
+      } else if (this.check_mobile_number()) {
+        this.error_mobile_message = 'شماره موبایل وارد شده معتبر نمی باشد';
+        return false;
+      } else {
+        this.error_mobile_message = false;
+        return true;
+      }
+    },
+    validateAddress: function validateAddress() {
+      if (this.address.toString().trim() == "") {
+        this.error_address_message = 'آدرس نمی تواند خالی باشد';
+        return false;
+      } else if (this.address.toString().trim().length < 20) {
+        this.error_address_message = 'آدرس دقیق را وارد کنید';
+        return false;
+      } else {
+        this.error_address_message = false;
+        return true;
+      }
+    },
+    validateZipCode: function validateZipCode() {
+      if (this.zip_code.toString().trim() == "") {
+        this.error_zip_code_message = 'کد پستی نمی تواند خالی باشد';
+        return false;
+      } else if (this.zip_code.toString().trim().length < 10 || isNaN(this.zip_code) || this.zip_code.toString().trim().length > 10) {
+        this.error_zip_code_message = 'کد پستی وارد شده معتبر نمی باشد';
+        return false;
+      } else {
+        this.error_zip_code_message = false;
+        return true;
+      }
+    },
+    validateProvince: function validateProvince() {
+      if (this.province_id.toString().trim() == "") {
+        this.error_province_id_message = 'استان جهت ارسال کالا را وارد کنید';
+        return false;
+      } else {
+        this.error_province_id_message = false;
+        return true;
+      }
+    },
+    validateCity: function validateCity() {
+      if (this.city_id.toString().trim() == "") {
+        this.error_city_id_message = 'شهر جهت ارسال کالا را وارد کنید';
+        return false;
+      } else {
+        this.error_city_id_message = false;
+        return true;
+      }
+    },
+    setUpdateData: function setUpdateData(address, title) {
+      this.id = address.id;
+      this.name = address.name;
+      this.mobile = address.mobile;
+      this.city_id = address.city_id;
+      this.province_id = address.province_id;
+      this.address = address.address;
+      this.zip_code = address.zip_code;
+      this.title = title;
+      this.getProvince();
+      if (this.province_id > 0) {
+        this.getCity(this.city_id);
+      } else {
+        this.cityList = [];
+        setTimeout(function () {
+          $("#city_id").selectpicker('refresh');
+        }, 100);
+      }
+      this.error_name_message = false;
+      this.error_mobile_message = false;
+      this.error_address_message = false;
+      this.error_zip_code_message = false;
+      this.error_province_id_message = false;
+      this.error_city_id_message = false;
+      $("#myModal").modal('show');
+    },
+    setTitle: function setTitle(title) {
+      this.title = title;
+      this.name = '';
+      this.mobile = '';
+      this.city_id = '';
+      this.province_id = '';
+      this.address = '';
+      this.zip_code = '';
+      this.$emit('hideBox');
+      this.show_box = true;
+      this.show_mobile_box();
+      this.$nextTick(function () {
+        $("#province_id").selectpicker('refresh');
+        $("#city_id").selectpicker('refresh');
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MobileAddressList.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MobileAddressList.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AddressForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddressForm */ "./resources/js/components/AddressForm.vue");
+/* harmony import */ var _MobileAddressForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MobileAddressForm */ "./resources/js/components/MobileAddressForm.vue");
+/* harmony import */ var _myMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../myMixin */ "./resources/js/myMixin.js");
+/* harmony import */ var _OrderingTime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./OrderingTime */ "./resources/js/components/OrderingTime.vue");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "AddressList",
+  components: {
+    OrderingTime: _OrderingTime__WEBPACK_IMPORTED_MODULE_3__["default"],
+    AddressForm: _AddressForm__WEBPACK_IMPORTED_MODULE_0__["default"],
+    MobileAddressForm: _MobileAddressForm__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  props: ['data'],
+  data: function data() {
+    return {
+      AddressLists: [],
+      show_address_list: false,
+      show_default: true,
+      city_id: '',
+      show_dialog_box: false,
+      remove_address_id: ''
+    };
+  },
+  mounted: function mounted() {
+    this.AddressLists = this.data;
+    if (this.AddressLists.length > 0) {
+      this.city_id = this.AddressLists[0].city_id;
+      document.getElementById('address_id').value = this.AddressLists[0].id;
+    }
+  },
+  methods: {
+    showModalBox: function showModalBox() {
+      this.$refs.data.setTitle('افزودن آدرس جدید');
+      $("#myModal").modal('show');
+    },
+    close_address_list: function close_address_list() {
+      this.show_address_list = false;
+      this.show_default = true;
+    },
+    show_default_address: function show_default_address() {
+      if (this.AddressLists.length > 0 && this.show_default) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    change_address: function change_address() {
+      this.show_default = false;
+      this.show_address_list = true;
+    },
+    updateAddressList: function updateAddressList(data) {
+      this.AddressLists = data;
+    },
+    updateRow: function updateRow(address) {
+      this.$refs.data.setUpdateData(address, 'ویرایش آدرس');
+      if (address['lat'] != "0.0") {
+        updateMap(address['lat'], address['lng']);
+      }
+    },
+    remove_address: function remove_address(address) {
+      this.remove_address_id = address.id;
+      this.show_dialog_box = true;
+    },
+    change_default_address: function change_default_address(key) {
+      var old_array = this.AddressLists;
+      var first = old_array[0];
+      var select = old_array[key];
+      this.city_id = select.city_id;
+      this.$set(this.AddressLists, 0, select);
+      this.$set(this.AddressLists, key, first);
+      this.show_default = this;
+      document.getElementById('address_id').value = select.id;
+      this.$nextTick(function () {
+        var width = $(window).width();
+        var right = "-" + width + "px";
+        setTimeout(function () {
+          $(".mobile_data_box").css({
+            'right': right
+          });
+        }, 50);
+      });
+    },
+    delete_address: function delete_address() {
+      var _this = this;
+      $("#loading").show();
+      this.show_dialog_box = false;
+      var url = this.$siteUrl + "/user/removeAddress/" + this.remove_address_id;
+      this.axios["delete"](url).then(function (response) {
+        $("#loading").hide();
+        if (response.data != 'error') {
+          _this.AddressLists = response.data;
+        }
+      })["catch"](function (error) {
+        $("#loading").hide();
+      });
+    },
+    show_more_address: function show_more_address() {
+      this.show_address_list = true;
+      this.$nextTick(function () {
+        var width = $(window).width();
+        var right = "-" + width + "px";
+        $(".mobile_data_box").css({
+          'right': right
+        });
+        setTimeout(function () {
+          $(".mobile_data_box").css('right', '0');
+        }, 100);
+      });
+    },
+    show_address_box: function show_address_box() {
+      this.$refs.data.setTitle('افزودن آدرس جدید');
+    },
+    hide_address_list_box: function hide_address_list_box() {
+      this.show_address_list = false;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MobileOtherPrice.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MobileOtherPrice.vue?vue&type=script&lang=js& ***!
@@ -4646,6 +4984,400 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MobileAddressForm.vue?vue&type=template&id=2a739a0a&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MobileAddressForm.vue?vue&type=template&id=2a739a0a&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_vm.show_box ? _c("div", {
+    staticClass: "mobile_data_box"
+  }, [_c("div", {
+    staticClass: "header"
+  }, [_c("span", [_vm._v("   " + _vm._s(_vm.title) + "   ")]), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c("div", {
+    staticClass: "content"
+  }, [_c("div", {
+    staticClass: "profile_item",
+    staticStyle: {
+      margin: "10px"
+    },
+    attrs: {
+      id: "add_address_box"
+    }
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "account_title"
+  }, [_vm._v(" نام و نام خانوادگی تحویل گیرنده : ")]), _vm._v(" "), _c("label", {
+    staticClass: "input_label",
+    attrs: {
+      "for": ""
+    }
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.name,
+      expression: "name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: " نام و نام خانوادگی تحویل گیرنده"
+    },
+    domProps: {
+      value: _vm.name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.name = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _vm.error_name_message ? _c("label", {
+    "class": [_vm.error_name_message ? "feedback_hint active" : "feedback"],
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v(_vm._s(_vm.error_name_message))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "account_title"
+  }, [_vm._v(" شماره موبایل :")]), _vm._v(" "), _c("label", {
+    staticClass: "input_label",
+    attrs: {
+      "for": ""
+    }
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.mobile,
+      expression: "mobile"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: " شماره موبایل تحویل گیرنده"
+    },
+    domProps: {
+      value: _vm.mobile
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.mobile = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _vm.error_mobile_message ? _c("label", {
+    "class": [_vm.error_mobile_message ? "feedback_hint active" : "feedback"],
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v(_vm._s(_vm.error_mobile_message))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "account_title"
+  }, [_vm._v(" استان :")]), _vm._v(" "), _c("label", {
+    staticClass: "input_label",
+    attrs: {
+      "for": ""
+    }
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.province_id,
+      expression: "province_id"
+    }],
+    staticClass: "selectpicker",
+    attrs: {
+      name: "",
+      id: "province_id",
+      "data-live-search": "true"
+    },
+    on: {
+      change: [function ($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.province_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }, function ($event) {
+        return _vm.getCity("");
+      }]
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("انتخاب استان")]), _vm._v(" "), _vm._l(_vm.province, function (row) {
+    return _c("option", {
+      domProps: {
+        value: row.id
+      }
+    }, [_vm._v(_vm._s(row.name))]);
+  })], 2), _vm._v(" "), _vm.error_province_id_message ? _c("label", {
+    "class": [_vm.error_province_id_message ? "feedback_hint active" : "feedback"],
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v(_vm._s(_vm.error_province_id_message))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "account_title"
+  }, [_vm._v(" شهر :")]), _vm._v(" "), _c("label", {
+    staticClass: "input_label",
+    attrs: {
+      "for": ""
+    }
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.city_id,
+      expression: "city_id"
+    }],
+    staticClass: "selectpicker",
+    attrs: {
+      name: "",
+      id: "city_id",
+      "data-live-search": "true"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.city_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("انتخاب شهر")]), _vm._v(" "), _vm._l(_vm.city, function (row) {
+    return _c("option", {
+      domProps: {
+        value: row.id
+      }
+    }, [_vm._v(_vm._s(row.name))]);
+  })], 2), _vm._v(" "), _vm.error_city_id_message ? _c("label", {
+    "class": [_vm.error_city_id_message ? "feedback_hint active" : "feedback"],
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v(_vm._s(_vm.error_city_id_message))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "account_title"
+  }, [_vm._v(" آدرس پستی :")]), _vm._v(" "), _c("label", {
+    staticClass: "input_label",
+    attrs: {
+      "for": ""
+    }
+  }, [_c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address,
+      expression: "address"
+    }],
+    staticClass: "textarea form-control",
+    attrs: {
+      placeholder: "آدرس پستی تحویل گیرنده"
+    },
+    domProps: {
+      value: _vm.address
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.address = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _vm.error_address_message ? _c("label", {
+    "class": [_vm.error_address_message ? "feedback_hint active" : "feedback"],
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v(_vm._s(_vm.error_address_message))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "account_title"
+  }, [_vm._v(" کد پستی :")]), _vm._v(" "), _c("label", {
+    staticClass: "input_label",
+    attrs: {
+      "for": ""
+    }
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.zip_code,
+      expression: "zip_code"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: " کد پستی تحویل گیرنده"
+    },
+    domProps: {
+      value: _vm.zip_code
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.zip_code = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _vm.error_zip_code_message ? _c("label", {
+    "class": [_vm.error_zip_code_message ? "feedback_hint active" : "feedback"],
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v(_vm._s(_vm.error_zip_code_message))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("button", {
+    staticClass: "btn btn-primary",
+    on: {
+      click: function click($event) {
+        return _vm.add_address();
+      }
+    }
+  }, [_c("span", [_vm._v("ثبت و ارسال به این آدرس")])])])])])]) : _vm._e()]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("a", [_c("span", [_vm._v("بازگشت")]), _vm._v(" "), _c("i", {
+    staticClass: "mdi mdi-chevron-left"
+  })]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MobileAddressList.vue?vue&type=template&id=1ebf59d5&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MobileAddressList.vue?vue&type=template&id=1ebf59d5&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_vm.AddressLists.length == 0 ? _c("button", {
+    staticClass: "add_address_btn",
+    attrs: {
+      type: "button",
+      "data-target": ".bd-example-modal-lg"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.show_address_box();
+      }
+    }
+  }, [_c("strong", [_vm._v("افزودن آدرس جدید")])]) : _vm._e(), _vm._v(" "), _vm.AddressLists.length > 0 ? _c("div", {
+    staticClass: "address_list"
+  }, [_c("div", {
+    staticClass: "product_item_box default_address"
+  }, [_c("h6", [_vm._v(" تحویل گیرنده : " + _vm._s(_vm.AddressLists[0]["name"]) + " ")]), _vm._v(" "), _c("div", {
+    staticClass: "address_content"
+  }, [_c("div", [_vm._v(" آدرس : " + _vm._s(_vm.AddressLists[0]["get_province"]["name"]) + " - " + _vm._s(_vm.AddressLists[0]["address"]))]), _vm._v(" "), _c("ul", [_c("li", [_vm._v("\n                        کد پستی :\n                        "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(_vm.AddressLists[0]["zip_code"])))])]), _vm._v(" "), _c("li", [_vm._v("\n                        شماره موبایل :\n                        "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(_vm.AddressLists[0]["mobile"])))])])]), _vm._v(" "), _c("a", {
+    staticClass: "show_other_item",
+    on: {
+      click: function click($event) {
+        return _vm.show_more_address();
+      }
+    }
+  }, [_c("span", {
+    staticStyle: {
+      "margin-left": "15px"
+    }
+  }, [_vm._v("تغییر آدرس ارسال")]), _vm._v(" "), _c("i", {
+    staticClass: "fa fa-angle-left",
+    staticStyle: {
+      position: "absolute",
+      "margin-top": "5px",
+      "margin-right": "5px",
+      "font-size": "15px"
+    }
+  })])])])]) : _vm._e(), _vm._v(" "), _c("mobile-address-form", {
+    ref: "data",
+    on: {
+      setData: _vm.updateAddressList,
+      hideBox: function hideBox($event) {
+        return _vm.hide_address_list_box();
+      }
+    }
+  }), _vm._v(" "), _vm.show_address_list ? _c("div", {
+    staticClass: "mobile_data_box"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "content"
+  }, [_c("button", {
+    staticClass: "add_address_btn",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.show_address_box();
+      }
+    }
+  }, [_c("strong", [_vm._v("افزودن آدرس جدید")])]), _vm._v(" "), _vm._l(_vm.AddressLists, function (address, key) {
+    return _c("div", [_c("div", {
+      staticClass: "product_item_box default_address"
+    }, [_c("h6", [_vm._v(" تحویل گیرنده : " + _vm._s(address["name"]) + " ")]), _vm._v(" "), _c("div", {
+      staticClass: "address_content"
+    }, [_c("div", [_vm._v(" آدرس : " + _vm._s(address["get_province"]["name"]) + " - " + _vm._s(address["address"]))]), _vm._v(" "), _c("ul", [_c("li", [_vm._v("\n                                کد پستی :\n                                "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(address["zip_code"])))])]), _vm._v(" "), _c("li", [_vm._v("\n                                شماره موبایل :\n                                "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(address["mobile"])))])])]), _vm._v(" "), _c("a", [key == 0 ? _c("span", {
+      staticClass: "select_address_tag"
+    }, [_vm._v("سفارش به این آدرس ارسال می شود")]) : _c("span", {
+      staticClass: "select_address_tag",
+      staticStyle: {
+        color: "#989191!important"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.change_default_address(key);
+        }
+      }
+    }, [_vm._v("ارسال سفارش به این آدرس")])])])])]);
+  })], 2)]) : _vm._e()], 1);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "header"
+  }, [_c("span", [_vm._v("انتخاب آدرس")]), _vm._v(" "), _c("a", [_c("span", [_vm._v("بازگشت")]), _vm._v(" "), _c("i", {
+    staticClass: "mdi mdi-chevron-left"
+  })])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MobileOtherPrice.vue?vue&type=template&id=6724a346&scoped=true&":
 /*!*************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MobileOtherPrice.vue?vue&type=template&id=6724a346&scoped=true& ***!
@@ -4830,12 +5562,7 @@ var render = function render() {
       }
     })]) : _vm._e(), _vm._v(" "), _c("span", {
       staticClass: "cart_product_price"
-    }, [_vm._v(_vm._s(product.price2) + " تومان")]), _vm._v(" "), _c("input", {
-      staticClass: "example1",
-      attrs: {
-        type: "text"
-      }
-    })])]), _vm._v(" "), _c("div", {
+    }, [_vm._v(_vm._s(product.price2) + " تومان")])])]), _vm._v(" "), _c("div", {
       staticClass: "checkout_options"
     }, [_c("span", [_vm._v("تعداد :")]), _vm._v(" "), _c("span", [_c("select", {
       directives: [{
@@ -25940,8 +26667,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_OtherPrice__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/OtherPrice */ "./resources/js/components/OtherPrice.vue");
 /* harmony import */ var _components_MobileOtherPrice__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/MobileOtherPrice */ "./resources/js/components/MobileOtherPrice.vue");
 /* harmony import */ var _components_MobileShoppingCart__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/MobileShoppingCart */ "./resources/js/components/MobileShoppingCart.vue");
+/* harmony import */ var _components_MobileAddressList__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/MobileAddressList */ "./resources/js/components/MobileAddressList.vue");
+/* harmony import */ var _components_MobileAddressForm__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/MobileAddressForm */ "./resources/js/components/MobileAddressForm.vue");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 Vue.component('pagination', __webpack_require__(/*! shetabit-laravel-vue-pagination */ "./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue"));
+
+
 
 
 
@@ -25976,7 +26707,9 @@ var app = new Vue({
     HeaderCart: _components_HeaderCart__WEBPACK_IMPORTED_MODULE_12__["default"],
     OtherPrice: _components_OtherPrice__WEBPACK_IMPORTED_MODULE_13__["default"],
     MobileOtherPrice: _components_MobileOtherPrice__WEBPACK_IMPORTED_MODULE_14__["default"],
-    MobileShoppingCart: _components_MobileShoppingCart__WEBPACK_IMPORTED_MODULE_15__["default"]
+    MobileShoppingCart: _components_MobileShoppingCart__WEBPACK_IMPORTED_MODULE_15__["default"],
+    MobileAddressList: _components_MobileAddressList__WEBPACK_IMPORTED_MODULE_16__["default"],
+    MobileAddressForm: _components_MobileAddressForm__WEBPACK_IMPORTED_MODULE_17__["default"]
   }
 });
 
@@ -26529,6 +27262,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_HeaderCart_vue_vue_type_template_id_3277fd10_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_HeaderCart_vue_vue_type_template_id_3277fd10_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/MobileAddressForm.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/MobileAddressForm.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MobileAddressForm_vue_vue_type_template_id_2a739a0a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MobileAddressForm.vue?vue&type=template&id=2a739a0a&scoped=true& */ "./resources/js/components/MobileAddressForm.vue?vue&type=template&id=2a739a0a&scoped=true&");
+/* harmony import */ var _MobileAddressForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MobileAddressForm.vue?vue&type=script&lang=js& */ "./resources/js/components/MobileAddressForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _MobileAddressForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MobileAddressForm_vue_vue_type_template_id_2a739a0a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MobileAddressForm_vue_vue_type_template_id_2a739a0a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "2a739a0a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/MobileAddressForm.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/MobileAddressForm.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/MobileAddressForm.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileAddressForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./MobileAddressForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MobileAddressForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileAddressForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/MobileAddressForm.vue?vue&type=template&id=2a739a0a&scoped=true&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/MobileAddressForm.vue?vue&type=template&id=2a739a0a&scoped=true& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileAddressForm_vue_vue_type_template_id_2a739a0a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../node_modules/vue-loader/lib??vue-loader-options!./MobileAddressForm.vue?vue&type=template&id=2a739a0a&scoped=true& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MobileAddressForm.vue?vue&type=template&id=2a739a0a&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileAddressForm_vue_vue_type_template_id_2a739a0a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileAddressForm_vue_vue_type_template_id_2a739a0a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/MobileAddressList.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/MobileAddressList.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MobileAddressList_vue_vue_type_template_id_1ebf59d5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MobileAddressList.vue?vue&type=template&id=1ebf59d5&scoped=true& */ "./resources/js/components/MobileAddressList.vue?vue&type=template&id=1ebf59d5&scoped=true&");
+/* harmony import */ var _MobileAddressList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MobileAddressList.vue?vue&type=script&lang=js& */ "./resources/js/components/MobileAddressList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _MobileAddressList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MobileAddressList_vue_vue_type_template_id_1ebf59d5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MobileAddressList_vue_vue_type_template_id_1ebf59d5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "1ebf59d5",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/MobileAddressList.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/MobileAddressList.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/MobileAddressList.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileAddressList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./MobileAddressList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MobileAddressList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileAddressList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/MobileAddressList.vue?vue&type=template&id=1ebf59d5&scoped=true&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/MobileAddressList.vue?vue&type=template&id=1ebf59d5&scoped=true& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileAddressList_vue_vue_type_template_id_1ebf59d5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../node_modules/vue-loader/lib??vue-loader-options!./MobileAddressList.vue?vue&type=template&id=1ebf59d5&scoped=true& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MobileAddressList.vue?vue&type=template&id=1ebf59d5&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileAddressList_vue_vue_type_template_id_1ebf59d5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileAddressList_vue_vue_type_template_id_1ebf59d5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -27627,6 +28498,19 @@ __webpack_require__.r(__webpack_exports__);
         jd = 1 + (days - 186) % 30;
       }
       return [jy, jm, jd];
+    },
+    show_mobile_box: function show_mobile_box() {
+      this.$nextTick(function () {
+        $('body').css('overflow-y', 'hidden');
+        var width = $(window).width();
+        var right = "-" + width + "px";
+        $(".mobile_data_box").css({
+          'right': right
+        });
+        setTimeout(function () {
+          $(".mobile_data_box").css('right', '0');
+        }, 50);
+      });
     }
   }
 });

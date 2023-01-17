@@ -565,6 +565,17 @@ export default {
                 jd = 1 + ((days - 186) % 30);
             }
             return [jy, jm, jd];
+        },
+        show_mobile_box:function () {
+            this.$nextTick(function () {
+                $('body').css('overflow-y','hidden');
+                const width=$(window).width();
+                const right="-"+width+"px";
+                $(".mobile_data_box").css({'right':right});
+                setTimeout(function () {
+                    $(".mobile_data_box").css('right','0');
+                },50)
+            });
         }
 
 

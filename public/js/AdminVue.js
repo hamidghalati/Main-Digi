@@ -18658,6 +18658,19 @@ __webpack_require__.r(__webpack_exports__);
         jd = 1 + (days - 186) % 30;
       }
       return [jy, jm, jd];
+    },
+    show_mobile_box: function show_mobile_box() {
+      this.$nextTick(function () {
+        $('body').css('overflow-y', 'hidden');
+        var width = $(window).width();
+        var right = "-" + width + "px";
+        $(".mobile_data_box").css({
+          'right': right
+        });
+        setTimeout(function () {
+          $(".mobile_data_box").css('right', '0');
+        }, 50);
+      });
     }
   }
 });

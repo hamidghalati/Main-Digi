@@ -64,8 +64,8 @@
                                 </div>
                                 <span class="cart_product_price">{{ product.price2 }} تومان</span>
 
-                                
-                                <input type="text" class="example1" />
+
+
 
                             </div>
 

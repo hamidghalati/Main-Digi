@@ -29,6 +29,7 @@ class SiteController extends Controller
     public function __construct()
     {
         getCatList();
+
         $detect=new MobileDetect();
         if ($detect->isMobile() || $detect->isTablet())
         {

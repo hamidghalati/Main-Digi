@@ -30,6 +30,19 @@ body {
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'iranyekan';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/iranyekan/iranyekanwebmedium.eot');
+    src: url('../fonts/iranyekan/iranyekanwebmedium.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+    url('../fonts/iranyekan/iranyekanwebmedium.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../fonts/iranyekan/iranyekanwebmedium.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+    url('../fonts/iranyekan/iranyekanwebmedium.ttf') format('truetype');
+    url('../fonts/iranyekan/iranyekanwebmedium.svg') format('truetype');
+}
+
+
 a {
     text-decoration: none !important;
     color: #000000;
@@ -1134,10 +1147,269 @@ message_div {
     font-family: 'iransans';
 }
 
-/*.cart_table {*/
-/*    background: white !important;*/
-/*    width: 100% !important;*/
-/*    margin-top: 20px !important;*/
-/*    border: 1px solid #e8e8e8 !important;*/
-/*    box-shadow: 0 12px 12px 0 rgba(180, 180, 180, 0.1);*/
-/*}*/
+.order_header{
+    width: 100%;
+    height: 140px;
+    background: white;
+}
+
+.checkout_steps{
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    width: 43px;
+    margin: 34px 161px;
+}
+.checkout_steps li{
+    list-style: none;
+    position: relative;
+}
+.step_item::before{
+    content: attr(step-title);
+    font-size: 13px;
+    position: absolute;
+    top: -25px;
+    left: 50%;
+}
+
+.step_item{
+    width: 20px;
+    height: 20px;
+    position: relative;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    background-color: #d0d0d0;
+    text-align: center;
+}
+.inactive::before{
+    content: "";
+    position: absolute;
+    background-color:#d0d0d0 ;
+    width: 382px;
+    height: 3px;
+    top: 50%;
+    left: 0;
+}
+
+.card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.10rem
+}
+
+.card-header:first-child {
+    border-radius: calc(0.37rem - 1px) calc(0.37rem - 1px) 0 0
+}
+
+.card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1)
+}
+
+.track {
+    position: relative;
+    background-color: #ddd;
+    height: 7px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 60px;
+    margin-top: 50px
+}
+
+.track .step {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    width: 25%;
+    margin-top: -18px;
+    text-align: center;
+    position: relative
+}
+
+.track .step.active:before {
+    background: #16a677;
+}
+
+.track .step::before {
+    height: 7px;
+    position: absolute;
+    content: "";
+    width: 100%;
+    left: 0;
+    top: 18px
+}
+
+.track .step.active .icon {
+    background: #16a677;
+    color: #fff
+}
+
+.track .icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    border-radius: 100%;
+    background: #ddd
+}
+
+.track .step.active .text {
+    font-weight: 400;
+    color: #000
+}
+
+.track .text {
+    display: block;
+    margin-top: 7px;
+    font-size: 11px;
+}
+.container, .container-fluid, .container-xl, .container-lg, .container-md, .container-sm {
+    padding-right: 0!important;
+    padding-left:0!important;
+}
+.default_address{
+    margin:20px 10px 0 10px;
+}
+.default_address h6{
+    font-weight:bold ;
+    padding: 10px;
+    font-size: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.default_address .address_content{
+    padding: 10px;
+}
+.default_address .address_content ul{
+    width: 100%;
+    margin-top: 10px;
+    display: inline-flex;
+    font-size: 14px;
+}
+.default_address .address_content ul li{
+    width:50%;
+    list-style: none;
+}
+.show_other_item{
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+    color: #00bfd6;
+    font-size: 14px;
+    align-items: center;
+}
+.add_address_btn{
+    width: 95%;
+    margin:10px auto;
+    border: 4px dashed #b8b8b8;
+    background: #fff;
+    min-height: 70px;
+    justify-content: center;
+    color: #a0a0a0;
+    letter-spacing: -0.3px;
+    display: block;
+}
+.add_address_btn strong{
+    font-size: 20px;
+    padding: 14px 22px;
+}
+.add_address_btn strong::before{
+    content: "\F067";
+    padding-left: 5px;
+    font: normal normal normal 14px/1 FontAwesome;
+}
+.select_address_tag{
+    color: #00bfd6;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    font-size:14px;
+}
+.profile_item{
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 9px;
+    -webkit-border-radius: 9px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .09);
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .09);
+
+}
+#add_address_box .textarea{
+    resize: none;
+    height: 110px;
+    width: 100%;
+    padding: 5px;
+    font-size: small;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    -webkit-border-radius: 0.25rem;
+    font-family: iransans!important;
+}
+
+#add_address_box label {
+    display: block;
+    margin-top: 0.5rem;
+}
+
+#add_address_box .account_title{
+    font-size: 14px;
+    padding-bottom: 5px;
+}
+
+#add_address_box .input_label input{
+    padding-right: 10px!important;
+    font-family: iransans!important;
+    font-size: small;
+}
+#add_address_box .bootstrap-select .btn{
+    background: white!important;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    -webkit-border-radius: 0.25rem;
+    padding: 0.375rem 0.75rem!important;
+}
+
+#add_address_box .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 100% !important;
+}
+
+#add_address_box .bootstrap-select .btn-light .filter-option {
+    text-align: right !important;
+}
+
+#add_address_box .bootstrap-select .dropdown-menu.inner{
+    text-align: right !important;
+}
+
+#add_address_box .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    margin-top: 0!important;
+}
+#add_address_box .btn-primary{
+    font-size: 14px;
+    height: 45px!important;
+    line-height: 30px;
+    width:100%;
+}
+
+.feedback_hint.active{
+    display: block!important;
+}
+.feedback_hint{
+   color: red;
+    font-size: 13px;
+}
+

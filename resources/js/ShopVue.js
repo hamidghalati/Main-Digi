@@ -17,6 +17,8 @@ import HeaderCart from "./components/HeaderCart";
 import OtherPrice from "./components/OtherPrice";
 import MobileOtherPrice from "./components/MobileOtherPrice";
 import MobileShoppingCart from "./components/MobileShoppingCart";
+import MobileAddressList from "./components/MobileAddressList";
+import MobileAddressForm from "./components/MobileAddressForm";
 
 
 
@@ -41,7 +43,9 @@ const app = new Vue({
         HeaderCart,
         OtherPrice,
         MobileOtherPrice,
-        MobileShoppingCart
+        MobileShoppingCart,
+        MobileAddressList,
+        MobileAddressForm
 
     }
 });

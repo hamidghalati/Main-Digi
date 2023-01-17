@@ -6,6 +6,7 @@ use App\Address;
 use App\Cart;
 use App\DiscountCode;
 use App\GiftCart;
+use App\Lib\MobileDetect;
 use App\Order;
 
 use App\OrderData;
@@ -17,9 +18,18 @@ use Session;
 
 class ShoppingController extends Controller
 {
+    protected $view='';
+
     public function __construct()
     {
         $this->middleware('auth');
+
+        $detect=new MobileDetect();
+        if ($detect->isMobile() || $detect->isTablet())
+        {
+            $this->view='mobile.';
+        }
+
     }
 
     public function shipping(Request $request)
@@ -28,7 +38,7 @@ class ShoppingController extends Controller
         {
             $user_id=$request->user()->id;
             $address=Address::with(['getProvince','getCity'])->where('user_id',$user_id)->orderBy('id','DESC')->get();
-          return view('shipping.set_data',['address'=>$address]);
+          return view($this->view.'shipping.set_data',['address'=>$address]);
         }
         else
         {
