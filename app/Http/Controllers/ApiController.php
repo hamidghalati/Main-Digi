@@ -12,14 +12,13 @@ class ApiController extends Controller
 {
     public function get_province()
     {
-        $province = ProvinceModel::orderBy('id', 'Asc')->get();
-        return $province;
+        return ProvinceModel::orderBy('id', 'Asc')->get();
     }
 
     public function get_city($province_id)
     {
-        $city = CityModel::where('province_id', $province_id)->orderBy('id', 'Asc')->get();
-        return $city;
+        return CityModel::where('province_id', $province_id)->orderBy('id', 'Asc')->get();
+
     }
 
     public function getComment(Request $request)

@@ -96,7 +96,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <button class="btn btn-primary" v-on:click="add_address()">
-                                                <span>ثبت و ارسال به این آدرس</span>
+                                                <span>{{ btn_text }}</span>
                                             </button>
                                         </div>
                                     </div>
@@ -110,8 +110,7 @@
 
                         <div class="col-md-5">
 
-                            <div id="map"
-                                 style="width: 99%; height: 98%; background: #eee; border: 2px solid #aaa;position: absolute;z-index: 1;display: block;"></div>
+                            <div id="map" style="width: 99%; height: 98%; background: #eee; border: 2px solid #aaa;position: absolute;z-index: 1;display: block;"></div>
 
                             <p id="log">logs</p>
 
@@ -154,7 +153,8 @@ export default {
             error_zip_code_message:false,
             province:[],
             city:[],
-            title:'ثبت آدرس'
+            title:'ثبت آدرس',
+            btn_text:'ثبت و ارسال به این آدرس'
         }
     },
     mixins:[myMixin],
@@ -308,6 +308,7 @@ export default {
             }
         },
         setUpdateData:function (address,title) {
+            this.btn_text='ویرایش و ارسال به این آدرس';
             this.id=address.id;
             this.name=address.name;
             this.mobile=address.mobile;
@@ -338,6 +339,7 @@ export default {
         },
         setTitle:function (title) {
             this.title=title;
+            this.btn_text='ثبت و ارسال به این آدرس';
             this.name='';
             this.mobile='';
             this.city_id='';

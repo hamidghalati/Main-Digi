@@ -10,7 +10,7 @@
             <div class="product_item_box default_address">
                 <h6> تحویل گیرنده : {{ AddressLists[0]['name'] }} </h6>
                 <div class="address_content">
-                    <div> آدرس : {{ AddressLists[0]['get_province']['name'] }} - {{ AddressLists[0]['address'] }}</div>
+                    <div> آدرس : استان  {{ AddressLists[0]['get_province']['name'] }} - {{ AddressLists[0]['get_city']['name'] }} - {{ AddressLists[0]['address'] }}</div>
                     <ul>
                         <li>
                             کد پستی :
@@ -36,7 +36,8 @@
 
         <div class="mobile_data_box" v-if="show_address_list">
             <div class="header">
-                <span>انتخاب آدرس</span>
+                <span><i class="fa fa-location-crosshairs"></i>  انتخاب آدرس</span>
+
                 <a>
                     <span>بازگشت</span>
                     <i class="mdi mdi-chevron-left"></i>
@@ -50,9 +51,16 @@
 
                 <div v-for="(address,key) in AddressLists">
                     <div class="product_item_box default_address">
-                        <h6> تحویل گیرنده : {{ address['name'] }} </h6>
+                        <div class="header">
+                            <h6> تحویل گیرنده : {{ address['name'] }} </h6>
+                            <div>
+                                <i class="mdi mdi-file-edit-outline" style="color: #384a51" v-on:click="updateRow(address)"></i>
+                                <i class="mdi mdi-trash-can-outline" v-on:click="remove_address(address)"></i>
+                            </div>
+                        </div>
+
                         <div class="address_content">
-                            <div> آدرس : {{ address['get_province']['name'] }} - {{ address['address'] }}</div>
+                            <div> آدرس : استان {{ address['get_province']['name'] }}   - {{ address['get_city']['name'] }} - {{ address['address'] }}</div>
                             <ul>
                                 <li>
                                     کد پستی :
@@ -76,6 +84,14 @@
                 </div>
             </div>
 
+        </div>
+
+        <div class="message_div" v-if="show_dialog_box">
+            <div class="message_box">
+                <p id="msg">آیا مایل به حذف این آدرس هستید؟</p>
+                <a  class="alert alert-success" v-on:click="delete_address">بلی</a>
+                <a  class="alert alert-danger" v-on:click="show_dialog_box=false">خیر</a>
+            </div>
         </div>
 
     </div>

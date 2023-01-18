@@ -1929,7 +1929,8 @@ __webpack_require__.r(__webpack_exports__);
       error_zip_code_message: false,
       province: [],
       city: [],
-      title: 'ثبت آدرس'
+      title: 'ثبت آدرس',
+      btn_text: 'ثبت و ارسال به این آدرس'
     };
   },
   mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -2060,6 +2061,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     setUpdateData: function setUpdateData(address, title) {
+      this.btn_text = 'ویرایش و ارسال به این آدرس';
       this.id = address.id;
       this.name = address.name;
       this.mobile = address.mobile;
@@ -2087,6 +2089,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     setTitle: function setTitle(title) {
       this.title = title;
+      this.btn_text = 'ثبت و ارسال به این آدرس';
       this.name = '';
       this.mobile = '';
       this.city_id = '';
@@ -2712,7 +2715,8 @@ __webpack_require__.r(__webpack_exports__);
       error_zip_code_message: false,
       province: [],
       city: [],
-      title: 'ثبت آدرس'
+      title: 'ثبت آدرس',
+      btn_text: 'ثبت و ارسال به این آدرس'
     };
   },
   mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -2724,6 +2728,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       this.axios.get(this.$siteUrl + '/api/get_province').then(function (response) {
         _this.province = response.data;
+        _this.$nextTick(function () {
+          $("#province_id").selectpicker('refresh');
+        });
       });
     },
     getCity: function getCity(id) {
@@ -2766,7 +2773,7 @@ __webpack_require__.r(__webpack_exports__);
           $("#loading").hide();
           if (response.data != "error") {
             _this3.$emit('setData', response.data);
-            $("#myModal").modal('hide');
+            $(".hide_box").hide();
           }
         })["catch"](function (error) {
           $("#loading").hide();
@@ -2840,6 +2847,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     setUpdateData: function setUpdateData(address, title) {
+      this.btn_text = 'ویرایش و ارسال به این آدرس';
       this.id = address.id;
       this.name = address.name;
       this.mobile = address.mobile;
@@ -2863,10 +2871,18 @@ __webpack_require__.r(__webpack_exports__);
       this.error_zip_code_message = false;
       this.error_province_id_message = false;
       this.error_city_id_message = false;
-      $("#myModal").modal('show');
+      this.$emit('hideBox');
+      $('.hide_box').show();
+      $("#change_map").click();
+      this.show_mobile_box();
+      this.$nextTick(function () {
+        $("#province_id").selectpicker('refresh');
+        $("#city_id").selectpicker('refresh');
+      });
     },
     setTitle: function setTitle(title) {
       this.title = title;
+      this.btn_text = 'ثبت و ارسال به این آدرس';
       this.name = '';
       this.mobile = '';
       this.city_id = '';
@@ -2874,7 +2890,8 @@ __webpack_require__.r(__webpack_exports__);
       this.address = '';
       this.zip_code = '';
       this.$emit('hideBox');
-      this.show_box = true;
+      $('.hide_box').show();
+      $("#change_map").click();
       this.show_mobile_box();
       this.$nextTick(function () {
         $("#province_id").selectpicker('refresh');
@@ -4196,7 +4213,7 @@ var render = function render() {
         return _vm.add_address();
       }
     }
-  }, [_c("span", [_vm._v("ثبت و ارسال به این آدرس")])])])])])])]), _vm._v(" "), _vm._m(1)])])])])])]);
+  }, [_c("span", [_vm._v(_vm._s(_vm.btn_text))])])])])])])]), _vm._v(" "), _vm._m(1)])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -4998,13 +5015,13 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_vm.show_box ? _c("div", {
-    staticClass: "mobile_data_box"
+  return _c("div", [_c("div", {
+    staticClass: "mobile_data_box hide_box"
   }, [_c("div", {
     staticClass: "header"
   }, [_c("span", [_vm._v("   " + _vm._s(_vm.title) + "   ")]), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c("div", {
     staticClass: "content"
-  }, [_c("div", {
+  }, [_vm._m(1), _vm._v(" "), _c("div", {
     staticClass: "profile_item",
     staticStyle: {
       margin: "10px"
@@ -5016,7 +5033,7 @@ var render = function render() {
     staticClass: "form-group"
   }, [_c("div", {
     staticClass: "account_title"
-  }, [_vm._v(" نام و نام خانوادگی تحویل گیرنده : ")]), _vm._v(" "), _c("label", {
+  }, [_vm._v(" نام و نام خانوادگی تحویل گیرنده :")]), _vm._v(" "), _c("label", {
     staticClass: "input_label",
     attrs: {
       "for": ""
@@ -5258,7 +5275,7 @@ var render = function render() {
         return _vm.add_address();
       }
     }
-  }, [_c("span", [_vm._v("ثبت و ارسال به این آدرس")])])])])])]) : _vm._e()]);
+  }, [_c("span", [_vm._v(_vm._s(_vm.btn_text))])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -5266,6 +5283,38 @@ var staticRenderFns = [function () {
   return _c("a", [_c("span", [_vm._v("بازگشت")]), _vm._v(" "), _c("i", {
     staticClass: "mdi mdi-chevron-left"
   })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "profile_item",
+    staticStyle: {
+      height: "330px!important",
+      position: "relative"
+    }
+  }, [_c("div", {
+    attrs: {
+      id: "change_map"
+    }
+  }), _vm._v(" "), _c("div", {
+    staticStyle: {
+      width: "100%",
+      height: "100%",
+      background: "#eee",
+      border: "2px solid #aaa",
+      position: "relative",
+      "z-index": "1",
+      display: "block"
+    },
+    attrs: {
+      id: "map"
+    }
+  }), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-success",
+    attrs: {
+      id: "select_location_btn"
+    }
+  }, [_vm._v("انتخاب")])]);
 }];
 render._withStripped = true;
 
@@ -5303,7 +5352,7 @@ var render = function render() {
     staticClass: "product_item_box default_address"
   }, [_c("h6", [_vm._v(" تحویل گیرنده : " + _vm._s(_vm.AddressLists[0]["name"]) + " ")]), _vm._v(" "), _c("div", {
     staticClass: "address_content"
-  }, [_c("div", [_vm._v(" آدرس : " + _vm._s(_vm.AddressLists[0]["get_province"]["name"]) + " - " + _vm._s(_vm.AddressLists[0]["address"]))]), _vm._v(" "), _c("ul", [_c("li", [_vm._v("\n                        کد پستی :\n                        "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(_vm.AddressLists[0]["zip_code"])))])]), _vm._v(" "), _c("li", [_vm._v("\n                        شماره موبایل :\n                        "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(_vm.AddressLists[0]["mobile"])))])])]), _vm._v(" "), _c("a", {
+  }, [_c("div", [_vm._v(" آدرس : استان  " + _vm._s(_vm.AddressLists[0]["get_province"]["name"]) + " - " + _vm._s(_vm.AddressLists[0]["get_city"]["name"]) + " - " + _vm._s(_vm.AddressLists[0]["address"]))]), _vm._v(" "), _c("ul", [_c("li", [_vm._v("\n                        کد پستی :\n                        "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(_vm.AddressLists[0]["zip_code"])))])]), _vm._v(" "), _c("li", [_vm._v("\n                        شماره موبایل :\n                        "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(_vm.AddressLists[0]["mobile"])))])])]), _vm._v(" "), _c("a", {
     staticClass: "show_other_item",
     on: {
       click: function click($event) {
@@ -5347,9 +5396,28 @@ var render = function render() {
   }, [_c("strong", [_vm._v("افزودن آدرس جدید")])]), _vm._v(" "), _vm._l(_vm.AddressLists, function (address, key) {
     return _c("div", [_c("div", {
       staticClass: "product_item_box default_address"
-    }, [_c("h6", [_vm._v(" تحویل گیرنده : " + _vm._s(address["name"]) + " ")]), _vm._v(" "), _c("div", {
+    }, [_c("div", {
+      staticClass: "header"
+    }, [_c("h6", [_vm._v(" تحویل گیرنده : " + _vm._s(address["name"]) + " ")]), _vm._v(" "), _c("div", [_c("i", {
+      staticClass: "mdi mdi-file-edit-outline",
+      staticStyle: {
+        color: "#384a51"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.updateRow(address);
+        }
+      }
+    }), _vm._v(" "), _c("i", {
+      staticClass: "mdi mdi-trash-can-outline",
+      on: {
+        click: function click($event) {
+          return _vm.remove_address(address);
+        }
+      }
+    })])]), _vm._v(" "), _c("div", {
       staticClass: "address_content"
-    }, [_c("div", [_vm._v(" آدرس : " + _vm._s(address["get_province"]["name"]) + " - " + _vm._s(address["address"]))]), _vm._v(" "), _c("ul", [_c("li", [_vm._v("\n                                کد پستی :\n                                "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(address["zip_code"])))])]), _vm._v(" "), _c("li", [_vm._v("\n                                شماره موبایل :\n                                "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(address["mobile"])))])])]), _vm._v(" "), _c("a", [key == 0 ? _c("span", {
+    }, [_c("div", [_vm._v(" آدرس : استان " + _vm._s(address["get_province"]["name"]) + "   - " + _vm._s(address["get_city"]["name"]) + " - " + _vm._s(address["address"]))]), _vm._v(" "), _c("ul", [_c("li", [_vm._v("\n                                کد پستی :\n                                "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(address["zip_code"])))])]), _vm._v(" "), _c("li", [_vm._v("\n                                شماره موبایل :\n                                "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(address["mobile"])))])])]), _vm._v(" "), _c("a", [key == 0 ? _c("span", {
       staticClass: "select_address_tag"
     }, [_vm._v("سفارش به این آدرس ارسال می شود")]) : _c("span", {
       staticClass: "select_address_tag",
@@ -5362,14 +5430,36 @@ var render = function render() {
         }
       }
     }, [_vm._v("ارسال سفارش به این آدرس")])])])])]);
-  })], 2)]) : _vm._e()], 1);
+  })], 2)]) : _vm._e(), _vm._v(" "), _vm.show_dialog_box ? _c("div", {
+    staticClass: "message_div"
+  }, [_c("div", {
+    staticClass: "message_box"
+  }, [_c("p", {
+    attrs: {
+      id: "msg"
+    }
+  }, [_vm._v("آیا مایل به حذف این آدرس هستید؟")]), _vm._v(" "), _c("a", {
+    staticClass: "alert alert-success",
+    on: {
+      click: _vm.delete_address
+    }
+  }, [_vm._v("بلی")]), _vm._v(" "), _c("a", {
+    staticClass: "alert alert-danger",
+    on: {
+      click: function click($event) {
+        _vm.show_dialog_box = false;
+      }
+    }
+  }, [_vm._v("خیر")])])]) : _vm._e()], 1);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "header"
-  }, [_c("span", [_vm._v("انتخاب آدرس")]), _vm._v(" "), _c("a", [_c("span", [_vm._v("بازگشت")]), _vm._v(" "), _c("i", {
+  }, [_c("span", [_c("i", {
+    staticClass: "fa fa-location-crosshairs"
+  }), _vm._v("  انتخاب آدرس")]), _vm._v(" "), _c("a", [_c("span", [_vm._v("بازگشت")]), _vm._v(" "), _c("i", {
     staticClass: "mdi mdi-chevron-left"
   })])]);
 }];

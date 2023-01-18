@@ -117,41 +117,8 @@
     <script src="{{url('js/server.js')}}" type="text/javascript"></script>
 
     <script src="{{ asset('js/shop.js') }}" type="text/javascript"></script>
-    <script>
+    <script src="{{ asset('js/Map.js') }}" type="text/javascript"></script>
 
-        // jQuery(window).load(function () {
-        //     "use strict";
-        //     jQuery("body").find('#site-loading').fadeOut(500);
-        // });
-        $("#myModal").on('show.bs.modal',function (){
-            setTimeout(function () {
-                myMap.invalidateSize()
-            },500);
-
-            get_my_location();
-            myMap.on('move',function (e) {
-                lat=e.target.getCenter().lat;
-                lng=e.target.getCenter().lng;
-                marker.setLatLng({lat:lat,lng:lng});
-
-            });
-
-        });
-        updateMap=function (lat,lng) {
-            document.getElementById('lat').value=lat;
-            document.getElementById('lng').value=lng;
-            if (myMap!=null)
-            {
-                myMap.panTo(new L.LatLng(lat,lng));
-                marker.setLatLng({lat:lat,lng:lng});
-            }
-        }
-
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        });
-
-    </script>
 @endsection
 
 

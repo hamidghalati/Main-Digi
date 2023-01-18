@@ -1,77 +1,96 @@
 <template>
     <div>
 
-            <div class="mobile_data_box" v-if="show_box">
-                <div class="header">
-                    <span>   {{ title }}   </span>
-                    <a>
-                        <span>بازگشت</span>
-                        <i class="mdi mdi-chevron-left"></i>
-                    </a>
-                </div>
-
-                <div class="content">
-                    <div class="profile_item" style="margin: 10px" id="add_address_box">
-                        <div class="form-group">
-                            <div class="account_title"> نام و نام خانوادگی تحویل گیرنده : </div>
-                            <label for="" class="input_label">
-                                <input type="text" v-model="name" class="form-control" placeholder=" نام و نام خانوادگی تحویل گیرنده">
-                                <label for="" v-if="error_name_message" :class="[error_name_message ? 'feedback_hint active' : 'feedback']">{{error_name_message}}</label>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <div class="account_title"> شماره موبایل :</div>
-                            <label for="" class="input_label">
-                                <input type="text" v-model="mobile" class="form-control" placeholder=" شماره موبایل تحویل گیرنده">
-                                <label for="" v-if="error_mobile_message" :class="[error_mobile_message? 'feedback_hint active' : 'feedback']">{{error_mobile_message}}</label>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <div class="account_title"> استان :</div>
-                            <label for="" class="input_label">
-                                <select class="selectpicker" v-model="province_id" name="" id="province_id" v-on:change="getCity('')" data-live-search="true">
-                                    <option value="">انتخاب استان</option>
-                                    <option v-for="row in province" v-bind:value="row.id">{{row.name}}</option>
-                                </select>
-
-                                <label for="" v-if="error_province_id_message" :class="[error_province_id_message? 'feedback_hint active' : 'feedback']">{{error_province_id_message}}</label>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <div class="account_title"> شهر :</div>
-                            <label for="" class="input_label">
-                                <select class="selectpicker" v-model="city_id" name="" id="city_id" data-live-search="true">
-                                    <option value="">انتخاب شهر</option>
-                                    <option v-for="row in city" v-bind:value="row.id">{{row.name}}</option>
-                                </select>
-
-                                <label for="" v-if="error_city_id_message" :class="[error_city_id_message? 'feedback_hint active' : 'feedback']">{{error_city_id_message}}</label>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <div class="account_title"> آدرس پستی :</div>
-                            <label for="" class="input_label">
-                                <textarea class="textarea form-control" v-model="address" placeholder="آدرس پستی تحویل گیرنده" ></textarea>
-                                <label for="" v-if="error_address_message" :class="[error_address_message? 'feedback_hint active' : 'feedback']">{{error_address_message}}</label>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <div class="account_title"> کد پستی :</div>
-                            <label for="" class="input_label">
-                                <input type="text" v-model="zip_code" class="form-control" placeholder=" کد پستی تحویل گیرنده">
-                                <label for="" v-if="error_zip_code_message" :class="[error_zip_code_message? 'feedback_hint active' : 'feedback']">{{error_zip_code_message}}</label>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-primary" v-on:click="add_address()">
-                                <span>ثبت و ارسال به این آدرس</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
+        <div class="mobile_data_box hide_box">
+            <div class="header">
+                <span>   {{ title }}   </span>
+                <a>
+                    <span>بازگشت</span>
+                    <i class="mdi mdi-chevron-left"></i>
+                </a>
             </div>
 
+            <div class="content">
+
+                <div class="profile_item" style="height: 330px!important;position: relative">
+                    <div id="change_map"></div>
+                    <div id="map"
+                         style="width: 100%; height: 100%; background: #eee; border: 2px solid #aaa;position:relative ;z-index: 1;display: block;">
+                    </div>
+                    <button class="btn btn-success" id="select_location_btn">انتخاب</button>
+                </div>
+
+                <div class="profile_item" style="margin: 10px" id="add_address_box">
+                    <div class="form-group">
+                        <div class="account_title"> نام و نام خانوادگی تحویل گیرنده :</div>
+                        <label for="" class="input_label">
+                            <input type="text" v-model="name" class="form-control"
+                                   placeholder=" نام و نام خانوادگی تحویل گیرنده">
+                            <label for="" v-if="error_name_message"
+                                   :class="[error_name_message ? 'feedback_hint active' : 'feedback']">{{ error_name_message }}</label>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <div class="account_title"> شماره موبایل :</div>
+                        <label for="" class="input_label">
+                            <input type="text" v-model="mobile" class="form-control"
+                                   placeholder=" شماره موبایل تحویل گیرنده">
+                            <label for="" v-if="error_mobile_message"
+                                   :class="[error_mobile_message? 'feedback_hint active' : 'feedback']">{{ error_mobile_message }}</label>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <div class="account_title"> استان :</div>
+                        <label for="" class="input_label">
+                            <select class="selectpicker" v-model="province_id" name="" id="province_id"
+                                    v-on:change="getCity('')" data-live-search="true">
+                                <option value="">انتخاب استان</option>
+                                <option v-for="row in province" v-bind:value="row.id">{{ row.name }}</option>
+                            </select>
+
+                            <label for="" v-if="error_province_id_message"
+                                   :class="[error_province_id_message? 'feedback_hint active' : 'feedback']">{{ error_province_id_message }}</label>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <div class="account_title"> شهر :</div>
+                        <label for="" class="input_label">
+                            <select class="selectpicker" v-model="city_id" name="" id="city_id" data-live-search="true">
+                                <option value="">انتخاب شهر</option>
+                                <option v-for="row in city" v-bind:value="row.id">{{ row.name }}</option>
+                            </select>
+
+                            <label for="" v-if="error_city_id_message"
+                                   :class="[error_city_id_message? 'feedback_hint active' : 'feedback']">{{ error_city_id_message }}</label>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <div class="account_title"> آدرس پستی :</div>
+                        <label for="" class="input_label">
+                            <textarea class="textarea form-control" v-model="address"
+                                      placeholder="آدرس پستی تحویل گیرنده"></textarea>
+                            <label for="" v-if="error_address_message"
+                                   :class="[error_address_message? 'feedback_hint active' : 'feedback']">{{ error_address_message }}</label>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <div class="account_title"> کد پستی :</div>
+                        <label for="" class="input_label">
+                            <input type="text" v-model="zip_code" class="form-control"
+                                   placeholder=" کد پستی تحویل گیرنده">
+                            <label for="" v-if="error_zip_code_message"
+                                   :class="[error_zip_code_message? 'feedback_hint active' : 'feedback']">{{ error_zip_code_message }}</label>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" v-on:click="add_address()">
+                            <span>{{ btn_text }}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
 
     </div>
@@ -91,7 +110,7 @@ export default {
             city_id: '',
             address: '',
             zip_code: '',
-            show_box:false,
+            show_box: false,
             error_name_message: false,
             error_mobile_message: false,
             error_province_id_message: false,
@@ -100,7 +119,8 @@ export default {
             error_zip_code_message: false,
             province: [],
             city: [],
-            title: 'ثبت آدرس'
+            title: 'ثبت آدرس',
+            btn_text:'ثبت و ارسال به این آدرس'
         }
     },
     mixins: [myMixin],
@@ -111,6 +131,9 @@ export default {
         getProvince() {
             this.axios.get(this.$siteUrl + '/api/get_province').then(response => {
                 this.province = response.data;
+                this.$nextTick(function () {
+                    $("#province_id").selectpicker('refresh');
+                });
 
 
             });
@@ -154,7 +177,7 @@ export default {
                     $("#loading").hide();
                     if (response.data != "error") {
                         this.$emit('setData', response.data);
-                        $("#myModal").modal('hide');
+                        $(".hide_box").hide();
                     }
 
 
@@ -233,6 +256,7 @@ export default {
             }
         },
         setUpdateData: function (address, title) {
+            this.btn_text='ویرایش و ارسال به این آدرس';
             this.id = address.id;
             this.name = address.name;
             this.mobile = address.mobile;
@@ -257,24 +281,33 @@ export default {
             this.error_province_id_message = false;
             this.error_city_id_message = false;
 
-            $("#myModal").modal('show');
+            this.$emit('hideBox');
+            $('.hide_box').show();
+            $("#change_map").click();
+            this.show_mobile_box();
+            this.$nextTick(function () {
+                $("#province_id").selectpicker('refresh');
+                $("#city_id").selectpicker('refresh');
+            });
         },
         setTitle: function (title) {
             this.title = title;
+            this.btn_text='ثبت و ارسال به این آدرس';
             this.name = '';
             this.mobile = '';
             this.city_id = '';
             this.province_id = '';
             this.address = '';
             this.zip_code = '';
+
             this.$emit('hideBox');
-            this.show_box=true;
-           this.show_mobile_box();
+            $('.hide_box').show();
+            $("#change_map").click();
+            this.show_mobile_box();
             this.$nextTick(function () {
                 $("#province_id").selectpicker('refresh');
                 $("#city_id").selectpicker('refresh');
             });
-
         }
 
 
