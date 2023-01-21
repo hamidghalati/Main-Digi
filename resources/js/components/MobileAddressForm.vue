@@ -86,6 +86,9 @@
                         <button class="btn btn-primary" v-on:click="add_address()">
                             <span>{{ btn_text }}</span>
                         </button>
+
+                        <div v-if="server_error"  class="alert alert-warning" style="margin-top: 20px;font-size: 14px;">خطا در ارسال اطلاعات، مجدداً تلاش نمایید</div>
+
                     </div>
                 </div>
             </div>
@@ -120,7 +123,8 @@ export default {
             province: [],
             city: [],
             title: 'ثبت آدرس',
-            btn_text:'ثبت و ارسال به این آدرس'
+            btn_text:'ثبت و ارسال به این آدرس',
+            server_error:false
         }
     },
     mixins: [myMixin],
@@ -173,16 +177,22 @@ export default {
                 formData.append('lat', lat);
                 formData.append('lng', lng);
                 const url = this.$siteUrl + '/user/addAddress';
+                this.server_error=false;
                 this.axios.post(url, formData).then(response => {
                     $("#loading").hide();
+                    $(".hide_box").hide();
                     if (response.data != "error") {
                         this.$emit('setData', response.data);
-                        $(".hide_box").hide();
+                    }
+                    else {
+                        this.server_error=true;
                     }
 
 
                 }).catch(error => {
                     $("#loading").hide();
+                    this.server_error=true;
+                    $(".hide_box").hide();
                 });
 
             }

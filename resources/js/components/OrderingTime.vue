@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="send_order_type_box">
         <div v-if="multi_type_send">
             <h6>انتخاب نحوه ارسال</h6>
             <div class="shipping_data_box">
@@ -22,7 +22,7 @@
                 <swiper :options="swiperOtion">
                     <swiper-slide v-for="product in OrderingData.cart_product_data" :key="product.product_id" class="product_info_box">
                         <img v-bind:src="$siteUrl+'files/thumb/'+product.product_image_url" alt="">
-                        <p>{{product.product_title}}</p>
+                        <p style="text-align: justify;">{{product.product_title}}</p>
 
                         <div class="swiper-button-next" slot="button-next"></div>
                         <div class="swiper-button-prev" slot="button-prev"></div>
@@ -139,6 +139,13 @@ export default {
                 navigation:{
                     nextEl:'.swiper-button-next',
                     prevEl:'.swiper-button-prev',
+                },
+                breakpoints:{
+                    400:{
+                        slidesPerView:2
+                    },600:{
+                        slidesPerView:2
+                    },
                 }
             }
         }

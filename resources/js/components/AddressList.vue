@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
 
         <button v-if="AddressLists.length==0" type="button" class="add_address_btn" v-on:click="showModalBox()"  data-target=".bd-example-modal-lg">
             <strong>افزودن آدرس جدید</strong>
@@ -60,7 +60,7 @@
                  <ul>
                      <li> <h6>{{AddressLists[0]['name']}}</h6></li>
                      <li>
-                         <span class="data_link">اصلاح این آدرس</span>
+                         <span class="data_link" v-on:click="updateRow(AddressLists[0])">اصلاح این آدرس</span>
                      </li>
                      <li class="change_address_btn">
                          <button class="address_btn" v-on:click="change_address()">تغییر آدرس ارسال</button>
@@ -93,7 +93,11 @@
 
         </div>
 
-        <OrderingTime v-if="city_id>0" v-bind:city_id="city_id"></OrderingTime>
+
+                <OrderingTime v-if="city_id>0" v-bind:city_id="city_id"></OrderingTime>
+
+
+
 
         <div class="message_div" v-if="show_dialog_box">
             <div class="message_box">

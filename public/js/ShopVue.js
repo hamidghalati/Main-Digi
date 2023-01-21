@@ -1930,7 +1930,8 @@ __webpack_require__.r(__webpack_exports__);
       province: [],
       city: [],
       title: 'ثبت آدرس',
-      btn_text: 'ثبت و ارسال به این آدرس'
+      btn_text: 'ثبت و ارسال به این آدرس',
+      server_error: false
     };
   },
   mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -1983,14 +1984,18 @@ __webpack_require__.r(__webpack_exports__);
         formData.append('lat', lat);
         formData.append('lng', lng);
         var url = this.$siteUrl + '/user/addAddress';
+        this.server_error = false;
         this.axios.post(url, formData).then(function (response) {
           $("#loading").hide();
           if (response.data != "error") {
             _this3.$emit('setData', response.data);
             $("#myModal").modal('hide');
+          } else {
+            _this3.server_error = true;
           }
         })["catch"](function (error) {
           $("#loading").hide();
+          _this3.server_error = true;
         });
       }
     },
@@ -2716,7 +2721,8 @@ __webpack_require__.r(__webpack_exports__);
       province: [],
       city: [],
       title: 'ثبت آدرس',
-      btn_text: 'ثبت و ارسال به این آدرس'
+      btn_text: 'ثبت و ارسال به این آدرس',
+      server_error: false
     };
   },
   mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -2769,14 +2775,19 @@ __webpack_require__.r(__webpack_exports__);
         formData.append('lat', lat);
         formData.append('lng', lng);
         var url = this.$siteUrl + '/user/addAddress';
+        this.server_error = false;
         this.axios.post(url, formData).then(function (response) {
           $("#loading").hide();
+          $(".hide_box").hide();
           if (response.data != "error") {
             _this3.$emit('setData', response.data);
-            $(".hide_box").hide();
+          } else {
+            _this3.server_error = true;
           }
         })["catch"](function (error) {
           $("#loading").hide();
+          _this3.server_error = true;
+          $(".hide_box").hide();
         });
       }
     },
@@ -3321,6 +3332,14 @@ __webpack_require__.r(__webpack_exports__);
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
+        },
+        breakpoints: {
+          400: {
+            slidesPerView: 2
+          },
+          600: {
+            slidesPerView: 2
+          }
         }
       }
     };
@@ -4213,7 +4232,13 @@ var render = function render() {
         return _vm.add_address();
       }
     }
-  }, [_c("span", [_vm._v(_vm._s(_vm.btn_text))])])])])])])]), _vm._v(" "), _vm._m(1)])])])])])]);
+  }, [_c("span", [_vm._v(_vm._s(_vm.btn_text))])]), _vm._v(" "), _vm.server_error ? _c("div", {
+    staticClass: "alert alert-warning",
+    staticStyle: {
+      "margin-top": "20px",
+      "font-size": "16px"
+    }
+  }, [_vm._v("خطا در ارسال اطلاعات، مجدداً تلاش نمایید")]) : _vm._e()])])])])]), _vm._v(" "), _vm._m(1)])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -4354,7 +4379,14 @@ var render = function render() {
     staticStyle: {
       "padding-right": "20px"
     }
-  }, [_c("ul", [_c("li", [_c("h6", [_vm._v(_vm._s(_vm.AddressLists[0]["name"]))])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("li", {
+  }, [_c("ul", [_c("li", [_c("h6", [_vm._v(_vm._s(_vm.AddressLists[0]["name"]))])]), _vm._v(" "), _c("li", [_c("span", {
+    staticClass: "data_link",
+    on: {
+      click: function click($event) {
+        return _vm.updateRow(_vm.AddressLists[0]);
+      }
+    }
+  }, [_vm._v("اصلاح این آدرس")])]), _vm._v(" "), _c("li", {
     staticClass: "change_address_btn"
   }, [_c("button", {
     staticClass: "address_btn",
@@ -4393,13 +4425,7 @@ var render = function render() {
     }
   }, [_vm._v("خیر")])])]) : _vm._e()], 1);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("li", [_c("span", {
-    staticClass: "data_link"
-  }, [_vm._v("اصلاح این آدرس")])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -5275,7 +5301,13 @@ var render = function render() {
         return _vm.add_address();
       }
     }
-  }, [_c("span", [_vm._v(_vm._s(_vm.btn_text))])])])])])])]);
+  }, [_c("span", [_vm._v(_vm._s(_vm.btn_text))])]), _vm._v(" "), _vm.server_error ? _c("div", {
+    staticClass: "alert alert-warning",
+    staticStyle: {
+      "margin-top": "20px",
+      "font-size": "14px"
+    }
+  }, [_vm._v("خطا در ارسال اطلاعات، مجدداً تلاش نمایید")]) : _vm._e()])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -5430,7 +5462,11 @@ var render = function render() {
         }
       }
     }, [_vm._v("ارسال سفارش به این آدرس")])])])])]);
-  })], 2)]) : _vm._e(), _vm._v(" "), _vm.show_dialog_box ? _c("div", {
+  })], 2)]) : _vm._e(), _vm._v(" "), _vm.city_id > 0 ? _c("OrderingTime", {
+    attrs: {
+      city_id: _vm.city_id
+    }
+  }) : _vm._e(), _vm._v(" "), _vm.show_dialog_box ? _c("div", {
     staticClass: "message_div"
   }, [_c("div", {
     staticClass: "message_box"
@@ -5794,7 +5830,11 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_vm.multi_type_send ? _c("div", [_c("h6", [_vm._v("انتخاب نحوه ارسال")]), _vm._v(" "), _c("div", {
+  return _c("div", {
+    attrs: {
+      id: "send_order_type_box"
+    }
+  }, [_vm.multi_type_send ? _c("div", [_c("h6", [_vm._v("انتخاب نحوه ارسال")]), _vm._v(" "), _c("div", {
     staticClass: "shipping_data_box"
   }, [_c("p", {
     on: {
@@ -5829,7 +5869,11 @@ var render = function render() {
         src: _vm.$siteUrl + "files/thumb/" + product.product_image_url,
         alt: ""
       }
-    }), _vm._v(" "), _c("p", [_vm._v(_vm._s(product.product_title))]), _vm._v(" "), _c("div", {
+    }), _vm._v(" "), _c("p", {
+      staticStyle: {
+        "text-align": "justify"
+      }
+    }, [_vm._v(_vm._s(product.product_title))]), _vm._v(" "), _c("div", {
       staticClass: "swiper-button-next",
       attrs: {
         slot: "button-next"
