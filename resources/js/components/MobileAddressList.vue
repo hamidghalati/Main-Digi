@@ -86,7 +86,7 @@
 
         </div>
 
-        <OrderingTime v-if="city_id>0" v-bind:city_id="city_id"></OrderingTime>
+        <OrderingTime v-if="city_id>0" v-bind:city_id="city_id" :mobile="true"></OrderingTime>
 
         <div class="message_div" v-if="show_dialog_box">
             <div class="message_box">

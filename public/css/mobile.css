@@ -1444,7 +1444,7 @@ message_div {
     -webkit-box-shadow: 1px 1px 4px 0 rgba(0,0,0,0.09);
     margin: 20px auto;
     font-size: 14px;
-    padding: 20px 40px 10px 30px;
+    padding: 20px;
     cursor: pointer;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -1483,41 +1483,43 @@ message_div {
     margin: auto;
     display: block;
 }
-.shipping_data_box .header_box
-{
-    background-color: #fcfcfc;
-    border-bottom: 1px solid #e7e7e7;
-    border-radius: 6px 0 0 6px;
-    -webkit-border-radius: 6px 0 0 6px;
-    padding: 9px;
-    display: inline-flex;
-    width: 100%;
-    font-size: 13px;
-    /*position: absolute;*/
-}
+/*.shipping_data_box .header_box*/
+/*{*/
+/*    background-color: #fcfcfc;*/
+/*    border-bottom: 1px solid #e7e7e7;*/
+/*    border-radius: 6px 0 0 6px;*/
+/*    -webkit-border-radius: 6px 0 0 6px;*/
+/*    padding: 9px;*/
+/*    display: inline-flex;*/
+/*    width: 100%;*/
+/*    font-size: 13px;*/
+/*    !*position: absolute;*!*/
+/*}*/
 .shipping_data_box .header_box div{
-    width: 25%;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    color: #858585;
-}
-.shipping_data_box .header_box div span{
-    display: block;
-    font-weight: bold;
-    padding-top: 10px;
-    padding-left: 30px;
-}
+    font-size: 13px!important;
+    padding: 10px;
+    border-bottom: 1px solid #f6f6f6;
+    display: flex;
+    justify-content: space-between;
 
-.shipping_data_box .header_box::after{
-    content: "\F107";
-    font: normal normal normal 14px/1 FontAwesome;
-    position: relative;
-    left: 30px;
-    font-size: 30px;
-    color: #c6c6c6;
-
-    margin-top: 20px;
 }
+/*.shipping_data_box .header_box div span{*/
+/*    display: block;*/
+/*    font-weight: bold;*/
+/*    padding-top: 10px;*/
+/*    padding-left: 30px;*/
+/*}*/
+
+/*.shipping_data_box .header_box::after{*/
+/*    content: "\F107";*/
+/*    font: normal normal normal 14px/1 FontAwesome;*/
+/*    position: relative;*/
+/*    left: 30px;*/
+/*    font-size: 30px;*/
+/*    color: #c6c6c6;*/
+
+/*    margin-top: 20px;*/
+/*}*/
 .shipping_data_box_title
 {
     font-weight: bold;
@@ -1566,12 +1568,15 @@ message_div {
 .swiper_product_box .product_info_box p {
     font-size: 13px;
     margin-top: 20px;
-    text-align: center;
+    text-align: justify;
     line-height: 1.692;
     font-weight: 700;
     letter-spacing: -.4px;
     color: #858585;
     font-family: 'IRANSans';
+    height: 60px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 .swiper_product_box {
     margin-bottom: 10px;
@@ -1599,8 +1604,76 @@ message_div {
 }
 .checkout_time{
     margin-right: 60px;
+    margin-left: 10px;
+    text-align: justify
 
 }
 .checkout_time span{
     font-size: 14px;
+}
+.check_box {
+    width: 19px;
+    height: 18px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    background: #fff;
+    background-color: rgb(255, 255, 255);
+    display: block;
+    border: 1px solid #d8d8d8;
+    float: right;
+}
+.check_box.active {
+    background-color: #2196F3 !important;
+    border: 1px solid #2196F3 !important;
+}
+.form-check-input {
+    display: none;
+}
+.check_box.active::before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\F00C";
+    display: block;
+    color: white;
+    margin-right: 1px;
+}
+.checkout_action {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 30px;
+}
+.gift_li{
+    display: none;
+}
+.discount_li{
+    display: none;
+}
+.payment_box{
+    padding-bottom: 20px!important;
+}
+#mobile_order_product_list .swiper-button-prev{
+    right: 0!important;
+}
+#mobile_order_product_list .swiper-button-next{
+    left: 0!important;
+}
+#mobile_order_product_list .swiper_product_box{
+    border-bottom: 0!important;
+    margin-top: 35px;
+}
+.product_color_name{
+    height: 20px!important;
+}
+.discount_input {
+    width: calc(100% - 120px);
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    height: 40px;
+}
+.discount_button {
+    width: 120px;
+    height: 40px;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    background-color: #41a7b4;
+    border-color: #41a7b4;
 }

@@ -71,7 +71,7 @@ class ShoppingController extends Controller
                 Session::put('cart_final_price',$cart_final_price);
 
 
-                return view('shipping.payment',['send_order_data'=>$send_order_data,'send_type'=>$send_type]);
+                return view($this->view.'shipping.payment',['send_order_data'=>$send_order_data,'send_type'=>$send_type]);
             }
             else
             {

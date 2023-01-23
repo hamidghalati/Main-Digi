@@ -1,4 +1,4 @@
-const site_url = 'http://127.0.0.1:8000/';
+const site_url = "http://127.0.0.1:8000/";
 let times = null;
 let t = 180;
 let promo_single_count=0

@@ -26,6 +26,8 @@
             @yield('content')
         </div>
 
+        @include('mobile.footer')
+
     </div>
 
     <!-- LOADING ANIMATION -->

@@ -247,7 +247,7 @@ var myMap = new L.Map('map', {
     maptype: 'dreamy',
     poi: true,
     traffic: false,
-    center: [29.664755, 52.457622],
+    center: ['', ''],
     zoom: 14
 });
 //adding the marker to map

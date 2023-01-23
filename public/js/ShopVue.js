@@ -3314,7 +3314,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "OrderingTime",
-  props: ['city_id'],
+  props: ['city_id', 'mobile'],
   mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   components: {
     swiper: vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_1__["swiper"],
@@ -5464,7 +5464,8 @@ var render = function render() {
     }, [_vm._v("ارسال سفارش به این آدرس")])])])])]);
   })], 2)]) : _vm._e(), _vm._v(" "), _vm.city_id > 0 ? _c("OrderingTime", {
     attrs: {
-      city_id: _vm.city_id
+      city_id: _vm.city_id,
+      mobile: true
     }
   }) : _vm._e(), _vm._v(" "), _vm.show_dialog_box ? _c("div", {
     staticClass: "message_div"
@@ -5873,7 +5874,13 @@ var render = function render() {
       staticStyle: {
         "text-align": "justify"
       }
-    }, [_vm._v(_vm._s(product.product_title))]), _vm._v(" "), _c("div", {
+    }, [_vm._v(_vm._s(product.product_title))]), _vm._v(" "), product.color_id > 0 ? _c("p", {
+      staticClass: "product_color_name"
+    }, [_vm._v("رنگ :"), _c("span", {
+      style: {
+        color: product.color_code
+      }
+    }, [_vm._v(" " + _vm._s(product.color_name))])]) : _vm._e(), _vm._v(" "), _c("div", {
       staticClass: "swiper-button-next",
       attrs: {
         slot: "button-next"
@@ -5929,7 +5936,17 @@ var render = function render() {
           src: _vm.$siteUrl + "files/thumb/" + _vm.OrderingData.cart_product_data[data + "_" + key2].product_image_url,
           alt: ""
         }
-      }), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.OrderingData.cart_product_data[data + "_" + key2].product_title))])]);
+      }), _vm._v(" "), _c("p", {
+        attrs: {
+          id: "product_box_title"
+        }
+      }, [_vm._v(_vm._s(_vm.OrderingData.cart_product_data[data + "_" + key2].product_title))]), _vm._v(" "), _vm.OrderingData.cart_product_data[data + "_" + key2].color_id > 0 ? _c("p", {
+        staticClass: "product_color_name"
+      }, [_vm._v("رنگ :"), _c("span", {
+        style: {
+          color: _vm.OrderingData.cart_product_data[data + "_" + key2].color_code
+        }
+      }, [_vm._v(" " + _vm._s(_vm.OrderingData.cart_product_data[data + "_" + key2].color_name))])]) : _vm._e()]);
     }), _vm._v(" "), _c("div", {
       staticClass: "swiper-button-next",
       attrs: {
@@ -5952,19 +5969,18 @@ var render = function render() {
     }), _vm._v(" "), _c("div", {
       staticClass: "checkout_time"
     }, [_c("p", [_c("span", [_vm._v("بازه تحویل سفارش : ")]), _vm._v(" "), _c("span", [_vm._v("زمان تقریبی تحویل از ")]), _vm._v(" "), _c("span", [_vm._v(_vm._s(delivery_order_interval.day_label1))]), _vm._v(" "), _c("span", [_vm._v("تا")]), _vm._v(" "), _c("span", [_vm._v(_vm._s(delivery_order_interval.day_label2))])]), _vm._v(" "), _c("span", [_vm._v(" (پست پیشتاز)")]), _vm._v(" "), _c("span", [_vm._v("هزینه ارسال : ")]), _vm._v(" "), _c("span", [_vm._v(_vm._s(delivery_order_interval.send_fast_price))])])])])]) : _vm._e();
-  }), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("ul", {
+  }), _vm._v(" "), _vm._m(0), _vm._v(" "), !this.mobile ? _c("ul", {
     staticClass: "checkout_action"
   }, [_c("li", [_c("a", {
     staticClass: "data_link",
     attrs: {
       href: _vm.$siteUrl + "Cart"
     }
-  }, [_vm._v("بازگشت به سبد خرید")])]), _vm._v(" "), _c("li", [_c("a", {
-    staticClass: "data_link",
+  }, [_vm._v("بازگشت به سبد خرید")])]), _vm._v(" "), _vm._m(1)]) : _c("a", {
     attrs: {
-      href: _vm.$siteUrl + "payment"
+      onclick: "$('#add_order').submit()"
     }
-  }, [_vm._v("تایید و ادامه ثبت سفارش ")])])])], 2);
+  }, [_vm._m(2)])], 2);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -5991,6 +6007,21 @@ var staticRenderFns = [function () {
       "padding-right": "10px"
     }
   }, [_vm._v("درخواست ارسال فاکتور خرید")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("li", [_c("a", {
+    staticClass: "data_link",
+    attrs: {
+      onclick: "$('#add_order').submit()"
+    }
+  }, [_vm._v("تایید و ادامه ثبت سفارش ")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "add_product_link"
+  }, [_c("span", [_vm._v("تایید و ادامه ثبت سفارش ")])]);
 }];
 render._withStripped = true;
 

@@ -216,25 +216,24 @@
 
 
 @endsection
-
 @section('header')
     <link rel="stylesheet" href="{{asset('slick/slick/slick.css')}}">
     <link rel="stylesheet" href="{{asset('slick/slick/slick-theme.css')}}">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.0/slick.min.js"></script>
 @endsection
 
 @section('footer')
 
-<script>
+    <script>
 
-</script>
+    </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
 
     <script>
 
         const swiper = new Swiper('.swiper-container', {
-            slidesPerView: 'auto',
+            slidesPerView: 2,
             spaceBetween: 0,
             navigation: {
                 nextEl: '.swiper-button-next',
@@ -242,10 +241,5 @@
             },
 
         });
-
-
-
-
-
     </script>
 @endsection

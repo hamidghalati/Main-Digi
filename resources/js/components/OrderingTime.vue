@@ -23,6 +23,8 @@
                     <swiper-slide v-for="product in OrderingData.cart_product_data" :key="product.product_id" class="product_info_box">
                         <img v-bind:src="$siteUrl+'files/thumb/'+product.product_image_url" alt="">
                         <p style="text-align: justify;">{{product.product_title}}</p>
+                        <p class="product_color_name" v-if="product.color_id>0">رنگ :<span v-bind:style="{color:product.color_code} "> {{ product.color_name }}</span></p>
+
 
                         <div class="swiper-button-next" slot="button-next"></div>
                         <div class="swiper-button-prev" slot="button-prev"></div>
@@ -66,7 +68,9 @@
                     <swiper :options="swiperOtion">
                         <swiper-slide v-for="(data,key2) in OrderingData.array_product_id[key]" :key="key" class="product_info_box">
                             <img v-bind:src="$siteUrl+'files/thumb/'+OrderingData.cart_product_data[data+'_'+key2].product_image_url" alt="">
-                            <p>{{OrderingData.cart_product_data[data+'_'+key2].product_title}}</p>
+                            <p id="product_box_title">{{OrderingData.cart_product_data[data+'_'+key2].product_title}}</p>
+                            <p class="product_color_name" v-if="OrderingData.cart_product_data[data+'_'+key2].color_id>0">رنگ :<span v-bind:style="{color:OrderingData.cart_product_data[data+'_'+key2].color_code}"> {{ OrderingData.cart_product_data[data+'_'+key2].color_name }}</span></p>
+
                         </swiper-slide>
 
                         <div class="swiper-button-next" slot="button-next"></div>
@@ -101,17 +105,22 @@
             <span style="padding-right: 10px">درخواست ارسال فاکتور خرید</span>
         </div>
 
-        <ul class="checkout_action">
+        <ul class="checkout_action" v-if="!this.mobile">
             <li>
                 <a v-bind:href="$siteUrl+'Cart'" class="data_link">بازگشت به سبد خرید</a>
             </li>
 
             <li>
-                <a v-bind:href="$siteUrl+'payment'" class="data_link">تایید و ادامه ثبت سفارش </a>
+                <a onclick="$('#add_order').submit()" class="data_link">تایید و ادامه ثبت سفارش </a>
             </li>
 
         </ul>
 
+        <a v-else onclick="$('#add_order').submit()" >
+            <div class="add_product_link">
+                <span>تایید و ادامه ثبت سفارش </span>
+            </div>
+        </a>
 
     </div>
 
@@ -124,7 +133,7 @@ import 'swiper/dist/css/swiper.css'
 
 export default {
     name: "OrderingTime",
-    props:['city_id'],
+    props:['city_id','mobile'],
     mixins:[MyMixin],
     components:{swiper,swiperSlide},
     data(){
