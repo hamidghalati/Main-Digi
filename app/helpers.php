@@ -3,7 +3,7 @@
 use App\CatBrand;
 use App\CategoriesModel;
 use App\GiftCart;
-use App\Lib\JDF;
+use App\Lib\jdf;
 use App\ProductColorModel;
 use App\ProductPriceModel;
 use App\ProductWarranty;
@@ -931,7 +931,7 @@ function get_cat_url($cat)
 function getTimestamp($date, $type)
 {
 
-    $jdf = new JDF();
+    $jdf = new jdf();
     $time = 0;
     $e = explode('/', $date);
     if (sizeof($e) == 3) {
@@ -1200,7 +1200,7 @@ function get_product_price_changed($product_id)
 {
     $array=array();
     $points=[];
-    $jdf=new JDF();
+    $jdf=new jdf();
 
     $productColor=ProductColorModel::with('getColor')->where('product_id',$product_id)->get();
     $timeStamp=strtotime('-30 day');

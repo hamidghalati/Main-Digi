@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Lib\Jdf;
+use App\Lib\jdf;
 use Auth;
 use DB;
 use Illuminate\Database\Eloquent\Model;
@@ -30,7 +30,7 @@ class Order extends Model
         $order_address_id=Session::get('order_address_id');
         $time=time();
         $order_code=substr($time,1,5).$user_id.substr($time,5,10);
-        $jdf=new Jdf();
+        $jdf=new jdf();
         $this->user_id=$user_id;
         $this->address_id=$order_address_id;
         $this->order_read='no';
@@ -113,7 +113,7 @@ class Order extends Model
     public function add_order_info($order_data)
     {
         $this->colors_id='';
-        $jdf=new Jdf();
+        $jdf=new jdf();
         $h=$jdf->tr_num($jdf->jdate('H'));
         $h=(24-$h);
 

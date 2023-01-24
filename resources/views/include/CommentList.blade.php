@@ -1,7 +1,7 @@
 <form method="post" id="data_form">
     @csrf
 
-    @php $jdf=new \App\Lib\Jdf(); $scoreType=\App\CommentScore::getScoreTypeLabel();@endphp
+    @php $jdf=new \App\Lib\jdf(); $scoreType=\App\CommentScore::getScoreTypeLabel();@endphp
 
     @foreach($comments as $comment)
         <div class="comment_box @if($comment->status==1) Accepted @else pending_approval @endif">
@@ -17,7 +17,8 @@
                         </div>
                     @endif
 
-                    <span class="comment_status" comment-id="{{ $comment->id }}" comment-status="{{ $comment->status }}">
+                    <span class="comment_status" comment-id="{{ $comment->id }}"
+                          comment-status="{{ $comment->status }}">
                         @if($comment->status==1)
                             تایید شده
                         @else
@@ -43,10 +44,11 @@
                 <div>
                     @if(!isset($remove_delete_link))
                         @if(!$comment->trashed())
-                            <span  data-toggle="tooltip" data-placement="top"
+                            <span data-toggle="tooltip" data-placement="top"
                                   title="حذف نظر"
                                   onclick="del_row('{{url('admin/comments/'.$comment->id)}}','{{ csrf_token() }}','آیا از حذف این نظر مطمئن هستید؟')">
-                                             <i style="font-size: 20px;cursor: pointer" class="mdi mdi-trash-can-outline"></i>
+                                             <i style="font-size: 20px;cursor: pointer"
+                                                class="mdi mdi-trash-can-outline"></i>
 
                             </span>
                         @else
@@ -59,13 +61,14 @@
                             </span>
                         @endif
 
-                            @if($comment->trashed())
-                                <span class="btn btn-info" data-toggle="tooltip" data-placement="top"
-                                      title="بازیابی نظر"  onclick="restore_row('{{url('admin/comments/'.$comment->id)}}','{{ csrf_token() }}','آیا از بازیابی این نظر مطمئن هستید؟')">
-                                            <i class="fa fa-refresh" ></i>
+                        @if($comment->trashed())
+                            <span class="btn btn-info" data-toggle="tooltip" data-placement="top"
+                                  title="بازیابی نظر"
+                                  onclick="restore_row('{{url('admin/comments/'.$comment->id)}}','{{ csrf_token() }}','آیا از بازیابی این نظر مطمئن هستید؟')">
+                                            <i class="fa fa-refresh"></i>
                                             بازیابی
                                 </span>
-                            @endif
+                        @endif
 
                     @endif
                 </div>
@@ -94,7 +97,6 @@
                             </a>
                         </div>
                     @endif
-
 
 
                     <span>ثبت شده در محصول :</span>

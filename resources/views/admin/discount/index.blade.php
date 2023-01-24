@@ -18,13 +18,14 @@
                 @if(isset($_GET['trashed']) && $_GET['trashed']==true)
                     <input type="hidden" name="trashed" value="true">
                 @endif
-                <input type="text" name="string" class="form-control" value="{{$req->get('string','')}}" placeholder="کد تخفیف مورد نظر را وارد کنید">
+                <input type="text" name="string" class="form-control" value="{{$req->get('string','')}}"
+                       placeholder="کد تخفیف مورد نظر را وارد کنید">
                 <button class="btn btn-primary btn_search">جستجو
                 </button>
 
             </form>
 
-            <form method="post"  id="data_form">
+            <form method="post" id="data_form">
                 @csrf
                 <table class="table table-striped">
                     <thead>
@@ -40,15 +41,16 @@
                     <tbody>
                     <?php
 
-                    $i=(isset($_GET['page']))?(($_GET['page']-1)*10):0;
-                    $jdf=new \App\Lib\Jdf();
+                    $i = (isset($_GET['page'])) ? (($_GET['page'] - 1) * 10) : 0;
+                    $jdf = new \App\Lib\jdf();
                     ?>
                     @foreach($discount as $key=>$value)
                         <tr>
                             <td>
 
                                 <div class="pretty p-icon p-smooth">
-                                    <input type="checkbox" name="discount_id[]" value="{{$value->id}}" class="check_box" />
+                                    <input type="checkbox" name="discount_id[]" value="{{$value->id}}"
+                                           class="check_box"/>
                                     <div class="state p-danger-o">
                                         <i class="icon fa fa-close"></i>
                                         <label></label>
@@ -78,33 +80,33 @@
                                     </a>
                                 @endif
 
-                                    @if($value->trashed())
-                                        <span class="btn btn-info" data-toggle="tooltip" data-placement="top"
-                                           title="بازیابی کد تخفیف"  onclick="restore_row('{{url('admin/discount/'.$value->id)}}','{{ csrf_token() }}','آیا از بازیابی کد تخفیف مطمئن هستید؟')">
-                                            <i class="fa fa-refresh" ></i>
+                                @if($value->trashed())
+                                    <span class="btn btn-info" data-toggle="tooltip" data-placement="top"
+                                          title="بازیابی کد تخفیف"
+                                          onclick="restore_row('{{url('admin/discount/'.$value->id)}}','{{ csrf_token() }}','آیا از بازیابی کد تخفیف مطمئن هستید؟')">
+                                            <i class="fa fa-refresh"></i>
                                             بازیابی
                                         </span>
-                                    @endif
-                                    @if(!$value->trashed())
-                                        <span class="btn btn-danger" data-toggle="tooltip" data-placement="top"
-                                              title="حذف کد تخفیف" onclick="del_row('{{url('admin/discount/'.$value->id)}}','{{ csrf_token() }}','آیا از حذف کد تخفیف مطمئن هستید؟')" >
-                                             <i class="fa fa-remove" ></i>
+                                @endif
+                                @if(!$value->trashed())
+                                    <span class="btn btn-danger" data-toggle="tooltip" data-placement="top"
+                                          title="حذف کد تخفیف"
+                                          onclick="del_row('{{url('admin/discount/'.$value->id)}}','{{ csrf_token() }}','آیا از حذف کد تخفیف مطمئن هستید؟')">
+                                             <i class="fa fa-remove"></i>
                                               حذف کد تخفیف
                                         </span>
-                                    @else
-                                        <span class="btn btn-danger" onclick="del_row('{{url('admin/discount/'.$value->id)}}','{{ csrf_token() }}','اطلاعات شما از بین خواهد رفت.آیا مطمئن هستید؟')" data-toggle="tooltip" data-placement="top"
-                                              title="حذف کامل کد تخفیف">
-                                             <i class="fa fa-remove" ></i>
+                                @else
+                                    <span class="btn btn-danger"
+                                          onclick="del_row('{{url('admin/discount/'.$value->id)}}','{{ csrf_token() }}','اطلاعات شما از بین خواهد رفت.آیا مطمئن هستید؟')"
+                                          data-toggle="tooltip" data-placement="top"
+                                          title="حذف کامل کد تخفیف">
+                                             <i class="fa fa-remove"></i>
                                               حذف کد تخفیف
                                         </span>
-                                    @endif
+                                @endif
 
                             </td>
                         </tr>
-
-
-
-
 
                     @endforeach
 
@@ -124,8 +126,5 @@
 
         </div>
     </div>
-
-
-
 
 @endsection

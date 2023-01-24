@@ -10,11 +10,12 @@
         </div>
         <div class="panel_content">
 
-    @include('include.alert')
+            @include('include.alert')
 
 
             <form action="" method="get" class="search_form">
-                <input autocomplete="off" type="text" name="submission_id" class="form-control" value="{{$req->get('submission_id','')}}" placeholder="شماره مرسوله مورد نظر را وارد کنید">
+                <input autocomplete="off" type="text" name="submission_id" class="form-control"
+                       value="{{$req->get('submission_id','')}}" placeholder="شماره مرسوله مورد نظر را وارد کنید">
                 <button class="btn btn-primary btn_search">جستجو
                 </button>
             </form>
@@ -33,12 +34,12 @@
                 <tbody>
                 <?php
 
-                 $jdf=new \App\Lib\Jdf();
-                $i=(isset($_GET['page']))?(($_GET['page']-1)*10):0;
+                $jdf = new \App\Lib\jdf();
+                $i = (isset($_GET['page'])) ? (($_GET['page'] - 1) * 10) : 0;
                 $orderStatus = \App\Order::orderStatus();
                 ?>
                 @foreach($submission as $key=>$value)
-                    <?php   $i++;$e=explode(' ',$value->created_at);$e2=explode('-',$e[0])  ?>
+                        <?php $i++;$e = explode(' ', $value->created_at);$e2 = explode('-', $e[0]) ?>
                     <tr>
 
                         <td>{{replace_number($i)}}</td>
@@ -60,10 +61,6 @@
                         </td>
                     </tr>
 
-
-
-
-
                 @endforeach
 
                 @if(sizeof($submission)==0)
@@ -77,7 +74,6 @@
 
 
             {{$submission->links()}}
-
 
 
         </div>

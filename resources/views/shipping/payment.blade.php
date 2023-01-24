@@ -1,17 +1,18 @@
 @extends('layouts.order.order')
 @section('content')
 
-
-
-
     <div class="container">
         <article class="card">
             <div class="card-body">
                 <div class="track">
-                    <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">اطلاعات ارسال</span> </div>
-                    <div class="step active"> <span class="icon"> <i class="fa fa-credit-card"></i> </span> <span class="text"> پرداخت</span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> اتمام خرید و ارسال </span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">پیگیری</span> </div>
+                    <div class="step active"><span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">اطلاعات ارسال</span>
+                    </div>
+                    <div class="step active"><span class="icon"> <i class="fa fa-credit-card"></i> </span> <span
+                            class="text"> پرداخت</span></div>
+                    <div class="step"><span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> اتمام خرید و ارسال </span>
+                    </div>
+                    <div class="step"><span class="icon"> <i class="fa fa-box"></i> </span> <span
+                            class="text">پیگیری</span></div>
                 </div>
 
             </div>
@@ -36,7 +37,7 @@
                 <h6>خلاصه سفارش</h6>
 
                 <div class="shipping_data_box" style="padding-right: 15px;padding-left: 15px">
-                    <?php $i=1;
+                    <?php $i = 1;
                     ?>
                     @if($send_type==1)
 
@@ -94,7 +95,8 @@
                             <div class="shipping_data_box" style="padding: 0">
                                 <div class="header_box">
                                     <div>
-                                        مرسوله {{replace_number($i)}} از {{replace_number(sizeof($send_order_data['delivery_order_interval']))}}
+                                        مرسوله {{replace_number($i)}}
+                                        از {{replace_number(sizeof($send_order_data['delivery_order_interval']))}}
                                         <span>({{replace_number(sizeof($send_order_data['array_product_id'][$key]))}}) کالا </span>
                                     </div>
                                     <div>
@@ -103,7 +105,7 @@
                                     </div>
 
                                     <div>
-                                         ارسال از :
+                                        ارسال از :
                                         <span>
                                             @if($value['send_order_day_number']==0)
                                                 آماده ارسال
@@ -119,12 +121,13 @@
                                     </div>
 
                                 </div>
+
                                 <div class="swiper-container ordering_product_list">
                                     <div class="swiper-wrapper swiper_product_box">
                                         @foreach($send_order_data['array_product_id'][$key] as $key2=>$value2)
                                             <div class="swiper-slide product_info_box ">
-                                                <?php
-                                                    $product=$send_order_data['cart_product_data'][$value2.'_'.$key2];
+                                                    <?php
+                                                    $product = $send_order_data['cart_product_data'][$value2 . '_' . $key2];
                                                     ?>
                                                 <img src="{{url('files/thumb/'.$product['product_image_url'])}}" alt="">
                                                 <p class="product_title">{{$product['product_title']}}</p>
@@ -137,8 +140,9 @@
                                     <div class="swiper-button-prev"></div>
                                     <div class="swiper-button-next"></div>
                                 </div>
+
                             </div>
-                            <?php $i++ ?>
+                                <?php $i++ ?>
                         @endforeach
 
                     @endif
@@ -148,13 +152,12 @@
             </div>
 
 
-
             <div class="page_aside">
                 <div class="order_info" style="margin-top: 0!important;">
                     <?php
 
-                    $cart_final_price=$send_type==1 ? $send_order_data['integer_normal_cart_price'] : $send_order_data['integer_fasted_cart_amount'];
-                    $final_price=Session::get('final_price',0);
+                    $cart_final_price = $send_type == 1 ? $send_order_data['integer_normal_cart_price'] : $send_order_data['integer_fasted_cart_amount'];
+                    $final_price = Session::get('final_price', 0);
                     ?>
                     <ul>
                         <li>
@@ -166,7 +169,7 @@
                         <li>
                             <span>هزینه ارسال :</span>
                             <span class="left" id="total_send_order_price">
-                                <?= $send_type==1 ? $send_order_data['normal_send_order_amount'] : $send_order_data['total_fast_send_amount']?>
+                                <?= $send_type == 1 ? $send_order_data['normal_send_order_amount'] : $send_order_data['total_fast_send_amount'] ?>
                             </span>
                         </li>
 
@@ -185,7 +188,8 @@
                     <div class="checkout_divider"></div>
                     <div class="checkout_content">
                         <p style="color: red">مبلغ قابل پرداخت</p>
-                        <p class="cart_price_p" id="final_price">{{replace_number(number_format($cart_final_price))}} تومان </p>
+                        <p class="cart_price_p" id="final_price">{{replace_number(number_format($cart_final_price))}}
+                            تومان </p>
                     </div>
 
                     <a href="{{url('order/payment')}}">
@@ -196,9 +200,6 @@
                     </a>
 
 
-
-
-
                 </div>
 
             </div>
@@ -206,40 +207,24 @@
         </div>
     </div>
 
-
-
-
-
-
-
-
-
-
 @endsection
 @section('header')
-    <link rel="stylesheet" href="{{asset('slick/slick/slick.css')}}">
-    <link rel="stylesheet" href="{{asset('slick/slick/slick-theme.css')}}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.0/slick.min.js"></script>
+    <link rel="stylesheet" src="{{asset('css/swiper.min.css')}}"/>
+
 @endsection
-
 @section('footer')
+    <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
 
     <script>
-
-    </script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
-
-    <script>
-
         const swiper = new Swiper('.swiper-container', {
-            slidesPerView: 2,
+            slidesPerView: 1,
             spaceBetween: 0,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
-            },
-
+            }
         });
+
     </script>
+
 @endsection

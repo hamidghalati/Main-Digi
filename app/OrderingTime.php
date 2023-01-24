@@ -1,6 +1,6 @@
 <?php
 namespace App;
-use App\Lib\Jdf;
+use App\Lib\jdf;
 use Session;
 
 class OrderingTime
@@ -176,7 +176,7 @@ class OrderingTime
     public function get_delivery_order_interval()
     {
         $day_array=array();
-        $jdf=new Jdf();
+        $jdf=new jdf();
         foreach ($this->send_status as $key=>$value)
         {
             settype($value,'integer');

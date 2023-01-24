@@ -51,7 +51,9 @@ a {
 ul {
     padding: 0 !important;
 }
-
+li{
+    list-style: none;
+}
 .header {
     width: 100%;
     display: flex;
@@ -1696,4 +1698,118 @@ message_div {
 }
 .profile_item_list a{
     color: #5b5b5b;
+}
+.profile_info_row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid #e3e3e3;
+}
+.order_list .product_item_header{
+    font-weight: bold;
+    border-bottom: 1px solid #e3e3e3 !important;
+    line-height: normal!important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 15px;
+}
+.order_list .profile_item{
+    padding: 10px 15px;
+}
+.profile_menu_title {
+    display: block;
+    padding:15px 20px 10px;
+    color: #858585;
+    font-weight: bold;
+    font-size: 15px;
+}
+.order_steps img {
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    display: block;
+}
+.step_div span {
+    padding-top: 15px;
+}
+.step_div {
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+}
+.step_inactive {
+    filter: grayscale(100%);
+    opacity: 0.3;
+}
+.order_steps hr {
+    min-width: 66px;
+    margin-right: 10px;
+    margin-left: 10px;
+    background-color: #e5e5e5;
+    opacity: 1;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    height: 5px;
+}
+.hr_active {
+    background-color: #81d7e2 !important;
+}
+
+.order_content_header{
+    font-size: 17px!important;
+    margin: 20px 20px 0 20px;
+    font-weight: bold;
+    border: 0!important;
+}
+.remove_border{
+    border: 0!important;
+}
+.profile_item .swiper-button-prev{
+    right: 0!important;
+}
+.profile_item .swiper-button-next{
+    left: 0!important;
+}
+#order_product_box .product{
+    background: white;
+    border: 1px solid #f6f6f6;
+    box-shadow: 0 2px 4px 0 rgb(0,0 ,0, 0.09%);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+#order_product_box .product img{
+    width: 116px;
+    margin: 10px auto;
+    display: block;
+}
+#order_product_box .product .title{
+    color: #1e1d1d!important;
+    text-align: center!important;
+    margin-top: 10px!important;
+
+}
+#order_product_box .product .order_product_price{
+    text-align: center;
+    color: red;
+    font-size: 18px;
+}
+.product_box{
+    margin:10px;
+}
+.order_product_count{
+    position: absolute;
+    top: 0;
+    left: 10px;
+    font-weight: bold;
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    background-color: #00bfd6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }

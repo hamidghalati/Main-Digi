@@ -57,8 +57,7 @@
                     <tr>
                         <td>
                             مبلغ قابل پرداخت :
-                            <span
-                                style="font-family: IRANSans">{{replace_number(number_format($order->price)).' تومان '}}</span>
+                            <span style="font-family: IRANSans">{{replace_number(number_format($order->price)).' تومان '}}</span>
                         </td>
                         <td>
                             مبلغ کل :
@@ -224,15 +223,14 @@
 @endsection
 
 @section('header')
-    <link rel="stylesheet" href="{{asset('slick/slick/slick.css')}}">
-    <link rel="stylesheet" href="{{asset('slick/slick/slick-theme.css')}}">
+    <link rel="stylesheet" src="{{asset('css/swiper.min.css')}}"/>
 
 @endsection
 @section('footer')
     <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/vue-toastr/dist/vue-toastr.umd.min.js"></script>
+{{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>--}}
+{{--    <script src="https://unpkg.com/vue/dist/vue.js"></script>--}}
+{{--    <script src="https://unpkg.com/vue-toastr/dist/vue-toastr.umd.min.js"></script>--}}
 
     <script>
         const swiper = new Swiper('.swiper-container', {
