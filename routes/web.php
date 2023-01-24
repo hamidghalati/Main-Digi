@@ -185,6 +185,9 @@ Route::post('site/check_discount_code', 'ShoppingController@check_discount_code'
 
 
 Route::prefix('user')->middleware(['auth'])->group(function () {
+
+
+
     //Address
     Route::post('/addAddress', 'UserController@addAddress');
 
@@ -198,7 +201,8 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::get('/profile/gift-cart', 'User\UserPanelController@gift_cart');
     Route::get('/profile/orders', 'User\UserPanelController@orders');
     Route::get('/profile/orders/{order_id}', 'User\UserPanelController@show_orders');
-
+    //profile
+    Route::get('profile','User\UserPanelController@profile');
 
 
 });

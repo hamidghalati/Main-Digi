@@ -1,4 +1,4 @@
-@extends('layouts.shop.mobile')
+@extends('layouts.mobile.mobile')
 @section('head')
     <link rel="stylesheet" href="{{asset('css/swiper.min.css')}}">
 @endsection
@@ -21,10 +21,10 @@
                 </div>
                 <div style="display: flex;align-items: center">
                     <?php $width = 0;
-                    if ($product->score_count >0) {
-                        $width=$product->score/($product->score_count*6);
+                    if ($product->score_count > 0) {
+                        $width = $product->score / ($product->score_count * 6);
                     }
-                    $width=$width*20;
+                    $width = $width * 20;
                     ?>
                     <span> {{ replace_number($product->score_count) }} نفر </span>
                     <div class="score">
@@ -82,7 +82,8 @@
                 @else
                     <div class="product_unavailable">
                         <span>ناموجود</span>
-                        <p>این محصول در حال حاضر ناموجود می باشد، می توانید از طریق لیست محصولات مرتبط، از محصولات مشابه این کالا دیدن نمایید.</p>
+                        <p>این محصول در حال حاضر ناموجود می باشد، می توانید از طریق لیست محصولات مرتبط، از محصولات مشابه
+                            این کالا دیدن نمایید.</p>
                     </div>
                 @endif
             </div>
@@ -118,7 +119,6 @@
     </div>
 
     @include('mobile.product_item_list')
-
 
 @endsection
 @section('footer')

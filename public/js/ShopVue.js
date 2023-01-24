@@ -5843,13 +5843,17 @@ var render = function render() {
     }
   }, [_c("span", {
     "class": _vm.normal_send ? "radio_check active_radio_check" : "radio_check"
-  }), _vm._v(" "), _c("span", [_vm._v("عادی")])]), _vm._v(" "), _c("p", {
+  }), _vm._v(" "), _c("span", {
+    staticClass: "send_type"
+  }, [_vm._v("عادی")])]), _vm._v(" "), _c("p", {
     on: {
       click: _vm.send_fast_send
     }
   }, [_c("span", {
     "class": _vm.fast_send ? "radio_check active_radio_check" : "radio_check"
-  }), _vm._v(" "), _c("span", [_vm._v("سریع (مرسوله شما در سریع ترین زمان ممکن ارسال می شود)")])])])]) : _vm._e(), _vm._v(" "), _vm.normal_send ? _c("div", {
+  }), _vm._v(" "), _c("span", {
+    staticClass: "send_type"
+  }, [_vm._v("سریع (مرسوله شما در سریع ترین زمان ممکن ارسال می شود)")])])])]) : _vm._e(), _vm._v(" "), _vm.normal_send ? _c("div", {
     staticClass: "shipping_data_box",
     staticStyle: {
       "padding-left": "0",

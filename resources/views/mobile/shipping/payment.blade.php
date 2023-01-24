@@ -69,7 +69,7 @@
 
         <div class="shipping_data_box payment_box" style="margin-top: 0;">
             <span class="radio_check active_radio_check"></span>
-            <span>پرداخت اینترنتی (آنلاین با تمام کارت های بانکی)</span>
+            <span style="margin-right: 15px">پرداخت اینترنتی (آنلاین با تمام کارت های بانکی)</span>
         </div>
 
         <h6>خلاصه سفارش</h6>
@@ -110,7 +110,7 @@
                             @foreach($send_order_data['cart_product_data'] as $product)
                                 <div class="product_info_box swiper-slide">
                                     <img src="{{url('files/thumb/'.$product['product_image_url'])}}" alt="">
-                                    <p class="product_title">{{$product['product_title']}}</p>
+                                    <p style="height: 70px;" class="product_title">{{$product['product_title']}}</p>
                                     @if($product['color_id']>0)
                                         <p style="height: 25px!important;text-align: center" class="product_color">رنگ :{{$product['color_name']}}</p>
                                     @endif

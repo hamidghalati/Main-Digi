@@ -55,9 +55,9 @@
                 </a>
 
                 @if(Auth::check())
-                    <a href="{{ url('profile') }}"><span class="fa fa-user"></span></a>
+                    <a href="{{ url('user/profile') }}"><span class="fa fa-user"></span></a>
                 @else
-                    <a href="{{ url('profile') }}"><span class="fa fa-user"></span></a>
+                    <a href="{{ url('login') }}"><span class="fa fa-user"></span></a>
                 @endif
 
             </div>

@@ -4,15 +4,22 @@ namespace App\Http\Controllers\User;
 
 use App\GiftCart;
 use App\Http\Controllers\Controller;
+use App\Lib\MobileDetect;
 use App\Order;
 use App\OrderData;
 use Illuminate\Http\Request;
 
 class UserPanelController extends Controller
 {
+    protected $view='';
     public function __construct()
     {
         getCatList();
+        $detect=new MobileDetect();
+        if ($detect->isMobile() || $detect->isTablet())
+        {
+            $this->view='mobile.';
+        }
     }
 
     public function gift_cart(Request $request)
@@ -37,6 +44,11 @@ class UserPanelController extends Controller
         $order_data=new OrderData($order->getOrderInfo,$order->getProductRow,$order->user_id);
         $order_data=$order_data->getData();
         return view('UserPanel.show_order',['order'=>$order,'order_data'=>$order_data]);
+    }
+
+    public function profile()
+    {
+        return view($this->view.'userPanel.profile');
     }
 
 

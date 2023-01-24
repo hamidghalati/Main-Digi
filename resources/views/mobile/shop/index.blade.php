@@ -1,4 +1,4 @@
-@extends('layouts.shop.mobile')
+@extends('layouts.mobile.mobile')
 
 @section('head')
     <link rel="stylesheet" href="{{asset('css/swiper.min.css')}}">
@@ -55,7 +55,7 @@
                                     </p>
                                     @if($value->product_number>0)
                                         <del class="price_tag">
-                                        {{replace_number(number_format($value->price1)).'تومان'}}
+                                            {{replace_number(number_format($value->price1)).'تومان'}}
                                         </del>
 
                                         <span class="price price_tag">

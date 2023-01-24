@@ -1568,13 +1568,13 @@ message_div {
 .swiper_product_box .product_info_box p {
     font-size: 13px;
     margin-top: 20px;
-    text-align: justify;
+    text-align: center;
     line-height: 1.692;
     font-weight: 700;
     letter-spacing: -.4px;
     color: #858585;
     font-family: 'IRANSans';
-    height: 60px;
+    height: auto;
     margin-right: 10px;
     margin-left: 10px;
 }
@@ -1658,7 +1658,7 @@ message_div {
 }
 #mobile_order_product_list .swiper_product_box{
     border-bottom: 0!important;
-    margin-top: 35px;
+    margin-top: 20px;
 }
 .product_color_name{
     height: 20px!important;
@@ -1676,4 +1676,24 @@ message_div {
     -webkit-border-radius: 0;
     background-color: #41a7b4;
     border-color: #41a7b4;
+}
+.send_type{
+    margin-right: 15px;
+}
+.profile_item_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(229,229,229,0.84);
+    line-height: 50px;
+}
+.profile_item_header i{
+    font-size: 20px;
+}
+.profile_item_list{
+    margin: 12px!important;
+}
+.profile_item_list a{
+    color: #5b5b5b;
 }

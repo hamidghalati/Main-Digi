@@ -5,12 +5,12 @@
             <div class="shipping_data_box">
                 <p v-on:click="send_normal_send">
                     <span :class="(normal_send ? 'radio_check active_radio_check' : 'radio_check')"></span>
-                    <span>عادی</span>
+                    <span class="send_type">عادی</span>
                 </p>
 
                 <p v-on:click="send_fast_send">
                     <span :class="(fast_send ? 'radio_check active_radio_check' : 'radio_check')"></span>
-                    <span>سریع (مرسوله شما در سریع ترین زمان ممکن ارسال می شود)</span>
+                    <span class="send_type">سریع (مرسوله شما در سریع ترین زمان ممکن ارسال می شود)</span>
                 </p>
 
             </div>
