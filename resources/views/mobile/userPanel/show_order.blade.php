@@ -159,12 +159,12 @@
                                 <ul>
                                     <li class="title">{{$product['title']}}</li>
                                     @if($product['color_id']>0)
-                                        <li>
+                                        <li style="text-align: center">
                                             <span>رنگ :</span>
                                             <span>{{$product['color_name']}}</span>
                                         </li>
                                     @endif
-                                    <li>
+                                    <li style="text-align: center">
                                         <span>گارانتی :</span>
                                         <span>{{$product['warranty_name']}}</span>
                                     </li>

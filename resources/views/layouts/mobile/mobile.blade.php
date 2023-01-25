@@ -106,11 +106,7 @@
 
 </script>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $(".example1").pDatepicker();
-    });
-</script>
+
 
 
 </body>

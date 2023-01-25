@@ -201,7 +201,7 @@ class SiteController extends Controller
         if ($checkHasColor) {
             $colors = ColorModel::get();
         }
-        return view('shop.cat_product', ['filter' => $filter, 'category' => $category, 'brands' => $brands, 'colors' => $colors]);
+        return view($this->view.'shop.cat_product', ['filter' => $filter, 'category' => $category, 'brands' => $brands, 'colors' => $colors]);
 
     }
 

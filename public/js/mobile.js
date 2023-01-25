@@ -1,6 +1,7 @@
 const site_url = 'http://127.0.0.1:8000/';
 
 $(document).ready(function () {
+
     $("#align-justify").on('click', function () {
         $('.catBox').show();
         setTimeout(function () {
@@ -62,16 +63,28 @@ $(document).ready(function () {
 
     });
 
-
     $("#show_more_item_product").click(function () {
         $("#product_item").show();
-        $("#product_item").css('right', '0');
+        setTimeout(function () {
+            $("#product_item").css('right', '0');
+        },20);
+
         $('body').css('overflow-y', 'hidden');
     });
 
     $('.add_product_link').click(function () {
        $("#add_cart_form").submit();
     });
+
+    $('.advanced_search_box').click(function () {
+        $("#filter_box").show();
+        setTimeout(function () {
+            $("#filter_box").css('right', '0');
+        },20);
+
+        $('body').css('overflow-y', 'hidden');
+    });
+
 
 
 });
