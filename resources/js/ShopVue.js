@@ -19,6 +19,7 @@ import MobileOtherPrice from "./components/MobileOtherPrice";
 import MobileShoppingCart from "./components/MobileShoppingCart";
 import MobileAddressList from "./components/MobileAddressList";
 import MobileAddressForm from "./components/MobileAddressForm";
+import MobileProductBox from "./components/MobileProductBox";
 
 
 
@@ -45,7 +46,8 @@ const app = new Vue({
         MobileOtherPrice,
         MobileShoppingCart,
         MobileAddressList,
-        MobileAddressForm
+        MobileAddressForm,
+        MobileProductBox
 
     }
 });

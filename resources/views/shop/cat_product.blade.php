@@ -103,7 +103,7 @@
                                         </div>
                                         <div>
                                             <div
-                                                style="background:<?= $value->code ?> @if($value->name=='سفید') border: 1px solid black;  @endif  "
+                                                style="background:<?= $value->code ?>; @if($value->name=='سفید') border: 1px solid black;  @endif  "
                                                 class="color_div"></div>
                                         </div>
                                     </li>

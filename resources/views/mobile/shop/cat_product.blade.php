@@ -13,6 +13,10 @@
         <button class="filter_btn sort_btn">مرتب سازی</button>
     </div>
 
+    <div>
+        <mobile-product-box ></mobile-product-box>
+    </div>
+
     <div class="mobile_data_box hide_box" id="filter_box">
         <div class="header">
             <span>{{ $category->name }}</span>
@@ -30,12 +34,95 @@
                 </div>
             </div>
 
+
+            <div class="item_box toggle_box">
+                <div class="toggle-light" id="send_status"></div>
+                <span>فقط کالاهای آماده ارسال</span>
+            </div>
+
+            <div class="item_box">
+
+                <div class="title_box">
+                    <span class="mdi mdi-plus-circle"></span>
+                    <label for="">محدوده قیمت مورد نظر</label>
+                </div>
+                <div>
+                    <div class="filter_box">
+                    <div id="slider" class="price_range_slider"></div>
+                    <ul class="filter_price_ul">
+                        <li>
+                            <div>از</div>
+                            <div class="price" id="min_price"></div>
+                            <div>تومان</div>
+                        </li>
+                        <li>
+                            <div>تا</div>
+                            <div class="price" id="max_price"></div>
+                            <div>تومان</div>
+                        </li>
+                    </ul>
+
+                    <button class="btn btn-primary" id="price_filter_btn">
+                        <span class="fa fa-filter"></span>
+                        <span> اعمال محدوده قیمت </span>
+                    </button>
+                    </div>
+                </div>
+            </div>
+
+            @if(isset($category)&& sizeof($category->getChild)>0)
+                <div class="item_box">
+                    <div class="title_box">
+                        <label for="">دسته بندی</label>
+                    </div>
+                    <ul class="search_category_ul">
+                        <li class="parent">
+                            <a href="{{ url('search/'.$category->url) }}">{{$category->name}}</a>
+                            <ul>
+                                @foreach($category->getChild as $cat)
+                                    <li>
+                                        <a href="{{ url('search/'.$cat->url) }}">{{$cat->name}}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            @endif
+
+            @if(isset($brands) && sizeof($brands)>0)
+                <div class="item_box">
+                    <div class="title_box">
+                        <i class="mdi mdi-plus-circle"></i>
+                        <label for="">برند</label>
+                    </div>
+                    <div>
+                        <div class="filter_box filter_brand_div">
+
+                            <input class="form-control" type="text" id="brand_search"
+                                   placeholder="جستجوی نام برند">
+
+                            <ul class="list-inline product_cat_ul brand_list">
+                                @foreach($brands as $key=>$value)
+
+                                    <li data="brand_param_{{$value->brand_id}}">
+                                        <span class="check_box"></span>
+                                        <span class="title">{{$value->getBrand->brand_name}}</span>
+                                        <span class="ename">{{$value->getBrand->brand_ename}}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             @if(isset($filter))
                 @foreach($filter as $key=>$value)
                     <div class="item_box">
                         <div class="title_box">
+                            <i class="mdi mdi-plus-circle"></i>
                             <label for="">{{$value->title}}</label>
-                            <span class="fa fa-angle-down"></span>
                         </div>
                         <div>
                             <div class="filter_box">
@@ -53,6 +140,37 @@
                     </div>
                 @endforeach
             @endif
+
+            @if(sizeof($colors)>1)
+                <div class="item_box">
+                    <div class="title_box">
+                        <i class="mdi mdi-plus-circle"></i>
+                        <label for="">رنگ ها</label>
+                    </div>
+                    <div>
+                        <div class="filter_box">
+                            <ul class="list-inline product_cat_ul color_filter_ul">
+                                @foreach($colors as $key=>$value)
+
+                                    <li data="color_param_{{$value->id}}">
+                                        <div>
+                                            <span class="check_box"></span>
+                                            <span class="title">{{$value->name}}</span>
+
+                                        </div>
+                                        <div>
+                                            <div
+                                                style="background:<?= $value->code ?>; @if($value->name=='سفید') border: 1px solid black;  @endif  "
+                                                class="color_div"></div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
 
         </div>
 
@@ -81,7 +199,6 @@
         });
 
         // $('.toggle').toggles({click:false});
-
 
 
     </script>

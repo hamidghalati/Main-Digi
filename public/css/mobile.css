@@ -419,7 +419,7 @@ a:focus {
     width: 20px;
     height: 20px;
     display: block;
-    z-index: 10000000;
+    z-index: 100000;
     position: absolute;
     text-align: center;
     top: -13px;
@@ -1882,7 +1882,6 @@ message_div {
 }
 .item_box .title_box{
     display: flex;
-    justify-content: space-between;
     width: 98%;
     margin: auto;
     cursor: pointer;
@@ -1891,3 +1890,109 @@ message_div {
     color: #424242;
     align-items: center;
 }
+.item_box .title_box label{
+    margin-bottom: 0!important;
+    padding-right: 5px;
+}
+.item_box .title_box i{
+    top: 2px!important;
+    position: relative!important;
+    font-size: 20px!important;
+}
+.filter_box{
+    display: none;
+    max-height: 500px;
+    overflow-y: auto;
+    border-top: 1px solid #dedede;
+}
+.item_box ul li {
+    color: grey;
+    font-size: 14px;
+    padding-top: 10px;
+    padding-right: 5px;
+    cursor: pointer;
+}
+.item_box ul li .title {
+    padding-right: 5px;
+}
+.color_div {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+}
+.color_filter_ul li {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+}
+.ename {
+    float: left;
+    font-size: 12px !important;
+    padding-left: 10px;
+}
+.filter_brand_div {
+    position: relative;
+}
+.filter_brand_div::before {
+    content: "\F002";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 22px;
+    right: 5%;
+}
+#brand_search {
+    width: 95%;
+    margin: 15px auto;
+    font-size: 13px !important;
+    display: block;
+    padding: 7px 25px;
+}
+.toggle_box #send_status {
+    margin: 10px;
+}
+.price_range_slider {
+    width: 90%;
+    margin: 30px auto !important;
+}
+.filter_price_ul {
+    display: inline-flex;
+    width: 100%;
+    padding-top: 0 !important;
+    border-bottom: 1px solid #dedede;
+    padding-bottom: 0 !important;
+}
+.filter_price_ul li:first-child {
+    border-left: 1px solid #dedede;
+}
+.filter_price_ul li {
+    width: 50%;
+    list-style: none;
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: 14px;
+}
+.filter_price_ul li .price {
+    background-color: #F0F0F0;
+    width: 80%;
+    margin: 10px auto;
+    color: grey !important;
+}
+.price {
+    color: red !important;
+    text-align: center !important;
+    font-size: 18px !important;
+    font-family: 'IRANSans';
+}
+#price_filter_btn {
+    background-color: #2196F3 !important;
+    border: 1px solid #2196F3;
+    margin: 10px auto;
+    font-size: 14px;
+    display: block;
+}
+.noUi-txt-dir-rtl.noUi-horizontal .noUi-handle {
+    left: 285px !important;
+    right: auto;
+}
+

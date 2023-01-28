@@ -85,6 +85,17 @@ $(document).ready(function () {
         $('body').css('overflow-y', 'hidden');
     });
 
+    $('.title_box').click(function () {
+        const el = $(this).parent().find('.filter_box');
+        if (el.css('display') == 'none') {
+            el.slideDown();
+            $('.mdi-plus-circle', this).removeClass('mdi-plus-circle').addClass('mdi-minus-circle');
+        } else {
+            el.slideUp();
+            $('.mdi-minus-circle', this).removeClass('mdi-minus-circle').addClass('mdi-plus-circle');
+        }
+    });
+
 
 
 });
