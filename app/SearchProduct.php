@@ -63,7 +63,7 @@ class SearchProduct
     {
         $product2 = ProductsModel::orderBy('price', 'DESC');
 
-        $product = ProductsModel::select(['id', 'title', 'product_url', 'price', 'discount_price', 'special', 'image_url', 'brand_id', 'status']);
+        $product = ProductsModel::select(['id', 'title', 'product_url', 'price', 'discount_price', 'special', 'image_url', 'brand_id', 'status','score','score_count']);
 
         if (is_array($this->category) && sizeof($this->category) > 0) {
             $product = $product->whereIn('cat_id', $this->category);

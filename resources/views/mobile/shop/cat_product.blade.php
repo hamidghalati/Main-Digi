@@ -14,6 +14,7 @@
     </div>
 
     <div>
+        <div id="selected_filter_box"></div>
         <mobile-product-box ></mobile-product-box>
     </div>
 
@@ -33,7 +34,6 @@
                     <span>فقط کالاهای موجود</span>
                 </div>
             </div>
-
 
             <div class="item_box toggle_box">
                 <div class="toggle-light" id="send_status"></div>
@@ -128,7 +128,9 @@
                             <div class="filter_box">
                                 <ul class="list-inline product_cat_ul">
                                     @foreach($value->getChild as $key2=>$value2)
-                                            <?php $filter_key = 'attribute[' . $value->id . ']' ?>
+                                            <?php
+                                            $filter_key = 'attribute['.$value->id.']';
+                                            ?>
                                         <li data="{{$filter_key}}_param_{{$value2->id}}">
                                             <span class="check_box"></span>
                                             <span class="title">{{$value2->title}}</span>
@@ -171,7 +173,13 @@
                 </div>
             @endif
 
+            <div style="padding-bottom: 60px"></div>
 
+
+        </div>
+
+        <div id="filter_link" class="add_product_link">
+            <span>جستجوی پیشرفته</span>
         </div>
 
     </div>

@@ -62,8 +62,8 @@ export default {
             }
             return format.split('').reverse().join('');
         },
-        check_search_params:function () {
-            let url=window.location.href;
+        check_search_params:function (page_url) {
+            let url=page_url==undefined ? window.location.href : page_url;
             const params=url.split('?');
             if (params[1]!=undefined)
             {
@@ -94,21 +94,7 @@ export default {
 
             }
         },
-        add_filter_tag:function (data,k,v) {
-            $('#filter_div').show();
-            data=data.toString().replace(",",'_').replace(",",'_');
-            data=data.toString().replace("''",'').replace("",'');
-            data="'"+data+"'";
-            const el="li[data="+data+"]";
-            const title=$(el).parent().parent().parent().parent().find('.title_box label').text();
-            const html='<div class="selected_filter_item" data-key="'+k+'" data-value="'+v+'">'+
-                '<span>'+
-                title+":"+$(el).find('.title').text()+
-                '</span>'+
-                '<i id="selected_filter_item_remove" class="fa fa-close"></i>'+
-                '</div>';
-            $("#selected_filter_box").append(html);
-        },
+  
         setRangeSlider:function (price) {
             const app=this;
             var slider = document.querySelector('.price_range_slider');
@@ -169,49 +155,6 @@ export default {
 
 
         },
-        add_active_filter:function (k,v) {
-            if (k.length>1)
-            {
-
-
-                    let data="";
-                    let filter_key=k[0];
-                    if (k.length==3)
-                    {
-                        data=k[0]+"["+k[1]+"_param_"+v;
-                        data="'"+data+"'";
-                        filter_key=k[0]+"["+k[1];
-
-                    }
-                    else {
-                        data=k[0]+"_param_"+v;
-
-                    }
-
-                    $('li[data='+data+'] .check_box').addClass('active');
-                    $('li[data='+data+']').parent().parent().slideDown();
-                    if ($('li[data='+data+']').length==1)
-                    {
-                        this.add_filter_tag(data,filter_key,v);
-                    }
-                }
-            else {
-
-                if (k=="has_product")
-                {
-                    this.set_enable_product_status_toggle();
-
-                }
-                else if (k=="has_ready_to_shipment")
-                {
-                    this.set_enable_status_toggle();
-                }
-
-
-
-
-            }
-        },
         setFilterPrice:function () {
             this.add_url_param('price[min]',this.min_price);
             this.add_url_param('price[max]',this.max_price);
@@ -248,19 +191,19 @@ export default {
             a=Math.round(a);
             return a;
         },
-        set_filter_event:function (el) {
+        set_filter_event:function (el,page_url) {
             let data=$(el).attr('data');
             data=data.split('_');
             if ($('.check_box',el).hasClass('active'))
             {
                 $('.check_box',el).removeClass('active');
-                this.remove_url_query_string(data[0],data[2]);
-                this.remove_filter_tag(data[0],data[2]);
+                this.remove_url_query_string(data[0],data[2],page_url);
+                this.remove_filter_tag(data[0],data[2],page_url);
             }
             else {
                 $('.check_box',el).addClass('active');
-                this.add_url_query_string(data[0],data[2]);
-                this.add_filter_tag(data,data[0],data[2]);
+                this.add_url_query_string(data[0],data[2],page_url);
+                this.add_filter_tag(data,data[0],data[2],page_url);
             }
         },
         add_url_query_string:function (key,value) {
@@ -280,8 +223,8 @@ export default {
             this.getProduct(1);
 
         },
-        remove_url_query_string:function (key,value) {
-            let url=window.location.href;
+        remove_url_query_string:function (key,value,page_url) {
+            let url=page_url==undefined ? window.location.href : page_url;
             let check=url.split(key);
             const params=url.split('?');
             let h=0;
@@ -325,9 +268,7 @@ export default {
             {
                 url=url.replace('&','?');
             }
-
-            this.setPageUrl(url);
-            this.getProduct(1);
+            this.changed_url(url);
         },
         set_sort:function (value) {
             this.sort=value;
@@ -465,14 +406,6 @@ export default {
                 }
             }
         },
-        remove_filter_tag:function (k,v) {
-            $('.selected_filter_item[data-key="'+k+'"][data-value='+v+']').remove();
-            if ($('#selected_filter_box div').length==0)
-            {
-                $("#filter_div").hide();
-            }
-
-        },
         remove_filter_item:function (el) {
             const key=$(el).attr('data-key');
             const value=$(el).attr('data-value');
@@ -576,7 +509,8 @@ export default {
                     $(".mobile_data_box").css('right','0');
                 },50)
             });
-        }
+        },
+
 
 
     }

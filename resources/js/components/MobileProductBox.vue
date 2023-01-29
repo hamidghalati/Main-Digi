@@ -1,69 +1,71 @@
 <template>
 
     <div>
-        <div class="product_div" v-for="product in this.productList.data">
-            <div class="image_div">
-
-                <div class="product_offer_div">
-                    <div v-if="check_has_off(product)">
-                        <product-offers-time :time="check_has_off(product)"></product-offers-time>
-
-                    </div>
-                </div>
-
-                <ul class="color_box list-inline">
-                    <li v-for="(color,key) in product.get_product_color"
-                        v-if="color.get_color != null && key<3">
-                        <label for="" :style="{background:color.get_color.code}"></label>
-                    </li>
-
-                    <li v-if="product.get_product_color.length>3">
-                        <span class="fa fa-plus"></span>
-                    </li>
-                </ul>
+        <a v-for="product in this.productList.data" v-bind:href="$siteUrl+'product/dkp-'+product.id+'/'+product.product_url">
+           <div class="product_div">
+               <div class="product_offer_div">
+                   <div v-if="check_has_off(product)">
+                       <product-offers-time :time="check_has_off(product)"></product-offers-time>
+                   </div>
+               </div>
+               <div class="product_info_div">
+                   <div class="image_box">
+                       <img v-bind:src="$siteUrl+'files/thumb/'+product.image_url" alt="">
+                   </div>
+                   <div class="info">
+                       <div class="product_info">
+                           <span class="title">{{ product.title }}</span>
+                       </div>
 
 
-                <a v-bind:href="$siteUrl+'product/dkp-'+product.id+'/'+product.product_url">
-                    <img v-bind:src="$siteUrl+'files/thumb/'+product.image_url" alt="">
-                </a>
-            </div>
+                       <div style="display: flex;align-items: center" v-if="product.score_count>0">
 
-            <div class="info">
-                <a v-bind:href="$siteUrl+'product/dkp-'+product.id+'/'+product.product_url">
-                    <p class="title">{{ product.title }}</p>
-                </a>
+                           <span> {{ replaceNumber(product.score_count) }} نفر </span>
+                           <div class="score">
+                               <div class="gray">
+                                   <div class="red" :style="{width:getScoreValue(product)+'%'}"></div>
+                               </div>
+                           </div>
 
+                       </div>
 
+<!--                       <div class="score">-->
+<!--                           <div class="gray" v-if="product.score_count>0">-->
+<!--                               <span> {{ replaceNumber(product.score_count) }} نفر </span>-->
+<!--                               <div class="red" :style="{width:getScoreValue(product)+'%'}"></div>-->
+<!--                           </div>-->
+<!--                       </div>-->
 
-                <div v-if="product.status==1 && product.get_first_product_price !=null" class="price">
-                    <div class="discount_div">
-                        <div
-                            v-if="product.get_first_product_price.price1 != product.get_first_product_price.price2">
-                            <!--                            <img :src="$siteUrl+'files/images/discount.png'" alt="">-->
-                            <del>
-                                {{ replaceNumber(number_format(product.get_first_product_price.price1)) }} تومان
-                            </del>
-                            <span class="discount-badge">
+                       <div v-if="product.status==1 && product.get_first_product_price !=null" class="price">
+                           <div class="discount_div">
+                               <div
+                                   v-if="product.get_first_product_price.price1 != product.get_first_product_price.price2">
+                                   <!--                            <img :src="$siteUrl+'files/images/discount.png'" alt="">-->
+                                   <del>
+                                       {{ replaceNumber(number_format(product.get_first_product_price.price1)) }} تومان
+                                   </del>
+                                   <span class="discount-badge">
                                 %{{ getDiscountValue(product.get_first_product_price.price1, product.get_first_product_price.price2) }}
                             </span>
-                        </div>
-                    </div>
-                    <span>{{ replaceNumber(number_format(product.get_first_product_price.price2)) }} تومان </span>
-                </div>
-                <div v-else class="product_status">
-                    <div>
-                        <p class="line"></p>
-                        <span>ناموجود</span>
-                    </div>
-                </div>
+                               </div>
+                           </div>
+                           <span>{{ replaceNumber(number_format(product.get_first_product_price.price2)) }} تومان </span>
+                       </div>
 
-            </div>
+                       <div v-else class="product_status">
+                           <div>
+                               <p class="line"></p>
+                               <span>ناموجود</span>
+                           </div>
+                       </div>
 
-            <div class="shop_name" v-if="product.status==1">
-                فروشنده : حمیدرضا سمیعی نیا
-            </div>
 
-        </div>
+
+                   </div>
+               </div>
+           </div>
+        </a>
+
 
 
         <div v-if="this.productList.data==0 && get_result" class="not_found_product_message">
@@ -88,11 +90,10 @@ export default {
             min_price: 0,
             max_price: 0,
             get_result: false,
-            sort: 21,
             search_string: '',
-            compare_list: [],
-            show_compare: false,
-            compare_link: ''
+            search_url: '',
+
+
         }
     },
     props: ['compare'],
@@ -100,14 +101,16 @@ export default {
     mounted() {
         // this.request_url=window.location.href.replace(this.$siteUrl,this.$siteUrl+'/getProduct/');
         const app = this;
-        this.check_search_params();
+        this.search_url=window.location.href;
+        this.check_search_params(this.search_url);
+        $(".selected_filter_item").show();
         this.set_product_sort();
         this.set_search_string();
         $(document).on('click', '#price_filter_btn', function () {
             app.setFilterPrice();
         });
         $(document).on('click', '.product_cat_ul li', function () {
-            app.set_filter_event(this);
+            app.set_filter_event(this,app.search_url);
         });
         $(document).on('keyup', '#search_input', function (event) {
             app.search_product(event, this);
@@ -125,8 +128,11 @@ export default {
         $(document).on('click', '#remove_all_filter', function () {
             app.remove_all_filter();
         });
-
-
+        $(document).on('click', '#filter_link', function () {
+            $(".selected_filter_item").show();
+            $(".removed_tag").remove();
+            app.getProduct(1);
+        });
 
         this.getProduct();
 
@@ -134,8 +140,10 @@ export default {
     },
     methods: {
         getProduct: function (page = 1) {
+            this.setPageUrl(this.search_url);
+            this.hide_search_box();
             $("#loading").show();
-            this.request_url = window.location.href.replace(this.$siteUrl, this.$siteUrl + 'getProduct/');
+            this.request_url = this.search_url.replace(this.$siteUrl, this.$siteUrl + 'getProduct/');
             this.axios.get(this.get_request_url(this.request_url, page)).then(response => {
                 this.productList = response.data['product'];
                 this.setRangeSlider(response.data.max_price);
@@ -163,27 +171,119 @@ export default {
             }
 
         },
-        remove_all_filter:function () {
-            let url=window.location.href;
-            url=url.split('?')[0];
+        remove_all_filter: function () {
+            let url = window.location.href;
+            url = url.split('?')[0];
             this.setPageUrl(url);
             $('.selected_filter_item').remove();
             $("#filter_div").hide();
             $('.filter_box .list-inline li').find('.check_box').removeClass('active');
-            if ($('#product_status .toggle-slide .toggle-on').hasClass('active'))
-            {
+            if ($('#product_status .toggle-slide .toggle-on').hasClass('active')) {
                 $('#product_status').click();
             }
-            if ($('#send_status .toggle-slide .toggle-on').hasClass('active'))
-            {
+            if ($('#send_status .toggle-slide .toggle-on').hasClass('active')) {
                 $('#send_status').click();
             }
-            if (this.noUiSlider)
-            {
+            if (this.noUiSlider) {
                 this.noUiSlider.reset();
             }
             this.getProduct(1);
-        }
+        },
+        getScoreValue:function (product) {
+            let width=0;
+            if (product.score_count > 0){
+                width = product.score / (product.score_count * 6);
+            }
+            width*=20;
+            return width;
+        },
+        add_url_query_string:function (key,value) {
+            let url=this.search_url;
+            let check=url.split(key);
+            const n=check.length-1;
+            const url_params=url.split('?');
+            if (url_params[1]==undefined)
+            {
+                url=url+"?"+key+"["+n+"]="+value;
+            }
+            else {
+                url=url+"&"+key+"["+n+"]="+value;
+            }
+            this.search_url=url;
+        },
+        hide_search_box:function () {
+            $('body').css('overflow-y','auto');
+            const width=$(window).width();
+            const right="-"+width+"px";
+
+            setTimeout(function () {
+                $(".mobile_data_box").css({'right':right});
+            },50)
+        },
+        changed_url:function (url) {
+            this.search_url=url;
+        },
+        add_filter_tag:function (data,k,v) {
+            $('#filter_div').show();
+            data=data.toString().replace(",",'_').replace(",",'_');
+            data=data.toString().replace("''",'').replace("",'');
+            data="'"+data+"'";
+            const el="li[data="+data+"]";
+            const title=$(el).parent().parent().parent().parent().find('.title_box label').text();
+            const html='<div class="selected_filter_item" data-key="'+k+'" data-value="'+v+'">'+
+                '<span>'+
+                title+":"+$(el).find('.title').text()+
+                '</span>'+
+                '<i id="selected_filter_item_remove" class="fa fa-close"></i>'+
+                '</div>';
+            $("#selected_filter_box").append(html);
+        },
+        remove_filter_tag:function (k,v) {
+            $('.selected_filter_item[data-key="'+k+'"][data-value='+v+']').addClass('removed_tag');
+        },
+        add_active_filter:function (k,v) {
+            if (k.length>1)
+            {
+
+
+                let data="";
+                let filter_key=k[0];
+                if (k.length==3)
+                {
+                    data=k[0]+"["+k[1]+"_param_"+v;
+                    data="'"+data+"'";
+                    filter_key=k[0]+"["+k[1];
+
+                }
+                else {
+                    data=k[0]+"_param_"+v;
+
+                }
+
+                $('li[data='+data+'] .check_box').addClass('active');
+                $('li[data='+data+']').parent().parent().slideDown();
+                if ($('li[data='+data+']').length==1)
+                {
+                    this.add_filter_tag(data,filter_key,v);
+                }
+            }
+            else {
+
+                if (k=="has_product")
+                {
+                    this.set_enable_product_status_toggle();
+
+                }
+                else if (k=="has_ready_to_shipment")
+                {
+                    this.set_enable_status_toggle();
+                }
+
+
+
+
+            }
+        },
 
 
     }

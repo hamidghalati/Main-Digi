@@ -154,7 +154,7 @@
                             <div class="filter_box">
                                 <ul class="list-inline product_cat_ul">
                                     @foreach($value->getChild as $key2=>$value2)
-                                            <?php $filter_key = 'attribute[' . $value->id . ']' ?>
+                                            <?php $filter_key = 'attribute['.$value->id.']' ?>
                                         <li data="{{$filter_key}}_param_{{$value2->id}}">
                                             <span class="check_box"></span>
                                             <span class="title">{{$value2->title}}</span>

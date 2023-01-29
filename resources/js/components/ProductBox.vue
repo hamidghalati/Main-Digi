@@ -309,7 +309,77 @@ export default {
                 this.noUiSlider.reset();
             }
             this.getProduct(1);
-        }
+        },
+        changed_url:function (url) {
+            this.setPageUrl(url);
+            this.getProduct(1);
+        },
+        remove_filter_tag:function (k,v) {
+            $('.selected_filter_item[data-key="'+k+'"][data-value='+v+']').remove();
+            if ($('#selected_filter_box div').length==0)
+            {
+                $("#filter_div").hide();
+            }
+
+        },
+        add_active_filter:function (k,v) {
+            if (k.length>1)
+            {
+
+
+                let data="";
+                let filter_key=k[0];
+                if (k.length==3)
+                {
+                    data=k[0]+"["+k[1]+"_param_"+v;
+                    data="'"+data+"'";
+                    filter_key=k[0]+"["+k[1];
+
+                }
+                else {
+                    data=k[0]+"_param_"+v;
+
+                }
+
+                $('li[data='+data+'] .check_box').addClass('active');
+                $('li[data='+data+']').parent().parent().slideDown();
+                if ($('li[data='+data+']').length==1)
+                {
+                    this.add_filter_tag(data,filter_key,v);
+                }
+            }
+            else {
+
+                if (k=="has_product")
+                {
+                    this.set_enable_product_status_toggle();
+
+                }
+                else if (k=="has_ready_to_shipment")
+                {
+                    this.set_enable_status_toggle();
+                }
+
+
+
+
+            }
+        },
+        add_filter_tag:function (data,k,v) {
+            $('#filter_div').show();
+            data=data.toString().replace(",",'_').replace(",",'_');
+            data=data.toString().replace("''",'').replace("",'');
+            data="'"+data+"'";
+            const el="li[data="+data+"]";
+            const title=$(el).parent().parent().parent().parent().find('.title_box label').text();
+            const html='<div class="selected_filter_item" data-key="'+k+'" data-value="'+v+'">'+
+                '<span>'+
+                title+":"+$(el).find('.title').text()+
+                '</span>'+
+                '<i id="selected_filter_item_remove" class="fa fa-close"></i>'+
+                '</div>';
+            $("#selected_filter_box").append(html);
+        },
 
 
     }
