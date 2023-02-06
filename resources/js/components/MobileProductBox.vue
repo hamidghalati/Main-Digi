@@ -10,6 +10,11 @@
                </div>
                <div class="product_info_div">
                    <div class="image_box">
+                       <span v-if="product.status==1 && product.get_first_product_price !=null" class="discount-badge" id="discount-badge_filter" >
+                           <span  v-if="product.get_first_product_price.price1 != product.get_first_product_price.price2">
+                               %{{ getDiscountValue(product.get_first_product_price.price1, product.get_first_product_price.price2) }}
+                           </span>
+                       </span>
                        <img v-bind:src="$siteUrl+'files/thumb/'+product.image_url" alt="">
                    </div>
                    <div class="info">
@@ -44,9 +49,9 @@
                                    <del>
                                        {{ replaceNumber(number_format(product.get_first_product_price.price1)) }} تومان
                                    </del>
-                                   <span class="discount-badge">
-                                %{{ getDiscountValue(product.get_first_product_price.price1, product.get_first_product_price.price2) }}
-                            </span>
+<!--                                   <span class="discount-badge" id="discount-badge_filter" >-->
+<!--                                %{{ getDiscountValue(product.get_first_product_price.price1, product.get_first_product_price.price2) }}-->
+<!--                                   </span>-->
                                </div>
                            </div>
                            <span>{{ replaceNumber(number_format(product.get_first_product_price.price2)) }} تومان </span>
@@ -102,31 +107,12 @@ export default {
         // this.request_url=window.location.href.replace(this.$siteUrl,this.$siteUrl+'/getProduct/');
         const app = this;
         this.search_url=window.location.href;
-        this.check_search_params(this.search_url);
+        this.check_search_params(window.location.href);
         $(".selected_filter_item").show();
         this.set_product_sort();
         this.set_search_string();
-        $(document).on('click', '#price_filter_btn', function () {
-            app.setFilterPrice();
-        });
         $(document).on('click', '.product_cat_ul li', function () {
             app.set_filter_event(this,app.search_url);
-        });
-        $(document).on('keyup', '#search_input', function (event) {
-            app.search_product(event, this);
-        });
-        $(document).on('toggle', '#product_status', function (e, action) {
-            app.set_product_status(e, action);
-
-        });
-        $(document).on('toggle', '#send_status', function (e, action) {
-            app.set_send_status(e, action);
-        });
-        $(document).on('click', '.selected_filter_item', function () {
-            app.remove_filter_item(this);
-        });
-        $(document).on('click', '#remove_all_filter', function () {
-            app.remove_all_filter();
         });
         $(document).on('click', '#filter_link', function () {
             $(".selected_filter_item").show();
@@ -171,24 +157,6 @@ export default {
             }
 
         },
-        remove_all_filter: function () {
-            let url = window.location.href;
-            url = url.split('?')[0];
-            this.setPageUrl(url);
-            $('.selected_filter_item').remove();
-            $("#filter_div").hide();
-            $('.filter_box .list-inline li').find('.check_box').removeClass('active');
-            if ($('#product_status .toggle-slide .toggle-on').hasClass('active')) {
-                $('#product_status').click();
-            }
-            if ($('#send_status .toggle-slide .toggle-on').hasClass('active')) {
-                $('#send_status').click();
-            }
-            if (this.noUiSlider) {
-                this.noUiSlider.reset();
-            }
-            this.getProduct(1);
-        },
         getScoreValue:function (product) {
             let width=0;
             if (product.score_count > 0){
@@ -210,6 +178,7 @@ export default {
                 url=url+"&"+key+"["+n+"]="+value;
             }
             this.search_url=url;
+
         },
         hide_search_box:function () {
             $('body').css('overflow-y','auto');
@@ -237,9 +206,6 @@ export default {
                 '<i id="selected_filter_item_remove" class="fa fa-close"></i>'+
                 '</div>';
             $("#selected_filter_box").append(html);
-        },
-        remove_filter_tag:function (k,v) {
-            $('.selected_filter_item[data-key="'+k+'"][data-value='+v+']').addClass('removed_tag');
         },
         add_active_filter:function (k,v) {
             if (k.length>1)
@@ -278,12 +244,13 @@ export default {
                 {
                     this.set_enable_status_toggle();
                 }
-
-
-
-
             }
         },
+        remove_filter_tag:function (k,v) {
+            $('.selected_filter_item[data-key="'+k+'"][data-value='+v+']').addClass('removed_tag');
+        },
+
+
 
 
     }

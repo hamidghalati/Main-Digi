@@ -2555,8 +2555,8 @@ del {
     font-size: 14px;
 }
 .noUi-txt-dir-rtl.noUi-horizontal .noUi-handle {
-    left: 250px;
-    right: auto;
+    left: 0!important;
+    right: -15px!important;
 }
 .filter_price_ul li:first-child{
     border-left: 1px solid #dedede;

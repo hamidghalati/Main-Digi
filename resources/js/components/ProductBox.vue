@@ -73,11 +73,15 @@
                                         {{ replaceNumber(number_format(product.get_first_product_price.price1)) }} تومان
                                     </del>
                                     <span class="discount-badge">
-                                %{{ getDiscountValue(product.get_first_product_price.price1, product.get_first_product_price.price2) }}
+                                %{{
+                                            getDiscountValue(product.get_first_product_price.price1, product.get_first_product_price.price2)
+                                        }}
                             </span>
                                 </div>
                             </div>
-                            <span>{{ replaceNumber(number_format(product.get_first_product_price.price2)) }} تومان </span>
+                            <span>{{
+                                    replaceNumber(number_format(product.get_first_product_price.price2))
+                                }} تومان </span>
                         </div>
                         <div v-else class="product_status">
                             <div>
@@ -98,9 +102,6 @@
                 <div v-if="this.productList.data==0 && get_result" class="not_found_product_message">
                     محصولی برای نمایش یافت نشد
                 </div>
-
-
-
 
 
             </div>
@@ -172,7 +173,7 @@ export default {
     mounted() {
         // this.request_url=window.location.href.replace(this.$siteUrl,this.$siteUrl+'/getProduct/');
         const app = this;
-        this.check_search_params();
+
         this.set_product_sort();
         this.set_search_string();
         $(document).on('click', '#price_filter_btn', function () {
@@ -206,7 +207,7 @@ export default {
             }
         }, ".product_div");
 
-
+        this.check_search_params();
         this.getProduct();
 
 
@@ -289,96 +290,77 @@ export default {
             }
 
         },
-        remove_all_filter:function () {
-            let url=window.location.href;
-            url=url.split('?')[0];
+        remove_all_filter: function () {
+            let url = window.location.href;
+            url = url.split('?')[0];
             this.setPageUrl(url);
             $('.selected_filter_item').remove();
             $("#filter_div").hide();
             $('.filter_box .list-inline li').find('.check_box').removeClass('active');
-            if ($('#product_status .toggle-slide .toggle-on').hasClass('active'))
-            {
+            if ($('#product_status .toggle-slide .toggle-on').hasClass('active')) {
                 $('#product_status').click();
             }
-            if ($('#send_status .toggle-slide .toggle-on').hasClass('active'))
-            {
+            if ($('#send_status .toggle-slide .toggle-on').hasClass('active')) {
                 $('#send_status').click();
             }
-            if (this.noUiSlider)
-            {
+            if (this.noUiSlider) {
                 this.noUiSlider.reset();
             }
             this.getProduct(1);
         },
-        changed_url:function (url) {
+        changed_url: function (url) {
             this.setPageUrl(url);
             this.getProduct(1);
         },
-        remove_filter_tag:function (k,v) {
-            $('.selected_filter_item[data-key="'+k+'"][data-value='+v+']').remove();
-            if ($('#selected_filter_box div').length==0)
-            {
-                $("#filter_div").hide();
-            }
-
-        },
-        add_active_filter:function (k,v) {
-            if (k.length>1)
-            {
-
-
+        add_active_filter: function (k, v) {
+            if (k.length > 1) {
                 let data="";
-                let filter_key=k[0];
-                if (k.length==3)
-                {
-                    data=k[0]+"["+k[1]+"_param_"+v;
-                    data="'"+data+"'";
-                    filter_key=k[0]+"["+k[1];
+                let filter_key = k[0];
+                if (k.length == 3) {
+
+                    data = k[0] + "[" + k[1] + "_param_" + v;
+                    data = "'"+data+"'";
+                    filter_key = k[0] + "[" + k[1];
+
+                } else {
+                    data = k[0] + "_param_" + v;
 
                 }
-                else {
-                    data=k[0]+"_param_"+v;
-
-                }
-
                 $('li[data='+data+'] .check_box').addClass('active');
                 $('li[data='+data+']').parent().parent().slideDown();
-                if ($('li[data='+data+']').length==1)
-                {
-                    this.add_filter_tag(data,filter_key,v);
+                if ($('li[data='+data+']').length == 1) {
+                    this.add_filter_tag(data, filter_key, v);
                 }
-            }
-            else {
+            } else {
 
-                if (k=="has_product")
-                {
+                if (k == "has_product") {
                     this.set_enable_product_status_toggle();
 
-                }
-                else if (k=="has_ready_to_shipment")
-                {
+                } else if (k == "has_ready_to_shipment") {
                     this.set_enable_status_toggle();
                 }
-
-
-
-
             }
         },
-        add_filter_tag:function (data,k,v) {
-            $('#filter_div').show();
-            data=data.toString().replace(",",'_').replace(",",'_');
-            data=data.toString().replace("''",'').replace("",'');
-            data="'"+data+"'";
-            const el="li[data="+data+"]";
-            const title=$(el).parent().parent().parent().parent().find('.title_box label').text();
-            const html='<div class="selected_filter_item" data-key="'+k+'" data-value="'+v+'">'+
-                '<span>'+
-                title+":"+$(el).find('.title').text()+
-                '</span>'+
-                '<i id="selected_filter_item_remove" class="fa fa-close"></i>'+
-                '</div>';
-            $("#selected_filter_box").append(html);
+        add_url_query_string: function (key, value) {
+            let url = window.location.href;
+            let check = url.split(key);
+            const n = check.length - 1;
+            const url_params = url.split('?');
+            if (url_params[1] == undefined) {
+                url = url + "?" + key + "[" + n + "]=" + value;
+            } else {
+                url = url + "&" + key + "[" + n + "]=" + value;
+            }
+
+            this.setPageUrl(url);
+            this.getProduct(1);
+
+        },
+        remove_filter_tag:function (k,v) {
+            $('.selected_filter_item[data-key="'+k+'"][data-value='+v+']').remove();
+            if ($("selected_filter_box div").length==0){
+                $("#filter_div").hide();
+            }
         },
 
 

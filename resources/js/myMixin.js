@@ -65,7 +65,7 @@ export default {
         check_search_params:function (page_url) {
             let url=page_url==undefined ? window.location.href : page_url;
             const params=url.split('?');
-            if (params[1]!=undefined)
+            if (params[1] !=undefined)
             {
                 if (params[1].indexOf('&')>-1)
                 {
@@ -75,26 +75,19 @@ export default {
                         let k=vars[i].split('=')[0];
                         let v=vars[i].split('=')[1];
                         k=k.split('[');
-
-                        this.add_active_filter(k,v);
-
+                         this.add_active_filter(k,v);
                     }
 
                 }
-
                 else {
 
                     let k=params[1].split('=')[0];
                     let v=params[1].split('=')[1];
                     k=k.split('[');
-
-                    this.add_active_filter(k,v);
+                     this.add_active_filter(k,v);
                 }
-
-
             }
         },
-  
         setRangeSlider:function (price) {
             const app=this;
             var slider = document.querySelector('.price_range_slider');
@@ -205,23 +198,6 @@ export default {
                 this.add_url_query_string(data[0],data[2],page_url);
                 this.add_filter_tag(data,data[0],data[2],page_url);
             }
-        },
-        add_url_query_string:function (key,value) {
-            let url=window.location.href;
-            let check=url.split(key);
-            const n=check.length-1;
-            const url_params=url.split('?');
-            if (url_params[1]==undefined)
-            {
-                url=url+"?"+key+"["+n+"]="+value;
-            }
-            else {
-                url=url+"&"+key+"["+n+"]="+value;
-            }
-
-            this.setPageUrl(url);
-            this.getProduct(1);
-
         },
         remove_url_query_string:function (key,value,page_url) {
             let url=page_url==undefined ? window.location.href : page_url;
@@ -477,6 +453,55 @@ export default {
             }
 
         },
+        add_filter_tag:function (data,k,v) {
+            $('#filter_div').show();
+            data=data.toString().replace(",",'_').replace(",",'_');
+            data=data.toString().replace("''",'').replace("",'');
+            data="'"+data+"'";
+            const el="li[data="+data+"]";
+            const title=$(el).parent().parent().parent().parent().find('.title_box label').text();
+            const html='<div class="selected_filter_item" data-key="'+k+'" data-value="'+v+'">'+
+                '<span>'+
+                title+":"+$(el).find('.title').text()+
+                '</span>'+
+                '<i id="selected_filter_item_remove" class="fa fa-close"></i>'+
+                '</div>';
+            $("#selected_filter_box").append(html);
+        },
+
+        add_active_filter:function (k,v) {
+            if (k.length>1)
+            {
+                let data="";
+                let filter_key=k[0];
+                if (k.length==3)
+                {
+                    data=k[0]+"["+k[1]+"_param_"+v;
+                    data="'"+data+"'";
+                    filter_key=k[0]+"["+k[1];
+                }
+                else {
+                    data=k[0]+"_param_"+v;
+                }
+                $('li[data='+data+'] .check_box').addClass('active');
+                $('li[data='+data+']').parent().parent().slideDown();
+                if ($('li[data='+data+']').length==1)
+                {
+                    this.add_filter_tag(data,filter_key,v);
+                }
+            }
+            else {
+
+                if (k=="has_product")
+                {
+                    this.set_enable_product_status_toggle();
+                }
+                else if (k=="has_ready_to_shipment")
+                {
+                    this.set_enable_status_toggle();
+                }
+            }
+        },
         gregorian_to_jalali:function (gy, gm, gd) {
             var g_d_m, jy, jm, jd, gy2, days;
             g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
@@ -510,6 +535,7 @@ export default {
                 },50)
             });
         },
+
 
 
 
