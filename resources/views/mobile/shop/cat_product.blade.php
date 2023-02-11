@@ -62,10 +62,7 @@
                         </li>
                     </ul>
 
-                    <button class="btn btn-primary" id="price_filter_btn">
-                        <span class="fa fa-filter"></span>
-                        <span> اعمال محدوده قیمت </span>
-                    </button>
+
                     </div>
                 </div>
             </div>

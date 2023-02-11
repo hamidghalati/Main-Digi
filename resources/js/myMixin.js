@@ -148,33 +148,8 @@ export default {
 
 
         },
-        setFilterPrice:function () {
-            this.add_url_param('price[min]',this.min_price);
-            this.add_url_param('price[max]',this.max_price);
-            this.getProduct(1);
-        },
-        add_url_param:function (key,value) {
-            let params=new window.URLSearchParams(window.location.search);
-            let url=window.location.href;
-            if (params.get(key)!=null)
-            {
-                let old_param=key+"="+encodeURIComponent(params.get(key));
-                let new_param=key+"="+value;
-                url=url.replace(old_param,new_param);
 
-            }
-            else {
-                const url_params=url.split('?');
-                if (url_params[1]==undefined)
-                {
-                    url+="?"+key+"="+value;
-                }
-                else {
-                    url+="&"+key+"="+value;
-                }
-            }
-            this.setPageUrl(url);
-        },
+
         setPageUrl:function (url) {
             window.history.pushState('data','title',url);
         },
@@ -297,9 +272,9 @@ export default {
                 }
             }
         },
-        remove_url_params:function (key,value) {
+        remove_url_params:function (key,value,page_url) {
             let params=new window.URLSearchParams(window.location.search);
-            let url=window.location.href;
+            let url=page_url==undefined ? window.location.href : page_url;
 
             if (params.get(key)!=null)
             {
@@ -314,9 +289,15 @@ export default {
                     url=url.replace('&','?');
                 }
 
+                if (page_url==undefined)
+                {
+                    this.setPageUrl(url);
+                    this.getProduct(1);
+                }
+                else {
+                    this.search_url=url;
+                }
 
-                this.setPageUrl(url);
-                this.getProduct(1);
             }
         },
         set_search_string:function () {
@@ -327,61 +308,8 @@ export default {
                 this.search_string=params.get('string');
             }
         },
-        set_product_status:function (e,action) {
-            if (action)
-            {
-                this.add_url_param('has_product',1);
-                this.getProduct(1);
 
 
-                if (!$("#selected_filter_box").find('div').hasClass('product_status_filter'))
-                {
-                    $("#filter_div").show();
-                    const html= '<div class="selected_filter_item product_status_filter">'+
-                        '<span>فقط کالاهای موجود</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>'
-                        +'</div>';
-                    $('#selected_filter_box').append(html);
-                }
-
-            }
-            else {
-                this.remove_url_params('has_product',1);
-                this.getProduct(1);
-
-                $('.product_status_filter').remove();
-                if ($('#selected_filter_box div').length==0)
-                {
-                    $("#filter_div").hide();
-                }
-            }
-        },
-        set_send_status:function (e,action) {
-            if (action)
-            {
-                this.add_url_param('has_ready_to_shipment',1);
-                this.getProduct(1);
-
-                if (!$("#selected_filter_box").find('div').hasClass('send_status_filter'))
-                {
-                    $("#filter_div").show();
-                    const html= '<div class="selected_filter_item send_status_filter">'+
-                        '<span>کالاهای آماده ارسال</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>'
-                        +'</div>';
-                    $('#selected_filter_box').append(html);
-                }
-
-            }
-            else {
-                this.remove_url_params('has_ready_to_shipment',1);
-                this.getProduct(1);
-
-                $('.send_status_filter').remove();
-                if ($('#selected_filter_box div').length==0)
-                {
-                    $("#filter_div").hide();
-                }
-            }
-        },
         remove_filter_item:function (el) {
             const key=$(el).attr('data-key');
             const value=$(el).attr('data-value');
@@ -453,21 +381,6 @@ export default {
             }
 
         },
-        add_filter_tag:function (data,k,v) {
-            $('#filter_div').show();
-            data=data.toString().replace(",",'_').replace(",",'_');
-            data=data.toString().replace("''",'').replace("",'');
-            data="'"+data+"'";
-            const el="li[data="+data+"]";
-            const title=$(el).parent().parent().parent().parent().find('.title_box label').text();
-            const html='<div class="selected_filter_item" data-key="'+k+'" data-value="'+v+'">'+
-                '<span>'+
-                title+":"+$(el).find('.title').text()+
-                '</span>'+
-                '<i id="selected_filter_item_remove" class="fa fa-close"></i>'+
-                '</div>';
-            $("#selected_filter_box").append(html);
-        },
 
         add_active_filter:function (k,v) {
             if (k.length>1)
@@ -501,6 +414,31 @@ export default {
                     this.set_enable_status_toggle();
                 }
             }
+        },
+        remove_all_filter: function (page_url) {
+            let url=page_url==undefined ? window.location.href : page_url;
+            url = url.split('?')[0];
+            $('.selected_filter_item').remove();
+            $("#filter_div").hide();
+            $('.filter_box .list-inline li').find('.check_box').removeClass('active');
+            if ($('#product_status .toggle-slide .toggle-on').hasClass('active')) {
+                $('#product_status').click();
+            }
+            if ($('#send_status .toggle-slide .toggle-on').hasClass('active')) {
+                $('#send_status').click();
+            }
+            if (this.noUiSlider) {
+                this.noUiSlider.reset();
+            }
+            if (page_url==undefined)
+            {
+                this.setPageUrl(url);
+                this.getProduct(1);
+            }
+            else {
+                this.search_url=url;
+            }
+
         },
         gregorian_to_jalali:function (gy, gm, gd) {
             var g_d_m, jy, jm, jd, gy2, days;

@@ -1902,7 +1902,7 @@ message_div {
 .filter_box{
     display: none;
     max-height: 500px;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
     border-top: 1px solid #dedede;
 }
 .item_box ul li {
@@ -1959,7 +1959,6 @@ message_div {
     display: inline-flex;
     width: 100%;
     padding-top: 0 !important;
-    border-bottom: 1px solid #dedede;
     padding-bottom: 0 !important;
 }
 .filter_price_ul li:first-child {
@@ -2087,4 +2086,15 @@ message_div {
     -webkit-border-top-right-radius: 5px !important;
     -webkit-border-bottom-left-radius: 5px !important;
     font-family: iransans;
+}
+.info .product_status div{
+    padding-bottom:5px;
+    min-height: 50px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    font-size: 16px;
+    text-align: left;
+    padding-left: 10px;
+    justify-content: flex-end;
 }

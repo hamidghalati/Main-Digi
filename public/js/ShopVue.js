@@ -3174,16 +3174,40 @@ __webpack_require__.r(__webpack_exports__);
     // this.request_url=window.location.href.replace(this.$siteUrl,this.$siteUrl+'/getProduct/');
     var app = this;
     this.search_url = window.location.href;
-    this.check_search_params(window.location.href);
+    this.check_search_params(this.search_url);
     $(".selected_filter_item").show();
-    this.set_product_sort();
-    this.set_search_string();
+    // this.set_product_sort();
+    // this.set_search_string();
     $(document).on('click', '.product_cat_ul li', function () {
       app.set_filter_event(this, app.search_url);
     });
+    // $(document).on('click', '#filter_link', function () {
+    //     alert('a')
+    //     $(".selected_filter_item").show();
+    //     $('.removed_tag').remove();
+    //     $('.product_status_filter').remove();
+    //     app.getProduct(1);
+    // });
     $(document).on('click', '#filter_link', function () {
       $(".selected_filter_item").show();
+      $('.removed_tag').remove();
+      $('.product_status_filter').remove();
+      app.getProduct(1);
+    });
+    $(document).on('click', '#remove_all_filter', function () {
+      app.remove_all_filter(app.search_url);
+    });
+    $(document).on('toggle', '#product_status', function (e, action) {
+      app.set_product_status(e, action);
+    });
+    $(document).on('toggle', '#send_status', function (e, action) {
+      app.set_send_status(e, action);
+    });
+    $(document).on('click', '.selected_filter_item', function () {
+      $(".selected_filter_item").show();
       $(".removed_tag").remove();
+      $(".product_status_filter").remove();
+      app.remove_filter_item(this);
       app.getProduct(1);
     });
     this.getProduct();
@@ -3192,6 +3216,7 @@ __webpack_require__.r(__webpack_exports__);
     getProduct: function getProduct() {
       var _this = this;
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.setFilterPrice();
       this.setPageUrl(this.search_url);
       this.hide_search_box();
       $("#loading").show();
@@ -3253,13 +3278,13 @@ __webpack_require__.r(__webpack_exports__);
       this.search_url = url;
     },
     add_filter_tag: function add_filter_tag(data, k, v) {
-      $('#filter_div').show();
+      $("#filter_div").show();
       data = data.toString().replace(",", '_').replace(",", '_');
-      data = data.toString().replace("''", '').replace("", '');
+      data = data.toString().replace("'", '').replace("'", '');
       data = "'" + data + "'";
       var el = "li[data=" + data + "]";
       var title = $(el).parent().parent().parent().parent().find('.title_box label').text();
-      var html = '<div class="selected_filter_item" data-key="' + k + '" data-value="' + v + '">' + '<span>' + title + ":" + $(el).find('.title').text() + '</span>' + '<i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
+      var html = '<div class="selected_filter_item" data-key="' + k + '" data-value="' + v + '">' + '<span>' + title + ":" + $(el).find('.title').text() + '</span>' + '<i id="selected_filter_item_remove" class="mdi mdi-close"></i>' + '</div>';
       $("#selected_filter_box").append(html);
     },
     add_active_filter: function add_active_filter(k, v) {
@@ -3287,7 +3312,80 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     remove_filter_tag: function remove_filter_tag(k, v) {
-      $('.selected_filter_item[data-key="' + k + '"][data-value=' + v + ']').addClass('removed_tag');
+      $('.selected_filter_item[data-key="' + k + '"][data-value="' + v + '"]').addClass('removed_tag');
+    },
+    setFilterPrice: function setFilterPrice() {
+      if (this.max_price > 0) {
+        this.search_url = this.add_url_param('price[min]', this.min_price);
+        this.search_url = this.add_url_param('price[max]', this.max_price);
+      }
+    },
+    add_url_param: function add_url_param(key, value) {
+      var params = new window.URLSearchParams(window.location.search);
+      var url = this.search_url;
+      if (params.get(key) != null) {
+        var old_param = key + "=" + encodeURIComponent(params.get(key));
+        var new_param = key + "=" + value;
+        url = url.replace(old_param, new_param);
+      } else {
+        var url_params = url.split('?');
+        if (url_params[1] == undefined) {
+          url = url + "?" + key + "=" + value;
+        } else {
+          url = url + "&" + key + "=" + value;
+        }
+      }
+      return url;
+    },
+    set_product_status: function set_product_status(e, action) {
+      // if (action)
+      // {
+      //     this.search_url=this.add_url_param('has_product',1);
+      //     if (!$("#selected_filter_box").find('div').hasClass('product_status_filter'))
+      //     {
+      //         $("#filter_div").show();
+      //         const html= '<div class="selected_filter_item product_status_filter">'+
+      //             '<span>فقط کالاهای موجود</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>'
+      //             +'</div>';
+      //         $('#selected_filter_box').append(html);
+      //     }
+      // }
+      // else {
+      //     this.remove_url_params('has_product',1,this.search_url);
+      // }
+
+      if (action) {
+        this.search_url = this.add_url_param('has_product', 1);
+        if (!$("#selected_filter_box").find('div').hasClass('product_status_filter')) {
+          $("#selected_filter_box").show();
+          var html = '<div class="selected_filter_item product_status_filter">' + '<span>فقط کالاهای موجود</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
+          $('#selected_filter_box').append(html);
+        }
+      } else {
+        this.remove_url_params('has_product', 1, this.search_url);
+        $('.product_status_filter').remove();
+        if ($('#selected_filter_box div').length == 0) {
+          $("#filter_div").hide();
+        }
+      }
+    },
+    set_send_status: function set_send_status(e, action) {
+      if (action) {
+        this.add_url_param('has_ready_to_shipment', 1);
+        this.getProduct(1);
+        if (!$("#selected_filter_box").find('div').hasClass('send_status_filter')) {
+          $("#filter_div").show();
+          var html = '<div class="selected_filter_item send_status_filter">' + '<span>کالاهای آماده ارسال</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
+          $('#selected_filter_box').append(html);
+        }
+      } else {
+        this.remove_url_params('has_ready_to_shipment', 1);
+        this.getProduct(1);
+        $('.send_status_filter').remove();
+        if ($('#selected_filter_box div').length == 0) {
+          $("#filter_div").hide();
+        }
+      }
     }
   }
 });
@@ -3837,6 +3935,74 @@ __webpack_require__.r(__webpack_exports__);
       if ($("selected_filter_box div").length == 0) {
         $("#filter_div").hide();
       }
+    },
+    setFilterPrice: function setFilterPrice() {
+      this.add_url_param('price[min]', this.min_price);
+      this.add_url_param('price[max]', this.max_price);
+      this.getProduct(1);
+    },
+    add_url_param: function add_url_param(key, value) {
+      var params = new window.URLSearchParams(window.location.search);
+      var url = window.location.href;
+      if (params.get(key) != null) {
+        var old_param = key + "=" + encodeURIComponent(params.get(key));
+        var new_param = key + "=" + value;
+        url = url.replace(old_param, new_param);
+      } else {
+        var url_params = url.split('?');
+        if (url_params[1] == undefined) {
+          url += "?" + key + "=" + value;
+        } else {
+          url += "&" + key + "=" + value;
+        }
+      }
+      this.setPageUrl(url);
+    },
+    set_product_status: function set_product_status(e, action) {
+      if (action) {
+        this.add_url_param('has_product', 1);
+        this.getProduct(1);
+        if (!$("#selected_filter_box").find('div').hasClass('product_status_filter')) {
+          $("#filter_div").show();
+          var html = '<div class="selected_filter_item product_status_filter">' + '<span>فقط کالاهای موجود</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
+          $('#selected_filter_box').append(html);
+        }
+      } else {
+        this.remove_url_params('has_product', 1);
+        this.getProduct(1);
+        $('.product_status_filter').remove();
+        if ($('#selected_filter_box div').length == 0) {
+          $("#filter_div").hide();
+        }
+      }
+    },
+    set_send_status: function set_send_status(e, action) {
+      if (action) {
+        this.add_url_param('has_ready_to_shipment', 1);
+        this.getProduct(1);
+        if (!$("#selected_filter_box").find('div').hasClass('send_status_filter')) {
+          $("#filter_div").show();
+          var html = '<div class="selected_filter_item send_status_filter">' + '<span>کالاهای آماده ارسال</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
+          $('#selected_filter_box').append(html);
+        }
+      } else {
+        this.remove_url_params('has_ready_to_shipment', 1);
+        this.getProduct(1);
+        $('.send_status_filter').remove();
+        if ($('#selected_filter_box div').length == 0) {
+          $("#filter_div").hide();
+        }
+      }
+    },
+    add_filter_tag: function add_filter_tag(data, k, v) {
+      $("#filter_div").show();
+      data = data.toString().replace(",", '_').replace(",", '_');
+      data = data.toString().replace("'", '').replace("'", '');
+      data = "'" + data + "'";
+      var el = "li[data=" + data + "]";
+      var title = $(el).parent().parent().parent().parent().find('.title_box label').text();
+      var html = '<div class="selected_filter_item" data-key="' + k + '" data-value="' + v + '">' + '<span>' + title + ":" + $(el).find('.title').text() + '</span>' + '<i id="selected_filter_item_remove" class="mdi mdi-close"></i>' + '</div>';
+      $("#selected_filter_box").append(html);
     }
   }
 });
@@ -5844,12 +6010,12 @@ var render = function render() {
       staticClass: "product_info_div"
     }, [_c("div", {
       staticClass: "image_box"
-    }, [product.status == 1 && product.get_first_product_price != null ? _c("span", {
+    }, [product.get_first_product_price.price1 != product.get_first_product_price.price2 ? _c("div", [_c("span", {
       staticClass: "discount-badge",
       attrs: {
         id: "discount-badge_filter"
       }
-    }, [product.get_first_product_price.price1 != product.get_first_product_price.price2 ? _c("span", [_vm._v("\n                               %" + _vm._s(_vm.getDiscountValue(product.get_first_product_price.price1, product.get_first_product_price.price2)) + "\n                           ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c("img", {
+    }, [_vm._v("\n                            %" + _vm._s(_vm.getDiscountValue(product.get_first_product_price.price1, product.get_first_product_price.price2)) + "\n                        ")])]) : _vm._e(), _vm._v(" "), _c("img", {
       attrs: {
         src: _vm.$siteUrl + "files/thumb/" + product.image_url,
         alt: ""
@@ -5878,12 +6044,12 @@ var render = function render() {
       staticClass: "price"
     }, [_c("div", {
       staticClass: "discount_div"
-    }, [product.get_first_product_price.price1 != product.get_first_product_price.price2 ? _c("div", [_c("del", [_vm._v("\n                                       " + _vm._s(_vm.replaceNumber(_vm.number_format(product.get_first_product_price.price1))) + " تومان\n                                   ")])]) : _vm._e()]), _vm._v(" "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(_vm.number_format(product.get_first_product_price.price2))) + " تومان ")])]) : _c("div", {
+    }, [product.get_first_product_price.price1 != product.get_first_product_price.price2 ? _c("div", [_c("del", [_vm._v("\n                                    " + _vm._s(_vm.replaceNumber(_vm.number_format(product.get_first_product_price.price1))) + " تومان\n                                ")])]) : _vm._e()]), _vm._v(" "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(_vm.number_format(product.get_first_product_price.price2))) + " تومان ")])]) : _c("div", {
       staticClass: "product_status"
     }, [_vm._m(0, true)])])])])]);
   }), _vm._v(" "), this.productList.data == 0 && _vm.get_result ? _c("div", {
     staticClass: "not_found_product_message"
-  }, [_vm._v("\n            محصولی برای نمایش یافت نشد\n        ")]) : _vm._e()], 2);
+  }, [_vm._v("\n        محصولی برای نمایش یافت نشد\n    ")]) : _vm._e()], 2);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -28712,28 +28878,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     },
-    setFilterPrice: function setFilterPrice() {
-      this.add_url_param('price[min]', this.min_price);
-      this.add_url_param('price[max]', this.max_price);
-      this.getProduct(1);
-    },
-    add_url_param: function add_url_param(key, value) {
-      var params = new window.URLSearchParams(window.location.search);
-      var url = window.location.href;
-      if (params.get(key) != null) {
-        var old_param = key + "=" + encodeURIComponent(params.get(key));
-        var new_param = key + "=" + value;
-        url = url.replace(old_param, new_param);
-      } else {
-        var url_params = url.split('?');
-        if (url_params[1] == undefined) {
-          url += "?" + key + "=" + value;
-        } else {
-          url += "&" + key + "=" + value;
-        }
-      }
-      this.setPageUrl(url);
-    },
     setPageUrl: function setPageUrl(url) {
       window.history.pushState('data', 'title', url);
     },
@@ -28833,9 +28977,9 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     },
-    remove_url_params: function remove_url_params(key, value) {
+    remove_url_params: function remove_url_params(key, value, page_url) {
       var params = new window.URLSearchParams(window.location.search);
-      var url = window.location.href;
+      var url = page_url == undefined ? window.location.href : page_url;
       if (params.get(key) != null) {
         value = encodeURIComponent(value);
         url = url.replace('&' + key + "=" + value, '');
@@ -28845,8 +28989,12 @@ __webpack_require__.r(__webpack_exports__);
         if (url_params[1] == undefined) {
           url = url.replace('&', '?');
         }
-        this.setPageUrl(url);
-        this.getProduct(1);
+        if (page_url == undefined) {
+          this.setPageUrl(url);
+          this.getProduct(1);
+        } else {
+          this.search_url = url;
+        }
       }
     },
     set_search_string: function set_search_string() {
@@ -28854,42 +29002,6 @@ __webpack_require__.r(__webpack_exports__);
       var url = window.location.href;
       if (params.get('string') != null) {
         this.search_string = params.get('string');
-      }
-    },
-    set_product_status: function set_product_status(e, action) {
-      if (action) {
-        this.add_url_param('has_product', 1);
-        this.getProduct(1);
-        if (!$("#selected_filter_box").find('div').hasClass('product_status_filter')) {
-          $("#filter_div").show();
-          var html = '<div class="selected_filter_item product_status_filter">' + '<span>فقط کالاهای موجود</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
-          $('#selected_filter_box').append(html);
-        }
-      } else {
-        this.remove_url_params('has_product', 1);
-        this.getProduct(1);
-        $('.product_status_filter').remove();
-        if ($('#selected_filter_box div').length == 0) {
-          $("#filter_div").hide();
-        }
-      }
-    },
-    set_send_status: function set_send_status(e, action) {
-      if (action) {
-        this.add_url_param('has_ready_to_shipment', 1);
-        this.getProduct(1);
-        if (!$("#selected_filter_box").find('div').hasClass('send_status_filter')) {
-          $("#filter_div").show();
-          var html = '<div class="selected_filter_item send_status_filter">' + '<span>کالاهای آماده ارسال</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
-          $('#selected_filter_box').append(html);
-        }
-      } else {
-        this.remove_url_params('has_ready_to_shipment', 1);
-        this.getProduct(1);
-        $('.send_status_filter').remove();
-        if ($('#selected_filter_box div').length == 0) {
-          $("#filter_div").hide();
-        }
       }
     },
     remove_filter_item: function remove_filter_item(el) {
@@ -28953,16 +29065,6 @@ __webpack_require__.r(__webpack_exports__);
         $('#selected_filter_box').append(html);
       }
     },
-    add_filter_tag: function add_filter_tag(data, k, v) {
-      $('#filter_div').show();
-      data = data.toString().replace(",", '_').replace(",", '_');
-      data = data.toString().replace("''", '').replace("", '');
-      data = "'" + data + "'";
-      var el = "li[data=" + data + "]";
-      var title = $(el).parent().parent().parent().parent().find('.title_box label').text();
-      var html = '<div class="selected_filter_item" data-key="' + k + '" data-value="' + v + '">' + '<span>' + title + ":" + $(el).find('.title').text() + '</span>' + '<i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
-      $("#selected_filter_box").append(html);
-    },
     add_active_filter: function add_active_filter(k, v) {
       if (k.length > 1) {
         var data = "";
@@ -28985,6 +29087,28 @@ __webpack_require__.r(__webpack_exports__);
         } else if (k == "has_ready_to_shipment") {
           this.set_enable_status_toggle();
         }
+      }
+    },
+    remove_all_filter: function remove_all_filter(page_url) {
+      var url = page_url == undefined ? window.location.href : page_url;
+      url = url.split('?')[0];
+      $('.selected_filter_item').remove();
+      $("#filter_div").hide();
+      $('.filter_box .list-inline li').find('.check_box').removeClass('active');
+      if ($('#product_status .toggle-slide .toggle-on').hasClass('active')) {
+        $('#product_status').click();
+      }
+      if ($('#send_status .toggle-slide .toggle-on').hasClass('active')) {
+        $('#send_status').click();
+      }
+      if (this.noUiSlider) {
+        this.noUiSlider.reset();
+      }
+      if (page_url == undefined) {
+        this.setPageUrl(url);
+        this.getProduct(1);
+      } else {
+        this.search_url = url;
       }
     },
     gregorian_to_jalali: function gregorian_to_jalali(gy, gm, gd) {

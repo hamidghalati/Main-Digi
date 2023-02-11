@@ -18342,28 +18342,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     },
-    setFilterPrice: function setFilterPrice() {
-      this.add_url_param('price[min]', this.min_price);
-      this.add_url_param('price[max]', this.max_price);
-      this.getProduct(1);
-    },
-    add_url_param: function add_url_param(key, value) {
-      var params = new window.URLSearchParams(window.location.search);
-      var url = window.location.href;
-      if (params.get(key) != null) {
-        var old_param = key + "=" + encodeURIComponent(params.get(key));
-        var new_param = key + "=" + value;
-        url = url.replace(old_param, new_param);
-      } else {
-        var url_params = url.split('?');
-        if (url_params[1] == undefined) {
-          url += "?" + key + "=" + value;
-        } else {
-          url += "&" + key + "=" + value;
-        }
-      }
-      this.setPageUrl(url);
-    },
     setPageUrl: function setPageUrl(url) {
       window.history.pushState('data', 'title', url);
     },
@@ -18463,9 +18441,9 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     },
-    remove_url_params: function remove_url_params(key, value) {
+    remove_url_params: function remove_url_params(key, value, page_url) {
       var params = new window.URLSearchParams(window.location.search);
-      var url = window.location.href;
+      var url = page_url == undefined ? window.location.href : page_url;
       if (params.get(key) != null) {
         value = encodeURIComponent(value);
         url = url.replace('&' + key + "=" + value, '');
@@ -18475,8 +18453,12 @@ __webpack_require__.r(__webpack_exports__);
         if (url_params[1] == undefined) {
           url = url.replace('&', '?');
         }
-        this.setPageUrl(url);
-        this.getProduct(1);
+        if (page_url == undefined) {
+          this.setPageUrl(url);
+          this.getProduct(1);
+        } else {
+          this.search_url = url;
+        }
       }
     },
     set_search_string: function set_search_string() {
@@ -18484,42 +18466,6 @@ __webpack_require__.r(__webpack_exports__);
       var url = window.location.href;
       if (params.get('string') != null) {
         this.search_string = params.get('string');
-      }
-    },
-    set_product_status: function set_product_status(e, action) {
-      if (action) {
-        this.add_url_param('has_product', 1);
-        this.getProduct(1);
-        if (!$("#selected_filter_box").find('div').hasClass('product_status_filter')) {
-          $("#filter_div").show();
-          var html = '<div class="selected_filter_item product_status_filter">' + '<span>فقط کالاهای موجود</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
-          $('#selected_filter_box').append(html);
-        }
-      } else {
-        this.remove_url_params('has_product', 1);
-        this.getProduct(1);
-        $('.product_status_filter').remove();
-        if ($('#selected_filter_box div').length == 0) {
-          $("#filter_div").hide();
-        }
-      }
-    },
-    set_send_status: function set_send_status(e, action) {
-      if (action) {
-        this.add_url_param('has_ready_to_shipment', 1);
-        this.getProduct(1);
-        if (!$("#selected_filter_box").find('div').hasClass('send_status_filter')) {
-          $("#filter_div").show();
-          var html = '<div class="selected_filter_item send_status_filter">' + '<span>کالاهای آماده ارسال</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
-          $('#selected_filter_box').append(html);
-        }
-      } else {
-        this.remove_url_params('has_ready_to_shipment', 1);
-        this.getProduct(1);
-        $('.send_status_filter').remove();
-        if ($('#selected_filter_box div').length == 0) {
-          $("#filter_div").hide();
-        }
       }
     },
     remove_filter_item: function remove_filter_item(el) {
@@ -18583,16 +18529,6 @@ __webpack_require__.r(__webpack_exports__);
         $('#selected_filter_box').append(html);
       }
     },
-    add_filter_tag: function add_filter_tag(data, k, v) {
-      $('#filter_div').show();
-      data = data.toString().replace(",", '_').replace(",", '_');
-      data = data.toString().replace("''", '').replace("", '');
-      data = "'" + data + "'";
-      var el = "li[data=" + data + "]";
-      var title = $(el).parent().parent().parent().parent().find('.title_box label').text();
-      var html = '<div class="selected_filter_item" data-key="' + k + '" data-value="' + v + '">' + '<span>' + title + ":" + $(el).find('.title').text() + '</span>' + '<i id="selected_filter_item_remove" class="fa fa-close"></i>' + '</div>';
-      $("#selected_filter_box").append(html);
-    },
     add_active_filter: function add_active_filter(k, v) {
       if (k.length > 1) {
         var data = "";
@@ -18615,6 +18551,28 @@ __webpack_require__.r(__webpack_exports__);
         } else if (k == "has_ready_to_shipment") {
           this.set_enable_status_toggle();
         }
+      }
+    },
+    remove_all_filter: function remove_all_filter(page_url) {
+      var url = page_url == undefined ? window.location.href : page_url;
+      url = url.split('?')[0];
+      $('.selected_filter_item').remove();
+      $("#filter_div").hide();
+      $('.filter_box .list-inline li').find('.check_box').removeClass('active');
+      if ($('#product_status .toggle-slide .toggle-on').hasClass('active')) {
+        $('#product_status').click();
+      }
+      if ($('#send_status .toggle-slide .toggle-on').hasClass('active')) {
+        $('#send_status').click();
+      }
+      if (this.noUiSlider) {
+        this.noUiSlider.reset();
+      }
+      if (page_url == undefined) {
+        this.setPageUrl(url);
+        this.getProduct(1);
+      } else {
+        this.search_url = url;
       }
     },
     gregorian_to_jalali: function gregorian_to_jalali(gy, gm, gd) {

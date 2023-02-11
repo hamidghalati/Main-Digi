@@ -362,6 +362,103 @@ export default {
                 $("#filter_div").hide();
             }
         },
+        setFilterPrice:function () {
+            this.add_url_param('price[min]',this.min_price);
+            this.add_url_param('price[max]',this.max_price);
+            this.getProduct(1);
+        },
+        add_url_param:function (key,value) {
+            let params=new window.URLSearchParams(window.location.search);
+            let url=window.location.href;
+            if (params.get(key)!=null)
+            {
+                let old_param=key+"="+encodeURIComponent(params.get(key));
+                let new_param=key+"="+value;
+                url=url.replace(old_param,new_param);
+
+            }
+            else {
+                const url_params=url.split('?');
+                if (url_params[1]==undefined)
+                {
+                    url+="?"+key+"="+value;
+                }
+                else {
+                    url+="&"+key+"="+value;
+                }
+            }
+            this.setPageUrl(url);
+        },
+        set_product_status:function (e,action) {
+            if (action)
+            {
+                this.add_url_param('has_product',1);
+                this.getProduct(1);
+
+
+                if (!$("#selected_filter_box").find('div').hasClass('product_status_filter'))
+                {
+                    $("#filter_div").show();
+                    const html= '<div class="selected_filter_item product_status_filter">'+
+                        '<span>فقط کالاهای موجود</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>'
+                        +'</div>';
+                    $('#selected_filter_box').append(html);
+                }
+
+            }
+            else {
+                this.remove_url_params('has_product',1);
+                this.getProduct(1);
+
+                $('.product_status_filter').remove();
+                if ($('#selected_filter_box div').length==0)
+                {
+                    $("#filter_div").hide();
+                }
+            }
+        },
+        set_send_status:function (e,action) {
+            if (action)
+            {
+                this.add_url_param('has_ready_to_shipment',1);
+                this.getProduct(1);
+
+                if (!$("#selected_filter_box").find('div').hasClass('send_status_filter'))
+                {
+                    $("#filter_div").show();
+                    const html= '<div class="selected_filter_item send_status_filter">'+
+                        '<span>کالاهای آماده ارسال</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>'
+                        +'</div>';
+                    $('#selected_filter_box').append(html);
+                }
+
+            }
+            else {
+                this.remove_url_params('has_ready_to_shipment',1);
+                this.getProduct(1);
+
+                $('.send_status_filter').remove();
+                if ($('#selected_filter_box div').length==0)
+                {
+                    $("#filter_div").hide();
+                }
+            }
+        },
+        add_filter_tag: function (data, k, v) {
+            $("#filter_div").show();
+            data = data.toString().replace(",", '_').replace(",", '_');
+            data = data.toString().replace("'", '').replace("'", '');
+            data = "'" + data + "'";
+            const el = "li[data=" + data + "]";
+            const title = $(el).parent().parent().parent().parent().find('.title_box label').text();
+            const html = '<div class="selected_filter_item" data-key="' + k + '" data-value="' + v + '">' +
+                '<span>' +
+                title + ":" + $(el).find('.title').text() +
+                '</span>' +
+                '<i id="selected_filter_item_remove" class="mdi mdi-close"></i>' +
+                '</div>';
+            $("#selected_filter_box").append(html);
+        },
 
 
     }
