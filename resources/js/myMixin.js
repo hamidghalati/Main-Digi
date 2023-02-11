@@ -148,8 +148,6 @@ export default {
 
 
         },
-
-
         setPageUrl:function (url) {
             window.history.pushState('data','title',url);
         },
@@ -221,11 +219,7 @@ export default {
             }
             this.changed_url(url);
         },
-        set_sort:function (value) {
-            this.sort=value;
-            this.add_url_param('sortby',value);
-            this.getProduct(1);
-        },
+
         get_request_url:function (url,page) {
             const url_param=url.split('?');
             if (url_param[1]==undefined)
@@ -274,6 +268,17 @@ export default {
         },
         remove_url_params:function (key,value,page_url) {
             let params=new window.URLSearchParams(window.location.search);
+            if (page_url!=undefined)
+            {
+                let search_url_params=this.search_url.split('?');
+                if (search_url_params[1]!=undefined)
+                {
+                    search_url_params='?'+search_url_params[1];
+                    params=new window.URLSearchParams(search_url_params);
+                }
+                console.log(search_url_params)
+            }
+
             let url=page_url==undefined ? window.location.href : page_url;
 
             if (params.get(key)!=null)
@@ -308,58 +313,6 @@ export default {
                 this.search_string=params.get('string');
             }
         },
-
-
-        remove_filter_item:function (el) {
-            const key=$(el).attr('data-key');
-            const value=$(el).attr('data-value');
-            if (key && value)
-            {
-                this.remove_url_query_string(key,value);
-                $(el).remove();
-
-                const data=key+"_param_"+value;
-                $('li[data="'+data+'"] .check_box').removeClass('active');
-
-                if ($('#selected_filter_box div').length==0)
-                {
-                    $("#filter_div").hide();
-                }
-            }
-            else if ($(el).hasClass('product_status_filter')) {
-                this.remove_product_status(el);
-            }
-            else if ($(el).hasClass('send_status_filter')) {
-                this.remove_send_status_filter(el);
-            }
-
-        },
-        remove_product_status:function (el) {
-            $(el).remove();
-            this.remove_url_params('has_product','1');
-
-            $('#product_status').unbind('click');
-            $('#product_status').toggles({
-                type: 'Light',
-                text: {'on': 'موجود', 'off': 'ناموجود'},
-                width: 85,
-                direction: 'rtl',
-                on: false
-            });
-        },
-        remove_send_status_filter:function (el) {
-            $(el).remove();
-            this.remove_url_params('has_ready_to_shipment','1');
-
-            $('#send_status').unbind('click');
-            $('#send_status').toggles({
-                type: 'Light',
-                text: {'on': 'آماده ارسال', 'off': 'در حال آماده'},
-                width: 85,
-                direction: 'rtl',
-                on: false
-            });
-        },
         set_enable_product_status_toggle:function () {
             if (!$("#selected_filter_box").find('div').hasClass('product_status_filter'))
             {
@@ -381,7 +334,6 @@ export default {
             }
 
         },
-
         add_active_filter:function (k,v) {
             if (k.length>1)
             {
@@ -473,9 +425,5 @@ export default {
                 },50)
             });
         },
-
-
-
-
     }
 }

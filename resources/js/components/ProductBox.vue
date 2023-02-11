@@ -459,7 +459,55 @@ export default {
                 '</div>';
             $("#selected_filter_box").append(html);
         },
+        remove_filter_item:function (el) {
+            const key=$(el).attr('data-key');
+            const value=$(el).attr('data-value');
+            if (key && value)
+            {
+                this.remove_url_query_string(key,value);
+                $(el).remove();
 
+                const data=key+"_param_"+value;
+                $('li[data="'+data+'"] .check_box').removeClass('active');
+
+                if ($('#selected_filter_box div').length==0)
+                {
+                    $("#filter_div").hide();
+                }
+
+            }
+            else if ($(el).hasClass('product_status_filter')) {
+                this.remove_product_status(el);
+            }
+            else if ($(el).hasClass('send_status_filter')) {
+                this.remove_send_status_filter(el);
+            }
+
+        },
+        remove_product_status:function (el) {
+            $(el).remove();
+            this.remove_url_params('has_product','1');
+
+            $('#product_status').click();
+        },
+        remove_send_status_filter:function (el) {
+            $(el).remove();
+            this.remove_url_params('has_ready_to_shipment','1');
+
+            $('#send_status').unbind('click');
+            $('#send_status').toggles({
+                type: 'Light',
+                text: {'on': 'آماده ارسال', 'off': 'در حال آماده'},
+                width: 85,
+                direction: 'rtl',
+                on: false
+            });
+        },
+        set_sort:function (value) {
+            this.sort=value;
+            this.add_url_param('sortby',value);
+            this.getProduct(1);
+        },
 
     }
 }
@@ -469,13 +517,3 @@ export default {
 
 </style>
 
-
-// else {
-//     this.noUiSlider.updateOptions({
-//         start: [0, price],
-//         range: {
-//             'min': 0,
-//             'max': price
-//         },
-//     });
-// }

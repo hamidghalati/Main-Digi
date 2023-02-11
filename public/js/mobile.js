@@ -96,6 +96,36 @@ $(document).ready(function () {
         }
     });
 
+    let search = new window.URLSearchParams(window.location.search);
+    if (document.getElementById('product_status')) {
+        if (search.get('has_product') != null) {
+            if (search.get('has_product') == 1) {
+                $('#product_status').toggles({
+                    type: 'Light',
+                    text: {'on': '', 'off': ''},
+                    width: 50,
+                    direction: 'rtl',
+                    on: true
+                });
+            }
+        }
+
+        if (search.get('has_ready_to_shipment') != null) {
+            if (search.get('has_ready_to_shipment') == 1) {
+                $('#send_status').toggles({
+                    type: 'Light',
+                    text: {'on': 'آماده ارسال', 'off': 'در حال آماده'},
+                    width: 85,
+                    direction: 'rtl',
+                    on: true
+                });
+            }
+        }
+    }
+
+    $('.sort_btn').click(function () {
+       $("#sort_dialog_box").modal('show');
+    });
 
 
 });

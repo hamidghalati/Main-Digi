@@ -78,6 +78,49 @@
         <div v-if="this.productList.data==0 && get_result" class="not_found_product_message">
             محصولی برای نمایش یافت نشد
         </div>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="sort_dialog_box" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">مرتب سازی بر اساس</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-inline sort_ul">
+                            <li  v-on:click="set_sort(21)">
+                                <input type="radio" id="radio1" name="sort">
+                                <label for="radio1">پر بازدیدترین</label>
+                            </li>
+                            <li  v-on:click="set_sort(22)">
+                                <input type="radio" id="radio2" name="sort">
+                               <label for="radio2">محبوب ترین</label>
+                            </li>
+                            <li v-on:click="set_sort(23)">
+                                <input type="radio" id="radio3" name="sort">
+                                <label for="radio3">جدیدترین</label>
+                            </li>
+                            <li v-on:click="set_sort(24)">
+                                <input type="radio" id="radio4" name="sort">
+                               <label for="radio4">ارزان ترین</label>
+                            </li>
+                            <li v-on:click="set_sort(25)">
+                                <input type="radio" id="radio5" name="sort">
+                                <label for="radio5">گران ترین</label>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
 </template>
@@ -99,6 +142,7 @@ export default {
             get_result: false,
             search_string: '',
             search_url: '',
+            sort: 21,
 
 
         }
@@ -116,20 +160,12 @@ export default {
         $(document).on('click', '.product_cat_ul li', function () {
             app.set_filter_event(this, app.search_url);
         });
-        // $(document).on('click', '#filter_link', function () {
-        //     alert('a')
-        //     $(".selected_filter_item").show();
-        //     $('.removed_tag').remove();
-        //     $('.product_status_filter').remove();
-        //     app.getProduct(1);
-        // });
         $(document).on('click', '#filter_link', function () {
             $(".selected_filter_item").show();
             $('.removed_tag').remove();
-            $('.product_status_filter').remove();
             app.getProduct(1);
-
         });
+
         $(document).on('click', '#remove_all_filter', function () {
             app.remove_all_filter(app.search_url);
         });
@@ -143,7 +179,7 @@ export default {
         $(document).on('click', '.selected_filter_item', function () {
             $(".selected_filter_item").show();
             $(".removed_tag").remove();
-            $(".product_status_filter").remove();
+            // $(".product_status_filter").remove();
             app.remove_filter_item(this);
             app.getProduct(1);
         });
@@ -234,8 +270,6 @@ export default {
         },
         add_active_filter: function (k, v) {
             if (k.length > 1) {
-
-
                 let data = "";
                 let filter_key = k[0];
                 if (k.length == 3) {
@@ -296,59 +330,32 @@ export default {
            return url;
         },
         set_product_status:function (e,action) {
-            // if (action)
-            // {
-            //     this.search_url=this.add_url_param('has_product',1);
-            //     if (!$("#selected_filter_box").find('div').hasClass('product_status_filter'))
-            //     {
-            //         $("#filter_div").show();
-            //         const html= '<div class="selected_filter_item product_status_filter">'+
-            //             '<span>فقط کالاهای موجود</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>'
-            //             +'</div>';
-            //         $('#selected_filter_box').append(html);
-            //     }
-            // }
-            // else {
-            //     this.remove_url_params('has_product',1,this.search_url);
-            // }
-
-
-
             if (action)
             {
                 this.search_url=this.add_url_param('has_product',1);
 
                 if (!$("#selected_filter_box").find('div').hasClass('product_status_filter'))
                 {
-                    $("#selected_filter_box").show();
+                    $("#filter_div").show();
                     const html= '<div class="selected_filter_item product_status_filter">'+
                         '<span>فقط کالاهای موجود</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>'
                         +'</div>';
                     $('#selected_filter_box').append(html);
                 }
+                else {
+                    $('.product_status_filter').removeClass('removed_tag');
+                }
 
             }
             else {
                 this.remove_url_params('has_product',1,this.search_url);
-                $('.product_status_filter').remove();
-                if ($('#selected_filter_box div').length==0)
-                {
-                    $("#filter_div").hide();
-                }
+                $('.product_status_filter').addClass('removed_tag');
             }
-
-
-
-
-
-
-
         },
         set_send_status:function (e,action) {
             if (action)
             {
-                this.add_url_param('has_ready_to_shipment',1);
-                this.getProduct(1);
+               this.search_url=this.add_url_param('has_ready_to_shipment',1);
 
                 if (!$("#selected_filter_box").find('div').hasClass('send_status_filter'))
                 {
@@ -358,18 +365,76 @@ export default {
                         +'</div>';
                     $('#selected_filter_box').append(html);
                 }
+                else {
+                    $('.send_status_filter').removeClass('removed_tag');
+                }
 
             }
             else {
-                this.remove_url_params('has_ready_to_shipment',1);
-                this.getProduct(1);
+                this.remove_url_params('has_ready_to_shipment',1,this.search_url);
+                $('.send_status_filter').addClass('removed_tag');
+            }
+        },
+        remove_filter_item:function (el) {
+            const key=$(el).attr('data-key');
+            const value=$(el).attr('data-value');
+            if (key && value)
+            {
+                this.remove_url_query_string(key,value,this.search_url);
+                $(el).remove();
 
-                $('.send_status_filter').remove();
+                const data=key+"_param_"+value;
+                $('li[data="'+data+'"] .check_box').removeClass('active');
+
                 if ($('#selected_filter_box div').length==0)
                 {
                     $("#filter_div").hide();
                 }
+                this.getProduct(1);
+
             }
+            else if ($(el).hasClass('product_status_filter')) {
+                this.remove_product_status(el);
+                this.getProduct(1);
+            }
+            else if ($(el).hasClass('send_status_filter')) {
+                this.remove_send_status_filter(el);
+                this.getProduct(1);
+            }
+
+        },
+        remove_product_status:function (el) {
+            $(el).remove();
+            this.remove_url_params('has_product','1');
+            $('#product_status').click();
+            this.getProduct(1);
+            // $('#product_status').toggles({
+            //     type: 'Light',
+            //     text: {'on': '', 'off': ''},
+            //     width: 50,
+            //     direction: 'rtl',
+            //     on: false
+            // });
+        },
+        remove_send_status_filter:function (el) {
+            $(el).remove();
+            this.remove_url_params('has_ready_to_shipment','1');
+
+            $('#send_status').click();
+            this.getProduct(1);
+            // $('#send_status').toggles({
+            //     type: 'Light',
+            //     text: {'on': 'آماده ارسال', 'off': 'در حال آماده'},
+            //     width: 85,
+            //     direction: 'rtl',
+            //     on: false
+            // });
+        },
+        set_sort:function (value) {
+            this.sort=value;
+            this.search_url=this.add_url_param('sortby',value);
+            $("#sort_dialog_box").modal('hide');
+            this.getProduct(1);
         },
 
 
