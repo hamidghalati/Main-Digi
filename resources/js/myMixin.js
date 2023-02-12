@@ -219,7 +219,6 @@ export default {
             }
             this.changed_url(url);
         },
-
         get_request_url:function (url,page) {
             const url_param=url.split('?');
             if (url_param[1]==undefined)

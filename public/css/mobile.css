@@ -976,6 +976,19 @@ a:focus {
     background-repeat: no-repeat;
     display: none;
 }
+#loading2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    height: 100%;
+    z-index: 999999999;
+    background-position: center center;
+    background-color: rgba(0, 0, 255, 0.3);
+    background-repeat: no-repeat;
+}
 
 #loading h6 {
     top: 65%;
@@ -983,6 +996,17 @@ a:focus {
     position: absolute;
     font-size: 17px;
     height: 0;
+}
+#loading2 h6 {
+    top: 65%;
+    right: 48%;
+    position: absolute;
+    font-size: 17px;
+    height: 0;
+    color: white;
+    display: flex;
+    align-items: center;
+    text-align: center;
 }
 
 .loader {
@@ -2123,14 +2147,16 @@ message_div {
 }
 input[type="radio"]:checked,input[type="radio"]:not(:checked)
 {
-    position: absolute;
-    left: -999999999px;
+    /*position: absolute;*/
+    left: -9999px;
+    display: contents;
 }
 input[type="radio"]:checked+label,input[type="radio"]:not(:checked)+label{
     position: relative;
     padding-right:28px;
     color:#666;
     line-height: 20px;
+    cursor:pointer;
 }
 input[type="radio"]:checked+label::before,input[type="radio"]:not(:checked)+label::before{
     content: "";
@@ -2165,3 +2191,4 @@ input[type="radio"]:checked+label:after{
     transform: scale(1);
     -webkit-transform: scale(1);
 }
+

@@ -3166,7 +3166,13 @@ __webpack_require__.r(__webpack_exports__);
       get_result: false,
       search_string: '',
       search_url: '',
-      sort: 21
+      sort: 21,
+      page: 1,
+      product_box_height: 0,
+      scroll_height: 0,
+      getServerData: 'ok',
+      show_loading_box: true,
+      send_request: true
     };
   },
   props: ['compare'],
@@ -3177,7 +3183,7 @@ __webpack_require__.r(__webpack_exports__);
     this.search_url = window.location.href;
     this.check_search_params(this.search_url);
     $(".selected_filter_item").show();
-    // this.set_product_sort();
+    this.set_product_sort();
     // this.set_search_string();
     $(document).on('click', '.product_cat_ul li', function () {
       app.set_filter_event(this, app.search_url);
@@ -3185,7 +3191,10 @@ __webpack_require__.r(__webpack_exports__);
     $(document).on('click', '#filter_link', function () {
       $(".selected_filter_item").show();
       $('.removed_tag').remove();
-      app.getProduct(1);
+      app.getServerData = 'ok';
+      app.productList.data = [];
+      app.page = 1;
+      app.getProduct();
     });
     $(document).on('click', '#remove_all_filter', function () {
       app.remove_all_filter(app.search_url);
@@ -3201,28 +3210,49 @@ __webpack_require__.r(__webpack_exports__);
       $(".removed_tag").remove();
       // $(".product_status_filter").remove();
       app.remove_filter_item(this);
-      app.getProduct(1);
+      app.page = 1;
+      app.getProduct();
+    });
+    $(window).scroll(function (e) {
+      app.checkScroll($(document).scrollTop());
     });
     this.getProduct();
   },
   methods: {
     getProduct: function getProduct() {
       var _this = this;
-      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.setFilterPrice();
-      this.setPageUrl(this.search_url);
-      this.hide_search_box();
-      $("#loading").show();
-      this.request_url = this.search_url.replace(this.$siteUrl, this.$siteUrl + 'getProduct/');
-      this.axios.get(this.get_request_url(this.request_url, page)).then(function (response) {
-        _this.productList = response.data['product'];
-        _this.setRangeSlider(response.data.max_price);
-        $("#loading").hide();
-        _this.get_result = true;
-        if (response.data['count'] != undefined) {
-          $("#product_count").text(_this.replaceNumber(response.data['count']) + " کالا ");
-        }
-      });
+      if (this.send_request == true) {
+        this.send_request = false;
+        var _app = this;
+        this.setFilterPrice();
+        this.setPageUrl(this.search_url);
+        this.hide_search_box();
+        this.show_loading_box = true;
+        this.request_url = this.search_url.replace(this.$siteUrl, this.$siteUrl + 'getProduct/');
+        this.axios.get(this.get_request_url(this.request_url, this.page)).then(function (response) {
+          response.data['product'].data.forEach(function (item) {
+            _app.productList.data.push(item);
+          });
+          if (response.data['product'].data.length == 0) {
+            _this.getServerData = 'no';
+          }
+          _this.setRangeSlider(response.data.max_price);
+          _this.show_loading_box = false;
+          _this.get_result = true;
+
+          // if (response.data['count'] != undefined) {
+          //     $("#product_count").text(this.replaceNumber(response.data['count']) + " کالا ")
+          // }
+          _this.$nextTick(function () {
+            var h = $("#cat_product_list")[0].scrollHeight;
+            this.product_box_height = h;
+          });
+          _this.send_request = true;
+        })["catch"](function (error) {
+          _this.show_loading_box = false;
+          _this.send_request = true;
+        });
+      }
     },
     check_has_off: function check_has_off(product) {
       if (product.get_first_product_price != null) {
@@ -3371,20 +3401,32 @@ __webpack_require__.r(__webpack_exports__);
         if ($('#selected_filter_box div').length == 0) {
           $("#filter_div").hide();
         }
-        this.getProduct(1);
+        app.getServerData = 'ok';
+        this.page = 1;
+        this.productList.data = [];
+        this.getProduct();
       } else if ($(el).hasClass('product_status_filter')) {
         this.remove_product_status(el);
-        this.getProduct(1);
+        app.getServerData = 'ok';
+        this.page = 1;
+        this.productList.data = [];
+        this.getProduct();
       } else if ($(el).hasClass('send_status_filter')) {
         this.remove_send_status_filter(el);
-        this.getProduct(1);
+        app.getServerData = 'ok';
+        this.page = 1;
+        this.productList.data = [];
+        this.getProduct();
       }
     },
     remove_product_status: function remove_product_status(el) {
       $(el).remove();
       this.remove_url_params('has_product', '1');
       $('#product_status').click();
-      this.getProduct(1);
+      app.getServerData = 'ok';
+      this.page = 1;
+      this.productList.data = [];
+      this.getProduct();
       // $('#product_status').toggles({
       //     type: 'Light',
       //     text: {'on': '', 'off': ''},
@@ -3398,7 +3440,10 @@ __webpack_require__.r(__webpack_exports__);
       $(el).remove();
       this.remove_url_params('has_ready_to_shipment', '1');
       $('#send_status').click();
-      this.getProduct(1);
+      app.getServerData = 'ok';
+      this.page = 1;
+      this.productList.data = [];
+      this.getProduct();
       // $('#send_status').toggles({
       //     type: 'Light',
       //     text: {'on': 'آماده ارسال', 'off': 'در حال آماده'},
@@ -3412,7 +3457,19 @@ __webpack_require__.r(__webpack_exports__);
       this.sort = value;
       this.search_url = this.add_url_param('sortby', value);
       $("#sort_dialog_box").modal('hide');
-      this.getProduct(1);
+      this.productList.data = [];
+      app.getServerData = 'ok';
+      this.page = 1;
+      this.getProduct();
+    },
+    checkScroll: function checkScroll(h) {
+      if (h > this.product_box_height / 2 && this.product_box_height > 200 && h > this.scroll_height && this.getServerData == 'ok') {
+        this.page = this.page + 1;
+        this.getProduct();
+      }
+      if (h > this.scroll_height) {
+        this.scroll_height = h;
+      }
     }
   }
 });
@@ -6062,7 +6119,11 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_vm._l(this.productList.data, function (product) {
+  return _c("div", [_c("div", {
+    attrs: {
+      id: "cat_product_list"
+    }
+  }, [_vm._l(this.productList.data, function (product) {
     return _c("a", {
       attrs: {
         href: _vm.$siteUrl + "product/dkp-" + product.id + "/" + product.product_url
@@ -6113,12 +6174,18 @@ var render = function render() {
       staticClass: "price"
     }, [_c("div", {
       staticClass: "discount_div"
-    }, [product.get_first_product_price.price1 != product.get_first_product_price.price2 ? _c("div", [_c("del", [_vm._v("\n                                    " + _vm._s(_vm.replaceNumber(_vm.number_format(product.get_first_product_price.price1))) + " تومان\n                                ")])]) : _vm._e()]), _vm._v(" "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(_vm.number_format(product.get_first_product_price.price2))) + " تومان ")])]) : _c("div", {
+    }, [product.get_first_product_price.price1 != product.get_first_product_price.price2 ? _c("div", [_c("del", [_vm._v("\n                                        " + _vm._s(_vm.replaceNumber(_vm.number_format(product.get_first_product_price.price1))) + " تومان\n                                    ")])]) : _vm._e()]), _vm._v(" "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(_vm.number_format(product.get_first_product_price.price2))) + " تومان ")])]) : _c("div", {
       staticClass: "product_status"
     }, [_vm._m(0, true)])])])])]);
-  }), _vm._v(" "), this.productList.data == 0 && _vm.get_result ? _c("div", {
+  }), _vm._v(" "), this.productList.data == 0 && _vm.get_result && !_vm.show_loading_box ? _c("div", {
     staticClass: "not_found_product_message"
-  }, [_vm._v("\n        محصولی برای نمایش یافت نشد\n    ")]) : _vm._e(), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n            محصولی برای نمایش یافت نشد\n        ")]) : _vm._e(), _vm._v(" "), _vm.show_loading_box ? _c("div", {
+    attrs: {
+      id: "loading2"
+    }
+  }, [_c("span", {
+    staticClass: "loader"
+  })]) : _vm._e()], 2), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
       id: "sort_dialog_box",
@@ -6138,87 +6205,157 @@ var render = function render() {
     staticClass: "modal-body"
   }, [_c("ul", {
     staticClass: "list-inline sort_ul"
-  }, [_c("li", {
+  }, [_c("li", [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.sort,
+      expression: "sort"
+    }],
+    attrs: {
+      value: "21",
+      type: "radio",
+      id: "radio1",
+      name: "sort"
+    },
+    domProps: {
+      checked: _vm._q(_vm.sort, "21")
+    },
+    on: {
+      change: function change($event) {
+        _vm.sort = "21";
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "radio1"
+    },
     on: {
       click: function click($event) {
         return _vm.set_sort(21);
       }
     }
-  }, [_c("input", {
+  }, [_vm._v("پر بازدیدترین")])]), _vm._v(" "), _c("li", [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.sort,
+      expression: "sort"
+    }],
     attrs: {
+      value: "22",
       type: "radio",
-      id: "radio1",
+      id: "radio2",
       name: "sort"
+    },
+    domProps: {
+      checked: _vm._q(_vm.sort, "22")
+    },
+    on: {
+      change: function change($event) {
+        _vm.sort = "22";
+      }
     }
   }), _vm._v(" "), _c("label", {
     attrs: {
-      "for": "radio1"
-    }
-  }, [_vm._v("پر بازدیدترین")])]), _vm._v(" "), _c("li", {
+      "for": "radio2"
+    },
     on: {
       click: function click($event) {
         return _vm.set_sort(22);
       }
     }
-  }, [_c("input", {
+  }, [_vm._v("محبوب ترین")])]), _vm._v(" "), _c("li", [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.sort,
+      expression: "sort"
+    }],
     attrs: {
+      value: "23",
       type: "radio",
-      id: "radio2",
+      id: "radio3",
       name: "sort"
+    },
+    domProps: {
+      checked: _vm._q(_vm.sort, "23")
+    },
+    on: {
+      change: function change($event) {
+        _vm.sort = "23";
+      }
     }
   }), _vm._v(" "), _c("label", {
     attrs: {
-      "for": "radio2"
-    }
-  }, [_vm._v("محبوب ترین")])]), _vm._v(" "), _c("li", {
+      "for": "radio3"
+    },
     on: {
       click: function click($event) {
         return _vm.set_sort(23);
       }
     }
-  }, [_c("input", {
+  }, [_vm._v("جدیدترین")])]), _vm._v(" "), _c("li", [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.sort,
+      expression: "sort"
+    }],
     attrs: {
+      value: "24",
       type: "radio",
-      id: "radio3",
+      id: "radio4",
       name: "sort"
+    },
+    domProps: {
+      checked: _vm._q(_vm.sort, "24")
+    },
+    on: {
+      change: function change($event) {
+        _vm.sort = "24";
+      }
     }
   }), _vm._v(" "), _c("label", {
     attrs: {
-      "for": "radio3"
-    }
-  }, [_vm._v("جدیدترین")])]), _vm._v(" "), _c("li", {
+      "for": "radio4"
+    },
     on: {
       click: function click($event) {
         return _vm.set_sort(24);
       }
     }
-  }, [_c("input", {
+  }, [_vm._v("ارزان ترین")])]), _vm._v(" "), _c("li", [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.sort,
+      expression: "sort"
+    }],
     attrs: {
+      value: "25",
       type: "radio",
-      id: "radio4",
+      id: "radio5",
       name: "sort"
+    },
+    domProps: {
+      checked: _vm._q(_vm.sort, "25")
+    },
+    on: {
+      change: function change($event) {
+        _vm.sort = "25";
+      }
     }
   }), _vm._v(" "), _c("label", {
     attrs: {
-      "for": "radio4"
-    }
-  }, [_vm._v("ارزان ترین")])]), _vm._v(" "), _c("li", {
+      "for": "radio5"
+    },
     on: {
       click: function click($event) {
         return _vm.set_sort(25);
       }
     }
-  }, [_c("input", {
-    attrs: {
-      type: "radio",
-      id: "radio5",
-      name: "sort"
-    }
-  }), _vm._v(" "), _c("label", {
-    attrs: {
-      "for": "radio5"
-    }
-  }, [_vm._v("گران ترین")])])])])])])])], 2);
+  }, [_vm._v("گران ترین")])])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,

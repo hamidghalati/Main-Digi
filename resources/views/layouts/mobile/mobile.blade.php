@@ -74,6 +74,10 @@
         </div>
 
 
+
+
+
+
         @include('mobile.footer')
 
     </div>
