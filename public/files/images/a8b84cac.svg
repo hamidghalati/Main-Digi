@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="183px" height="150px" viewBox="0 0 183 150" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="93.1192699%" y1="1.48745029%" x2="8.09287806%" y2="95.8609721%" id="linearGradient-1">
+            <stop stop-color="#A4A4A4" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="93.1192699%" y1="1.48745029%" x2="6.73275881%" y2="97.3706122%" id="linearGradient-2">
+            <stop stop-color="#ABA7A7" offset="0%"></stop>
+            <stop stop-color="#FAFAFA" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="93.1192699%" y1="1.48745029%" x2="6.73275881%" y2="97.3706122%" id="linearGradient-3">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#B9BBBB" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#CFCDCD" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="iPhone-SE" transform="translate(-199.000000, -40.000000)">
+            <g id="Group" transform="translate(186.000000, 31.000000)">
+                <path d="M37.226882,62.5394606 C37.226882,57.1244378 41.6046061,52.7346945 47.0360102,52.7346945 L109.925566,52.7346945 C115.342998,52.7346945 119.734695,57.1205487 119.734695,62.5394606 L119.734695,171.968352 C119.734695,177.383375 115.35697,181.773118 109.925566,181.773118 L47.0360102,181.773118 C41.6185783,181.773118 37.226882,177.387264 37.226882,171.968352 L37.226882,62.5394606 Z" id="Rectangle-Copy" fill="url(#linearGradient-1)" transform="translate(78.480788, 117.253906) rotate(-270.000000) translate(-78.480788, -117.253906) "></path>
+                <rect id="Rectangle" fill="#000000" transform="translate(77.903766, 117.500000) rotate(-270.000000) translate(-77.903766, -117.500000) " x="39.4037657" y="56.5962343" width="77" height="121.807531" rx="9.8"></rect>
+                <rect id="Rectangle-2" fill="#4A4A4A" transform="translate(72.643774, 117.253906) rotate(-450.000000) translate(-72.643774, -117.253906) " x="39.1437742" y="69.2539063" width="67" height="96" rx="6"></rect>
+                <rect id="Rectangle-4" fill="url(#linearGradient-2)" transform="translate(20.643774, 116.753906) rotate(-450.000000) translate(-20.643774, -116.753906) " x="12.6437742" y="115.753906" width="16" height="2"></rect>
+                <circle id="Oval-2" fill="url(#linearGradient-2)" transform="translate(20.643774, 127.753906) rotate(-450.000000) translate(-20.643774, -127.753906) " cx="20.6437742" cy="127.753906" r="1"></circle>
+                <rect id="Rectangle-Copy" fill="url(#linearGradient-3)" transform="translate(109.282068, 89.639329) scale(-1, 1) rotate(-310.000000) translate(-109.282068, -89.639329) " x="68.0281621" y="25.1201174" width="82.5078125" height="129.038423" rx="9.8"></rect>
+                <rect id="Rectangle" fill="#000000" transform="translate(108.808749, 88.910716) scale(-1, 1) rotate(-310.000000) translate(-108.808749, -88.910716) " x="70.8087489" y="28.2224314" width="76" height="121.376569" rx="9.8"></rect>
+                <rect id="Rectangle-2" fill="#4A4A4A" transform="translate(106.550019, 86.841586) rotate(-50.000000) translate(-106.550019, -86.841586) " x="73.0500187" y="38.841586" width="67" height="96" rx="6"></rect>
+                <rect id="Rectangle-4" fill="url(#linearGradient-2)" transform="translate(67.037101, 53.033608) rotate(-50.000000) translate(-67.037101, -53.033608) " x="59.0371015" y="52.0336081" width="16" height="2"></rect>
+                <circle id="Oval-2" fill="url(#linearGradient-2)" transform="translate(59.966438, 61.460097) rotate(-50.000000) translate(-59.966438, -61.460097) " cx="59.9664378" cy="61.4600969" r="1"></circle>
+                <rect id="Rectangle-Copy" fill="url(#linearGradient-3)" x="112.496094" y="29.8661088" width="82.5078125" height="129.038423" rx="9.8"></rect>
+                <rect id="Rectangle" fill="#000000" x="115.496094" y="32.8661088" width="76" height="123" rx="9.8"></rect>
+                <path d="M14.153489,65.7232565 L14.1185702,63.8903446 C14.7857028,63.8389202 41.745999,48.5345086 42.1585921,26.1548003 L32.6018711,26.1548003 L47.6803552,6.26825642 L62.7588392,26.1548003 L53.182821,26.1548003 C52.6112556,51.1415412 13.3536202,66.1135217 14.153489,65.7232565 Z" id="Shape" fill="url(#linearGradient-4)" transform="translate(38.438705, 35.999480) scale(-1, 1) rotate(-61.000000) translate(-38.438705, -35.999480) "></path>
+                <ellipse id="Oval" fill="url(#linearGradient-2)" cx="153.544922" cy="144.541841" rx="4.54492188" ry="4.541841"></ellipse>
+                <rect id="Rectangle-2" fill="#4A4A4A" x="120" y="41" width="67" height="96" rx="6"></rect>
+                <rect id="Rectangle-4" fill="url(#linearGradient-2)" x="146" y="36" width="16" height="2"></rect>
+                <circle id="Oval-2" fill="url(#linearGradient-2)" cx="143" cy="37" r="1"></circle>
+                <g id="Page-1" opacity="0.473297575" transform="translate(127.000000, 72.000000)" fill="#FFFFFF">
+                    <polygon id="Fill-1" points="41.24934 -0.0004375 26.39934 17.4995625 41.24934 34.9995625 52.80154 34.9995625 37.95154 17.4995625 52.80154 -0.0004375"></polygon>
+                    <path d="M17.6,0 L8.8,0 L0,0 L0,8.75 L8.8,8.75 L15.4,8.75 C16.6144,8.75 17.6,9.73 17.6,10.9375 L17.6,24.0625 C17.6,25.27 16.6144,26.25 15.4,26.25 L8.8,26.25 L0,26.25 L0,35 L8.8,35 L17.6,35 C22.4598,35 26.4,31.0821875 26.4,26.25 L26.4,8.75 C26.4,3.9178125 22.4598,0 17.6,0" id="Fill-2"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

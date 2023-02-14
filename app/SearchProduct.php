@@ -123,7 +123,7 @@ class SearchProduct
         $count=$product->count();
 
         $product = $product->with(['getProductColor.getColor', 'getFirstProductPrice'])
-            ->paginate(3);
+            ->paginate(12);
 
         $max_price = $product2->first();
         $max_price = $max_price ? $max_price->price : 0;

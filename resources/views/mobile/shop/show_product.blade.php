@@ -103,7 +103,7 @@
         @if($product_item_count>0)
             <div class="product_item_box">
                 <div style="padding: 15px">
-                    <div class="item_box">
+                    <div class="item_box remove_item_box_shadow">
                         <span>مشخصات فنی</span>
                         <a id="show_more_item_product">
                             <span>بیشتر</span>
@@ -115,10 +115,11 @@
 
             </div>
         @endif
-
+        @include('mobile.show_product_comments')
     </div>
 
     @include('mobile.product_item_list')
+
 
 @endsection
 @section('footer')

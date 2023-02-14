@@ -26,7 +26,7 @@ class UserPanelController extends Controller
     {
         $user_id=$request->user()->id;
         $gift_cart=GiftCart::where('user_id',$user_id)->orderBy('id','DESC')->paginate(10);
-        return view('userPanel.gift_cart',['gift_cart'=>$gift_cart]);
+        return view($this->view.'userPanel.gift_cart',['gift_cart'=>$gift_cart]);
     }
 
     public function orders(Request $request)

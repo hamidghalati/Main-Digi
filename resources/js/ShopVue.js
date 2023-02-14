@@ -20,6 +20,7 @@ import MobileShoppingCart from "./components/MobileShoppingCart";
 import MobileAddressList from "./components/MobileAddressList";
 import MobileAddressForm from "./components/MobileAddressForm";
 import MobileProductBox from "./components/MobileProductBox";
+import MobileThemeCommentList from "./components/MobileThemeCommentList";
 
 
 
@@ -47,7 +48,8 @@ const app = new Vue({
         MobileShoppingCart,
         MobileAddressList,
         MobileAddressForm,
-        MobileProductBox
+        MobileProductBox,
+        MobileThemeCommentList
 
     }
 });

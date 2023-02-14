@@ -18565,6 +18565,81 @@ __webpack_require__.r(__webpack_exports__);
           $(".mobile_data_box").css('right', '0');
         }, 50);
       });
+    },
+    getLabel: function getLabel(key, key2) {
+      key2 = key2 + 1;
+      var a = "score" + key2;
+      if (this.list.data[key]['get_score'][a] != undefined) {
+        return this.scoreLabel[this.list.data[key]['get_score'][a]];
+      } else {
+        return 'معمولی';
+      }
+    },
+    getWidth: function getWidth(key, key2) {
+      key2 = key2 + 1;
+      var a = "score" + key2;
+      if (this.list.data[key]['get_score'][a] != undefined) {
+        return this.list.data[key]['get_score'][a] * 25;
+      } else {
+        return 50;
+      }
+    },
+    getDate: function getDate(time) {
+      time *= 1000;
+      var date = new Date(time);
+      var jalai = this.gregorian_to_jalali(date.getFullYear(), date.getMonth() + 1, date.getDate());
+      var r = this.replaceNumber(jalai[2]) + ' ' + this.monthName[jalai[1] - 1] + ' ' + this.replaceNumber(jalai[0]);
+      return r;
+    },
+    like: function like(key, comment_id) {
+      var _this = this;
+      if (this.send) {
+        $("#loading").show();
+        this.send = false;
+        var url = this.$siteUrl + "user/likeComment";
+        var formData = new FormData();
+        formData.append('comment_id', comment_id);
+        this.axios.post(url, formData).then(function (response) {
+          _this.send = true;
+          $("#loading").hide();
+          if (response.data == "add") {
+            _this.list.data[key].like = _this.list.data[key].like + 1;
+          } else if (response.data == "remove") {
+            _this.list.data[key].like = _this.list.data[key].like - 1;
+          }
+        })["catch"](function (error) {
+          _this.send = true;
+          $("#loading").hide();
+          if (error.response.status == 401) {
+            $("#login_box").modal('show');
+          }
+        });
+      }
+    },
+    dislike: function dislike(key, comment_id) {
+      var _this2 = this;
+      if (this.send) {
+        $("#loading").show();
+        this.send = false;
+        var url = this.$siteUrl + "user/dislikeComment";
+        var formData = new FormData();
+        formData.append('comment_id', comment_id);
+        this.axios.post(url, formData).then(function (response) {
+          _this2.send = true;
+          $("#loading").hide();
+          if (response.data == "add") {
+            _this2.list.data[key].dislike = _this2.list.data[key].dislike + 1;
+          } else if (response.data == "remove") {
+            _this2.list.data[key].dislike = _this2.list.data[key].dislike - 1;
+          }
+        })["catch"](function (error) {
+          _this2.send = true;
+          $("#loading").hide();
+          if (error.response.status == 401) {
+            $("#login_box").modal('show');
+          }
+        });
+      }
     }
   }
 });

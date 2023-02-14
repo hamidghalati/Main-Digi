@@ -179,6 +179,7 @@ export default {
             $('.removed_tag').remove();
             app.getServerData='ok';
             app.productList.data=[];
+            app.scroll_height=0;
             app.page=1;
             app.getProduct();
         });
@@ -194,11 +195,11 @@ export default {
             app.set_send_status(e, action);
         });
         $(document).on('click', '.selected_filter_item', function () {
-            $(".selected_filter_item").show();
-            $(".removed_tag").remove();
-            // $(".product_status_filter").remove();
-            app.remove_filter_item(this);
+            app.getServerData='ok';
+            app.productList.data=[];
+            app.scroll_height=0;
             app.page=1;
+            app.remove_filter_item(this);
             app.getProduct();
         });
         $(window).scroll(function (e) {
@@ -432,6 +433,7 @@ export default {
                     $("#filter_div").hide();
                 }
                 app.getServerData='ok';
+                this.scroll_height=0;
                 this.page=1;
                 this.productList.data=[];
                 this.getProduct();
@@ -440,15 +442,21 @@ export default {
             else if ($(el).hasClass('product_status_filter')) {
                 this.remove_product_status(el);
                 app.getServerData='ok';
+                this.scroll_height=0;
                 this.page=1;
                 this.productList.data=[];
+                this.getProduct();
+
                 this.getProduct();
             }
             else if ($(el).hasClass('send_status_filter')) {
                 this.remove_send_status_filter(el);
                 app.getServerData='ok';
+                this.scroll_height=0;
                 this.page=1;
                 this.productList.data=[];
+                this.getProduct();
+
                 this.getProduct();
             }
 
@@ -458,6 +466,7 @@ export default {
             this.remove_url_params('has_product','1');
             $('#product_status').click();
             app.getServerData='ok';
+            this.scroll_height=0;
             this.page=1;
             this.productList.data=[];
             this.getProduct();
@@ -475,6 +484,7 @@ export default {
 
             $('#send_status').click();
             app.getServerData='ok';
+            this.scroll_height=0;
             this.page=1;
             this.productList.data=[];
             this.getProduct();
@@ -491,12 +501,13 @@ export default {
             this.search_url=this.add_url_param('sortby',value);
             $("#sort_dialog_box").modal('hide');
             this.productList.data=[];
-            app.getServerData='ok';
+            this.getServerData='ok';
+            this.scroll_height=0;
             this.page=1;
             this.getProduct();
         },
         checkScroll:function (h) {
-            if(h>(this.product_box_height/2) && this.product_box_height>200 && h>this.scroll_height && this.getServerData=='ok')
+            if(h>(this.product_box_height/2) && this.product_box_height>200 && h>this.scroll_height && this.getServerData=='ok' && this.send_request)
             {
                 this.page=this.page+1;
                 this.getProduct();

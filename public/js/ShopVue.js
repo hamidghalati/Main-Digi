@@ -2288,86 +2288,11 @@ __webpack_require__.r(__webpack_exports__);
       score = score * 25;
       return score;
     },
-    getLabel: function getLabel(key, key2) {
-      key2 = key2 + 1;
-      var a = "score" + key2;
-      if (this.list.data[key]['get_score'][a] != undefined) {
-        return this.scoreLabel[this.list.data[key]['get_score'][a]];
-      } else {
-        return 'معمولی';
-      }
-    },
-    getWidth: function getWidth(key, key2) {
-      key2 = key2 + 1;
-      var a = "score" + key2;
-      if (this.list.data[key]['get_score'][a] != undefined) {
-        return this.list.data[key]['get_score'][a] * 25;
-      } else {
-        return 50;
-      }
-    },
     add_comment: function add_comment() {
       if (this.auth == 'no') {
         window.location = this.$siteUrl + "/login";
       } else {
         window.location = this.$siteUrl + "/product/comment/" + this.product_id;
-      }
-    },
-    getDate: function getDate(time) {
-      time *= 1000;
-      var date = new Date(time);
-      var jalai = this.gregorian_to_jalali(date.getFullYear(), date.getMonth() + 1, date.getDate());
-      var r = replaceNumber(jalai[2]) + ' ' + this.monthName[jalai[1] - 1] + ' ' + replaceNumber(jalai[0]);
-      return r;
-    },
-    like: function like(key, comment_id) {
-      var _this2 = this;
-      if (this.send) {
-        $("#loading").show();
-        this.send = false;
-        var url = this.$siteUrl + "user/likeComment";
-        var formData = new FormData();
-        formData.append('comment_id', comment_id);
-        this.axios.post(url, formData).then(function (response) {
-          _this2.send = true;
-          $("#loading").hide();
-          if (response.data == "add") {
-            _this2.list.data[key].like = _this2.list.data[key].like + 1;
-          } else if (response.data == "remove") {
-            _this2.list.data[key].like = _this2.list.data[key].like - 1;
-          }
-        })["catch"](function (error) {
-          _this2.send = true;
-          $("#loading").hide();
-          if (error.response.status == 401) {
-            $("#login_box").modal('show');
-          }
-        });
-      }
-    },
-    dislike: function dislike(key, comment_id) {
-      var _this3 = this;
-      if (this.send) {
-        $("#loading").show();
-        this.send = false;
-        var url = this.$siteUrl + "user/dislikeComment";
-        var formData = new FormData();
-        formData.append('comment_id', comment_id);
-        this.axios.post(url, formData).then(function (response) {
-          _this3.send = true;
-          $("#loading").hide();
-          if (response.data == "add") {
-            _this3.list.data[key].dislike = _this3.list.data[key].dislike + 1;
-          } else if (response.data == "remove") {
-            _this3.list.data[key].dislike = _this3.list.data[key].dislike - 1;
-          }
-        })["catch"](function (error) {
-          _this3.send = true;
-          $("#loading").hide();
-          if (error.response.status == 401) {
-            $("#login_box").modal('show');
-          }
-        });
       }
     },
     set_ordering: function set_ordering(type) {
@@ -3117,19 +3042,18 @@ __webpack_require__.r(__webpack_exports__);
       $("#add_cart_form").submit();
     },
     show_list_box: function show_list_box() {
+      $('body').css('overflow-y', 'hidden');
       this.show_box = true;
-      this.$nextTick(function () {
-        $('body').css('overflow-y', 'hidden');
-        $("#product_item").css('display', 'none');
-        var width = $(window).width();
-        var right = "-" + width + "px";
-        $(".mobile_data_box").css({
-          'right': right
-        });
-        setTimeout(function () {
-          $(".mobile_data_box").css('right', '0');
-        }, 100);
-      });
+      // this.$nextTick(function () {
+      //     $('body').css('overflow-y','hidden');
+      //     $("#product_item").css('display','none');
+      //     const width=$(window).width();
+      //     const right="-"+width+"px";
+      //     $(".mobile_data_box").css({'right':right});
+      //     setTimeout(function () {
+      //         $(".mobile_data_box").css('right','0');
+      //     },100)
+      // });
     }
   }
 });
@@ -3193,6 +3117,7 @@ __webpack_require__.r(__webpack_exports__);
       $('.removed_tag').remove();
       app.getServerData = 'ok';
       app.productList.data = [];
+      app.scroll_height = 0;
       app.page = 1;
       app.getProduct();
     });
@@ -3206,11 +3131,11 @@ __webpack_require__.r(__webpack_exports__);
       app.set_send_status(e, action);
     });
     $(document).on('click', '.selected_filter_item', function () {
-      $(".selected_filter_item").show();
-      $(".removed_tag").remove();
-      // $(".product_status_filter").remove();
-      app.remove_filter_item(this);
+      app.getServerData = 'ok';
+      app.productList.data = [];
+      app.scroll_height = 0;
       app.page = 1;
+      app.remove_filter_item(this);
       app.getProduct();
     });
     $(window).scroll(function (e) {
@@ -3402,20 +3327,25 @@ __webpack_require__.r(__webpack_exports__);
           $("#filter_div").hide();
         }
         app.getServerData = 'ok';
+        this.scroll_height = 0;
         this.page = 1;
         this.productList.data = [];
         this.getProduct();
       } else if ($(el).hasClass('product_status_filter')) {
         this.remove_product_status(el);
         app.getServerData = 'ok';
+        this.scroll_height = 0;
         this.page = 1;
         this.productList.data = [];
+        this.getProduct();
         this.getProduct();
       } else if ($(el).hasClass('send_status_filter')) {
         this.remove_send_status_filter(el);
         app.getServerData = 'ok';
+        this.scroll_height = 0;
         this.page = 1;
         this.productList.data = [];
+        this.getProduct();
         this.getProduct();
       }
     },
@@ -3424,6 +3354,7 @@ __webpack_require__.r(__webpack_exports__);
       this.remove_url_params('has_product', '1');
       $('#product_status').click();
       app.getServerData = 'ok';
+      this.scroll_height = 0;
       this.page = 1;
       this.productList.data = [];
       this.getProduct();
@@ -3441,6 +3372,7 @@ __webpack_require__.r(__webpack_exports__);
       this.remove_url_params('has_ready_to_shipment', '1');
       $('#send_status').click();
       app.getServerData = 'ok';
+      this.scroll_height = 0;
       this.page = 1;
       this.productList.data = [];
       this.getProduct();
@@ -3458,12 +3390,13 @@ __webpack_require__.r(__webpack_exports__);
       this.search_url = this.add_url_param('sortby', value);
       $("#sort_dialog_box").modal('hide');
       this.productList.data = [];
-      app.getServerData = 'ok';
+      this.getServerData = 'ok';
+      this.scroll_height = 0;
       this.page = 1;
       this.getProduct();
     },
     checkScroll: function checkScroll(h) {
-      if (h > this.product_box_height / 2 && this.product_box_height > 200 && h > this.scroll_height && this.getServerData == 'ok') {
+      if (h > this.product_box_height / 2 && this.product_box_height > 200 && h > this.scroll_height && this.getServerData == 'ok' && this.send_request) {
         this.page = this.page + 1;
         this.getProduct();
       }
@@ -3562,6 +3495,75 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return false;
       }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MobileThemeCommentList.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MobileThemeCommentList.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _myMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../myMixin */ "./resources/js/myMixin.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "MobileThemeCommentList",
+  props: ['product_id', 'product_title'],
+  mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  data: function data() {
+    return {
+      show_box: false,
+      list: {
+        data: []
+      },
+      comment_count: 0,
+      avg: 0,
+      avg_score: [],
+      getServerData: 'no',
+      ordering: 1,
+      scoreItem: ['کیفیت ساخت :', 'نوآوری :', 'سهولت استفاده :', 'ارزش خرید به نسبت قیمت :', 'امکانات و قابلیت ها :', 'سهولت طراحی و ظاهر :'],
+      scoreLabel: ['خیلی بد', 'بد', 'معمولی', 'خوب', 'عالی'],
+      monthName: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+      send: true,
+      show_loading_box: false
+    };
+  },
+  mounted: function mounted() {
+    var app = this;
+    $(document).on('click', '#show_more_comment', function () {
+      $('body').css('overflow-y', 'hidden');
+      app.show_box = true;
+      if (app.list.data.length == 0) {
+        app.getList();
+      }
+    });
+  },
+  methods: {
+    getList: function getList() {
+      var _this = this;
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.show_loading_box = true;
+      var url = this.$siteUrl + "/site/getComment?page=" + page + "&product_id=" + this.product_id + "&orderBy=" + this.ordering;
+      this.axios.get(url).then(function (response) {
+        _this.show_loading_box = false;
+        _this.list = response.data.comment;
+        _this.avg = response.data.avg;
+        _this.comment_count = response.data.comment_count;
+        _this.avg_score = response.data.avg_score;
+        _this.getServerData = 'ok';
+      })["catch"](function (reason) {
+        _this.show_loading_box = false;
+      });
+    },
+    set_ordering: function set_ordering(type) {
+      this.ordering = type;
+      this.getList(1);
     }
   }
 });
@@ -6033,9 +6035,23 @@ var render = function render() {
     on: {
       click: _vm.show_list_box
     }
-  })])]) : _vm._e(), _vm._v(" "), _vm.show_box ? _c("div", {
-    staticClass: "mobile_data_box"
-  }, [_vm._m(0), _vm._v(" "), _vm.warrantyList.length > 1 ? _c("div", {
+  })])]) : _vm._e(), _vm._v(" "), _c("transition", {
+    attrs: {
+      name: "data-box"
+    }
+  }, [_vm.show_box ? _c("div", {
+    staticClass: "vue_mobile_data_box"
+  }, [_c("div", {
+    staticClass: "header"
+  }, [_c("span", [_vm._v("لیست فروشندگان این کالا")]), _vm._v(" "), _c("a", {
+    on: {
+      click: function click($event) {
+        _vm.show_box = false;
+      }
+    }
+  }, [_c("span", [_vm._v("بازگشت")]), _vm._v(" "), _c("i", {
+    staticClass: "mdi mdi-chevron-left"
+  })])]), _vm._v(" "), _vm.warrantyList.length > 1 ? _c("div", {
     staticClass: "productPriceList content"
   }, _vm._l(_vm.warrantyList, function (warranty, key) {
     return _c("div", {
@@ -6088,18 +6104,10 @@ var render = function render() {
           return _vm.add_product(warranty.warranty_id);
         }
       }
-    }, [_vm._v("\n                        افزودن به سبد خرید\n                    ")])])]);
-  }), 0) : _vm._e()]) : _vm._e()]);
+    }, [_vm._v("\n                           افزودن به سبد خرید\n                       ")])])]);
+  }), 0) : _vm._e()]) : _vm._e()])], 1);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "header"
-  }, [_c("span", [_vm._v("لیست فروشندگان این کالا")]), _vm._v(" "), _c("a", [_c("span", [_vm._v("بازگشت")]), _vm._v(" "), _c("i", {
-    staticClass: "mdi mdi-chevron-left"
-  })])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -6563,6 +6571,219 @@ var staticRenderFns = [function () {
     staticClass: "add_product_link"
   }, [_c("span", [_vm._v("ادامه ثبت سفارش")])]);
 }];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MobileThemeCommentList.vue?vue&type=template&id=32fc57fe&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MobileThemeCommentList.vue?vue&type=template&id=32fc57fe&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("transition", {
+    attrs: {
+      name: "data-box"
+    }
+  }, [_vm.show_box ? _c("div", {
+    staticClass: "vue_mobile_data_box"
+  }, [_c("div", {
+    staticClass: "header"
+  }, [_c("span", [_vm._v("نظرات کاربران")]), _vm._v(" "), _c("a", {
+    on: {
+      click: function click($event) {
+        _vm.show_box = false;
+      }
+    }
+  }, [_c("span", [_vm._v("بازگشت")]), _vm._v(" "), _c("i", {
+    staticClass: "mdi mdi-chevron-left"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "content",
+    staticStyle: {
+      background: "#F5F5F5!important"
+    }
+  }, [_vm.comment_count > 0 && _vm.getServerData == "ok" ? _c("div", {
+    staticClass: "feq_filter"
+  }, [_c("div", {
+    staticClass: "item_box box_header"
+  }, [_c("span", [_vm._v("نظر خود را ثبت کنید")]), _vm._v(" "), _c("a", {
+    staticClass: "add_link",
+    attrs: {
+      href: _vm.$siteUrl + "/product/comment/" + this.product_id
+    }
+  }, [_c("span", [_vm._v("افزودن نظر")]), _vm._v(" "), _c("span", {
+    staticClass: "fa fa-plus"
+  })])]), _vm._v(" "), _c("span", {
+    staticClass: "feq_filter_title"
+  }, [_vm._v("مرتب سازی بر اساس :")]), _vm._v(" "), _c("ul", {
+    staticClass: "feq_filter_item"
+  }, [_c("li", [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.ordering,
+      expression: "ordering"
+    }],
+    attrs: {
+      type: "radio",
+      value: "1",
+      name: "sort",
+      id: "radio1"
+    },
+    domProps: {
+      checked: _vm._q(_vm.ordering, "1")
+    },
+    on: {
+      click: function click($event) {
+        return _vm.set_ordering(1);
+      },
+      change: function change($event) {
+        _vm.ordering = "1";
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "radio1"
+    }
+  }, [_vm._v("نظر خریداران")])]), _vm._v(" "), _c("li", [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.ordering,
+      expression: "ordering"
+    }],
+    attrs: {
+      type: "radio",
+      value: "2",
+      name: "sort",
+      id: "radio2"
+    },
+    domProps: {
+      checked: _vm._q(_vm.ordering, "2")
+    },
+    on: {
+      click: function click($event) {
+        return _vm.set_ordering(2);
+      },
+      change: function change($event) {
+        _vm.ordering = "2";
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "radio2"
+    }
+  }, [_vm._v("مفیدترین نظرات")])]), _vm._v(" "), _c("li", [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.ordering,
+      expression: "ordering"
+    }],
+    attrs: {
+      type: "radio",
+      value: "3",
+      name: "sort",
+      id: "radio3"
+    },
+    domProps: {
+      checked: _vm._q(_vm.ordering, "3")
+    },
+    on: {
+      click: function click($event) {
+        return _vm.set_ordering(3);
+      },
+      change: function change($event) {
+        _vm.ordering = "3";
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "radio3"
+    }
+  }, [_vm._v("جدیدترین نظرات")])])])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.list.data, function (comment, key) {
+    return _c("div", {
+      staticClass: "comment_div_mobile"
+    }, [_c("div", {
+      staticClass: "row"
+    }, [_c("div", {
+      staticClass: "comment_header"
+    }, [_c("div", {
+      staticStyle: {
+        width: "86%"
+      }
+    }, [_c("span", {
+      staticClass: "comment_title"
+    }, [_vm._v(_vm._s(comment.title))]), _vm._v(" "), _c("p", [_c("span", [_vm._v("توسط")]), _vm._v(" "), comment.get_user_info == null ? _c("span", [_vm._v("ناشناس")]) : _c("span", [_vm._v(_vm._s(comment.get_user_info.first_name + " " + comment.get_user_info.last_name))]), _vm._v(" "), _c("span", [_vm._v("در تاریخ")]), _vm._v("\n                                " + _vm._s(_vm.getDate(comment.time)) + "\n                            ")])]), _vm._v(" "), comment.order_id > 0 ? _c("div", {
+      staticClass: "title_buyer"
+    }, [_vm._v(" خریدار")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "row"
+    }, [comment.advantage.length > 1 ? _c("div", {
+      staticClass: "col-12"
+    }, [_c("span", {
+      staticClass: "evaluation_label"
+    }, [_vm._v("نقاط قوت")]), _vm._v(" "), _c("ul", {
+      staticClass: "evaluation_ul advantage"
+    }, _vm._l(comment.advantage, function (advantage) {
+      return advantage != "" ? _c("li", [_c("span", [_vm._v(_vm._s(advantage))])]) : _vm._e();
+    }), 0)]) : _vm._e(), _vm._v(" "), comment.advantage.length > 1 ? _c("div", {
+      staticClass: "col-12"
+    }, [_c("span", {
+      staticClass: "evaluation_label"
+    }, [_vm._v("نقاط ضعف")]), _vm._v(" "), _c("ul", {
+      staticClass: "evaluation_ul disadvantage"
+    }, _vm._l(comment.disadvantage, function (disadvantage) {
+      return disadvantage != "" ? _c("li", [_c("span", [_vm._v(_vm._s(disadvantage))])]) : _vm._e();
+    }), 0)]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "comment_text"
+    }, [_vm._v(_vm._s(comment.content))]), _vm._v(" "), _c("div", {
+      staticClass: "footer"
+    }, [_c("div", [_vm._v("\n                            آیا این نظر برایتان مفید بود ؟\n                        ")]), _vm._v(" "), _c("div", [_c("button", {
+      staticClass: "btn_like",
+      attrs: {
+        "data-count": _vm.replaceNumber(comment.like)
+      },
+      on: {
+        click: function click($event) {
+          return _vm.like(key, comment.id);
+        }
+      }
+    }, [_vm._v("بلی\n                            ")]), _vm._v(" "), _c("button", {
+      staticClass: "btn_like dislike",
+      attrs: {
+        "data-count": _vm.replaceNumber(comment.dislike)
+      },
+      on: {
+        click: function click($event) {
+          return _vm.dislike(key, comment.id);
+        }
+      }
+    }, [_vm._v("خیر\n                            ")])])])])]);
+  }), _vm._v(" "), _vm.comment_count == 0 && _vm.getServerData == "ok" ? _c("div", [_c("p", {
+    staticStyle: {
+      "text-align": "center",
+      "padding-top": "30px",
+      "padding-bottom": "20px",
+      color: "red"
+    }
+  }, [_vm._v("تاکنون برای این\n                    محصول نظری\n                    ثبت نشده است")])]) : _vm._e(), _vm._v(" "), _vm.show_loading_box ? _c("div", {
+    attrs: {
+      id: "loading2"
+    }
+  }, [_c("span", {
+    staticClass: "loader"
+  })]) : _vm._e()], 2)]) : _vm._e()]);
+};
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -27622,8 +27843,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_MobileAddressList__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/MobileAddressList */ "./resources/js/components/MobileAddressList.vue");
 /* harmony import */ var _components_MobileAddressForm__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/MobileAddressForm */ "./resources/js/components/MobileAddressForm.vue");
 /* harmony import */ var _components_MobileProductBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/MobileProductBox */ "./resources/js/components/MobileProductBox.vue");
+/* harmony import */ var _components_MobileThemeCommentList__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/MobileThemeCommentList */ "./resources/js/components/MobileThemeCommentList.vue");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 Vue.component('pagination', __webpack_require__(/*! shetabit-laravel-vue-pagination */ "./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue"));
+
 
 
 
@@ -27664,7 +27887,8 @@ var app = new Vue({
     MobileShoppingCart: _components_MobileShoppingCart__WEBPACK_IMPORTED_MODULE_15__["default"],
     MobileAddressList: _components_MobileAddressList__WEBPACK_IMPORTED_MODULE_16__["default"],
     MobileAddressForm: _components_MobileAddressForm__WEBPACK_IMPORTED_MODULE_17__["default"],
-    MobileProductBox: _components_MobileProductBox__WEBPACK_IMPORTED_MODULE_18__["default"]
+    MobileProductBox: _components_MobileProductBox__WEBPACK_IMPORTED_MODULE_18__["default"],
+    MobileThemeCommentList: _components_MobileThemeCommentList__WEBPACK_IMPORTED_MODULE_19__["default"]
   }
 });
 
@@ -28585,6 +28809,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/MobileThemeCommentList.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/MobileThemeCommentList.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MobileThemeCommentList_vue_vue_type_template_id_32fc57fe_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MobileThemeCommentList.vue?vue&type=template&id=32fc57fe&scoped=true& */ "./resources/js/components/MobileThemeCommentList.vue?vue&type=template&id=32fc57fe&scoped=true&");
+/* harmony import */ var _MobileThemeCommentList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MobileThemeCommentList.vue?vue&type=script&lang=js& */ "./resources/js/components/MobileThemeCommentList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _MobileThemeCommentList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MobileThemeCommentList_vue_vue_type_template_id_32fc57fe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MobileThemeCommentList_vue_vue_type_template_id_32fc57fe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "32fc57fe",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/MobileThemeCommentList.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/MobileThemeCommentList.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/MobileThemeCommentList.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileThemeCommentList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./MobileThemeCommentList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MobileThemeCommentList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileThemeCommentList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/MobileThemeCommentList.vue?vue&type=template&id=32fc57fe&scoped=true&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/MobileThemeCommentList.vue?vue&type=template&id=32fc57fe&scoped=true& ***!
+  \*******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileThemeCommentList_vue_vue_type_template_id_32fc57fe_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../node_modules/vue-loader/lib??vue-loader-options!./MobileThemeCommentList.vue?vue&type=template&id=32fc57fe&scoped=true& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MobileThemeCommentList.vue?vue&type=template&id=32fc57fe&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileThemeCommentList_vue_vue_type_template_id_32fc57fe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileThemeCommentList_vue_vue_type_template_id_32fc57fe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/OfferTime.vue":
 /*!***********************************************!*\
   !*** ./resources/js/components/OfferTime.vue ***!
@@ -29429,6 +29722,81 @@ __webpack_require__.r(__webpack_exports__);
           $(".mobile_data_box").css('right', '0');
         }, 50);
       });
+    },
+    getLabel: function getLabel(key, key2) {
+      key2 = key2 + 1;
+      var a = "score" + key2;
+      if (this.list.data[key]['get_score'][a] != undefined) {
+        return this.scoreLabel[this.list.data[key]['get_score'][a]];
+      } else {
+        return 'معمولی';
+      }
+    },
+    getWidth: function getWidth(key, key2) {
+      key2 = key2 + 1;
+      var a = "score" + key2;
+      if (this.list.data[key]['get_score'][a] != undefined) {
+        return this.list.data[key]['get_score'][a] * 25;
+      } else {
+        return 50;
+      }
+    },
+    getDate: function getDate(time) {
+      time *= 1000;
+      var date = new Date(time);
+      var jalai = this.gregorian_to_jalali(date.getFullYear(), date.getMonth() + 1, date.getDate());
+      var r = this.replaceNumber(jalai[2]) + ' ' + this.monthName[jalai[1] - 1] + ' ' + this.replaceNumber(jalai[0]);
+      return r;
+    },
+    like: function like(key, comment_id) {
+      var _this = this;
+      if (this.send) {
+        $("#loading").show();
+        this.send = false;
+        var url = this.$siteUrl + "user/likeComment";
+        var formData = new FormData();
+        formData.append('comment_id', comment_id);
+        this.axios.post(url, formData).then(function (response) {
+          _this.send = true;
+          $("#loading").hide();
+          if (response.data == "add") {
+            _this.list.data[key].like = _this.list.data[key].like + 1;
+          } else if (response.data == "remove") {
+            _this.list.data[key].like = _this.list.data[key].like - 1;
+          }
+        })["catch"](function (error) {
+          _this.send = true;
+          $("#loading").hide();
+          if (error.response.status == 401) {
+            $("#login_box").modal('show');
+          }
+        });
+      }
+    },
+    dislike: function dislike(key, comment_id) {
+      var _this2 = this;
+      if (this.send) {
+        $("#loading").show();
+        this.send = false;
+        var url = this.$siteUrl + "user/dislikeComment";
+        var formData = new FormData();
+        formData.append('comment_id', comment_id);
+        this.axios.post(url, formData).then(function (response) {
+          _this2.send = true;
+          $("#loading").hide();
+          if (response.data == "add") {
+            _this2.list.data[key].dislike = _this2.list.data[key].dislike + 1;
+          } else if (response.data == "remove") {
+            _this2.list.data[key].dislike = _this2.list.data[key].dislike - 1;
+          }
+        })["catch"](function (error) {
+          _this2.send = true;
+          $("#loading").hide();
+          if (error.response.status == 401) {
+            $("#login_box").modal('show');
+          }
+        });
+      }
     }
   }
 });

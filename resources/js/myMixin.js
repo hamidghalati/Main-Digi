@@ -424,5 +424,79 @@ export default {
                 },50)
             });
         },
+        getLabel: function (key, key2) {
+            key2 = key2 + 1;
+            const a = "score" + key2;
+            if (this.list.data[key]['get_score'][a] != undefined) {
+                return this.scoreLabel[this.list.data[key]['get_score'][a]];
+            } else {
+                return 'معمولی';
+            }
+        },
+        getWidth: function (key, key2) {
+            key2 = key2 + 1;
+            const a = "score" + key2;
+            if (this.list.data[key]['get_score'][a] != undefined) {
+                return ((this.list.data[key]['get_score'][a]) * 25);
+            } else {
+                return 50;
+            }
+        },
+        getDate: function (time) {
+            time *= 1000;
+            const date = new Date(time);
+            const jalai = this.gregorian_to_jalali(date.getFullYear(), (date.getMonth() + 1), date.getDate());
+            const r = this.replaceNumber(jalai[2]) + ' ' + this.monthName[(jalai[1] - 1)] + ' ' + this.replaceNumber(jalai[0]);
+            return r;
+        },
+        like: function (key, comment_id) {
+            if (this.send) {
+                $("#loading").show();
+                this.send = false;
+                const url = this.$siteUrl + "user/likeComment";
+                const formData = new FormData();
+                formData.append('comment_id', comment_id);
+                this.axios.post(url, formData).then(response => {
+                    this.send = true;
+                    $("#loading").hide();
+                    if (response.data == "add") {
+                        this.list.data[key].like = this.list.data[key].like + 1;
+                    } else if (response.data == "remove") {
+                        this.list.data[key].like = this.list.data[key].like - 1;
+                    }
+                }).catch(error => {
+                    this.send = true;
+                    $("#loading").hide();
+                    if (error.response.status == 401) {
+                        $("#login_box").modal('show');
+                    }
+
+                });
+            }
+        },
+        dislike: function (key, comment_id) {
+            if (this.send) {
+                $("#loading").show();
+                this.send = false;
+                const url = this.$siteUrl + "user/dislikeComment";
+                const formData = new FormData();
+                formData.append('comment_id', comment_id);
+                this.axios.post(url, formData).then(response => {
+                    this.send = true;
+                    $("#loading").hide();
+                    if (response.data == "add") {
+                        this.list.data[key].dislike = this.list.data[key].dislike + 1;
+                    } else if (response.data == "remove") {
+                        this.list.data[key].dislike = this.list.data[key].dislike - 1;
+                    }
+                }).catch(error => {
+                    this.send = true;
+                    $("#loading").hide();
+                    if (error.response.status == 401) {
+                        $("#login_box").modal('show');
+                    }
+                });
+            }
+        },
     }
 }

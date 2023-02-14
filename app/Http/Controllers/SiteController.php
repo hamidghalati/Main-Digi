@@ -83,12 +83,21 @@ class SiteController extends Controller
             ->where('id', '!=', $product->id)->limit(15)->get();
         $review=ReView::where('product_id',$product->id)->get();
 
+        $comment_count=0;
+        $useful_comment=null;
+        if ($this->view=='mobile.'){
+            $comment_count=Comment::where(['product_id'=>$product->id,'status'=>1])->count();
+            $useful_comment=Comment::with('getUserInfo')->where(['product_id'=>$product->id,'status'=>1])->orderBy('like','DESC')->limit(2)->get();
+        }
+
         return view($this->view.'shop.show_product', [
             'product' => $product,
             'product_item' => $product_item,
             'product_item_count' => $product_item_count,
             'relate_product' => $relate_product,
-            'review'=>$review
+            'review'=>$review,
+            'comment_count'=>$comment_count,
+            'useful_comment'=>$useful_comment
         ]);
     }
 
