@@ -300,7 +300,7 @@ class SiteController extends Controller
     public function comment_form($product_id)
     {
         $product=ProductsModel::findOrFail($product_id);
-        return view('shop.comment_form',['product'=>$product]);
+        return view($this->view.'shop.comment_form',['product'=>$product]);
     }
 
     public function add_comment($product_id,Request $request)

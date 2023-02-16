@@ -14,7 +14,7 @@
            <div class="vue_mobile_data_box" v-if="show_box">
                <div class="header">
                    <span>لیست فروشندگان این کالا</span>
-                   <a v-on:click="show_box=false">
+                   <a v-on:click="hide_transition_box()">
                        <span>بازگشت</span>
                        <i class="mdi mdi-chevron-left"></i>
                    </a>

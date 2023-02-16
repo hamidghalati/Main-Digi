@@ -18591,7 +18591,7 @@ __webpack_require__.r(__webpack_exports__);
       var r = this.replaceNumber(jalai[2]) + ' ' + this.monthName[jalai[1] - 1] + ' ' + this.replaceNumber(jalai[0]);
       return r;
     },
-    like: function like(key, comment_id) {
+    like: function like(key, comment_id, redirect) {
       var _this = this;
       if (this.send) {
         $("#loading").show();
@@ -18611,12 +18611,16 @@ __webpack_require__.r(__webpack_exports__);
           _this.send = true;
           $("#loading").hide();
           if (error.response.status == 401) {
-            $("#login_box").modal('show');
+            if (redirect != undefined) {
+              window.location.href = _this.$siteUrl + "/login";
+            } else {
+              $("#login_box").modal('show');
+            }
           }
         });
       }
     },
-    dislike: function dislike(key, comment_id) {
+    dislike: function dislike(key, comment_id, redirect) {
       var _this2 = this;
       if (this.send) {
         $("#loading").show();
@@ -18636,10 +18640,18 @@ __webpack_require__.r(__webpack_exports__);
           _this2.send = true;
           $("#loading").hide();
           if (error.response.status == 401) {
-            $("#login_box").modal('show');
+            if (redirect != undefined) {
+              window.location.href = _this2.$siteUrl + "/login";
+            } else {
+              $("#login_box").modal('show');
+            }
           }
         });
       }
+    },
+    hide_transition_box: function hide_transition_box() {
+      this.show_box = false;
+      $('body').css('overflow-y', 'auto');
     }
   }
 });

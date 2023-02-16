@@ -1,113 +1,93 @@
 export default {
-    methods:{
-        replaceNumber:function(n) {
-            n=n.toString();
-            const find=["0","1","2","3","4","5","6","7","8","9"]
-            const replace=["۰","۱","۲","۳","۴","۵","۶","۷","۸","۹"]
-            for (let i=0;i<find.length;i++)
-            {
-                n=n.replace(new RegExp(find[i],'g'),replace[i]);
+    methods: {
+        replaceNumber: function (n) {
+            n = n.toString();
+            const find = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+            const replace = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"]
+            for (let i = 0; i < find.length; i++) {
+                n = n.replace(new RegExp(find[i], 'g'), replace[i]);
             }
             return n;
         },
-        check_mobile_number(){
-            if (isNaN(this.mobile))
-            {
+        check_mobile_number() {
+            if (isNaN(this.mobile)) {
                 return true;
-            }
-            else {
-                if (this.mobile.toString().trim().length==11)
-                {
+            } else {
+                if (this.mobile.toString().trim().length == 11) {
 
-                    if (this.mobile.toString().charAt(0)=='0' && this.mobile.toString().charAt(1)=='9')
-                    {
+                    if (this.mobile.toString().charAt(0) == '0' && this.mobile.toString().charAt(1) == '9') {
 
                         return false;
-                    }
-                    else {
+                    } else {
                         return true;
 
                     }
-                }
-                else if(this.mobile.toString().trim().length==10)
-                {
-                    if (this.mobile.toString().charAt(0)=='9' )
-                    {
+                } else if (this.mobile.toString().trim().length == 10) {
+                    if (this.mobile.toString().charAt(0) == '9') {
                         return false;
-                    }
-                    else {
+                    } else {
                         return true;
                     }
-                }
-                else {
+                } else {
                     return true;
                 }
 
             }
         },
-        number_format:function (num)
-        {
-            num=num.toString();
-            let format='';
-            let counter=0;
-            for (let i=num.length-1;i>=0;i--)
-            {
-                format+=num[i];
+        number_format: function (num) {
+            num = num.toString();
+            let format = '';
+            let counter = 0;
+            for (let i = num.length - 1; i >= 0; i--) {
+                format += num[i];
                 counter++;
-                if (counter==3)
-                {
-                    format+=",";
-                    counter=0;
+                if (counter == 3) {
+                    format += ",";
+                    counter = 0;
                 }
             }
             return format.split('').reverse().join('');
         },
-        check_search_params:function (page_url) {
-            let url=page_url==undefined ? window.location.href : page_url;
-            const params=url.split('?');
-            if (params[1] !=undefined)
-            {
-                if (params[1].indexOf('&')>-1)
-                {
-                    let vars=params[1].split('&');
-                    for (let i in vars)
-                    {
-                        let k=vars[i].split('=')[0];
-                        let v=vars[i].split('=')[1];
-                        k=k.split('[');
-                         this.add_active_filter(k,v);
+        check_search_params: function (page_url) {
+            let url = page_url == undefined ? window.location.href : page_url;
+            const params = url.split('?');
+            if (params[1] != undefined) {
+                if (params[1].indexOf('&') > -1) {
+                    let vars = params[1].split('&');
+                    for (let i in vars) {
+                        let k = vars[i].split('=')[0];
+                        let v = vars[i].split('=')[1];
+                        k = k.split('[');
+                        this.add_active_filter(k, v);
                     }
 
-                }
-                else {
+                } else {
 
-                    let k=params[1].split('=')[0];
-                    let v=params[1].split('=')[1];
-                    k=k.split('[');
-                     this.add_active_filter(k,v);
+                    let k = params[1].split('=')[0];
+                    let v = params[1].split('=')[1];
+                    k = k.split('[');
+                    this.add_active_filter(k, v);
                 }
             }
         },
-        setRangeSlider:function (price) {
-            const app=this;
+        setRangeSlider: function (price) {
+            const app = this;
             var slider = document.querySelector('.price_range_slider');
-            if (this.noUiSlider==null)
-            {
-                if (parseInt(price)>0)
-                {
-                    this.noUiSlider=noUiSlider.create(slider, {
+            if (this.noUiSlider == null) {
+                if (parseInt(price) > 0) {
+                    this.noUiSlider = noUiSlider.create(slider, {
                         start: [0, price],
-                        connect:true,
-                        direction:'rtl',
+                        connect: true,
+                        direction: 'rtl',
                         range: {
                             'min': 0,
                             'max': price
                         },
-                        format:{
-                            from:function (value) {
+                        format: {
+                            from: function (value) {
                                 return parseInt(value);
                             },
-                            to:function (value) {
+                            to: function (value) {
                                 return parseInt(value);
                             }
 
@@ -117,30 +97,27 @@ export default {
                 }
             }
 
-            if (slider.noUiSlider!=undefined)
-            {
-                slider.noUiSlider.on('update',function (values,handle) {
-                    app.min_price=values[0];
-                    app.max_price=values[1];
+            if (slider.noUiSlider != undefined) {
+                slider.noUiSlider.on('update', function (values, handle) {
+                    app.min_price = values[0];
+                    app.max_price = values[1];
                     $("#min_price").text(app.number_format(values[0]));
                     $("#max_price").text(app.number_format(values[1]));
                 });
 
 
-                let search=new window.URLSearchParams(window.location.search);
-                const min=parseInt(search.get('price[min]')) !=null ? parseInt(search.get('price[min]')) : 0;
-                if (search.get('price[max]')!=null)
-                {
+                let search = new window.URLSearchParams(window.location.search);
+                const min = parseInt(search.get('price[min]')) != null ? parseInt(search.get('price[min]')) : 0;
+                if (search.get('price[max]') != null) {
                     this.noUiSlider.updateOptions({
                         start: [min, parseInt(search.get('price[max]'))],
 
                     })
                 }
 
-                if (search.get('price[min]')!=null && search.get('price[max]')==null)
-                {
+                if (search.get('price[min]') != null && search.get('price[max]') == null) {
                     this.noUiSlider.updateOptions({
-                        start: [parseInt(search.get('price[min]')),slider.noUiSlider.get()[1]],
+                        start: [parseInt(search.get('price[min]')), slider.noUiSlider.get()[1]],
 
                     })
                 }
@@ -148,226 +125,192 @@ export default {
 
 
         },
-        setPageUrl:function (url) {
-            window.history.pushState('data','title',url);
+        setPageUrl: function (url) {
+            window.history.pushState('data', 'title', url);
         },
-        getDiscountValue:function (price1,price2) {
-            let a=(price2/price1)*100;
-            a=100-a;
-            a=Math.round(a);
+        getDiscountValue: function (price1, price2) {
+            let a = (price2 / price1) * 100;
+            a = 100 - a;
+            a = Math.round(a);
             return a;
         },
-        set_filter_event:function (el,page_url) {
-            let data=$(el).attr('data');
-            data=data.split('_');
-            if ($('.check_box',el).hasClass('active'))
-            {
-                $('.check_box',el).removeClass('active');
-                this.remove_url_query_string(data[0],data[2],page_url);
-                this.remove_filter_tag(data[0],data[2],page_url);
-            }
-            else {
-                $('.check_box',el).addClass('active');
-                this.add_url_query_string(data[0],data[2],page_url);
-                this.add_filter_tag(data,data[0],data[2],page_url);
+        set_filter_event: function (el, page_url) {
+            let data = $(el).attr('data');
+            data = data.split('_');
+            if ($('.check_box', el).hasClass('active')) {
+                $('.check_box', el).removeClass('active');
+                this.remove_url_query_string(data[0], data[2], page_url);
+                this.remove_filter_tag(data[0], data[2], page_url);
+            } else {
+                $('.check_box', el).addClass('active');
+                this.add_url_query_string(data[0], data[2], page_url);
+                this.add_filter_tag(data, data[0], data[2], page_url);
             }
         },
-        remove_url_query_string:function (key,value,page_url) {
-            let url=page_url==undefined ? window.location.href : page_url;
-            let check=url.split(key);
-            const params=url.split('?');
-            let h=0;
+        remove_url_query_string: function (key, value, page_url) {
+            let url = page_url == undefined ? window.location.href : page_url;
+            let check = url.split(key);
+            const params = url.split('?');
+            let h = 0;
 
-            if (params[1]!=undefined)
-            {
-                if(params[1].indexOf('&')>-1){
+            if (params[1] != undefined) {
+                if (params[1].indexOf('&') > -1) {
 
-                    let vars=params[1].split('&');
-                    for (let i in vars)
-                    {
-                        let k=vars[i].split('=')[0];
-                        let v=vars[i].split('=')[1];
-                        let n=k.indexOf(key);
-                        if (n>-1 && v!=value)
-                        {
-                            k=k.replace(key,'');
-                            k=k.replace('[','');
-                            k=k.replace(']','');
-                            const new_string=key+"["+h+"]="+v;
-                            const old_string=key+"["+k+"]="+v;
-                            url=url.replace(old_string,new_string);
+                    let vars = params[1].split('&');
+                    for (let i in vars) {
+                        let k = vars[i].split('=')[0];
+                        let v = vars[i].split('=')[1];
+                        let n = k.indexOf(key);
+                        if (n > -1 && v != value) {
+                            k = k.replace(key, '');
+                            k = k.replace('[', '');
+                            k = k.replace(']', '');
+                            const new_string = key + "[" + h + "]=" + v;
+                            const old_string = key + "[" + k + "]=" + v;
+                            url = url.replace(old_string, new_string);
                             h++;
-                        }
-                        else if (n>-1)
-                        {
-                            url=url.replace('&'+k+"="+v,'');
-                            url=url.replace('?'+k+"="+v,'');
+                        } else if (n > -1) {
+                            url = url.replace('&' + k + "=" + v, '');
+                            url = url.replace('?' + k + "=" + v, '');
                         }
                     }
-                }
-                else {
-                    url=url.replace('?'+key+"[0]"+"="+value,'');
+                } else {
+                    url = url.replace('?' + key + "[0]" + "=" + value, '');
 
                 }
 
             }
 
-            const url_params=url.split('?');
-            if (url_params[1]==undefined)
-            {
-                url=url.replace('&','?');
+            const url_params = url.split('?');
+            if (url_params[1] == undefined) {
+                url = url.replace('&', '?');
             }
             this.changed_url(url);
         },
-        get_request_url:function (url,page) {
-            const url_param=url.split('?');
-            if (url_param[1]==undefined)
-            {
-                url=url+"?page="+page;
-            }
-            else {
-                url=url+"&page="+page;
+        get_request_url: function (url, page) {
+            const url_param = url.split('?');
+            if (url_param[1] == undefined) {
+                url = url + "?page=" + page;
+            } else {
+                url = url + "&page=" + page;
             }
             return url;
         },
-        set_product_sort:function () {
-            let params=new window.URLSearchParams(window.location.search);
-            let url=window.location.href;
-            if (params.get("sortby")!=null){
-                const sortby=parseInt(params.get("sortby"));
-                if (sortby>=21 && sortby<=25)
-                {
-                    this.sort=sortby;
+        set_product_sort: function () {
+            let params = new window.URLSearchParams(window.location.search);
+            let url = window.location.href;
+            if (params.get("sortby") != null) {
+                const sortby = parseInt(params.get("sortby"));
+                if (sortby >= 21 && sortby <= 25) {
+                    this.sort = sortby;
                 }
             }
         },
-        search_product:function (event,el) {
-            if (event.keyCode==13)
-            {
-                const search_text=$(el).val();
-                if (search_text.trim().length==0)
-                {
-                    if (this.search_string!="")
-                    {
-                        this.remove_url_params('string',this.search_string);
-                        this.search_string='';
+        search_product: function (event, el) {
+            if (event.keyCode == 13) {
+                const search_text = $(el).val();
+                if (search_text.trim().length == 0) {
+                    if (this.search_string != "") {
+                        this.remove_url_params('string', this.search_string);
+                        this.search_string = '';
                         this.getProduct(1);
                     }
 
-                }
-                else {
-                    if (search_text.trim().length>1)
-                    {
-                        this.search_string=search_text;
-                        this.add_url_param('string',search_text);
+                } else {
+                    if (search_text.trim().length > 1) {
+                        this.search_string = search_text;
+                        this.add_url_param('string', search_text);
                         this.getProduct(1);
                     }
                 }
             }
         },
-        remove_url_params:function (key,value,page_url) {
-            let params=new window.URLSearchParams(window.location.search);
-            if (page_url!=undefined)
-            {
-                let search_url_params=this.search_url.split('?');
-                if (search_url_params[1]!=undefined)
-                {
-                    search_url_params='?'+search_url_params[1];
-                    params=new window.URLSearchParams(search_url_params);
+        remove_url_params: function (key, value, page_url) {
+            let params = new window.URLSearchParams(window.location.search);
+            if (page_url != undefined) {
+                let search_url_params = this.search_url.split('?');
+                if (search_url_params[1] != undefined) {
+                    search_url_params = '?' + search_url_params[1];
+                    params = new window.URLSearchParams(search_url_params);
                 }
                 console.log(search_url_params)
             }
 
-            let url=page_url==undefined ? window.location.href : page_url;
+            let url = page_url == undefined ? window.location.href : page_url;
 
-            if (params.get(key)!=null)
-            {
-                value=encodeURIComponent(value);
-                url=url.replace('&'+key+"="+value,'');
-                url=url.replace('?'+key+"="+value,'');
-                this.remove_filter_tag(key,value);
+            if (params.get(key) != null) {
+                value = encodeURIComponent(value);
+                url = url.replace('&' + key + "=" + value, '');
+                url = url.replace('?' + key + "=" + value, '');
+                this.remove_filter_tag(key, value);
 
-                const url_params=url.split('?');
-                if (url_params[1]==undefined)
-                {
-                    url=url.replace('&','?');
+                const url_params = url.split('?');
+                if (url_params[1] == undefined) {
+                    url = url.replace('&', '?');
                 }
 
-                if (page_url==undefined)
-                {
+                if (page_url == undefined) {
                     this.setPageUrl(url);
                     this.getProduct(1);
-                }
-                else {
-                    this.search_url=url;
+                } else {
+                    this.search_url = url;
                 }
 
             }
         },
-        set_search_string:function () {
-            let params=new window.URLSearchParams(window.location.search);
-            let url=window.location.href;
-            if (params.get('string')!=null)
-            {
-                this.search_string=params.get('string');
+        set_search_string: function () {
+            let params = new window.URLSearchParams(window.location.search);
+            let url = window.location.href;
+            if (params.get('string') != null) {
+                this.search_string = params.get('string');
             }
         },
-        set_enable_product_status_toggle:function () {
-            if (!$("#selected_filter_box").find('div').hasClass('product_status_filter'))
-            {
+        set_enable_product_status_toggle: function () {
+            if (!$("#selected_filter_box").find('div').hasClass('product_status_filter')) {
                 $("#filter_div").show();
-                const html= '<div class="selected_filter_item product_status_filter">'+
+                const html = '<div class="selected_filter_item product_status_filter">' +
                     '<span>فقط کالاهای موجود</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>'
-                    +'</div>';
+                    + '</div>';
                 $('#selected_filter_box').append(html);
             }
         },
-        set_enable_status_toggle:function () {
-            if (!$("#selected_filter_box").find('div').hasClass('send_status_filter'))
-            {
+        set_enable_status_toggle: function () {
+            if (!$("#selected_filter_box").find('div').hasClass('send_status_filter')) {
                 $("#filter_div").show();
-                const html= '<div class="selected_filter_item send_status_filter">'+
+                const html = '<div class="selected_filter_item send_status_filter">' +
                     '<span>کالاهای آماده ارسال</span> <i id="selected_filter_item_remove" class="fa fa-close"></i>'
-                    +'</div>';
+                    + '</div>';
                 $('#selected_filter_box').append(html);
             }
 
         },
-        add_active_filter:function (k,v) {
-            if (k.length>1)
-            {
-                let data="";
-                let filter_key=k[0];
-                if (k.length==3)
-                {
-                    data=k[0]+"["+k[1]+"_param_"+v;
-                    data="'"+data+"'";
-                    filter_key=k[0]+"["+k[1];
+        add_active_filter: function (k, v) {
+            if (k.length > 1) {
+                let data = "";
+                let filter_key = k[0];
+                if (k.length == 3) {
+                    data = k[0] + "[" + k[1] + "_param_" + v;
+                    data = "'" + data + "'";
+                    filter_key = k[0] + "[" + k[1];
+                } else {
+                    data = k[0] + "_param_" + v;
                 }
-                else {
-                    data=k[0]+"_param_"+v;
+                $('li[data=' + data + '] .check_box').addClass('active');
+                $('li[data=' + data + ']').parent().parent().slideDown();
+                if ($('li[data=' + data + ']').length == 1) {
+                    this.add_filter_tag(data, filter_key, v);
                 }
-                $('li[data='+data+'] .check_box').addClass('active');
-                $('li[data='+data+']').parent().parent().slideDown();
-                if ($('li[data='+data+']').length==1)
-                {
-                    this.add_filter_tag(data,filter_key,v);
-                }
-            }
-            else {
+            } else {
 
-                if (k=="has_product")
-                {
+                if (k == "has_product") {
                     this.set_enable_product_status_toggle();
-                }
-                else if (k=="has_ready_to_shipment")
-                {
+                } else if (k == "has_ready_to_shipment") {
                     this.set_enable_status_toggle();
                 }
             }
         },
         remove_all_filter: function (page_url) {
-            let url=page_url==undefined ? window.location.href : page_url;
+            let url = page_url == undefined ? window.location.href : page_url;
             url = url.split('?')[0];
             $('.selected_filter_item').remove();
             $("#filter_div").hide();
@@ -381,17 +324,15 @@ export default {
             if (this.noUiSlider) {
                 this.noUiSlider.reset();
             }
-            if (page_url==undefined)
-            {
+            if (page_url == undefined) {
                 this.setPageUrl(url);
                 this.getProduct(1);
-            }
-            else {
-                this.search_url=url;
+            } else {
+                this.search_url = url;
             }
 
         },
-        gregorian_to_jalali:function (gy, gm, gd) {
+        gregorian_to_jalali: function (gy, gm, gd) {
             var g_d_m, jy, jm, jd, gy2, days;
             g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
             gy2 = (gm > 2) ? (gy + 1) : gy;
@@ -413,15 +354,15 @@ export default {
             }
             return [jy, jm, jd];
         },
-        show_mobile_box:function () {
+        show_mobile_box: function () {
             this.$nextTick(function () {
-                $('body').css('overflow-y','hidden');
-                const width=$(window).width();
-                const right="-"+width+"px";
-                $(".mobile_data_box").css({'right':right});
+                $('body').css('overflow-y', 'hidden');
+                const width = $(window).width();
+                const right = "-" + width + "px";
+                $(".mobile_data_box").css({'right': right});
                 setTimeout(function () {
-                    $(".mobile_data_box").css('right','0');
-                },50)
+                    $(".mobile_data_box").css('right', '0');
+                }, 50)
             });
         },
         getLabel: function (key, key2) {
@@ -449,7 +390,7 @@ export default {
             const r = this.replaceNumber(jalai[2]) + ' ' + this.monthName[(jalai[1] - 1)] + ' ' + this.replaceNumber(jalai[0]);
             return r;
         },
-        like: function (key, comment_id) {
+        like: function (key, comment_id, redirect) {
             if (this.send) {
                 $("#loading").show();
                 this.send = false;
@@ -468,13 +409,18 @@ export default {
                     this.send = true;
                     $("#loading").hide();
                     if (error.response.status == 401) {
-                        $("#login_box").modal('show');
+                        if (redirect != undefined) {
+                            window.location.href = this.$siteUrl + "/login";
+                        } else {
+                            $("#login_box").modal('show');
+                        }
+
                     }
 
                 });
             }
         },
-        dislike: function (key, comment_id) {
+        dislike: function (key, comment_id,redirect) {
             if (this.send) {
                 $("#loading").show();
                 this.send = false;
@@ -493,10 +439,18 @@ export default {
                     this.send = true;
                     $("#loading").hide();
                     if (error.response.status == 401) {
-                        $("#login_box").modal('show');
+                        if (redirect != undefined) {
+                            window.location.href = this.$siteUrl + "/login";
+                        } else {
+                            $("#login_box").modal('show');
+                        }
                     }
                 });
             }
         },
+        hide_transition_box: function () {
+            this.show_box = false;
+            $('body').css('overflow-y', 'auto');
+        }
     }
 }

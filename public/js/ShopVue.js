@@ -3525,13 +3525,17 @@ __webpack_require__.r(__webpack_exports__);
       comment_count: 0,
       avg: 0,
       avg_score: [],
-      getServerData: 'no',
+      getServerData: 'ok',
       ordering: 1,
       scoreItem: ['کیفیت ساخت :', 'نوآوری :', 'سهولت استفاده :', 'ارزش خرید به نسبت قیمت :', 'امکانات و قابلیت ها :', 'سهولت طراحی و ظاهر :'],
       scoreLabel: ['خیلی بد', 'بد', 'معمولی', 'خوب', 'عالی'],
       monthName: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
       send: true,
-      show_loading_box: false
+      show_loading_box: false,
+      comment_list_height: 0,
+      scroll_height: 0,
+      send_request: true,
+      page: 1
     };
   },
   mounted: function mounted() {
@@ -3547,23 +3551,52 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getList: function getList() {
       var _this = this;
-      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.show_loading_box = true;
-      var url = this.$siteUrl + "/site/getComment?page=" + page + "&product_id=" + this.product_id + "&orderBy=" + this.ordering;
-      this.axios.get(url).then(function (response) {
-        _this.show_loading_box = false;
-        _this.list = response.data.comment;
-        _this.avg = response.data.avg;
-        _this.comment_count = response.data.comment_count;
-        _this.avg_score = response.data.avg_score;
-        _this.getServerData = 'ok';
-      })["catch"](function (reason) {
-        _this.show_loading_box = false;
-      });
+      if (this.send_request == true) {
+        this.send_request = false;
+        this.show_loading_box = true;
+        var app = this;
+        var url = this.$siteUrl + "/site/getComment?page=" + this.page + "&product_id=" + this.product_id + "&orderBy=" + this.ordering;
+        this.axios.get(url).then(function (response) {
+          _this.show_loading_box = false;
+          // this.list = response.data.comment;
+          response.data['comment'].data.forEach(function (item) {
+            app.list.data.push(item);
+          });
+          _this.avg = response.data.avg;
+          _this.comment_count = response.data.comment_count;
+          _this.avg_score = response.data.avg_score;
+          _this.send_request = true;
+          if (response.data['comment'].data.length == 0) {
+            _this.getServerData = 'no';
+          }
+          _this.getServerData = 'ok';
+          _this.$nextTick(function () {
+            var h = this.$refs.comment_box.clientHeight;
+            this.comment_list_height = h;
+          });
+        })["catch"](function (reason) {
+          _this.show_loading_box = false;
+          _this.send_request = true;
+        });
+      }
     },
     set_ordering: function set_ordering(type) {
       this.ordering = type;
       this.getList(1);
+    },
+    checkScroll: function checkScroll(event) {
+      var h = event.target.scrollTop;
+      console.log(h);
+      if (this.show_box) {
+        // console.log(h+">"+this.comment_list_height/5)
+        if (h < this.comment_list_height && this.comment_list_height > 200 && h > this.scroll_height && this.getServerData == 'ok' && this.send_request) {
+          this.page = this.page + 1;
+          this.getList();
+        }
+        if (h > this.scroll_height) {
+          this.scroll_height = h;
+        }
+      }
     }
   }
 });
@@ -6046,7 +6079,7 @@ var render = function render() {
   }, [_c("span", [_vm._v("لیست فروشندگان این کالا")]), _vm._v(" "), _c("a", {
     on: {
       click: function click($event) {
-        _vm.show_box = false;
+        return _vm.hide_transition_box();
       }
     }
   }, [_c("span", [_vm._v("بازگشت")]), _vm._v(" "), _c("i", {
@@ -6601,7 +6634,7 @@ var render = function render() {
   }, [_c("span", [_vm._v("نظرات کاربران")]), _vm._v(" "), _c("a", {
     on: {
       click: function click($event) {
-        _vm.show_box = false;
+        return _vm.hide_transition_box();
       }
     }
   }, [_c("span", [_vm._v("بازگشت")]), _vm._v(" "), _c("i", {
@@ -6610,8 +6643,11 @@ var render = function render() {
     staticClass: "content",
     staticStyle: {
       background: "#F5F5F5!important"
+    },
+    on: {
+      scroll: _vm.checkScroll
     }
-  }, [_vm.comment_count > 0 && _vm.getServerData == "ok" ? _c("div", {
+  }, [_c("div", {
     staticClass: "feq_filter"
   }, [_c("div", {
     staticClass: "item_box box_header"
@@ -6710,7 +6746,9 @@ var render = function render() {
     attrs: {
       "for": "radio3"
     }
-  }, [_vm._v("جدیدترین نظرات")])])])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.list.data, function (comment, key) {
+  }, [_vm._v("جدیدترین نظرات")])])])]), _vm._v(" "), _c("div", {
+    ref: "comment_box"
+  }, _vm._l(_vm.list.data, function (comment, key) {
     return _c("div", {
       staticClass: "comment_div_mobile"
     }, [_c("div", {
@@ -6723,7 +6761,7 @@ var render = function render() {
       }
     }, [_c("span", {
       staticClass: "comment_title"
-    }, [_vm._v(_vm._s(comment.title))]), _vm._v(" "), _c("p", [_c("span", [_vm._v("توسط")]), _vm._v(" "), comment.get_user_info == null ? _c("span", [_vm._v("ناشناس")]) : _c("span", [_vm._v(_vm._s(comment.get_user_info.first_name + " " + comment.get_user_info.last_name))]), _vm._v(" "), _c("span", [_vm._v("در تاریخ")]), _vm._v("\n                                " + _vm._s(_vm.getDate(comment.time)) + "\n                            ")])]), _vm._v(" "), comment.order_id > 0 ? _c("div", {
+    }, [_vm._v(_vm._s(comment.title))]), _vm._v(" "), _c("p", [_c("span", [_vm._v("توسط")]), _vm._v(" "), comment.get_user_info == null ? _c("span", [_vm._v("ناشناس")]) : _c("span", [_vm._v(_vm._s(comment.get_user_info.first_name + " " + comment.get_user_info.last_name))]), _vm._v(" "), _c("span", [_vm._v("در تاریخ")]), _vm._v("\n                                 " + _vm._s(_vm.getDate(comment.time)) + "\n                             ")])]), _vm._v(" "), comment.order_id > 0 ? _c("div", {
       staticClass: "title_buyer"
     }, [_vm._v(" خریدار")]) : _vm._e()]), _vm._v(" "), _c("div", {
       staticClass: "row"
@@ -6747,28 +6785,28 @@ var render = function render() {
       staticClass: "comment_text"
     }, [_vm._v(_vm._s(comment.content))]), _vm._v(" "), _c("div", {
       staticClass: "footer"
-    }, [_c("div", [_vm._v("\n                            آیا این نظر برایتان مفید بود ؟\n                        ")]), _vm._v(" "), _c("div", [_c("button", {
+    }, [_c("div", [_vm._v("\n                             آیا این نظر برایتان مفید بود ؟\n                         ")]), _vm._v(" "), _c("div", [_c("button", {
       staticClass: "btn_like",
       attrs: {
         "data-count": _vm.replaceNumber(comment.like)
       },
       on: {
         click: function click($event) {
-          return _vm.like(key, comment.id);
+          return _vm.like(key, comment.id, "redirect");
         }
       }
-    }, [_vm._v("بلی\n                            ")]), _vm._v(" "), _c("button", {
+    }, [_vm._v("بلی\n                             ")]), _vm._v(" "), _c("button", {
       staticClass: "btn_like dislike",
       attrs: {
         "data-count": _vm.replaceNumber(comment.dislike)
       },
       on: {
         click: function click($event) {
-          return _vm.dislike(key, comment.id);
+          return _vm.dislike(key, comment.id, "redirect");
         }
       }
-    }, [_vm._v("خیر\n                            ")])])])])]);
-  }), _vm._v(" "), _vm.comment_count == 0 && _vm.getServerData == "ok" ? _c("div", [_c("p", {
+    }, [_vm._v("خیر\n                             ")])])])])]);
+  }), 0), _vm._v(" "), _vm.comment_count == 0 && _vm.getServerData == "ok" ? _c("div", [_c("p", {
     staticStyle: {
       "text-align": "center",
       "padding-top": "30px",
@@ -6781,7 +6819,7 @@ var render = function render() {
     }
   }, [_c("span", {
     staticClass: "loader"
-  })]) : _vm._e()], 2)]) : _vm._e()]);
+  })]) : _vm._e()])]) : _vm._e()]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -29748,7 +29786,7 @@ __webpack_require__.r(__webpack_exports__);
       var r = this.replaceNumber(jalai[2]) + ' ' + this.monthName[jalai[1] - 1] + ' ' + this.replaceNumber(jalai[0]);
       return r;
     },
-    like: function like(key, comment_id) {
+    like: function like(key, comment_id, redirect) {
       var _this = this;
       if (this.send) {
         $("#loading").show();
@@ -29768,12 +29806,16 @@ __webpack_require__.r(__webpack_exports__);
           _this.send = true;
           $("#loading").hide();
           if (error.response.status == 401) {
-            $("#login_box").modal('show');
+            if (redirect != undefined) {
+              window.location.href = _this.$siteUrl + "/login";
+            } else {
+              $("#login_box").modal('show');
+            }
           }
         });
       }
     },
-    dislike: function dislike(key, comment_id) {
+    dislike: function dislike(key, comment_id, redirect) {
       var _this2 = this;
       if (this.send) {
         $("#loading").show();
@@ -29793,10 +29835,18 @@ __webpack_require__.r(__webpack_exports__);
           _this2.send = true;
           $("#loading").hide();
           if (error.response.status == 401) {
-            $("#login_box").modal('show');
+            if (redirect != undefined) {
+              window.location.href = _this2.$siteUrl + "/login";
+            } else {
+              $("#login_box").modal('show');
+            }
           }
         });
       }
+    },
+    hide_transition_box: function hide_transition_box() {
+      this.show_box = false;
+      $('body').css('overflow-y', 'auto');
     }
   }
 });

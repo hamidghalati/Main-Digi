@@ -58,9 +58,7 @@
                                         <!--                                   </span>-->
                                     </div>
                                 </div>
-                                <span>{{
-                                        replaceNumber(number_format(product.get_first_product_price.price2))
-                                    }} تومان </span>
+                                <span>{{replaceNumber(number_format(product.get_first_product_price.price2))}} تومان </span>
                             </div>
 
                             <div v-else class="product_status">
