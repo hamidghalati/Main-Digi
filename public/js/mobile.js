@@ -157,6 +157,47 @@ $(document).ready(function () {
 
     });
 
+    $(document).on('click', '.score_comment_form .item_list #fa-close', function () {
+        $(this).parent().remove();
+    });
+
+    $("#comment_form").submit(function (event) {
+        const comment_title = $("#comment_title").val();
+        const comment_content = $("#comment_content").val();
+
+        const check_title = check_comment_title(comment_title);
+        const check_content = check_comment_content(comment_content);
+
+        if (!check_title || !check_content) {
+            event.preventDefault();
+        }
+
+
+    });
+
+    $('.input_add_point input[type="text"]').keyup(function () {
+        const value = $(this).val();
+        if (value.trim().length > 2) {
+            $(this).parent().find('button').css('display', 'block');
+        } else {
+            $(this).parent().find('button').css('display', 'none');
+        }
+    });
+
+    $('.input_add_point button').click(function () {
+        const value = $(this).parent().find('input[type="text"]').val();
+        const name = $(this).parent().find('input[type="text"]').attr('id');
+        if (value.trim().length > 2) {
+            const html = '<div><span>' + value + '</span>' +
+                '<span class="fa fa-close" id="fa-close"></span>' +
+                '<input type="hidden" value="' + value + '" name="' + name + '[]">' +
+                '</div>';
+            $("#" + name + "_input_box").append(html);
+            $(this).parent().find('input[type="text"]').val('')
+            $(this).hide();
+        }
+    });
+
 
 });
 
@@ -185,4 +226,28 @@ function change_color(color_id, product_id) {
 function set_mobile_data_right_value() {
     const width = $(window).width();
     $(".mobile_data_box").css('right', '-' + width + 'px');
+}
+
+check_comment_title = function (title) {
+    if (title.trim() == "") {
+        $("#comment_title_error_message").show().text('عنوان نظر را وارد کنید');
+        $("#comment_title").addClass('validate_error_border');
+        return false;
+    } else {
+        $("#comment_title_error_message").hide();
+        $("#comment_title").removeClass('validate_error_border');
+        return true;
+    }
+}
+
+check_comment_content = function (content) {
+    if (content.trim().length == 0) {
+        $("#comment_content_error_message").show().text("متن نظر را وارد کنید");
+        $("#comment_content").addClass('validate_error_border');
+        return false;
+    } else {
+        $("#comment_content_error_message").hide();
+        $("#comment_content").removeClass('validate_error_border');
+        return true;
+    }
 }

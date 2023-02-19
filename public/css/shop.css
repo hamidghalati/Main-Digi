@@ -3581,7 +3581,11 @@ padding-right: 300px;
 #comment_content_error_message{
 
 }
-
+#comment_title{
+    padding: 11px 12px !important;
+    width: 100%;
+    height: auto!important;
+}
 .feedback_hint_error {
     background: #ef5662;
     font-size: 13px;

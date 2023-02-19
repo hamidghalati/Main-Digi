@@ -4,6 +4,20 @@
 @endsection
 @section('content')
     <div style="position: relative;padding-bottom: 50px">
+
+
+        @if(Session::has('comment_status'))
+            <div class="alert @if(Session::get('comment_status')=='ok') alert-success @else alert-danger @endif custom-alert">
+                @if(Session::get('comment_status')=='ok')
+                    <span>نظر شما با موفقیت ثبت شد و بعد از تأیید، نمایش داده خواهد شد</span>
+                @else
+                    <p>خطا در ثبت اطلاعات، مجدداً تلاش نمایید</p>
+                @endif
+            </div>
+        @endif
+
+
+
         <div class="product_item_box margin">
             <div class="product_headline">
                 <h6 class="product_title">

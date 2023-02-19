@@ -99,7 +99,7 @@
 
                             <div class="col-md-12">
                                 <div class="score_comment_form">
-                                    <div class="form-group">
+                                    <div class="row">
                                         <div class="account_title" style="margin-bottom: 10px">  عنوان نظر شما (اجباری) :</div>
                                         <label for="" class="input_label">
                                             <input type="text" class="form-control" name="title" id="comment_title" placeholder="عنوان نظر خود را وارد نمایید">
@@ -107,7 +107,7 @@
                                         </label>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6" style="padding-right: 0!important;">
+                                        <div class="col-md-12">
                                             <div class="positive_item">نقاط قوت</div>
                                             <div class="input_add_point advantage">
                                                 <input type="text" value="" id="advantage">
@@ -118,7 +118,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6" style="padding-left: 0!important;">
+                                        <div class="col-md-12" style="padding-left: 0!important;">
 
                                             <div class="negative_item negative">نقاط ضعف</div>
                                             <div class="input_add_point disadvantage">
@@ -131,15 +131,15 @@
                                         </div>
 
                                     </div>
-                                    <div class="form-group">
+                                    <div class="row">
                                         <div class="account_title">متن نظر شما (اجباری) :</div>
                                         <label for="" class="input_label">
                                             <textarea class="form-control" name="content" id="comment_content" placeholder="متن نظر خود را وارد نمایید"></textarea>
-                                            <label id="comment_content_error_message"  class="feedback_hint_error"></label>
+                                            <label id="comment_content_error_message"  class="feedback_hint"></label>
                                         </label>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="row">
                                         <button class="add_comment_btn">ثبت نظر</button>
                                     </div>
 

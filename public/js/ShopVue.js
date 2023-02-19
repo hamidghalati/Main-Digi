@@ -3535,7 +3535,10 @@ __webpack_require__.r(__webpack_exports__);
       comment_list_height: 0,
       scroll_height: 0,
       send_request: true,
-      page: 1
+      page: 1,
+      comment_list: {
+        data: []
+      }
     };
   },
   mounted: function mounted() {
@@ -3551,14 +3554,13 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getList: function getList() {
       var _this = this;
-      if (this.send_request == true) {
+      if (this.send_request) {
         this.send_request = false;
         this.show_loading_box = true;
         var app = this;
         var url = this.$siteUrl + "/site/getComment?page=" + this.page + "&product_id=" + this.product_id + "&orderBy=" + this.ordering;
         this.axios.get(url).then(function (response) {
           _this.show_loading_box = false;
-          // this.list = response.data.comment;
           response.data['comment'].data.forEach(function (item) {
             app.list.data.push(item);
           });
@@ -3569,7 +3571,9 @@ __webpack_require__.r(__webpack_exports__);
           if (response.data['comment'].data.length == 0) {
             _this.getServerData = 'no';
           }
-          _this.getServerData = 'ok';
+          if (response.data['comment'].data.length > 2) {
+            app.list = response.data.comment;
+          }
           _this.$nextTick(function () {
             var h = this.$refs.comment_box.clientHeight;
             this.comment_list_height = h;
@@ -3582,19 +3586,26 @@ __webpack_require__.r(__webpack_exports__);
     },
     set_ordering: function set_ordering(type) {
       this.ordering = type;
-      this.getList(1);
+      // this.list= this.comment_list;
+      this.send_request = true;
+      this.getList();
     },
     checkScroll: function checkScroll(event) {
       var h = event.target.scrollTop;
-      console.log(h);
       if (this.show_box) {
-        // console.log(h+">"+this.comment_list_height/5)
-        if (h < this.comment_list_height && this.comment_list_height > 200 && h > this.scroll_height && this.getServerData == 'ok' && this.send_request) {
+        console.log(h + ">" + this.comment_list_height + "-" + this.scroll_height);
+        if (h > this.comment_list_height / 3 && this.comment_list_height > 200 && h > this.scroll_height && this.getServerData == 'ok' && this.send_request) {
           this.page = this.page + 1;
           this.getList();
         }
         if (h > this.scroll_height) {
           this.scroll_height = h;
+        }
+        if (h < this.comment_list_height) {
+          // this.send_request=true;
+          this.getServerData = 'no';
+          this.scroll_height = h;
+          this.getList();
         }
       }
     }
@@ -6748,7 +6759,7 @@ var render = function render() {
     }
   }, [_vm._v("جدیدترین نظرات")])])])]), _vm._v(" "), _c("div", {
     ref: "comment_box"
-  }, _vm._l(_vm.list.data, function (comment, key) {
+  }, [_vm._l(_vm.list.data, function (comment, key) {
     return _c("div", {
       staticClass: "comment_div_mobile"
     }, [_c("div", {
@@ -6761,7 +6772,7 @@ var render = function render() {
       }
     }, [_c("span", {
       staticClass: "comment_title"
-    }, [_vm._v(_vm._s(comment.title))]), _vm._v(" "), _c("p", [_c("span", [_vm._v("توسط")]), _vm._v(" "), comment.get_user_info == null ? _c("span", [_vm._v("ناشناس")]) : _c("span", [_vm._v(_vm._s(comment.get_user_info.first_name + " " + comment.get_user_info.last_name))]), _vm._v(" "), _c("span", [_vm._v("در تاریخ")]), _vm._v("\n                                 " + _vm._s(_vm.getDate(comment.time)) + "\n                             ")])]), _vm._v(" "), comment.order_id > 0 ? _c("div", {
+    }, [_vm._v(_vm._s(comment.title))]), _vm._v(" "), _c("p", [_c("span", [_vm._v("توسط")]), _vm._v(" "), comment.get_user_info == null ? _c("span", [_vm._v("ناشناس")]) : _c("span", [_vm._v(_vm._s(comment.get_user_info.first_name + " " + comment.get_user_info.last_name))]), _vm._v(" "), _c("span", [_vm._v("در تاریخ")]), _vm._v("\n                                    " + _vm._s(_vm.getDate(comment.time)) + "\n                                ")])]), _vm._v(" "), comment.order_id > 0 ? _c("div", {
       staticClass: "title_buyer"
     }, [_vm._v(" خریدار")]) : _vm._e()]), _vm._v(" "), _c("div", {
       staticClass: "row"
@@ -6785,7 +6796,7 @@ var render = function render() {
       staticClass: "comment_text"
     }, [_vm._v(_vm._s(comment.content))]), _vm._v(" "), _c("div", {
       staticClass: "footer"
-    }, [_c("div", [_vm._v("\n                             آیا این نظر برایتان مفید بود ؟\n                         ")]), _vm._v(" "), _c("div", [_c("button", {
+    }, [_c("div", [_vm._v("\n                                آیا این نظر برایتان مفید بود ؟\n                            ")]), _vm._v(" "), _c("div", [_c("button", {
       staticClass: "btn_like",
       attrs: {
         "data-count": _vm.replaceNumber(comment.like)
@@ -6795,7 +6806,7 @@ var render = function render() {
           return _vm.like(key, comment.id, "redirect");
         }
       }
-    }, [_vm._v("بلی\n                             ")]), _vm._v(" "), _c("button", {
+    }, [_vm._v("بلی\n                                ")]), _vm._v(" "), _c("button", {
       staticClass: "btn_like dislike",
       attrs: {
         "data-count": _vm.replaceNumber(comment.dislike)
@@ -6805,8 +6816,12 @@ var render = function render() {
           return _vm.dislike(key, comment.id, "redirect");
         }
       }
-    }, [_vm._v("خیر\n                             ")])])])])]);
-  }), 0), _vm._v(" "), _vm.comment_count == 0 && _vm.getServerData == "ok" ? _c("div", [_c("p", {
+    }, [_vm._v("خیر\n                                ")])])])])]);
+  }), _vm._v(" "), _c("div", {
+    staticStyle: {
+      "margin-bottom": "62px!important"
+    }
+  })], 2), _vm._v(" "), _vm.comment_count == 0 && _vm.getServerData == "ok" ? _c("div", [_c("p", {
     staticStyle: {
       "text-align": "center",
       "padding-top": "30px",
