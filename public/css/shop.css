@@ -4058,8 +4058,29 @@ padding-right: 300px;
     height: 25px!important;
 }
 
+/*.bootstrap-select .btn-light {*/
+/*    height: calc(1.6em + 0.75rem + 2px);*/
+/*    padding: 0.375rem 0.75rem;*/
+/*    font-size: 0.9rem;*/
+/*    font-weight: 400;*/
+/*    line-height: 1.6;*/
+/*    background-color: #fff;*/
+/*    background-clip: padding-box;*/
+/*    border: 1px solid #ced4da;*/
+/*    border-radius: 0.25rem;*/
+/*    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;*/
+/*}*/
+#location .bootstrap-select .dropdown-toggle {
+    width: 216px!important;
+}
+#location .bootstrap-select .dropdown-menu {
+    text-align: right !important;
+}
 
-
+#location .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 216px !important;
+    margin-top: 10px;
+}
 
 
 
@@ -4095,6 +4116,7 @@ padding-right: 300px;
     .slider .col-10{padding-left: 0!important;}
     .product_list_div .product_div{width: 25%!important;}
     product_div img{width: 60%!important;}
+
 }
 
 @media (max-width: 1279px) {
@@ -4106,7 +4128,7 @@ padding-right: 300px;
     .index-pic{height: 211px!important;}
 
 }
-
+#location .col-md-6{padding: 0!important;}
 @media (min-width: 992px){
     .modal-lg, .modal-xl {
         max-width: 900px;

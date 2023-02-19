@@ -71,7 +71,7 @@
                             <div class="dropdown-divider"></div>
 
                         @endif
-                        <a href="{{url('profile')}}" class="dropdown-item profile">
+                        <a href="{{url('user/profile')}}" class="dropdown-item profile">
 
                             پروفایل</a>
                         <a href="{{url('user/profile/orders')}}" class="dropdown-item order">پیگیری سفارشات</a>

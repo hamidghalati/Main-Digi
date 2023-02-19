@@ -203,6 +203,9 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::get('/profile/orders/{order_id}', 'User\UserPanelController@show_orders');
     //profile
     Route::get('profile','User\UserPanelController@profile');
+    Route::get('profile/additional-info','User\UserPanelController@additional_info');
+    Route::post('profile/additional-info','User\UserPanelController@save_additional_info');
+
 
 
 });
