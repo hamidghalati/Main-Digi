@@ -209,6 +209,7 @@
 
 <script src="{{ asset('js/ShopVue.js') }}" type="text/javascript"></script>
 
+<script src="{{ asset('js/main.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/shop.js') }}" type="text/javascript"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.0/slick.min.js"></script>
