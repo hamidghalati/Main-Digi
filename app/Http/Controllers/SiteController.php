@@ -139,20 +139,7 @@ class SiteController extends Controller
 
     public function resend(Request $request)
     {
-        $active_code = rand(99999, 1000000);
-        $mobile = $request->get('mobile');
-        if ($request->ajax()) {
-            $user = User::where(['mobile' => $mobile, 'account_status' => 'InActive'])->first();
-            if ($user) {
-                $user->active_code = $active_code;
-                $user->update();
-                return 'ok';
-            } else {
-                return 'error';
-            }
-        } else {
-            return 'erroe';
-        }
+        return User::resend($request);
     }
 
     public function active_account(Request $request)

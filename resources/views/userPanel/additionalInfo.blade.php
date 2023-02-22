@@ -9,6 +9,12 @@
             <div class="profile_menu">
                 <span class="profile_menu_title" style="text-align: center;font-size: 20px">ویرایش اطلاعات شخصی</span>
 
+
+                @if(Session::has('status'))
+                    <div class="alert alert-success custom_alert">{{ Session::get('status') }}</div>
+                @endif
+
+
                 <div class=" profile_info">
                     <form id="additional_info" action="{{ url('user/profile/additional-info') }}" method="post">
                         @csrf

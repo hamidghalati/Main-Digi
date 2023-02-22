@@ -1407,7 +1407,7 @@ function getUserData($key,$additionalInfo)
    {
        return Auth::user()->mobile;
    }
-   elseif ($additionalInfo)
+   elseif (!empty($additionalInfo->$key))
    {
        return $additionalInfo->$key;
    }

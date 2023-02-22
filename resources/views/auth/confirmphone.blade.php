@@ -3,6 +3,14 @@
 @section('content')
     <div id="auth_box">
 
+        <div class="auth_box_title">
+            <span>تایید شماره تلفن همراه</span>
+        </div>
+        <div class="alert alert-success">
+            <span> برای شماره موبایل<span class="code_active">{{Session::get('mobile_number')}}</span> کد تایید ارسال شده است </span>
+            <a href="{{url('user/profile/additional-info')}}" class="data_link">ویرایش شماره</a>
+        </div>
+
         <div style="margin: 25px">
             <form method="POST" action="{{ url('changeMobileNumber') }}" id="active_account_form">
             @csrf

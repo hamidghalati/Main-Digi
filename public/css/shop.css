@@ -4156,6 +4156,10 @@ padding-right: 300px;
     border-left: none !important;
 }
 
+.custom_alert{
+    border-radius: 0!important;
+    margin: 10px;
+}
 
 
 

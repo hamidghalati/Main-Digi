@@ -62,4 +62,43 @@ class User extends Authenticatable
         }
 
     }
+
+    public static function resend($request)
+    {
+        $active_code = rand(99999, 1000000);
+        $mobile = $request->get('mobile');
+        if ($request->ajax()) {
+           if (\Auth::check())
+           {
+               $user_id=$request->user->id;
+               $row=AdditionalInfos::where('user_id',$user_id)->first();
+               $user = User::where(['id' => $user_id])->first();
+
+               if ($row && $row->mobile_phone != $user->mobile)
+               {
+                   $user = User::where(['id' => $user_id])->first();
+                   $user->active_code = $active_code;
+                   $user->update();
+                   return 'ok';
+               }
+               else
+               {
+                   return 'error';
+               }
+
+           }
+           else{
+               $user = User::where(['mobile' => $mobile, 'account_status' => 'InActive'])->first();
+               if ($user) {
+                   $user->active_code = $active_code;
+                   $user->update();
+                   return 'ok';
+               } else {
+                   return 'error';
+               }
+           }
+        } else {
+            return 'erroe';
+        }
+    }
 }
