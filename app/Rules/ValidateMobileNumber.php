@@ -4,6 +4,7 @@ namespace App\Rules;
 
 use App\User;
 
+use Auth;
 use Illuminate\Contracts\Validation\Rule;
 
 class ValidateMobileNumber implements Rule
@@ -27,12 +28,13 @@ class ValidateMobileNumber implements Rule
      */
     public function passes($attribute, $value)
     {
+        $user_id=Auth::user()->id;
         settype($value,'integer');
         if (strlen($value)==10 && is_numeric($value) && substr($value,0,1)=="9")
         {
             //,'account_status'=>'InActive'
             $check=User::where(['mobile'=>$value])->first();
-            if ($check)
+            if ($check && $check->id!=$user_id)
             {
                 if ($check->account_status=='InActive')
                 {

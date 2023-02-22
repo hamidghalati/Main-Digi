@@ -128,6 +128,15 @@ class SiteController extends Controller
         }
     }
 
+    public function confirmphone()
+    {
+        if (Session::has('mobile_number')) {
+            return view('auth.confirmphone');
+        } else {
+            return redirect('/');
+        }
+    }
+
     public function resend(Request $request)
     {
         $active_code = rand(99999, 1000000);
@@ -161,6 +170,11 @@ class SiteController extends Controller
         } else {
             return redirect()->back()->with('mobile_number', $mobile)->with('validate_error', 'کد وارد شده اشتباه می باشد')->withInput();
         }
+    }
+
+    public function changeMobileNumber(Request $request)
+    {
+        return User::changeMobileNumber($request);
     }
 
     public function add_cart(Request $request)

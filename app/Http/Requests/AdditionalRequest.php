@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\BankCode;
 use App\Rules\NationalCode;
 use App\Rules\ValidateMobileNumber;
 use Illuminate\Foundation\Http\FormRequest;
@@ -32,9 +33,12 @@ class AdditionalRequest extends FormRequest
             'mobile_phone'=>['required',new ValidateMobileNumber()],
         ];
         if (!empty($this->bank_card_number)){
-            $rules['bank_card_number']=['string','size:16'];
+            $rules['bank_card_number']=['string','size:16',new BankCode()];
         }
-        if ($this->legal==true)
+        if (!empty($this->email)){
+            $rules['email']=['required','email'];
+        }
+        if ($this->legal=='true')
         {
             $rules['company_name']=['required'];
             $rules['company_economic_number']=['required'];
@@ -63,6 +67,7 @@ class AdditionalRequest extends FormRequest
             'company_phone'=>'شماره تلفن ثابت',
             'city_id'=>'نام شهر',
             'province_id'=>'نام استان',
+            'email'=>'پست الکترونیک',
         ];
     }
 }

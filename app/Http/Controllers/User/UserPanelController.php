@@ -11,6 +11,7 @@ use App\Order;
 use App\OrderData;
 use App\ProvinceModel;
 use Auth;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 
 class UserPanelController extends Controller
@@ -74,7 +75,9 @@ class UserPanelController extends Controller
 
     public function save_additional_info(AdditionalRequest $request)
     {
-
+        $user_id=$request->user()->id;
+        $user=User::findOrFail($user_id);
+        return AdditionalInfos::addUserData($user,$request);
     }
 
 }

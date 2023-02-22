@@ -110,7 +110,7 @@
 
                                 </div>
 
-                                @if(old('legal') != true)
+                                @if(old('legal') != 'true')
 
                                 @endif
 
@@ -126,6 +126,17 @@
                             <button class="btn btn-dark">انصراف</button>
                         </div>
 
+                        <div class="creditcart">
+                            <img  width="32px"  src="https://shaba.smohammadabedy.ir/bank-iran/no-img.png">
+                            <input type="text"  class="creditcart-input" style="direction:ltr" placeholder="شماره کارت را وارد کنید">
+                        </div>
+
+                        <div class="shaba-number">
+                            <img  width="32px"  src="https://shaba.smohammadabedy.ir/bank-iran/no-img.png">
+                            <input type="text"  class="shaba-input"    style="direction:ltr" placeholder="کد شبا را وارد کنید">
+                            <span>بدون IR</span>
+                        </div>
+
                     </form>
                 </div>
 
@@ -138,6 +149,7 @@
 @endsection
 @section('footer')
     <script type="text/javascript" src="{{url('js/toggles.min.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/Bank.js')}}"></script>
     <script>
         $('#account_type').toggles({
             type: 'Light',
@@ -150,13 +162,13 @@
             if (action) {
 
                 $('.form_cover').hide();
-                document.getElementById('legal').value = true;
+                document.getElementById('legal').value = 'true';
             } else {
                 $('.form_cover').show();
-                document.getElementById('legal').value = false;
+                document.getElementById('legal').value = 'false';
             }
         });
-        @if(old('legal')==true)
+        @if(old('legal')=='true')
             $("#account_type").click();
         @endif
     </script>

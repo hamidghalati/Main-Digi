@@ -42,7 +42,7 @@ return [
     'digits_between'       => ':attribute باید بین :min و :max رقم باشد.',
     'dimensions'           => 'ابعاد تصویر :attribute قابل قبول نیست.',
     'distinct'             => 'فیلد :attribute مقدار تکراری دارد.',
-    'email'                => ':attribute باید یک ایمیل معتبر باشد.',
+    'email'                => ':attribute باید معتبر باشد.',
     'ends_with'            => 'فیلد :attribute باید با یکی از مقادیر زیر خاتمه یابد: :values',
     'enum'                 => ':attribute انتخاب شده اشتباه است.',
     'exists'               => ':attribute انتخاب شده، معتبر نیست.',

@@ -36,4 +36,30 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function changeMobileNumber($request)
+    {
+        $mobile = $request->get('mobile');
+        $active_code = $request->get('active_code');
+        $user_id=$request->user()->id;
+        $AdditionalInfo=AdditionalInfos::where(['user_id'=>$user_id,'mobile_phone'=>$mobile])->first();
+        if ($AdditionalInfo)
+        {
+            $user=User::find($user_id);
+            if ($active_code==$user->active_code)
+            {
+                $user->mobile=$AdditionalInfo->mobile_phone;
+                $user->update();
+                return redirect('user/profile/additional-info')->with('status','اطلاعات با موفقیت ثبت گردید.');
+            }
+            else
+            {
+                return redirect()->back()->with('mobile_number',$mobile)->with(['validate_error'=>'کد فعال سازی وارد شده اشتباه می باشد']);
+            }
+        }
+        else{
+            return redirect('/');
+        }
+
+    }
 }
