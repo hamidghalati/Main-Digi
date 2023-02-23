@@ -19,6 +19,16 @@ class AdditionalInfos extends Model
         {
             $data=$request->all();
             $data['newsletter']=$newsletters;
+            if ($request->get('legal')=='false')
+            {
+                $data['company_name']=null;
+                $data['company_economic_number']=null;
+                $data['company_registration_number']=null;
+                $data['company_national_identity_number']=null;
+                $data['company_phone']=null;
+                $data['province_id']=null;
+                $data['city_id']=null;
+            }
             $row->update($data);
             $AdditionalInfo=$row;
             $user->name=$request->get('first_name').' '.$request->get('last_name');
@@ -27,6 +37,8 @@ class AdditionalInfos extends Model
                 $active_Code=rand(99999,1000000);
                 $user->active_code=$active_Code;
             }
+
+
 
             $user->update();
 

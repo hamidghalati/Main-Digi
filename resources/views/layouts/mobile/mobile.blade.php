@@ -13,8 +13,9 @@
     @yield('header')
 
     <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
-    <link href="{{ asset('css/mobile.css') }}" rel="stylesheet">
 
+    <link href="{{ asset('css/mobile.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 
     <title>فروشگاه من</title>
 </head>

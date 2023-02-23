@@ -209,6 +209,9 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::get('profile/additional-info','User\UserPanelController@additional_info');
     Route::post('profile/additional-info','User\UserPanelController@save_additional_info');
 
+    //profile/personal-info
+    Route::get('profile/personal-info','User\UserPanelController@personal_info');
+
 
 
 });

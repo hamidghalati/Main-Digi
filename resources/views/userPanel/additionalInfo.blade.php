@@ -48,11 +48,8 @@
                                 @endforeach
 
                                 <div class="form-group row">
-                                    <input type="checkbox"
-                                           @if( getUserData('newsletter',$additionalInfo)=='yes') checked
-                                           @endif name="newsletter" class="form-check-input">
-                                    <span
-                                        class="check_box  @if( getUserData('newsletter',$additionalInfo)=='yes')@endif active"
+                                    <input type="checkbox" @if( getUserData('newsletter',$additionalInfo)=='yes') checked @endif name="newsletter" id="newsletter_input" class="form-check-input">
+                                    <span class="check_box  @if( getUserData('newsletter',$additionalInfo)=='yes') active @endif"
                                         id="newsletter"></span>
                                     <span class="form-check-label"> اشتراک در خبرنامه {{ env('shop_name') }}</span>
                                 </div>
@@ -94,7 +91,7 @@
 
                                     <div class="col-md-6">
                                         <label for="" class="input_label">
-                                            {{ Form::select('province_id',$province,null,['class'=>'selectpicker','data-live-search'=>'true','id'=>'profile_province_id']) }}
+                                            {{ Form::select('province_id',$province,getUserData('province_id',$additionalInfo),['class'=>'selectpicker','data-live-search'=>'true','id'=>'profile_province_id']) }}
                                             @if($errors->has('province_id'))
                                                 <label for="" class="feedback_hint_error" style="display: block">
                                                     <span> استان انتخاب نشده است</span>
@@ -105,7 +102,7 @@
 
                                     <div class="col-md-6">
                                         <label for="" class="input_label">
-                                            {{ Form::select('city_id',[''=>'انتخاب شهر'],null,['class'=>'selectpicker','data-live-search'=>'true','id'=>'profile_city']) }}
+                                            {{ Form::select('city_id',$city,getUserData('city_id',$additionalInfo),['class'=>'selectpicker','data-live-search'=>'true','id'=>'profile_city']) }}
                                             @if($errors->has('city_id'))
                                                 <label for="" class="feedback_hint_error" style="display: block">
                                                     <span> شهر انتخاب نشده است</span>
@@ -129,19 +126,19 @@
 
                         <div class="footer">
                             <button class="btn btn-success">ثبت اطلاعات</button>
-                            <button class="btn btn-dark">انصراف</button>
+                            <a href="{{ url('user/profile') }}" class="btn btn-dark">انصراف</a>
                         </div>
 
-                        <div class="creditcart">
-                            <img  width="32px"  src="https://shaba.smohammadabedy.ir/bank-iran/no-img.png">
-                            <input type="text"  class="creditcart-input" style="direction:ltr" placeholder="شماره کارت را وارد کنید">
-                        </div>
+{{--                        <div class="creditcart">--}}
+{{--                            <img  width="32px"  src="https://shaba.smohammadabedy.ir/bank-iran/no-img.png">--}}
+{{--                            <input type="text"  class="creditcart-input" style="direction:ltr" placeholder="شماره کارت را وارد کنید">--}}
+{{--                        </div>--}}
 
-                        <div class="shaba-number">
-                            <img  width="32px"  src="https://shaba.smohammadabedy.ir/bank-iran/no-img.png">
-                            <input type="text"  class="shaba-input"    style="direction:ltr" placeholder="کد شبا را وارد کنید">
-                            <span>بدون IR</span>
-                        </div>
+{{--                        <div class="shaba-number">--}}
+{{--                            <img  width="32px"  src="https://shaba.smohammadabedy.ir/bank-iran/no-img.png">--}}
+{{--                            <input type="text"  class="shaba-input"    style="direction:ltr" placeholder="کد شبا را وارد کنید">--}}
+{{--                            <span>بدون IR</span>--}}
+{{--                        </div>--}}
 
                     </form>
                 </div>
@@ -174,7 +171,7 @@
                 document.getElementById('legal').value = 'false';
             }
         });
-        @if(old('legal')=='true')
+        @if(old('legal')=='true' || getUserData('company_name',$additionalInfo))
             $("#account_type").click();
         @endif
     </script>

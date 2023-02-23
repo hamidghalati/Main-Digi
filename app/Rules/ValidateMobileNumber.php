@@ -28,7 +28,7 @@ class ValidateMobileNumber implements Rule
      */
     public function passes($attribute, $value)
     {
-        $user_id=Auth::user()->id;
+        $user_id=Auth::check() ? Auth::user()->id :0;
         settype($value,'integer');
         if (strlen($value)==10 && is_numeric($value) && substr($value,0,1)=="9")
         {

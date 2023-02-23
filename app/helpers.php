@@ -1390,12 +1390,12 @@ function get_product_price_changed($product_id)
 
 function getUserPersonalData($additionalInfo,$attr1,$attr2=null){
     $result='-';
-    if ($additionalInfo && !empty($additionalInfo->attr1))
+    if ($additionalInfo && !empty($additionalInfo->$attr1))
     {
-        $result=$additionalInfo->attr1;
+        $result=$additionalInfo->$attr1;
         if ($attr2)
         {
-            $result.=' '.$additionalInfo->attr2;
+            $result.=' '.$additionalInfo->$attr2;
         }
     }
     return $result;
@@ -1407,7 +1407,7 @@ function getUserData($key,$additionalInfo)
    {
        return Auth::user()->mobile;
    }
-   elseif (!empty($additionalInfo->$key))
+   elseif ($additionalInfo && !empty($additionalInfo->$key))
    {
        return $additionalInfo->$key;
    }

@@ -2672,3 +2672,25 @@ li{
 .custom-alert{
     margin: 10px;
 }
+.btn.profile_edit_link{
+    padding: 8px 15px;
+    border: 1px solid #00bfd6;
+    color: #00bfd6;
+    font-size: 14px;
+    margin-top: 20px;
+    text-align: center;
+}
+.personal_info{
+    color: #515151!important;
+    line-height: 40px;
+}
+.bootstrap-select .btn-light .filter-option {
+    text-align: center !important;
+}
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 100%!important;
+    margin-top: 13px!important;
+}
+.bootstrap-select .dropdown-menu li {
+    text-align: right!important;
+}

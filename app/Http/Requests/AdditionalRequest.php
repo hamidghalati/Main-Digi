@@ -43,7 +43,7 @@ class AdditionalRequest extends FormRequest
             $rules['company_name']=['required'];
             $rules['company_economic_number']=['required'];
             $rules['company_registration_number']=['required'];
-            $rules['company_national_identity_number']=['required','numeric','digit:11'];
+            $rules['company_national_identity_number']=['required','numeric','numeric:11'];
             $rules['company_phone']=['required'];
             $rules['city_id']=['required'];
             $rules['province_id']=['required'];

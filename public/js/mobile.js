@@ -198,6 +198,17 @@ $(document).ready(function () {
         }
     });
 
+    const legal=$("#legal_box");
+    if (legal.length==1)
+    {
+        const w=$(window).width();
+        if (w<500)
+        {
+            $('.form_cover').remove();
+            $("#legal_box").hide();
+        }
+    }
+
 
 });
 

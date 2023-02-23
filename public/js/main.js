@@ -32,6 +32,23 @@ $(document).ready(function () {
         }
     });
 
+    $("#newsletter").click(function () {
+       if ($(this).hasClass('active')){
+           $("#newsletter_input").removeAttr('checked');
+           $(this).removeClass('active');
+       }
+       else {
+           $(this).addClass('active');
+           $("#newsletter_input").attr('checked',true);
+       }
+    });
+
+    $('.form_cover span').click(function () {
+        $("#account_type").click();
+        $('.form_cover').hide();
+        document.getElementById('legal').value=true;
+    });
+
 
 
 
