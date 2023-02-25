@@ -18652,6 +18652,10 @@ __webpack_require__.r(__webpack_exports__);
     hide_transition_box: function hide_transition_box() {
       this.show_box = false;
       $('body').css('overflow-y', 'auto');
+    },
+    showModalBox: function showModalBox() {
+      this.$refs.data.setTitle('افزودن آدرس جدید');
+      $("#myModal").modal('show');
     }
   }
 });

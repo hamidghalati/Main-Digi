@@ -24,4 +24,14 @@ class UserController extends Controller
            return 'error';
        }
    }
+
+    public function getAddress(Request $request)
+    {
+        $user_id=$request->user()->id;
+        $userAddress=Address::with(['getCity','getProvince'])
+            ->where('user_id',$user_id)
+            ->orderBy('id','desc')
+            ->paginate(10);
+        return $userAddress;
+    }
 }

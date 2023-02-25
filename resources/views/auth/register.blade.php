@@ -1,4 +1,4 @@
-@extends('layouts.auth.auth')
+@extends("layouts.auth.$layout")
 
 @section('content')
 
@@ -7,7 +7,7 @@
             <span>ثبت نام در سایت</span>
         </div>
 
-        <div style="margin: 25px">
+        <div style="margin: {{$margin}}px">
             <form method="POST" action="{{ route('register') }}" id="register_form">
                 @csrf
 

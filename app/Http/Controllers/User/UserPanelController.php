@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\AdditionalInfos;
+use App\Address;
 use App\CityModel;
 use App\GiftCart;
 use App\Http\Controllers\Controller;
@@ -97,5 +98,12 @@ class UserPanelController extends Controller
             return redirect('user/profile');
         }
     }
+
+    public function address()
+    {
+        return view($this->view.'userPanel.address');
+    }
+
+
 
 }

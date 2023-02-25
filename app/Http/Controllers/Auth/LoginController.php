@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Lib\MobileDetect;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -27,6 +28,7 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo ='/';
+    protected $view='';
 
     /**
      * Create a new controller instance.
@@ -36,5 +38,10 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        $detect=new MobileDetect();
+        if ($detect->isMobile() || $detect->isTablet())
+        {
+            $this->view='mobile.';
+        }
     }
 }

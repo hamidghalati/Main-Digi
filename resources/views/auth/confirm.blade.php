@@ -1,4 +1,4 @@
-@extends('layouts.auth.auth')
+@extends("layouts.auth.$layout")
 
 @section('content')
     <div id="auth_box">
@@ -10,7 +10,7 @@
             <a href="{{url('register')}}" class="data_link">ویرایش شماره</a>
         </div>
 
-        <div style="margin: 25px">
+        <div style="margin: {{$margin}}px">
 
             <form method="POST" action="{{ route('active_account') }}" id="active_account_form">
             @csrf
@@ -70,8 +70,4 @@
 
 
 @endsection
-{{--@section('footer')--}}
-{{--    <script>--}}
-{{--        startTime();--}}
-{{--    </script>--}}
-{{--@endsection--}}
+

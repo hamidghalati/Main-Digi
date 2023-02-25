@@ -1,4 +1,4 @@
-@extends('layouts.auth.auth')
+@extends("layouts.auth.$layout")
 
 @section('content')
     <div id="auth_box">
@@ -63,8 +63,8 @@
 
 
 @endsection
-{{--@section('footer')--}}
-{{--    <script>--}}
-{{--        startTime();--}}
-{{--    </script>--}}
-{{--@endsection--}}
+@section('footer')
+    <script>
+        startTime();
+    </script>
+@endsection

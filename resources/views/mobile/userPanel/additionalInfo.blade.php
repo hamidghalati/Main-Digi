@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="col-md-6" >
-{{--                            <span class="profile_menu_title center" style="font-size: 17px;">حساب حقوقی </span>--}}
+                            <span class="profile_menu_title center" id="legal_title" style="font-size: 17px;">حساب حقوقی </span>
                             <div class="toggle_box" id="account_type_toggle">
                                 <div class="toggle-light" id="account_type"></div>
                                 <input type="hidden" name="legal" id="legal"

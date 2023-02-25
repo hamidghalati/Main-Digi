@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Lib\MobileDetect;
 use App\Providers\RouteServiceProvider;
 use App\Rules\ValidateMobileNumber;
 use App\User;
@@ -31,6 +32,7 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    protected $view='';
 
     /**
      * Create a new controller instance.
@@ -40,6 +42,11 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $detect=new MobileDetect();
+        if ($detect->isMobile() || $detect->isTablet())
+        {
+            $this->view='mobile.';
+        }
     }
 
     /**

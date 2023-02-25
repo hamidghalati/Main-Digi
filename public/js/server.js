@@ -41,7 +41,7 @@ get_my_location=function ()
 set_my_location=function (position) {
     lat=position.coords.latitude;
     lng=position.coords.longitude;
-   if(myMap!=null)
+    if(myMap!=null)
     {
         myMap.panTo(new L.LatLng(lat,lng));
         marker.setLatLng({lat:lat,lng:lng});
@@ -49,8 +49,8 @@ set_my_location=function (position) {
 };
 
 $("#select_location_btn").click(function () {
-   document.getElementById('lat').value=lat;
-   document.getElementById('lng').value=lng;
+    document.getElementById('lat').value=lat;
+    document.getElementById('lng').value=lng;
 });
 
 //

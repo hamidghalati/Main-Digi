@@ -26,3 +26,32 @@
 #additional_info .footer button {
     margin-left: 10px;
 }
+#legal_title{
+    display: none;
+}
+#additional_info .toggle_box span{
+    padding-right: 5px;
+}
+#account_type_toggle .toggle-light .toggle-on, .toggle-light .toggle-select .toggle-inner .active {
+    background: #3b8bdc!important;
+}
+#additional_info .footer{
+    display: flex;
+    justify-content: center;
+    height: 70px;
+    align-items: center;
+    margin: 20px 0;
+}
+.profile_address_cart{
+    background-color: #fff;
+    position: relative;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 98%;
+    margin: 20px auto;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.09);
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.09);
+}
+

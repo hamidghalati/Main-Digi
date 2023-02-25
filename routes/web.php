@@ -190,6 +190,8 @@ Route::post('site/check_discount_code', 'ShoppingController@check_discount_code'
 Route::prefix('user')->middleware(['auth'])->group(function () {
 
 
+    //getAddress
+    Route::get('/getAddress','UserController@getAddress');
 
     //Address
     Route::post('/addAddress', 'UserController@addAddress');
@@ -212,6 +214,11 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     //profile/personal-info
     Route::get('profile/personal-info','User\UserPanelController@personal_info');
 
+    //profile/address
+    Route::get('profile/address','User\UserPanelController@address');
+
+    //profile/address
+    Route::get('profile/address','User\UserPanelController@address');
 
 
 });

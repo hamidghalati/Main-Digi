@@ -2694,3 +2694,106 @@ li{
 .bootstrap-select .dropdown-menu li {
     text-align: right!important;
 }
+
+.legal_text {
+    font-size: 14px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+#additional_info .toggle_box{
+    display: flex;
+}
+#additional_info .toggle_box span{
+    font-size: 14px;
+}
+#auth_box{
+    background: #fff;
+    width: 95%!important;
+    margin: 20px auto;
+    border: 1px solid #dedede;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.09);
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.09);
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    height: auto!important;
+}
+.header.auth{
+    justify-content: center;
+    font-size: 16px;
+}
+.auth_box_title span{
+    color: #00bfd6!important;
+    font-size: 16px!important;
+    font-weight: bold;
+}
+.feedback_hint {
+    /*background: #ef5662 !important;*/
+    /*font-size: 13px !important;*/
+    /*color: #fff !important;*/
+    /*z-index: 100000 !important;*/
+    /*padding: 9px 6px !important;*/
+    /*position: absolute !important;*/
+    /*right: 100% !important;*/
+    /*margin-right: -190px !important;*/
+    /*margin-bottom: 102px !important;*/
+    /*white-space: nowrap !important;*/
+    /*width: 190px !important;*/
+    /*bottom: unset !important;*/
+    /*border-radius: 3px;*/
+    /*-webkit-border-radius: 3px;*/
+
+    background: unset !important;
+    font-size: 13px !important;
+    color: red !important;
+    z-index: 100000 !important;
+    padding: unset !important;
+    position: unset !important;
+    right: unset !important;
+    margin-right:unset !important;
+    margin-bottom:unset !important;
+    white-space: unset !important;
+    width: unset !important;
+    bottom: unset !important;
+    border-radius: unset!important;
+    -webkit-border-radius: unset!important;
+    padding-top: 10px!important;
+
+}
+.feedback_hint::before{
+    border-color: unset !important;
+    border-style: unset !important;
+    content: "";
+    border-width: unset !important;
+    top: unset !important;
+    right: unset !important;
+}
+#auth_box .input_label {
+    display: block!important;
+    width:100%;
+    margin: 5px 0 !important;
+    position: relative;
+}
+
+.input_label.user_name::before{
+    margin-top: 5px!important;
+}
+.input_label.user_pass::before {
+    margin-top: 5px;
+}
+.number_input {
+    border: none !important;
+    height: 35px;
+    width: 322px;
+    margin-right: -19px;
+    text-align: end !important;
+    letter-spacing: 45px;
+    font-family: iransans;
+    background: none;
+}
+.number_input_div {
+    width: 100%!important;
+    margin: auto;
+}
+#auth_box .alert-success{
+    margin: 10px!important;
+}

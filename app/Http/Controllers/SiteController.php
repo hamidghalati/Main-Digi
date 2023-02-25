@@ -122,7 +122,9 @@ class SiteController extends Controller
     public function confirm()
     {
         if (Session::has('mobile_number')) {
-            return view('auth.confirm');
+            $layout=$this->view=='mobile.' ? 'mobile-auth' : 'auth';
+            $margin=$this->view=='mobile.' ? '10' : '25';
+            return view('auth.confirm',['layout'=>$layout,'margin'=>$margin]);
         } else {
             return redirect('/');
         }
@@ -131,7 +133,9 @@ class SiteController extends Controller
     public function confirmphone()
     {
         if (Session::has('mobile_number')) {
-            return view('auth.confirmphone');
+            $layout=$this->view=='mobile.' ? 'mobile-auth' : 'auth';
+            $margin=$this->view=='mobile.' ? '10' : '25';
+            return view('auth.confirmphone',['layout'=>$layout,'margin'=>$margin]);
         } else {
             return redirect('/');
         }

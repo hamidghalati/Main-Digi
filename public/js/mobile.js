@@ -206,6 +206,12 @@ $(document).ready(function () {
         {
             $('.form_cover').remove();
             $("#legal_box").hide();
+            $('.feedback_hint_error').css('color','red');
+
+        }
+        else {
+            $("#legal_title").show();
+            $('.feedback_hint_error').css('color','red');
         }
     }
 

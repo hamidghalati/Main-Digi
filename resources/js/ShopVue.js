@@ -21,6 +21,7 @@ import MobileAddressList from "./components/MobileAddressList";
 import MobileAddressForm from "./components/MobileAddressForm";
 import MobileProductBox from "./components/MobileProductBox";
 import MobileThemeCommentList from "./components/MobileThemeCommentList";
+import ProfileAddress from "./components/ProfileAddress";
 
 
 
@@ -49,7 +50,8 @@ const app = new Vue({
         MobileAddressList,
         MobileAddressForm,
         MobileProductBox,
-        MobileThemeCommentList
+        MobileThemeCommentList,
+        ProfileAddress
 
     }
 });

@@ -34,10 +34,12 @@ a {
 
 #auth_box{
     background: #fff;
-    width: 520px;
+    width: 95%;
     margin: 40px auto;
     border: 1px solid #dedede;
     box-shadow: 0 12px 12px 0 rgba(180, 180, 180, 0.1);
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
 }
 
 .auth_box_title{
@@ -281,8 +283,12 @@ a {
     margin-left: 10px;
     margin-top: 8px;
 }
-.feedback_hint {
-    color: white!important;
-    font-size: 13px;
+.header.auth{
+    justify-content: center;
+    padding: 15px;
+    display: flex;
+    border-bottom: 1px solid #dedede;
+    font-size: 16px;
+    background: #fff;
 }
 

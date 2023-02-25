@@ -1403,17 +1403,24 @@ function getUserPersonalData($additionalInfo,$attr1,$attr2=null){
 
 function getUserData($key,$additionalInfo)
 {
-   if ($key=='mobile_phone')
-   {
-       return Auth::user()->mobile;
-   }
-   elseif ($additionalInfo && !empty($additionalInfo->$key))
-   {
-       return $additionalInfo->$key;
-   }
-   else{
-      return old($key);
-   }
+    if (!empty(old($key)))
+    {
+        return old($key);
+    }
+    else
+    {
+        if ($key=='mobile_phone')
+        {
+            return Auth::user()->mobile;
+        }
+        elseif ($additionalInfo && !empty($additionalInfo->$key)){
+
+            return $additionalInfo->$key;
+        }
+        else{
+            return '';
+        }
+    }
 }
 
 function checkEvent($n)

@@ -3,7 +3,7 @@
         <span>ورود به سایت</span>
     </div>
 
-    <div style="margin: 25px">
+    <div style="margin: {{$margin}}px">
         <form method="POST" action="{{ route('login') }}" id="login_form">
             @csrf
 

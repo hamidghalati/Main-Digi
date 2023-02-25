@@ -451,6 +451,11 @@ export default {
         hide_transition_box: function () {
             this.show_box = false;
             $('body').css('overflow-y', 'auto');
-        }
+        },
+        showModalBox:function () {
+            this.$refs.data.setTitle('افزودن آدرس جدید');
+            $("#myModal").modal('show');
+        },
+
     }
 }
