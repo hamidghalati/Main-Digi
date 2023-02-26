@@ -158,16 +158,18 @@ export default {
             city:[],
             title:'ثبت آدرس',
             btn_text:'ثبت و ارسال به این آدرس',
-            server_error:false
+            server_error:false,
+            get_page:'no'
         }
     },
     mixins:[myMixin],
+    props:['paginate'],
     mounted() {
         this.getProvince();
+        this.get_page=this.paginate=='ok' ?'ok' : 'no';
     },
     methods:{
-        getProvince()
-        {
+        getProvince(){
             this.axios.get(this.$siteUrl+'/api/get_province').then(response=>{
                 this.province=response.data;
                 setTimeout(function () {
@@ -211,6 +213,7 @@ export default {
                 formData.append('city_id',this.city_id);
                 formData.append('lat',lat);
                 formData.append('lng',lng);
+                formData.append('paginate',this.get_page);
                 const url=this.$siteUrl+'/user/addAddress';
                 this.server_error=false;
                 this.axios.post(url,formData).then(response=>{

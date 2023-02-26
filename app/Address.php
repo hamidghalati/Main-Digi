@@ -15,6 +15,7 @@ class Address extends Model
     {
         return $this->hasOne(ProvinceModel::class,'id','province_id')->withDefault(['name'=>''])->select(['id','name']);
     }
+
     public function getCity()
     {
         return $this->hasOne(CityModel::class,'id','city_id')->withDefault(['name'=>''])->select(['id','name']);
@@ -29,7 +30,16 @@ class Address extends Model
             $address->user_id=$user_id;
             if ($address->save())
             {
-                return Address::with(['getProvince','getCity'])->where(['user_id'=>$user_id])->orderBy('id','Desc')->get();
+                 $addressList=Address::with(['getProvince','getCity'])->where(['user_id'=>$user_id])->orderBy('id','Desc');
+
+                 if ($request->get('paginate')=='ok')
+                 {
+                     $addressList=$addressList->paginate(10);
+                 }
+                 else{
+                     $addressList=$addressList->get();
+                 }
+                 return $addressList;
             }
             else{
                 return 'error';
@@ -40,8 +50,16 @@ class Address extends Model
             if ($address)
             {
                 $address->update($request->all());
-                return Address::with(['getProvince','getCity'])->where(['user_id'=>$user_id])->orderBy('id','Desc')->get();
+                $addressList=Address::with(['getProvince','getCity'])->where(['user_id'=>$user_id])->orderBy('id','Desc');
 
+                if ($request->get('paginate')=='ok')
+                {
+                    $addressList=$addressList->paginate(10);
+                }
+                else{
+                    $addressList=$addressList->get();
+                }
+                return $addressList;
             }
             else{
                 return 'error';

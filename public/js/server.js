@@ -8,9 +8,9 @@
 //     zoom: 14
 // });
 //
+
 let lat='29.664755';
 let lng='52.457622';
-
 
 $("#myModal").on('show.bs.modal',function (){
     setTimeout(function () {

@@ -1,5 +1,5 @@
 const site_url = "http://127.0.0.1:8000/";
-let times = null;
+var times = 0;
 let t = 180;
 let promo_single_count=0
 

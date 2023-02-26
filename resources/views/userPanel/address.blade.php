@@ -7,17 +7,13 @@
 
 
         <div class="col-md-9" style="padding: 0">
-            <div class="profile_menu">
-                <span class="profile_menu_title">آدرس های من</span>
+            <span class="profile_menu_title" style="padding:20px 10px">آدرس های من</span>
 
-                <div class="profile_address">
-                    <profile-address></profile-address>
-                </div>
-
+            <div class="profile_address">
+                <input type="hidden" id="lat" name="lat" value="0.0">
+                <input type="hidden" id="lng" name="lng" value="0.0">
+                <profile-address></profile-address>
             </div>
-
-
-
 
         </div>
 

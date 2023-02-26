@@ -1,7 +1,7 @@
 body {
     direction: rtl;
     text-align: right;
-    font-family: Yekan;
+    font-family: iransans;
     position: absolute;
     width: 100%;
     min-height: 700px;
@@ -21,14 +21,21 @@ body {
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'IRANSans';
+/*@font-face {*/
+/*    font-family: 'IRANSans';*/
+/*    src: url('../fonts/Webfonts/Woff/IRANSansXFaNum-DemiBold.woff') format('woff'),*/
+/*    url('../fonts/Webfonts/Woff2/IRANSansXFaNum-DemiBold.woff2') format('woff2');*/
+/*    font-weight: bold;*/
+/*    font-style: normal;*/
+/*}*/
 
-    src: url('../fonts/Webfonts/Woff/IRANSansXFaNum-DemiBold.woff') format('woff'),
-    url('../fonts/Webfonts/Woff2/IRANSansXFaNum-DemiBold.woff2') format('woff2');
-    font-weight: bold;
-    font-style: normal;
+@font-face {
+    font-family: "iransans";
+    src: url("../fonts/iransans/IRANSansWeb_Light.woff2") format("woff2");
+    src: url("../fonts/iransans/IRANSansWeb_Light.woff") format("woff");
 }
+
+
 
 a {
     text-decoration: none !important;

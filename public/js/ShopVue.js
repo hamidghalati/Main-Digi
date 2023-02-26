@@ -1931,12 +1931,15 @@ __webpack_require__.r(__webpack_exports__);
       city: [],
       title: 'ثبت آدرس',
       btn_text: 'ثبت و ارسال به این آدرس',
-      server_error: false
+      server_error: false,
+      get_page: 'no'
     };
   },
   mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  props: ['paginate'],
   mounted: function mounted() {
     this.getProvince();
+    this.get_page = this.paginate == 'ok' ? 'ok' : 'no';
   },
   methods: {
     getProvince: function getProvince() {
@@ -1983,6 +1986,7 @@ __webpack_require__.r(__webpack_exports__);
         formData.append('city_id', this.city_id);
         formData.append('lat', lat);
         formData.append('lng', lng);
+        formData.append('paginate', this.get_page);
         var url = this.$siteUrl + '/user/addAddress';
         this.server_error = false;
         this.axios.post(url, formData).then(function (response) {
@@ -4264,7 +4268,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       AddressLists: {
         data: []
-      }
+      },
+      show_dialog_box: false
     };
   },
   mounted: function mounted() {
@@ -4281,6 +4286,55 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateAddressList: function updateAddressList(data) {
       this.AddressLists = data;
+    },
+    show_default_address: function show_default_address() {
+      if (this.AddressLists.length > 0 && this.show_default) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    change_address: function change_address() {
+      this.show_default = false;
+      this.show_address_list = true;
+    },
+    updateRow: function updateRow(address) {
+      this.$refs.data.setUpdateData(address, 'ویرایش آدرس');
+      if (address['lat'] != "0.0") {
+        updateMap(address['lat'], address['lng']);
+      }
+    },
+    remove_address: function remove_address(address) {
+      this.remove_address_id = address.id;
+      this.show_dialog_box = true;
+    },
+    change_default_address: function change_default_address(key) {
+      var old_array = this.AddressLists;
+      var first = old_array[0];
+      var select = old_array[key];
+
+      // old_array[0]=select;
+      // old_array[key]=first;
+      this.city_id = select.city_id;
+      this.$set(this.AddressLists, 0, select);
+      this.$set(this.AddressLists, key, first);
+      this.show_address_list = false;
+      this.show_default = this;
+      document.getElementById('address_id').value = select.id;
+    },
+    delete_address: function delete_address() {
+      var _this2 = this;
+      $("#loading").show();
+      this.show_dialog_box = false;
+      var url = this.$siteUrl + "/user/removeAddress/" + this.remove_address_id;
+      this.axios["delete"](url).then(function (response) {
+        $("#loading").hide();
+        if (response.data != 'error') {
+          _this2.AddressLists = response.data;
+        }
+      })["catch"](function (error) {
+        $("#loading").hide();
+      });
     }
   }
 });
@@ -7494,12 +7548,12 @@ var render = function render() {
       staticClass: "profile_address_cart"
     }, [_c("div", {
       staticClass: "profile_address_cart_desc"
-    }, [_c("h6", [_vm._v(_vm._s(address["name"]))]), _vm._v(" "), _c("p", [_vm._v(_vm._s(address["address"]))])]), _vm._v(" "), _c("div", {
+    }, [_c("h4", [_vm._v(_vm._s(address["name"]))]), _vm._v(" "), _c("p", [_vm._v(_vm._s(address["get_province"]["name"]) + " - " + _vm._s(address["get_city"]["name"]) + " - " + _vm._s(address["address"]))])]), _vm._v(" "), _c("div", {
       staticClass: "profile_address_cart_data"
     }, [_c("ul", [_c("li", [_c("i", {
-      staticClass: "fa fa-envelope"
+      staticClass: "mdi mdi-email-outline"
     }), _vm._v(" "), _c("span", [_vm._v("  کد پستی تحویل گیرنده :  " + _vm._s(_vm.replaceNumber(address["zip_code"])))])]), _vm._v(" "), _c("li", [_c("i", {
-      staticClass: "fa fa-mobile-phone"
+      staticClass: "mdi mdi-phone-classic"
     }), _vm._v(" "), _c("span", [_vm._v("  شماره تماس تحویل گیرنده :  " + _vm._s(_vm.replaceNumber(address["mobile"])))])])]), _vm._v(" "), _c("ul", {
       staticStyle: {
         display: "inline-flex"
@@ -7525,10 +7579,33 @@ var render = function render() {
     }, [_vm._v(" حذف")])])])])]);
   }), _vm._v(" "), _c("address-form", {
     ref: "data",
+    attrs: {
+      paginate: "ok"
+    },
     on: {
       setData: _vm.updateAddressList
     }
-  })], 2);
+  }), _vm._v(" "), _vm.show_dialog_box ? _c("div", {
+    staticClass: "message_div"
+  }, [_c("div", {
+    staticClass: "message_box"
+  }, [_c("p", {
+    attrs: {
+      id: "msg"
+    }
+  }, [_vm._v("آیا مایل به حذف این آدرس هستید؟")]), _vm._v(" "), _c("a", {
+    staticClass: "alert alert-success",
+    on: {
+      click: _vm.delete_address
+    }
+  }, [_vm._v("بلی")]), _vm._v(" "), _c("a", {
+    staticClass: "alert alert-danger",
+    on: {
+      click: function click($event) {
+        _vm.show_dialog_box = false;
+      }
+    }
+  }, [_vm._v("خیر")])])]) : _vm._e()], 2);
 };
 var staticRenderFns = [];
 render._withStripped = true;
