@@ -24,7 +24,7 @@ class Address extends Model
     public static function addUserAddress($request)
     {
         $user_id=$request->user()->id;
-        $id=$request->get('id','0');
+        $id=$request->get('id',0);
         if ($id==0){
             $address=new Address($request->all());
             $address->user_id=$user_id;
@@ -65,7 +65,5 @@ class Address extends Model
                 return 'error';
             }
         }
-
-
     }
 }

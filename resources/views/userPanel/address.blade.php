@@ -22,24 +22,15 @@
 @endsection
 
 @section('header')
-
-
     <link href="https://static.neshan.org/sdk/leaflet/1.4.0/leaflet.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
     <link rel="stylesheet" href="{{url('css/dist/leaflet.awesome-markers.css')}}">
-
     <script src="https://static.neshan.org/sdk/leaflet/1.4.0/leaflet.js" type="text/javascript"></script>
-
-
-
 @endsection
 
 @section('footer')
-
     <script src="{{url('js/dist/leaflet.awesome-markers.js')}}" type="text/javascript"></script>
     <script src="{{url('js/server.js')}}" type="text/javascript"></script>
-
     <script src="{{ asset('js/shop.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/Map.js') }}" type="text/javascript"></script>
-
 @endsection

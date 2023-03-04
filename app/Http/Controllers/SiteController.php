@@ -12,6 +12,7 @@ use App\ItemValueModel;
 use App\Lib\MobileDetect;
 use App\ProductsModel;
 use App\ProductWarranty;
+use App\Question;
 use App\ReView;
 use App\SearchProduct;
 use App\SliderModel;
@@ -318,6 +319,12 @@ class SiteController extends Controller
     public function CartProductData()
     {
         return Cart::getCartData();
+    }
+
+    public function get_question($product_id){
+        $Question=Question::with(['getUser'])->where(['questions_id'=>0,'product_id'=>$product_id,'status'=>1]);
+        $Question=$Question->paginate(10);
+        return $Question;
     }
 
 

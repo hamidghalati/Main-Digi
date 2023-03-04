@@ -24,7 +24,7 @@
                     </li>
                 </ul>
 
-                <ul style="display: inline-flex">
+                <ul style="display: inline-flex" class="btn_ul">
                     <li><button class="address_btn" v-on:click="updateRow(address)"> ویرایش</button></li>
                     <li  style="margin-right: 10px"><button class="address_btn" v-on:click="remove_address(address)"> حذف</button></li>
                 </ul>
@@ -34,13 +34,20 @@
         </div>
 
 
-        <address-form @setData="updateAddressList" ref="data" :paginate="'ok'"></address-form>
+
+        <pagination align="center" :data="AddressLists" @pagination-change-page="getAddress"></pagination>
+
+
+
+
+        <address-form v-if="layout!='mobile'" @setData="updateAddressList" ref="data" :paginate="'ok'"></address-form>
+        <mobile-address-form v-else @setData="updateAddressList" ref="data" :paginate="'ok'"></mobile-address-form>
 
 
         <div class="message_div" v-if="show_dialog_box">
             <div class="message_box">
                 <p id="msg">آیا مایل به حذف این آدرس هستید؟</p>
-                <a  class="alert alert-success" v-on:click="delete_address">بلی</a>
+                <a  class="alert alert-success" v-on:click="delete_address('ok')">بلی</a>
                 <a  class="alert alert-danger" v-on:click="show_dialog_box=false">خیر</a>
             </div>
         </div>
@@ -52,17 +59,26 @@
 <script>
 import myMixin from "../myMixin";
 import AddressForm from "./AddressForm";
+import LaravelVuePagination from 'shetabit-laravel-vue-pagination';
+import MobileAddressForm from "./MobileAddressForm";
+
 
 export default {
     name: "ProfileAddress",
     mixins:[myMixin],
-    components: {AddressForm},
+    components: {
+        AddressForm,
+        MobileAddressForm,
+        'Pagination': LaravelVuePagination
+    },
+
     data(){
         return{
             AddressLists:{data:[]},
             show_dialog_box:false,
         }
     },
+    props:['layout'],
     mounted() {
         this.getAddress();
     },
@@ -115,10 +131,11 @@ export default {
             this.show_default=this;
             document.getElementById('address_id').value=select.id;
         },
-        delete_address:function () {
+        delete_address:function (paginate) {
+            const string=paginate==undefined ? '' : "?paginate=ok"
             $("#loading").show();
             this.show_dialog_box=false;
-            const url=this.$siteUrl+"/user/removeAddress/"+this.remove_address_id;
+            const url=this.$siteUrl+"/user/removeAddress/"+this.remove_address_id+string;
             this.axios.delete(url).then(response=>{
                 $("#loading").hide();
                 if (response.data!='error')

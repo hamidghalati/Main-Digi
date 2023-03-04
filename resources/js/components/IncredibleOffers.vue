@@ -130,9 +130,12 @@
 
 <script>
 import axios from 'axios';
+import LaravelVuePagination from 'shetabit-laravel-vue-pagination';
 export default {
     name: "IncredibleOffers",
-
+    components: {
+        'Pagination': LaravelVuePagination
+    },
     data(){
         return{
             WarrantyList: {data:[]},

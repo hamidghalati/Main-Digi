@@ -137,7 +137,12 @@
                                   product_title="<?= $product->title ?>">
                     </comment-list>
                 </div>
-                <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="contact-tab">d</div>
+                <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="contact-tab">
+                    <question-list auth="<?php echo Auth::check() ? 'ok' : 'no' ?>"
+                                  product_id="<?= $product->id ?>"
+                                  product_title="<?= $product->title ?>">
+                    </question-list>
+                </div>
             </div>
         </div>
 

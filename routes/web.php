@@ -132,6 +132,8 @@ Route::get('product/comment/{product_id}','SiteController@comment_form')->middle
 Route::post('product/comment/{product_id}','SiteController@add_comment')->middleware('auth');
 Route::get('site/getComment','ApiController@getComment');
 
+//show question
+Route::get('site/get_question/{product_id}','SiteController@get_question');
 
 Route::get('product/{product_id}/{product_url}', 'SiteController@show_product');
 Route::get('product/{product_id}', 'SiteController@show_product');
@@ -139,6 +141,8 @@ Route::get('product/{product_id}', 'SiteController@show_product');
 
 //ajax
 Route::post('site/change_color', 'SiteController@change_color');
+
+
 
 Route::post('Cart', 'SiteController@add_cart');
 Route::get('Cart', 'SiteController@show_cart');
@@ -189,6 +193,8 @@ Route::post('site/check_discount_code', 'ShoppingController@check_discount_code'
 
 Route::prefix('user')->middleware(['auth'])->group(function () {
 
+    //addQuestion
+    Route::post('addQuestion','UserController@addQuestion');
 
     //getAddress
     Route::get('/getAddress','UserController@getAddress');

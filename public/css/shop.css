@@ -4153,23 +4153,113 @@ padding-right: 300px;
     font: normal normal normal 25px/1 FontAwesome;
     flex-direction: column;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.question_box{
+    margin: 35px;
+}
+.feq_headline{
+    color: #6f6f6f;
+    font-weight: 700;
+    line-height: 35px;
+    font-size: 19px;
+}
+.feq_headline span{
+    display: block;
+    padding-top: 5px;
+    font-size: 15px;
+}
+.question_box textarea{
+    padding: 10px;
+    width: 100%;
+    height: 180px;
+    resize: none;
+    margin-top: 20px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid #dfdfdf;
+}
+.question_bottom_div{
+    display: flex;
+}
+.question_bottom_div button{
+    margin-top: 10px;
+    padding: 12px 30px;
+    background-color: #7a7a7a;
+}
+.question_bottom_div .agreement{
+    margin: 18px;
+}
+.question_bottom_div .agreement label{
+    margin-right: 10px;
+    line-height: 30px;
+    font-size: 15px;
+}
+.feq_list li{
+    list-style: none;
+    position: relative;
+    border: 1px solid #dbdbdb;
+    background: #fcfcfc;
+    margin-right: 170px;
+    padding: 19px 29px 50px;
+    color: #4d4d4d;
+    min-height: 220px;
+    margin-top: 20px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.feq_list li::before{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent transparent transparent #dbdbdb;
+    border-width: 11px 0 11px 11px;
+    left: 100%;
+    top: 50%;
+}
+.feq_list .feq_header{
+    width: 122px;
+    margin-left: 44px;
+    position: absolute;
+    left: 100%;
+    top:35px;
+    text-align: center;
+    font-size: 20px;
+}
+.feq_list .feq_header span{
+    font-size: 15px!important;
+    display: block;
+}
+.feq_list .feq_header::before{
+    content: "\F059";
+    display: inline-block;
+    font-size: 40px;
+    color: #35ccde;
+    font-family: FontAwesome;
+}
+.feq_list .answerFormItem .feq_header::before{
+    content: ""!important;
+}
+.feq_list .footer{
+    font-size: 14px;
+    position: absolute;
+    display: flex;
+    width: 100%;
+    right: 0;
+    bottom: 25px;
+    padding: 0 20px;
+    justify-content: space-between;
+}
+.data_link{
+    cursor: pointer;
+}
+.feq_list .answerFormItem .btn-secondary{
+    background-color: #35ccde;
+    border-color: #35ccde;
+}
+.feq_list .answerFormItem h5{
+    width: 100%;
+}
 
 
 

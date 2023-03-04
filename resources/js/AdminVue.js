@@ -2,7 +2,15 @@
 
 window.Vue = require('vue');
 
+// Vue.component('pagination', require('vuejs-paginate'));
+// Vue.component('Pagination', Pagination)
+// Vue.component('paginate', VuejsPaginate)
+// import Paginate from 'vuejs-paginate'
+// Vue.component('paginate', Paginate)
+
 Vue.component('pagination', require('shetabit-laravel-vue-pagination'));
+
+
  Vue.component('Cleave', require('vue-cleave-component'));
 Vue.config.productionTip = false
 

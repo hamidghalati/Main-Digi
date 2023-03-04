@@ -1,7 +1,7 @@
 body {
     direction: rtl;
     text-align: right;
-    font-family: 'Yekan';
+    font-family: 'iransans';
     position: absolute;
     width: 100%;
     min-height: 700px;
@@ -24,10 +24,9 @@ body {
 @font-face {
     font-family: 'IRANSans';
 
-    src: url('../fonts/Webfonts/Woff/IRANSansXFaNum-DemiBold.woff') format('woff'),
-    url('../fonts/Webfonts/Woff2/IRANSansXFaNum-DemiBold.woff2') format('woff2');
-    font-weight: bold;
-    font-style: normal;
+    src: url('../fonts/Webfonts/Woff/IRANSansXFaNum-Regular.woff') format('woff'),
+    url('../fonts/Webfonts/Woff2/IRANSansXFaNum-Regular.woff2') format('woff2');
+
 }
 
 @font-face {
@@ -2796,4 +2795,49 @@ li{
 }
 #auth_box .alert-success{
     margin: 10px!important;
+}
+.profile_address_cart_data ul li {
+    font-size: 14px!important;
+}
+.address_btn {
+    color: #636363;
+    font-size: 15px;
+    line-height: 21px;
+    text-align: center;
+    padding: 6px 25px;
+    border: none;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #e3e3e3;
+    cursor: pointer;
+}
+.profile_address_cart_data{
+    display: block!important;
+    border-top: 0!important;
+    padding: 0!important;
+}
+.profile_address_cart_data ul{
+    margin: 0!important;
+}
+.profile_address_cart_desc{
+    padding: 10px!important;
+    min-height: auto!important;
+}
+.profile_address_cart{
+    height: auto!important;
+}
+.btn_ul{
+    width: 100%;
+    justify-content: flex-end;
+    border-top: 1px solid #f4f4f4;
+    padding-left: 10px!important;
+}
+.btn_ul button{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.profile_address_cart_data ul li {
+
+    padding-top: 0!important;
+    padding-bottom: 10px!important;
 }
