@@ -15,6 +15,7 @@
         "laravel/framework": "^6.20.26",
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.3",
+        "swiftmailer/swiftmailer": "6.0",
         "twbs/bootstrap": "5.2.3",
         "yoeunes/toastr": "^2.0"
     },

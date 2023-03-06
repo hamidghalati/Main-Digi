@@ -4398,7 +4398,7 @@ __webpack_require__.r(__webpack_exports__);
           formData.append('product_id', this.product_id);
           formData.append('questions', this.Question);
           formData.append('send_email', this.send_email);
-          formData.append('question_id', question_id);
+          formData.append('questions_id', question_id);
           this.axios.post(url, formData).then(function (response) {
             $("#loading").hide();
             _this.send = true;
@@ -7780,7 +7780,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _vm._m(1)])])]), _vm._v(" "), _vm._l(_vm.QuestionList.data, function (row, key) {
     return _c("ul", {
-      key: row.id,
+      key: key,
       staticClass: "feq_list"
     }, [_c("li", [_c("div", {
       staticClass: "section"
@@ -7832,7 +7832,50 @@ var render = function render() {
           return _vm.add_question(_vm.answer_id);
         }
       }
-    }, [_vm._v("ثبت پاسخ")])]), _vm._v(" "), _vm._m(3, true)])])])]) : _vm._e()]);
+    }, [_vm._v("ثبت پاسخ")])]), _vm._v(" "), _vm._m(3, true)])])])]) : _vm._e(), _vm._v(" "), _vm._l(row.get_answer, function (answer, key2) {
+      return _c("li", {
+        key: key2,
+        staticClass: "answer_li"
+      }, [_c("div", {
+        staticClass: "section"
+      }, [_c("div", {
+        staticClass: "feq_header"
+      }, [_c("p", [_vm._v("\n                        پاسخ\n                        "), answer.get_user.name == "" ? _c("span", [_vm._v("ناشناس")]) : _c("span", [_vm._v(_vm._s(answer.get_user.name))])])]), _vm._v(" "), _c("p", {
+        domProps: {
+          innerHTML: _vm._s(answer.questions)
+        }
+      }), _vm._v(" "), _c("div", {
+        staticClass: "footer"
+      }, [_c("span", [_vm._v(_vm._s(_vm.getDate(answer.time)))]), _vm._v(" "), _c("div", [_vm._v("\n                        آیا این پاسخ برایتان مفید بود؟\n                        "), _c("span", {
+        staticClass: "btn_like",
+        attrs: {
+          "data-count": _vm.replaceNumber(answer.like)
+        },
+        on: {
+          click: function click($event) {
+            return _vm.like(key, answer.id);
+          }
+        }
+      }, [_c("i", {
+        staticClass: "mdi mdi-thumb-up-outline"
+      })]), _vm._v(" "), _c("span", {
+        staticClass: "btn_like dislike",
+        attrs: {
+          "data-count": _vm.replaceNumber(answer.dislike)
+        },
+        on: {
+          click: function click($event) {
+            return _vm.dislike(key, answer.id);
+          }
+        }
+      }, [_c("i", {
+        staticClass: "mdi mdi-thumb-down-outline",
+        staticStyle: {
+          "padding-top": "6px",
+          position: "absolute"
+        }
+      })])])])])]);
+    })], 2);
   })], 2);
 };
 var staticRenderFns = [function () {
@@ -30057,13 +30100,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     replaceNumber: function replaceNumber(n) {
-      n = n.toString();
-      var find = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-      var replace = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-      for (var i = 0; i < find.length; i++) {
-        n = n.replace(new RegExp(find[i], 'g'), replace[i]);
+      if (n != undefined) {
+        n = n.toString();
+        var find = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+        var replace = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+        for (var i = 0; i < find.length; i++) {
+          n = n.replace(new RegExp(find[i], 'g'), replace[i]);
+        }
+        return n;
       }
-      return n;
     },
     check_mobile_number: function check_mobile_number() {
       if (isNaN(this.mobile)) {

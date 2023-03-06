@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'IRANSans';
+    src: url('../fonts/Webfonts/Woff/IRANSansXFaNum-Regular.woff') format('woff'),
+    url('../fonts/Webfonts/Woff2/IRANSansXFaNum-Regular.woff2') format('woff2');
+
+}
+body{direction: rtl;font-size: 16px;font-family: 'IRANSans'}
+.box{width: 95%;margin: auto}
+.answer_box{width: 95%;margin: auto;border: 1px dashed gray}

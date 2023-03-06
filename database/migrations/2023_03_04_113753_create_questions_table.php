@@ -21,7 +21,7 @@ class CreateQuestionsTable extends Migration
             $table->integer('questions_id')->default(0);
             $table->smallInteger('status')->default(0);
             $table->smallInteger('answer_count')->default(0);
-            $table->string('send_email')->default(0);
+            $table->string('send_email')->default('no');
             $table->text('questions');
             $table->integer('like')->default(0);
             $table->integer('dislike')->default(0);

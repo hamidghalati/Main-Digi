@@ -11,6 +11,9 @@
 |
 */
 
+use App\Mail\SendAnswer;
+use App\Question;
+
 Route::get('/', 'SiteController@index');
 
 Auth::routes();
@@ -231,16 +234,7 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
 
 
 Route::get('test', function () {
-//    $time=time();
-//    $discounts=\App\DiscountCode::where('code','takhfif-samsung')->where('expire_time','>=',$time)->get();
-//    if ($discounts)
-//    {
-//        return \App\DiscountCode::check($discounts);
-//    }
-//
-    Session::forget('cart_final_price');
-    Session::forget('discount_value');
-    Session::forget('gift_value');
+
 });
 
 //Session::forget('cart_final_price');

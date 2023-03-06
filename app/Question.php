@@ -14,4 +14,17 @@ class Question extends Model
     public function getUser(){
         return $this->hasOne(User::class,'id','user_id')->select(['id','name'])->withDefault(['name'=>'']);
     }
+
+    public function getAnswer(){
+        return $this->hasMany(Question::class,'questions_id','id')->where('status',1);
+    }
+
+    public function getUserInfo(){
+        return $this->hasOne(AdditionalInfos::class,'user_id','user_id')
+            ->select(['id','user_id','email','first_name','last_name']);
+    }
+
+    public function getProduct(){
+        return $this->hasOne(ProductsModel::class,'id','product_id')->select('id','product_url');
+    }
 }

@@ -18246,13 +18246,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     replaceNumber: function replaceNumber(n) {
-      n = n.toString();
-      var find = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-      var replace = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-      for (var i = 0; i < find.length; i++) {
-        n = n.replace(new RegExp(find[i], 'g'), replace[i]);
+      if (n != undefined) {
+        n = n.toString();
+        var find = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+        var replace = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+        for (var i = 0; i < find.length; i++) {
+          n = n.replace(new RegExp(find[i], 'g'), replace[i]);
+        }
+        return n;
       }
-      return n;
     },
     check_mobile_number: function check_mobile_number() {
       if (isNaN(this.mobile)) {

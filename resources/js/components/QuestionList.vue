@@ -30,7 +30,7 @@
 
         </div>
 
-        <ul class="feq_list" v-for="(row,key) in QuestionList.data" :key="row.id">
+        <ul class="feq_list" v-for="(row,key) in QuestionList.data" v-bind:key="key">
             <li>
                 <div class="section">
                     <div class="feq_header">
@@ -81,8 +81,33 @@
                         </div>
 
                     </div>
+                </div>
+            </li>
 
+            <li v-for="(answer,key2) in row.get_answer" class="answer_li" v-bind:key="key2">
+                <div class="section">
+                    <div class="feq_header">
+                        <p>
+                            پاسخ
+                            <span v-if="answer.get_user.name==''">ناشناس</span>
+                            <span v-else>{{ answer.get_user.name}}</span>
+                        </p>
+                    </div>
+                    <p v-html="answer.questions"></p>
 
+                    <div class="footer">
+                        <span>{{ getDate(answer.time) }}</span>
+                        <div>
+                            آیا این پاسخ برایتان مفید بود؟
+                            <span class="btn_like" v-on:click="like(key,answer.id)"
+                                  v-bind:data-count="replaceNumber(answer.like)"><i
+                                class="mdi mdi-thumb-up-outline"></i></span>
+                            <span class="btn_like dislike" v-on:click="dislike(key,answer.id)"
+                                  v-bind:data-count="replaceNumber(answer.dislike)"><i
+                                class="mdi mdi-thumb-down-outline"
+                                style="padding-top: 6px;position: absolute;"></i></span>
+                        </div>
+                    </div>
 
                 </div>
             </li>
@@ -141,7 +166,7 @@ export default {
                     formData.append('product_id',this.product_id);
                     formData.append('questions',this.Question);
                     formData.append('send_email',this.send_email);
-                    formData.append('question_id',question_id);
+                    formData.append('questions_id',question_id);
                     this.axios.post(url,formData).then(response=>{
                         $("#loading").hide();
                         this.send=true;

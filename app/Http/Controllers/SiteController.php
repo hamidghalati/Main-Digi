@@ -322,7 +322,7 @@ class SiteController extends Controller
     }
 
     public function get_question($product_id){
-        $Question=Question::with(['getUser'])->where(['questions_id'=>0,'product_id'=>$product_id,'status'=>1]);
+        $Question=Question::with(['getUser','getAnswer.getUser'])->where(['questions_id'=>0,'product_id'=>$product_id,'status'=>1]);
         $Question=$Question->paginate(10);
         return $Question;
     }

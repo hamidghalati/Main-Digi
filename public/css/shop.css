@@ -4260,10 +4260,38 @@ padding-right: 300px;
 .feq_list .answerFormItem h5{
     width: 100%;
 }
+.answer_li .footer .btn_like{
+    font-size: 20px;
+    padding: 0 13px;
+    cursor: pointer;
+}
+.answer_li .footer .btn_like::before{
+    margin-left: 7px;
+    font-size: 15px;
+    content: attr(data-count);
+}
 
+.answer_li .footer .dislike{
+    font-size: 20px;
+    cursor: pointer;
+}
+.answer_li .footer .btn_dislike::before{
+    margin-left: 7px;
+    font-size: 15px;
+    content: attr(data-count);
+}
 
-
-
+.answer_li{
+    margin-top: 0!important;
+    border-top-right-radius: 0!important;
+    -webkit-border-top-right-radius: 0!important;
+    border-top-left-radius: 0!important;
+    -webkit-border-top-left-radius: 0!important;
+    border-top: 0!important;
+}
+.answer_li .feq_header::before{
+    content: ""!important;
+}
 
 
 
