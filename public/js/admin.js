@@ -400,3 +400,8 @@ $('.comment_status').click(function () {
 
 });
 
+$(".add_answer").click(function () {
+    $(".answer_div").slideUp();
+    $(this).parent().parent().find('.answer_div').slideDown();
+});
+

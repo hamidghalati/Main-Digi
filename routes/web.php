@@ -74,6 +74,11 @@ Route::prefix('admin')->group(function () {
     create_crud_route('comments', 'CommentController',['show','create','store','edit','update']);
     Route::post('comment/change_status','Admin\CommentController@change_status');
 
+    //question
+    create_crud_route('questions', 'QuestionController',['show','create','store','edit','update']);
+    Route::post('questions/change_status','Admin\QuestionController@change_status');
+    Route::post('questions/addAnswer/{id}','Admin\QuestionController@addAnswer');
+
 
     //Item category
     Route::get('category/{id}/items', 'Admin\ItemController@items');

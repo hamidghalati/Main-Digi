@@ -1,7 +1,7 @@
 body{
     direction: rtl;
     text-align: right;
-    font-family: Yekan;
+    font-family: iransans;
     position: absolute;
     width: 100%;
     min-height:700px ;
@@ -20,12 +20,18 @@ body{
     font-style: normal;
 }
 
+/*@font-face {*/
+/*    font-family: 'IRANSans';*/
+
+/*    src: url('../fonts/Webfonts/Woff/IRANSansXFaNum-Regular.woff') format('woff'),*/
+/*    url('../fonts/Webfonts/Woff2/IRANSansXFaNum-Regular.woff2') format('woff2');*/
+
+/*}*/
+
 @font-face {
-    font-family: 'IRANSans';
-
-    src: url('../fonts/Webfonts/Woff/IRANSansXFaNum-Regular.woff') format('woff'),
-    url('../fonts/Webfonts/Woff2/IRANSansXFaNum-Regular.woff2') format('woff2');
-
+    font-family: "iransans";
+    src: url("../fonts/iransans/IRANSansWeb_Light.woff2") format("woff2");
+    src: url("../fonts/iransans/IRANSansWeb_Light.woff") format("woff");
 }
 
 a {
@@ -1060,4 +1066,72 @@ input.pdate{
 .server_error_box div{
     display: flex;
     align-items: center;
+}
+.question_div{
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.09);
+    color: #444d4d;
+    font-size: 14px;
+    margin-top: 20px;
+    min-height: 180px;
+}
+.question_div_header{
+    background-color: #f5f6f7;
+    padding: 18px;
+    display: inline-flex;
+    justify-content: space-between;
+    color: black;
+    width: 100%;
+    cursor: pointer;
+    border-top-right-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    -webkit-border-top-left-radius: 4px;
+}
+.question-pending-approval{
+    background-color: #fff3f4!important;
+    color: #fb3449!important;
+}
+.question_content{
+    padding: 18px;
+    line-height: 28px;
+}
+.question_div .main{
+    padding: 20px;
+    margin: 20px 10px;
+    border: 1px dashed #8b8b8c;
+    line-height: 25px;
+}
+.question_div .main p{
+    font-size: 17px!important;
+}
+.answer_div{
+    display: none;
+}
+.question_footer{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 5px;
+    font-size: 13px;
+    border-top: 1px solid #e0e1e2;
+    margin-top: 20px;
+}
+.question_footer a{
+    color: #1ca2db !important;
+}
+.add_answer{
+    color: #1ca2db !important;
+    cursor: pointer;
+    border-bottom: 1px dashed #1ca2db;
+}
+.question_content textarea{
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid #e0e1e2;
 }
