@@ -76,8 +76,8 @@ Route::prefix('admin')->group(function () {
 
     //question
     create_crud_route('questions', 'QuestionController',['show','create','store','edit','update']);
-    Route::post('questions/change_status','Admin\QuestionController@change_status');
-    Route::post('questions/addAnswer/{id}','Admin\QuestionController@addAnswer');
+    Route::post('question/change_status','Admin\QuestionController@change_status');
+    Route::post('question/addAnswer/{id}','Admin\QuestionController@addAnswer');
 
 
     //Item category

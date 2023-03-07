@@ -2,8 +2,10 @@
 
 namespace App;
 
+use App\Mail\SendAnswer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Mail;
 
 class Question extends Model
 {
@@ -54,5 +56,50 @@ class Question extends Model
 
     public function getQuestionAttribute($value){
         return strip_tags(nl2br($value),'<br>');
+    }
+
+    public static function change_status($request)
+    {
+        if ($request->ajax())
+        {
+            $question_id=$request->get('question_id');
+            $question=Question::find($question_id);
+            if ($question)
+            {
+                $status=$question->status==1 ? 0 : 1;
+                $question->status=$status;
+                if ($question->update())
+                {
+                    if ($question->questions_id>0 && $status==1)
+                    {
+                        self::sendAnswerEmail($question);
+
+                    }
+
+
+                    return 'ok';
+                }
+                else
+                {
+                    return 'error';
+                }
+            }
+            else
+            {
+                return 'error';
+            }
+        }
+    }
+
+    public static function sendAnswerEmail($answer)
+    {
+        $question=Question::with(['getUserInfo','getProduct'])->where(['id'=>$answer->questions_id,'send_email'=>'ok'])->first();
+        if ($question && $question->getUserInfo)
+        {
+            if (!empty($question->getUserInfo->email))
+            {
+                Mail::to($question->getUserInfo->email)->queue(new SendAnswer($question,$answer));
+            }
+        }
     }
 }

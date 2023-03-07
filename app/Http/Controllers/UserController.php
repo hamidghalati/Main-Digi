@@ -58,14 +58,7 @@ class UserController extends Controller
        $Question->user_id=$user_id;
        $Question->send_email=$send_email;
        $Question->save();
-        if ($Question->questions_id>0)
-        {
-            $parent=Question::with(['getUserInfo','getProduct'])->where(['id'=>$Question->questions_id,'send_email'=>'ok'])->first();
-            if ($parent && $parent->getUserInfo)
-            {
-                Mail::to($parent->getUserInfo->email)->queue(new SendAnswer($parent,$Question));
-            }
-        }
+
        return 'ok';
     }
 }

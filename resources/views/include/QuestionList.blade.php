@@ -19,13 +19,15 @@
                     </div>
 
 
-                    <span class="question_status" question_id="{{ $value->id }}" status="{{ $value->status }}"></span>
+                    <span class="question_status" question_id="{{ $value->id }}" status="{{ $value->status }}">
+                          @if($value->status)
+                            تایید شده
+                        @else
+                            در انتظار تایید
+                        @endif
+                    </span>
 
-                    @if($value->status)
-                        تایید شده
-                    @else
-                        در انتظار تایید
-                    @endif
+
                 </div>
 
                 <div>

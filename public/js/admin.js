@@ -405,3 +405,54 @@ $(".add_answer").click(function () {
     $(this).parent().parent().find('.answer_div').slideDown();
 });
 
+$(".question_status").click(function () {
+    const question_id=$(this).attr('question_id');
+    const status=$(this).attr('status');
+    const el=$(this);
+    $("#loading").show();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    const url = site_url + "admin/question/change_status";
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: "question_id=" + question_id ,
+        success: function (response) {
+            if (response=='ok') {
+
+                if (status==1)
+                {
+                    el.text('در انتظار تایید')
+                    el.attr('status',0);
+                    el.parent().parent().addClass('question-pending-approval');
+                }
+                else
+                {
+                    el.text(' تایید شده');
+                    el.attr('status',1);
+                    el.parent().parent().removeClass('question-pending-approval');
+                }
+            }
+            else{
+                $("#server_error_box").show();
+                setTimeout(function () {
+                    $("#server_error_box").hide();
+                },5000);
+            }
+            $("#loading").hide();
+
+        },
+        error: function (jqXhr, textStatus, error) {
+            $("#server_error_box").show();
+            setTimeout(function () {
+                $("#server_error_box").hide();
+            },5000);
+            $("#loading").hide();
+        }
+    });
+
+});
+
