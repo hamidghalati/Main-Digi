@@ -23,4 +23,24 @@ class QuestionController extends CustomController
     {
         return Question::change_status($request);
     }
+
+    public function addAnswer($id,Request $request){
+       $answer=$request->get('answer');
+       if (!empty($answer)){
+          return Question::AddAnswer($id,$request,$answer);
+       }
+       else{
+           return redirect()->back()->with(['message'=>'پاسخ شما خالی می باشد','header'=>'ثبت پرسش','alerts'=>'warning']);;
+       }
+    }
+
+
+
+
+
+
+
+
+
+
 }

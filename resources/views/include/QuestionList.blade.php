@@ -84,7 +84,11 @@
             </div>
 
             <div class="question_content">
-                {!! $value->questions !!}
+{{--                {!! strip_tags($value->questions,'<br>') !!}--}}
+
+                {!! strip_tags(nl2br($value->questions),'<br>') !!}
+
+
 
                 <div style="min-height: 70px">
                     @if($value->questions_id!=0)
@@ -93,7 +97,8 @@
                                 <span class="fa fa-question"></span>
                                 <span>پرسش اصلی</span>
                             </p>
-                            {!! $value->getParent->questions !!}
+{{--                            {!! $value->getParent->questions !!}--}}
+                            {!! strip_tags(nl2br( $value->getParent->questions),'<br>') !!}
                         </div>
                     @endif
                 </div>
@@ -101,7 +106,7 @@
                 @if($value->questions_id==0)
                     <div class="answer_div">
                         <textarea name="answer" id="answer_{{ $value->id }}" cols="30" rows="10" placeholder="پاسخ شما"></textarea>
-                        <a onclick="add_answer('<?= csrf_token() ?>','$value->id')" class="btn btn-success">ثبت پاسخ</a>
+                        <a onclick="add_answer('<?= csrf_token() ?>','{{$value->id}}')" class="btn btn-success">ثبت پاسخ</a>
                     </div>
                 @endif
 

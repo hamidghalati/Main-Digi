@@ -207,6 +207,7 @@ restore_row=function (url,t,message_text){
     $('.message_div').show();
 
 }
+
 add_tag=function () {
     const tag_list=document.getElementById('tag_list').value;
     const t=tag_list.split(',');
@@ -232,8 +233,7 @@ add_tag=function () {
     document.getElementById('tag_list').value='';
 }
 
-remove_tag=function (id,text)
-{
+remove_tag=function (id,text){
     $("#tag_div_"+id).hide();
     const keywords=document.getElementById('keywords').value;
     const t1=text+",";
@@ -256,8 +256,7 @@ add_item_input=function () {
 
 }
 
-add_child_input=function (id)
-{
+add_child_input=function (id){
     const child_count=document.getElementsByClassName('child_input_item').length+1;
     const count=document.getElementsByClassName('child_'+id).length+1;
     const html='<div class="form-group child_'+id+'" >'+
@@ -267,12 +266,9 @@ add_child_input=function (id)
         +'<input type="text" name="child_item['+id+'][-'+child_count+']" class="form-control child_input_item" placeholder="نام ویژگی">'+
         '</div>';
     $("#item_"+id).find('.child_item_box').append(html);
-
-
 }
 
-add_item_value_item=function (id)
-{
+add_item_value_item=function (id){
     const html='<div class="form-group">' +
         '<label></label>'+
         '<input name="item_value['+id+'][]" type="text" class="form-control" placeholder=" مشخصات را وارد نمایید...">'+
@@ -280,8 +276,7 @@ add_item_value_item=function (id)
     $("#input_item_box_"+id).append(html);
 }
 
-add_filter_input=function ()
-{
+add_filter_input=function (){
     const id=document.getElementsByClassName('filter_input').length+1;
     const html='<div class="form-group item_group" id="filter_-'+id+'">' +
         '<input type="text" class="form-control filter_input" name="filter[-'+id+']" placeholder="نام گروه فیلتر">'
@@ -301,6 +296,7 @@ add_filter_child_input=function (id) {
         '</div>';
     $("#filter_"+id).find('.child_filter_box').append(html);
 }
+
 $('.item_filter_box ul li input[type="checkbox"]').click(function () {
     const filter=$(this).parent().parent().parent().parent().find('.filter_value');
     const input=$(this).parent().parent().parent().parent().find('.item_value');
@@ -455,4 +451,30 @@ $(".question_status").click(function () {
     });
 
 });
+
+add_answer=function (token,id) {
+    const answer=$("#answer_"+id).val();
+
+    if (answer.trim()!="")
+    {
+        const url=site_url+"admin/question/addAnswer/"+id;
+        let form=document.createElement('form');
+        form.setAttribute('method','POST');
+        form.setAttribute('action',url);
+
+        const hiddenField1 = document.createElement('input');
+        hiddenField1.setAttribute('name', '_token');
+        hiddenField1.setAttribute('value', token);
+        form.appendChild(hiddenField1);
+
+        const hiddenField2 = document.createElement('input');
+        hiddenField2.setAttribute('name', 'answer');
+        hiddenField2.setAttribute('value', answer);
+        form.appendChild(hiddenField2);
+
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+    }
+}
 
