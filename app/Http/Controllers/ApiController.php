@@ -29,18 +29,20 @@ class ApiController extends Controller
         return $comments;
     }
 
-    public function likeComment(Request $request)
+    public function like(Request $request)
     {
-        $comment_id = $request->get('comment_id');
-        $result = Comment::addUserScore($comment_id, "like");
-        return $result;
+        return addLike($request,'like');
+//        $comment_id = $request->get('comment_id');
+//        $result = Comment::addUserScore($comment_id, "like");
+//        return $result;
     }
 
-    public function dislikeComment(Request $request)
+    public function dislike(Request $request)
     {
-        $comment_id = $request->get('comment_id');
-        $result = Comment::addUserScore($comment_id, "dislike");
-        return $result;
+        return addLike($request,'dislike');
+//        $comment_id = $request->get('comment_id');
+//        $result = Comment::addUserScore($comment_id, "dislike");
+//        return $result;
     }
 
     public function getProductChartData($product_id)

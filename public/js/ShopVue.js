@@ -4374,7 +4374,7 @@ __webpack_require__.r(__webpack_exports__);
       send_email: false,
       send: true,
       save_question: false,
-      QuestionList: {
+      list: {
         data: []
       },
       monthName: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
@@ -4422,7 +4422,7 @@ __webpack_require__.r(__webpack_exports__);
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       var url = this.$siteUrl + "site/get_question/" + this.product_id + "?page=" + page;
       this.axios.get(url).then(function (response) {
-        _this2.QuestionList = response.data;
+        _this2.list = response.data;
       });
     },
     set_answer_id: function set_answer_id(id) {
@@ -5194,7 +5194,9 @@ var render = function render() {
   }, [_c("ul", {
     staticClass: "rating_ul avg_ul"
   }, _vm._l(_vm.scoreItem, function (item, key) {
-    return _c("li", [_c("label", [_vm._v(_vm._s(item))]), _vm._v(" "), _c("div", {
+    return _c("li", {
+      key: key
+    }, [_c("label", [_vm._v(_vm._s(item))]), _vm._v(" "), _c("div", {
       staticClass: "rating",
       attrs: {
         "data-rate-digital": _vm.getLabel2(key)
@@ -5244,6 +5246,7 @@ var render = function render() {
     }
   }, [_vm._v("جدیدترین نظرات")])])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.list.data, function (comment, key) {
     return _c("div", {
+      key: key,
       staticClass: "comment_div"
     }, [_c("div", {
       staticClass: "row"
@@ -5252,7 +5255,9 @@ var render = function render() {
     }, [_c("ul", {
       staticClass: "rating_ul"
     }, _vm._l(_vm.scoreItem, function (item, key2) {
-      return _c("li", [_c("label", {
+      return _c("li", {
+        key: key2
+      }, [_c("label", {
         attrs: {
           "for": ""
         }
@@ -5282,7 +5287,9 @@ var render = function render() {
     }, [_vm._v("نقاط قوت")]), _vm._v(" "), _c("ul", {
       staticClass: "evaluation_ul advantage"
     }, _vm._l(comment.advantage, function (advantage) {
-      return advantage != "" ? _c("li", [_c("span", [_vm._v(_vm._s(advantage))])]) : _vm._e();
+      return advantage != "" ? _c("li", {
+        key: advantage.id
+      }, [_c("span", [_vm._v(_vm._s(advantage))])]) : _vm._e();
     }), 0)]) : _vm._e(), _vm._v(" "), comment.advantage.length > 1 ? _c("div", {
       staticClass: "col-md-6"
     }, [_c("span", {
@@ -5290,7 +5297,9 @@ var render = function render() {
     }, [_vm._v("نقاط ضعف")]), _vm._v(" "), _c("ul", {
       staticClass: "evaluation_ul disadvantage"
     }, _vm._l(comment.disadvantage, function (disadvantage) {
-      return disadvantage != "" ? _c("li", [_c("span", [_vm._v(_vm._s(disadvantage))])]) : _vm._e();
+      return disadvantage != "" ? _c("li", {
+        key: disadvantage.id
+      }, [_c("span", [_vm._v(_vm._s(disadvantage))])]) : _vm._e();
     }), 0)]) : _vm._e()]), _vm._v(" "), _c("div", {
       staticClass: "comment_text"
     }, [_vm._v(_vm._s(comment.content))]), _vm._v(" "), _c("div", {
@@ -5302,7 +5311,7 @@ var render = function render() {
       },
       on: {
         click: function click($event) {
-          return _vm.like(key, comment.id);
+          return _vm.like(comment, comment.id, "comments");
         }
       }
     }, [_c("i", {
@@ -5314,7 +5323,7 @@ var render = function render() {
       },
       on: {
         click: function click($event) {
-          return _vm.dislike(key, comment.id);
+          return _vm.dislike(comment, comment.id, "comments");
         }
       }
     }, [_c("i", {
@@ -6953,6 +6962,7 @@ var render = function render() {
     ref: "comment_box"
   }, [_vm._l(_vm.list.data, function (comment, key) {
     return _c("div", {
+      key: key,
       staticClass: "comment_div_mobile"
     }, [_c("div", {
       staticClass: "row"
@@ -6975,7 +6985,9 @@ var render = function render() {
     }, [_vm._v("نقاط قوت")]), _vm._v(" "), _c("ul", {
       staticClass: "evaluation_ul advantage"
     }, _vm._l(comment.advantage, function (advantage) {
-      return advantage != "" ? _c("li", [_c("span", [_vm._v(_vm._s(advantage))])]) : _vm._e();
+      return advantage != "" ? _c("li", {
+        key: advantage.id
+      }, [_c("span", [_vm._v(_vm._s(advantage))])]) : _vm._e();
     }), 0)]) : _vm._e(), _vm._v(" "), comment.advantage.length > 1 ? _c("div", {
       staticClass: "col-12"
     }, [_c("span", {
@@ -6983,7 +6995,9 @@ var render = function render() {
     }, [_vm._v("نقاط ضعف")]), _vm._v(" "), _c("ul", {
       staticClass: "evaluation_ul disadvantage"
     }, _vm._l(comment.disadvantage, function (disadvantage) {
-      return disadvantage != "" ? _c("li", [_c("span", [_vm._v(_vm._s(disadvantage))])]) : _vm._e();
+      return disadvantage != "" ? _c("li", {
+        key: disadvantage.id
+      }, [_c("span", [_vm._v(_vm._s(disadvantage))])]) : _vm._e();
     }), 0)]) : _vm._e()]), _vm._v(" "), _c("div", {
       staticClass: "comment_text"
     }, [_vm._v(_vm._s(comment.content))]), _vm._v(" "), _c("div", {
@@ -6995,7 +7009,7 @@ var render = function render() {
       },
       on: {
         click: function click($event) {
-          return _vm.like(key, comment.id, "redirect");
+          return _vm.like(comment, comment.id, "comments", "redirect");
         }
       }
     }, [_vm._v("بلی\n                                ")]), _vm._v(" "), _c("button", {
@@ -7005,7 +7019,7 @@ var render = function render() {
       },
       on: {
         click: function click($event) {
-          return _vm.dislike(key, comment.id, "redirect");
+          return _vm.dislike(comment, comment.id, "comments", "redirect");
         }
       }
     }, [_vm._v("خیر\n                                ")])])])])]);
@@ -7778,7 +7792,7 @@ var render = function render() {
         _vm.send_email = !_vm.send_email;
       }
     }
-  }), _vm._v(" "), _vm._m(1)])])]), _vm._v(" "), _vm._l(_vm.QuestionList.data, function (row, key) {
+  }), _vm._v(" "), _vm._m(1)])])]), _vm._v(" "), _vm._l(_vm.list.data, function (row, key) {
     return _c("ul", {
       key: key,
       staticClass: "feq_list"
@@ -7853,7 +7867,7 @@ var render = function render() {
         },
         on: {
           click: function click($event) {
-            return _vm.like(key, answer.id);
+            return _vm.like(answer, answer.id, "questions");
           }
         }
       }, [_c("i", {
@@ -7865,7 +7879,7 @@ var render = function render() {
         },
         on: {
           click: function click($event) {
-            return _vm.dislike(key, answer.id);
+            return _vm.dislike(answer, answer.id, "questions");
           }
         }
       }, [_c("i", {
@@ -30459,21 +30473,22 @@ __webpack_require__.r(__webpack_exports__);
       var r = this.replaceNumber(jalai[2]) + ' ' + this.monthName[jalai[1] - 1] + ' ' + this.replaceNumber(jalai[0]);
       return r;
     },
-    like: function like(key, comment_id, redirect) {
+    like: function like(element, row_id, table_name, redirect) {
       var _this = this;
       if (this.send) {
         $("#loading").show();
         this.send = false;
-        var url = this.$siteUrl + "user/likeComment";
+        var url = this.$siteUrl + "user/like";
         var formData = new FormData();
-        formData.append('comment_id', comment_id);
+        formData.append('row_id', row_id);
+        formData.append('table_name', table_name);
         this.axios.post(url, formData).then(function (response) {
           _this.send = true;
           $("#loading").hide();
           if (response.data == "add") {
-            _this.list.data[key].like = _this.list.data[key].like + 1;
+            element.like = element.like + 1;
           } else if (response.data == "remove") {
-            _this.list.data[key].like = _this.list.data[key].like - 1;
+            element.like = element.like - 1;
           }
         })["catch"](function (error) {
           _this.send = true;
@@ -30488,21 +30503,22 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    dislike: function dislike(key, comment_id, redirect) {
+    dislike: function dislike(element, row_id, table_name, redirect) {
       var _this2 = this;
       if (this.send) {
         $("#loading").show();
         this.send = false;
-        var url = this.$siteUrl + "user/dislikeComment";
+        var url = this.$siteUrl + "user/dislike";
         var formData = new FormData();
-        formData.append('comment_id', comment_id);
+        formData.append('row_id', row_id);
+        formData.append('table_name', table_name);
         this.axios.post(url, formData).then(function (response) {
           _this2.send = true;
           $("#loading").hide();
           if (response.data == "add") {
-            _this2.list.data[key].dislike = _this2.list.data[key].dislike + 1;
+            element.dislike = element.dislike + 1;
           } else if (response.data == "remove") {
-            _this2.list.data[key].dislike = _this2.list.data[key].dislike - 1;
+            element.dislike = element.dislike - 1;
           }
         })["catch"](function (error) {
           _this2.send = true;

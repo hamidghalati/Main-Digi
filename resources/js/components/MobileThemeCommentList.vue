@@ -40,7 +40,7 @@
                 </div>
 
                 <div ref="comment_box">
-                    <div class="comment_div_mobile" v-for="(comment,key) in list.data">
+                    <div class="comment_div_mobile" v-for="(comment,key) in list.data" v-bind:key="key">
                         <div class="row">
                             <div class="comment_header">
                                 <div style="width: 86%;">
@@ -61,8 +61,8 @@
                             <div class="row">
                                 <div class="col-12" v-if="comment.advantage.length>1">
                                     <span class="evaluation_label">نقاط قوت</span>
-                                    <ul class="evaluation_ul advantage">
-                                        <li v-for="advantage in comment.advantage" v-if="advantage!=''">
+                                    <ul class="evaluation_ul advantage" >
+                                        <li v-for="advantage in comment.advantage" v-if="advantage!=''"  v-bind:key="advantage.id">
                                             <span>{{ advantage }}</span>
                                         </li>
                                     </ul>
@@ -70,8 +70,8 @@
 
                                 <div class="col-12" v-if="comment.advantage.length>1">
                                     <span class="evaluation_label">نقاط ضعف</span>
-                                    <ul class="evaluation_ul disadvantage">
-                                        <li v-for="disadvantage in comment.disadvantage" v-if="disadvantage!=''">
+                                    <ul class="evaluation_ul disadvantage" >
+                                        <li v-for="disadvantage in comment.disadvantage" v-if="disadvantage!=''" v-bind:key="disadvantage.id">
                                             <span>{{ disadvantage }}</span>
                                         </li>
                                     </ul>
@@ -85,10 +85,10 @@
                                     آیا این نظر برایتان مفید بود ؟
                                 </div>
                                 <div>
-                                    <button class="btn_like" v-on:click="like(key,comment.id,'redirect')"
+                                    <button class="btn_like" v-on:click="like(comment,comment.id,'comments','redirect')"
                                             v-bind:data-count="replaceNumber(comment.like)">بلی
                                     </button>
-                                    <button class="btn_like dislike" v-on:click="dislike(key,comment.id,'redirect')"
+                                    <button class="btn_like dislike" v-on:click="dislike(comment,comment.id,'comments','redirect')"
                                             v-bind:data-count="replaceNumber(comment.dislike)">خیر
                                     </button>
                                 </div>

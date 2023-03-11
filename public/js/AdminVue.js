@@ -18605,21 +18605,22 @@ __webpack_require__.r(__webpack_exports__);
       var r = this.replaceNumber(jalai[2]) + ' ' + this.monthName[jalai[1] - 1] + ' ' + this.replaceNumber(jalai[0]);
       return r;
     },
-    like: function like(key, comment_id, redirect) {
+    like: function like(element, row_id, table_name, redirect) {
       var _this = this;
       if (this.send) {
         $("#loading").show();
         this.send = false;
-        var url = this.$siteUrl + "user/likeComment";
+        var url = this.$siteUrl + "user/like";
         var formData = new FormData();
-        formData.append('comment_id', comment_id);
+        formData.append('row_id', row_id);
+        formData.append('table_name', table_name);
         this.axios.post(url, formData).then(function (response) {
           _this.send = true;
           $("#loading").hide();
           if (response.data == "add") {
-            _this.list.data[key].like = _this.list.data[key].like + 1;
+            element.like = element.like + 1;
           } else if (response.data == "remove") {
-            _this.list.data[key].like = _this.list.data[key].like - 1;
+            element.like = element.like - 1;
           }
         })["catch"](function (error) {
           _this.send = true;
@@ -18634,21 +18635,22 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    dislike: function dislike(key, comment_id, redirect) {
+    dislike: function dislike(element, row_id, table_name, redirect) {
       var _this2 = this;
       if (this.send) {
         $("#loading").show();
         this.send = false;
-        var url = this.$siteUrl + "user/dislikeComment";
+        var url = this.$siteUrl + "user/dislike";
         var formData = new FormData();
-        formData.append('comment_id', comment_id);
+        formData.append('row_id', row_id);
+        formData.append('table_name', table_name);
         this.axios.post(url, formData).then(function (response) {
           _this2.send = true;
           $("#loading").hide();
           if (response.data == "add") {
-            _this2.list.data[key].dislike = _this2.list.data[key].dislike + 1;
+            element.dislike = element.dislike + 1;
           } else if (response.data == "remove") {
-            _this2.list.data[key].dislike = _this2.list.data[key].dislike - 1;
+            element.dislike = element.dislike - 1;
           }
         })["catch"](function (error) {
           _this2.send = true;

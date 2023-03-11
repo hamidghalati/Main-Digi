@@ -211,8 +211,8 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::post('/addAddress', 'UserController@addAddress');
 
     //like
-    Route::post('/likeComment','ApiController@likeComment');
-    Route::post('/dislikeComment','ApiController@dislikeComment');
+    Route::post('/like','ApiController@like');
+    Route::post('/dislike','ApiController@dislike');
 
     Route::delete('/removeAddress/{address_id}', 'UserController@removeAddress');
 

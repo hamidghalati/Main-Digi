@@ -1434,6 +1434,49 @@ function checkEvent($n)
     }
 }
 
+function addLike($request,$score_type){
+    $table_name=$request->get('table_name','');
+    $row_id=$request->get('row_id','');
+    if ($table_name=='comments' || $table_name=='questions')
+    {
+        $row=DB::table($table_name)->where('id',$row_id)->first();
+        if ($row){
+            $user_id=$request->user()->id;
+
+            $user_scored_status=DB::table('user_scored_status')
+                ->where(['user_id'=>$user_id,'row_id'=>$row_id,'score_type'=>$score_type,'type'=>$table_name])
+                ->first();
+            if ($user_scored_status)
+            {
+                DB::table('user_scored_status')
+                    ->where(['user_id'=>$user_id,'row_id'=>$row_id,'score_type'=>$score_type,'type'=>$table_name])
+                    ->delete();
+                DB::table($table_name)->where('id',$row_id)->decrement($score_type,1);
+                return 'remove';
+            }
+            else{
+                DB::table('user_scored_status')
+                    ->insert([
+                        'user_id'=>$user_id,
+                        'row_id'=>$row_id,
+                        'score_type'=>$score_type,
+                        'type'=>$table_name
+                    ]);
+                DB::table($table_name)->where('id',$row_id)->increment($score_type,1);
+                return 'add';
+            }
+
+        }
+        else{
+            return 'error';
+        }
+    }
+    else{
+        return 'error';
+    }
+
+}
+
 
 
 

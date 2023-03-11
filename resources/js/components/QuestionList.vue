@@ -30,7 +30,7 @@
 
         </div>
 
-        <ul class="feq_list" v-for="(row,key) in QuestionList.data" v-bind:key="key">
+        <ul class="feq_list" v-for="(row,key) in list.data" v-bind:key="key">
             <li>
                 <div class="section">
                     <div class="feq_header">
@@ -99,10 +99,10 @@
                         <span>{{ getDate(answer.time) }}</span>
                         <div>
                             آیا این پاسخ برایتان مفید بود؟
-                            <span class="btn_like" v-on:click="like(key,answer.id)"
+                            <span class="btn_like" v-on:click="like(answer,answer.id,'questions')"
                                   v-bind:data-count="replaceNumber(answer.like)"><i
                                 class="mdi mdi-thumb-up-outline"></i></span>
-                            <span class="btn_like dislike" v-on:click="dislike(key,answer.id)"
+                            <span class="btn_like dislike" v-on:click="dislike(answer,answer.id,'questions')"
                                   v-bind:data-count="replaceNumber(answer.dislike)"><i
                                 class="mdi mdi-thumb-down-outline"
                                 style="padding-top: 6px;position: absolute;"></i></span>
@@ -130,7 +130,7 @@ export default {
             send_email:false,
             send:true,
             save_question:false,
-            QuestionList:{data:[]},
+            list:{data:[]},
             monthName: [
                 'فروردین',
                 'اردیبهشت',
@@ -193,7 +193,7 @@ export default {
         get_question:function (page=1) {
             const url=this.$siteUrl+"site/get_question/"+this.product_id+"?page="+page;
             this.axios.get(url).then(response=>{
-                this.QuestionList=response.data;
+                this.list=response.data;
             });
         },
         set_answer_id:function (id) {

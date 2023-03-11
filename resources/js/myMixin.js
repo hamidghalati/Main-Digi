@@ -393,20 +393,21 @@ export default {
             const r = this.replaceNumber(jalai[2]) + ' ' + this.monthName[(jalai[1] - 1)] + ' ' + this.replaceNumber(jalai[0]);
             return r;
         },
-        like: function (key, comment_id, redirect) {
+        like: function (element, row_id,table_name,redirect) {
             if (this.send) {
                 $("#loading").show();
                 this.send = false;
-                const url = this.$siteUrl + "user/likeComment";
+                const url = this.$siteUrl + "user/like";
                 const formData = new FormData();
-                formData.append('comment_id', comment_id);
+                formData.append('row_id', row_id);
+                formData.append('table_name', table_name);
                 this.axios.post(url, formData).then(response => {
                     this.send = true;
                     $("#loading").hide();
                     if (response.data == "add") {
-                        this.list.data[key].like = this.list.data[key].like + 1;
+                        element.like = element.like + 1;
                     } else if (response.data == "remove") {
-                        this.list.data[key].like = this.list.data[key].like - 1;
+                        element.like = element.like - 1;
                     }
                 }).catch(error => {
                     this.send = true;
@@ -423,20 +424,21 @@ export default {
                 });
             }
         },
-        dislike: function (key, comment_id,redirect) {
+        dislike: function (element, row_id,table_name, redirect) {
             if (this.send) {
                 $("#loading").show();
                 this.send = false;
-                const url = this.$siteUrl + "user/dislikeComment";
+                const url = this.$siteUrl + "user/dislike";
                 const formData = new FormData();
-                formData.append('comment_id', comment_id);
+                formData.append('row_id', row_id);
+                formData.append('table_name', table_name);
                 this.axios.post(url, formData).then(response => {
                     this.send = true;
                     $("#loading").hide();
                     if (response.data == "add") {
-                        this.list.data[key].dislike = this.list.data[key].dislike + 1;
+                        element.dislike = element.dislike + 1;
                     } else if (response.data == "remove") {
-                        this.list.data[key].dislike = this.list.data[key].dislike - 1;
+                        element.dislike = element.dislike - 1;
                     }
                 }).catch(error => {
                     this.send = true;

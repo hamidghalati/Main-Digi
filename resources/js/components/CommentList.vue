@@ -13,7 +13,7 @@
 
             <div class="col-md-6">
                 <ul class="rating_ul avg_ul">
-                    <li v-for="(item,key) in scoreItem">
+                    <li v-for="(item,key) in scoreItem" v-bind:key="key">
                         <label>{{ item }}</label>
                         <div class="rating" v-bind:data-rate-digital="getLabel2(key)">
                             <div class="rating-value" v-bind:style="{width:getWidth2(key)+'%'}"></div>
@@ -44,12 +44,12 @@
             </ul>
         </div>
 
-        <div class="comment_div" v-for="(comment,key) in list.data">
+        <div class="comment_div" v-for="(comment,key) in list.data" v-bind:key="key">
             <div class="row">
 
                 <div class="col-md-5">
                     <ul class="rating_ul">
-                        <li v-for="(item,key2) in scoreItem">
+                        <li v-for="(item,key2) in scoreItem" v-bind:key="key2">
                             <label for="">{{ item }}</label>
                             <div class="rating" v-bind:data-rate-digital="getLabel(key,key2)">
                                 <div class="rating-value" v-bind:style="{width: getWidth(key,key2)+'%'}"></div>
@@ -83,8 +83,8 @@
                     <div class="row">
                         <div class="col-md-6" v-if="comment.advantage.length>1">
                             <span class="evaluation_label">نقاط قوت</span>
-                            <ul class="evaluation_ul advantage">
-                                <li v-for="advantage in comment.advantage" v-if="advantage!=''">
+                            <ul class="evaluation_ul advantage"  >
+                                <li v-for="advantage in comment.advantage" v-if="advantage!=''" v-bind:key="advantage.id">
                                     <span>{{ advantage }}</span>
                                 </li>
                             </ul>
@@ -92,8 +92,8 @@
 
                         <div class="col-md-6" v-if="comment.advantage.length>1">
                             <span class="evaluation_label">نقاط ضعف</span>
-                            <ul class="evaluation_ul disadvantage">
-                                <li v-for="disadvantage in comment.disadvantage" v-if="disadvantage!=''">
+                            <ul class="evaluation_ul disadvantage" >
+                                <li v-for="disadvantage in comment.disadvantage" v-if="disadvantage!=''" v-bind:key="disadvantage.id">
                                     <span>{{ disadvantage }}</span>
                                 </li>
                             </ul>
@@ -106,10 +106,10 @@
                     <div class="footer">
                         <div>
                             آیا این نظر برایتان مفید بود ؟
-                            <span class="btn_like" v-on:click="like(key,comment.id)"
+                            <span class="btn_like" v-on:click="like(comment,comment.id,'comments')"
                                   v-bind:data-count="replaceNumber(comment.like)"><i
                                 class="mdi mdi-thumb-up-outline"></i></span>
-                            <span class="btn_like dislike" v-on:click="dislike(key,comment.id)"
+                            <span class="btn_like dislike" v-on:click="dislike(comment,comment.id,'comments')"
                                   v-bind:data-count="replaceNumber(comment.dislike)"><i
                                 class="mdi mdi-thumb-down-outline"
                                 style="padding-top: 6px;position: absolute;"></i></span>
