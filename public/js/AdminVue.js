@@ -1964,14 +1964,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var shetabit_laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! shetabit-laravel-vue-pagination */ "./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue");
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "IncredibleOffers",
-  components: {
-    'Pagination': shetabit_laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
+  components: {},
   data: function data() {
     return {
       WarrantyList: {
@@ -2250,7 +2246,7 @@ var render = function render() {
         return _vm.getWarrantyList(1);
       }
     }
-  }, [_vm._v("جستجو\n        ")])]), _vm._v(" "), _c("table", {
+  }, [_vm._v("جستجو\n            ")])]), _vm._v(" "), _c("table", {
     staticClass: "table table-bordered"
   }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.WarrantyList.data, function (item, key) {
     return _c("tr", [_c("th", {
@@ -2281,7 +2277,7 @@ var render = function render() {
       } : {
         color: "white"
       }]
-    }, [_vm._v("\n                " + _vm._s(item.get_color.name) + "\n            ")]) : _vm._e()]) : _vm._e()]), _vm._v(" "), _c("td", [_c("p", {
+    }, [_vm._v("\n                    " + _vm._s(item.get_color.name) + "\n                ")]) : _vm._e()]) : _vm._e()]), _vm._v(" "), _c("td", [_c("p", {
       staticClass: "select_item",
       on: {
         click: function click($event) {
@@ -2296,15 +2292,7 @@ var render = function render() {
         }
       }
     }, [_vm._v("حذف")]) : _vm._e()])]);
-  }), 0)]), _vm._v(" "), _c("pagination", {
-    attrs: {
-      align: "center",
-      data: _vm.WarrantyList
-    },
-    on: {
-      "pagination-change-page": _vm.getWarrantyList
-    }
-  }), _vm._v(" "), _vm.show_message_box ? _c("div", {
+  }), 0)]), _vm._v(" "), _vm.show_message_box ? _c("div", {
     staticClass: "message_div",
     staticStyle: {
       display: "block"
@@ -2342,7 +2330,7 @@ var render = function render() {
   }, [_c("ul", {
     staticClass: "list-inline"
   }, _vm._l(_vm.server_errors, function (error) {
-    return _c("li", [_vm._v("\n                                " + _vm._s(error[0]) + "\n                            ")]);
+    return _c("li", [_vm._v("\n                                    " + _vm._s(error[0]) + "\n                                ")]);
   }), 0)]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", {
@@ -2496,7 +2484,7 @@ var render = function render() {
     }
   }, [_vm._v("     ثبت اطلاعات     "), _c("i", {
     staticClass: "fa fa-check"
-  })])])])])])])], 1);
+  })])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -4707,125 +4695,6 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue":
-/*!***********************************************************************************!*\
-  !*** ./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue ***!
-  \***********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _LaravelVuePagination_vue_vue_type_template_id_e66f6314___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LaravelVuePagination.vue?vue&type=template&id=e66f6314& */ "./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue?vue&type=template&id=e66f6314&");
-/* harmony import */ var _LaravelVuePagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LaravelVuePagination.vue?vue&type=script&lang=js& */ "./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _LaravelVuePagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _LaravelVuePagination_vue_vue_type_template_id_e66f6314___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _LaravelVuePagination_vue_vue_type_template_id_e66f6314___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************!*\
-  !*** ./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _vue_loader_lib_index_js_vue_loader_options_LaravelVuePagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../vue-loader/lib??vue-loader-options!./LaravelVuePagination.vue?vue&type=script&lang=js& */ "./node_modules/vue-loader/lib/index.js?!./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_vue_loader_lib_index_js_vue_loader_options_LaravelVuePagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue?vue&type=template&id=e66f6314&":
-/*!******************************************************************************************************************!*\
-  !*** ./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue?vue&type=template&id=e66f6314& ***!
-  \******************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _vue_loader_lib_loaders_templateLoader_js_ref_6_vue_loader_lib_index_js_vue_loader_options_LaravelVuePagination_vue_vue_type_template_id_e66f6314___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../vue-loader/lib/loaders/templateLoader.js??ref--6!../../vue-loader/lib??vue-loader-options!./LaravelVuePagination.vue?vue&type=template&id=e66f6314& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue?vue&type=template&id=e66f6314&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _vue_loader_lib_loaders_templateLoader_js_ref_6_vue_loader_lib_index_js_vue_loader_options_LaravelVuePagination_vue_vue_type_template_id_e66f6314___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _vue_loader_lib_loaders_templateLoader_js_ref_6_vue_loader_lib_index_js_vue_loader_options_LaravelVuePagination_vue_vue_type_template_id_e66f6314___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./node_modules/shetabit-laravel-vue-pagination/src/RenderlessLaravelVuePagination.vue":
-/*!*********************************************************************************************!*\
-  !*** ./node_modules/shetabit-laravel-vue-pagination/src/RenderlessLaravelVuePagination.vue ***!
-  \*********************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _RenderlessLaravelVuePagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RenderlessLaravelVuePagination.vue?vue&type=script&lang=js& */ "./node_modules/shetabit-laravel-vue-pagination/src/RenderlessLaravelVuePagination.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-
-
-
-
-/* normalize component */
-
-var component = Object(_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  _RenderlessLaravelVuePagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"],
-  render,
-  staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "node_modules/shetabit-laravel-vue-pagination/src/RenderlessLaravelVuePagination.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./node_modules/shetabit-laravel-vue-pagination/src/RenderlessLaravelVuePagination.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************!*\
-  !*** ./node_modules/shetabit-laravel-vue-pagination/src/RenderlessLaravelVuePagination.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _vue_loader_lib_index_js_vue_loader_options_RenderlessLaravelVuePagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../vue-loader/lib??vue-loader-options!./RenderlessLaravelVuePagination.vue?vue&type=script&lang=js& */ "./node_modules/vue-loader/lib/index.js?!./node_modules/shetabit-laravel-vue-pagination/src/RenderlessLaravelVuePagination.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_vue_loader_lib_index_js_vue_loader_options_RenderlessLaravelVuePagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IncredibleOffers.vue?vue&type=style&index=0&id=1ac9bd27&scoped=true&lang=css&":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/IncredibleOffers.vue?vue&type=style&index=0&id=1ac9bd27&scoped=true&lang=css& ***!
@@ -5463,489 +5332,6 @@ function _typeof(e){return _typeof="function"==typeof Symbol&&"symbol"==typeof S
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(e,t){ true?module.exports=t(__webpack_require__(/*! cleave.js */ "./node_modules/cleave.js/dist/cleave-esm.js")):undefined}("undefined"!=typeof self?self:this,function(e){return function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}return n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=1)}([function(t,n){t.exports=e},function(e,t,n){"use strict";n.r(t);var r=n(0),o=n.n(r);function u(){return(u=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e}).apply(this,arguments)}var a={name:"cleave",render:function(e){return e("input",{attrs:{type:"text",value:this.value},on:{blur:this.onBlur}})},props:{value:{default:null,required:!0,validator:function(e){return null===e||"string"==typeof e||e instanceof String||"number"==typeof e}},options:{type:Object,default:function(){return{}}},raw:{type:Boolean,default:!0}},data:function(){return{cleave:null,onValueChangedFn:null}},mounted:function(){this.cleave||(this.cleave=new o.a(this.$el,this.getOptions(this.options)))},methods:{getOptions:function(e){return this.onValueChangedFn=e.onValueChanged,u({},e,{onValueChanged:this.onValueChanged})},onValueChanged:function(e){var t=this.raw?e.target.rawValue:e.target.value;this.$emit("input",t),"function"==typeof this.onValueChangedFn&&this.onValueChangedFn.call(this,e)},onBlur:function(e){this.$emit("blur",this.value)}},watch:{options:{deep:!0,handler:function(e){this.cleave.destroy(),this.cleave=new o.a(this.$el,this.getOptions(e)),this.cleave.setRawValue(this.value)}},value:function(e){this.cleave&&(this.raw&&e===this.cleave.getRawValue()||(this.raw||e!==this.$el.value)&&this.cleave.setRawValue(e))}},beforeDestroy:function(){this.cleave&&(this.cleave.destroy(),this.cleave=null,this.onValueChangedFn=null)}};n.d(t,"plugin",function(){return i}),n.d(t,"component",function(){return a});var i=function(e,t){var n="cleave";"string"==typeof t&&(n=t),e.component(n,a)};a.install=i;t.default=a}]).default});
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/index.js?!./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib??vue-loader-options!./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _RenderlessLaravelVuePagination_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RenderlessLaravelVuePagination.vue */ "./node_modules/shetabit-laravel-vue-pagination/src/RenderlessLaravelVuePagination.vue");
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        data: {
-            type: Object,
-            default: () => {}
-        },
-        limit: {
-            type: Number,
-            default: 0
-        },
-        showDisabled: {
-            type: Boolean,
-            default: false
-        },
-        size: {
-            type: String,
-            default: 'default',
-            validator: value => {
-                return ['small', 'default', 'large'].indexOf(value) !== -1;
-            }
-        },
-        align: {
-            type: String,
-            default: 'left',
-            validator: value => {
-                return ['left', 'center', 'right'].indexOf(value) !== -1;
-            }
-        },
-        router: {
-            type: Boolean,
-            default: false
-        }
-    },
-
-    methods: {
-        onPaginationChangePage (page) {
-            this.$emit('pagination-change-page', page);
-        }
-    },
-
-    components: {
-        RenderlessLaravelVuePagination: _RenderlessLaravelVuePagination_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-    }
-});
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/index.js?!./node_modules/shetabit-laravel-vue-pagination/src/RenderlessLaravelVuePagination.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib??vue-loader-options!./node_modules/shetabit-laravel-vue-pagination/src/RenderlessLaravelVuePagination.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        data: {
-            type: Object,
-            default: () => {
-            }
-        },
-        limit: {
-            type: Number,
-            default: 0
-        },
-        showDisabled: {
-            type: Boolean,
-            default: false
-        },
-        size: {
-            type: String,
-            default: 'default',
-            validator: value => {
-                return ['small', 'default', 'large'].indexOf(value) !== -1;
-            }
-        },
-        align: {
-            type: String,
-            default: 'left',
-            validator: value => {
-                return ['left', 'center', 'right'].indexOf(value) !== -1;
-            }
-        },
-        router: {
-            type: Boolean,
-            default: false
-        }
-    },
-
-    computed: {
-        isApiResource () {
-            return !!this.data.meta;
-        },
-        currentPage () {
-            return this.isApiResource ? this.data.meta.current_page : this.data.current_page;
-        },
-        firstPageUrl () {
-            return this.isApiResource ? this.data.links.first : null;
-        },
-        from () {
-            return this.isApiResource ? this.data.meta.from : this.data.from;
-        },
-        lastPage () {
-            return this.isApiResource ? this.data.meta.last_page : this.data.last_page;
-        },
-        lastPageUrl () {
-            return this.isApiResource ? this.data.links.last : null;
-        },
-        nextPageUrl () {
-            return this.isApiResource ? this.data.links.next : this.data.next_page_url;
-        },
-        perPage () {
-            return this.isApiResource ? this.data.meta.per_page : this.data.per_page;
-        },
-        prevPageUrl () {
-            return this.isApiResource ? this.data.links.prev : this.data.prev_page_url;
-        },
-        to () {
-            return this.isApiResource ? this.data.meta.to : this.data.to;
-        },
-        total () {
-            return this.isApiResource ? this.data.meta.total : this.data.total;
-        },
-        pageRange () {
-            if (this.limit === -1) {
-                return 0;
-            }
-
-            if (this.limit === 0) {
-                return this.lastPage;
-            }
-
-            let current = this.currentPage;
-            let last = this.lastPage;
-            let delta = this.limit;
-            let left = current - delta;
-            let right = current + delta + 1;
-            let range = [];
-            let pages = [];
-            let l;
-
-            for (let i = 1; i <= last; i++) {
-                if (i === 1 || i === last || (i >= left && i < right)) {
-                    range.push(i);
-                }
-            }
-
-            range.forEach(function (i) {
-                if (l) {
-                    if (i - l === 2) {
-                        pages.push(l + 1);
-                    } else if (i - l !== 1) {
-                        pages.push('...');
-                    }
-                }
-                pages.push(i);
-                l = i;
-            });
-
-            return pages;
-        }
-    },
-
-    methods: {
-        previousPage () {
-            this.selectPage((this.currentPage - 1));
-        },
-        nextPage () {
-            this.selectPage((this.currentPage + 1));
-        },
-        selectPage (page) {
-            if (page === '...') {
-                return;
-            }
-            if (this.router) {
-                this.$router.push(this.makePath(this.$route.path, { ...this.$route.query, page: page }))
-            }
-
-            this.$emit('pagination-change-page', page);
-        },
-        makePath (path, queries) {
-            if (isNaN(queries.page)) {
-                return '#'
-            }
-            let qS = '?';
-            for (let [index, value] of Object.entries(queries)) {
-                qS += index + '=' + value + '&';
-            }
-            qS = qS.slice(0, qS.length - 1)
-            return path + qS;
-        }
-    },
-
-    render () {
-        return this.$scopedSlots.default({
-            data: this.data,
-            limit: this.limit,
-            showDisabled: this.showDisabled,
-            size: this.size,
-            align: this.align,
-            computed: {
-                isApiResource: this.isApiResource,
-                currentPage: this.currentPage,
-                firstPageUrl: this.firstPageUrl,
-                from: this.from,
-                lastPage: this.lastPage,
-                lastPageUrl: this.lastPageUrl,
-                nextPageUrl: this.nextPageUrl,
-                perPage: this.perPage,
-                prevPageUrl: this.prevPageUrl,
-                to: this.to,
-                total: this.total,
-                pageRange: this.pageRange
-            },
-            prevButtonEvents: {
-                click: (e) => {
-                    e.preventDefault();
-                    this.previousPage();
-                }
-            },
-            nextButtonEvents: {
-                click: (e) => {
-                    e.preventDefault();
-                    this.nextPage();
-                }
-            },
-            pageButtonEvents: page => ({
-                click: (e) => {
-                    e.preventDefault();
-                    this.selectPage(page);
-                }
-            }),
-            makePath: this.makePath
-        });
-    }
-});
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue?vue&type=template&id=e66f6314&":
-/*!************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue?vue&type=template&id=e66f6314& ***!
-  \************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function render() {
-  var _vm = this,
-    _c = _vm._self._c
-  return _c("renderless-laravel-vue-pagination", {
-    attrs: {
-      data: _vm.data,
-      limit: _vm.limit,
-      "show-disabled": _vm.showDisabled,
-      size: _vm.size,
-      align: _vm.align,
-      router: _vm.router,
-    },
-    on: { "pagination-change-page": _vm.onPaginationChangePage },
-    scopedSlots: _vm._u(
-      [
-        {
-          key: "default",
-          fn: function ({
-            data,
-            limit,
-            showDisabled,
-            size,
-            align,
-            computed,
-            prevButtonEvents,
-            nextButtonEvents,
-            pageButtonEvents,
-            makePath,
-          }) {
-            return computed.total > computed.perPage
-              ? _c(
-                  "ul",
-                  {
-                    staticClass: "pagination",
-                    class: {
-                      "pagination-sm": size == "small",
-                      "pagination-lg": size == "large",
-                      "justify-content-center": align == "center",
-                      "justify-content-end": align == "right",
-                    },
-                  },
-                  [
-                    computed.prevPageUrl || showDisabled
-                      ? _c(
-                          "li",
-                          {
-                            staticClass: "page-item pagination-prev-nav",
-                            class: { disabled: !computed.prevPageUrl },
-                          },
-                          [
-                            _c(
-                              "a",
-                              _vm._g(
-                                {
-                                  staticClass: "page-link",
-                                  attrs: {
-                                    href: _vm.$route
-                                      ? makePath(_vm.$route.path, {
-                                          ..._vm.$route.query,
-                                          page: computed.currentPage - 1,
-                                        })
-                                      : "#",
-                                    "aria-label": "Previous",
-                                    tabindex: !computed.prevPageUrl && -1,
-                                  },
-                                },
-                                prevButtonEvents
-                              ),
-                              [
-                                _vm._t("prev-nav", function () {
-                                  return [
-                                    _c(
-                                      "span",
-                                      { attrs: { "aria-hidden": "true" } },
-                                      [_vm._v("«")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "sr-only" }, [
-                                      _vm._v("Previous"),
-                                    ]),
-                                  ]
-                                }),
-                              ],
-                              2
-                            ),
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm._l(computed.pageRange, function (page, key) {
-                      return _c(
-                        "li",
-                        {
-                          key: key,
-                          staticClass: "page-item pagination-page-nav",
-                          class: { active: page == computed.currentPage },
-                        },
-                        [
-                          _vm._t(
-                            "page",
-                            function () {
-                              return [
-                                _c(
-                                  "a",
-                                  _vm._g(
-                                    {
-                                      staticClass: "page-link",
-                                      attrs: {
-                                        href: _vm.$route
-                                          ? makePath(_vm.$route.path, {
-                                              ..._vm.$route.query,
-                                              page,
-                                            })
-                                          : "#",
-                                      },
-                                    },
-                                    pageButtonEvents(page)
-                                  ),
-                                  [
-                                    _vm._v(
-                                      "\n                    " +
-                                        _vm._s(page) +
-                                        "\n                    "
-                                    ),
-                                    page == computed.currentPage
-                                      ? _c("span", { staticClass: "sr-only" }, [
-                                          _vm._v("(current)"),
-                                        ])
-                                      : _vm._e(),
-                                  ]
-                                ),
-                              ]
-                            },
-                            {
-                              page: page,
-                              isCurrentPage: page == computed.currentPage,
-                              href: _vm.$route
-                                ? makePath(_vm.$route.path, {
-                                    ..._vm.$route.query,
-                                    page,
-                                  })
-                                : "#",
-                              pageButtonEvents: pageButtonEvents,
-                            }
-                          ),
-                        ],
-                        2
-                      )
-                    }),
-                    _vm._v(" "),
-                    computed.nextPageUrl || showDisabled
-                      ? _c(
-                          "li",
-                          {
-                            staticClass: "page-item pagination-next-nav",
-                            class: { disabled: !computed.nextPageUrl },
-                          },
-                          [
-                            _c(
-                              "a",
-                              _vm._g(
-                                {
-                                  staticClass: "page-link",
-                                  attrs: {
-                                    href: _vm.$route
-                                      ? makePath(_vm.$route.path, {
-                                          ..._vm.$route.query,
-                                          page: computed.currentPage + 1,
-                                        })
-                                      : "#",
-                                    "aria-label": "Next",
-                                    tabindex: !computed.nextPageUrl && -1,
-                                  },
-                                },
-                                nextButtonEvents
-                              ),
-                              [
-                                _vm._t("next-nav", function () {
-                                  return [
-                                    _c(
-                                      "span",
-                                      { attrs: { "aria-hidden": "true" } },
-                                      [_vm._v("»")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "sr-only" }, [
-                                      _vm._v("Next"),
-                                    ]),
-                                  ]
-                                }),
-                              ],
-                              2
-                            ),
-                          ]
-                        )
-                      : _vm._e(),
-                  ],
-                  2
-                )
-              : _vm._e()
-          },
-        },
-      ],
-      null,
-      true
-    ),
-  })
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
 
 /***/ }),
 
@@ -17988,7 +17374,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // import Paginate from 'vuejs-paginate'
 // Vue.component('paginate', Paginate)
 
-Vue.component('pagination', __webpack_require__(/*! shetabit-laravel-vue-pagination */ "./node_modules/shetabit-laravel-vue-pagination/src/LaravelVuePagination.vue"));
+// Vue.component('pagination', require('shetabit-laravel-vue-pagination'));
+
 Vue.component('Cleave', __webpack_require__(/*! vue-cleave-component */ "./node_modules/vue-cleave-component/dist/vue-cleave.min.js"));
 Vue.config.productionTip = false;
 

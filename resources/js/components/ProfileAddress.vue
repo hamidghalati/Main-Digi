@@ -35,7 +35,7 @@
 
 
 
-        <pagination align="center" :data="AddressLists" @pagination-change-page="getAddress"></pagination>
+<!--        <pagination align="center" :data="AddressLists" @pagination-change-page="getAddress"></pagination>-->
 
 
 
@@ -59,7 +59,6 @@
 <script>
 import myMixin from "../myMixin";
 import AddressForm from "./AddressForm";
-import LaravelVuePagination from 'shetabit-laravel-vue-pagination';
 import MobileAddressForm from "./MobileAddressForm";
 
 
@@ -69,7 +68,6 @@ export default {
     components: {
         AddressForm,
         MobileAddressForm,
-        'Pagination': LaravelVuePagination
     },
 
     data(){

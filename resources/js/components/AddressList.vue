@@ -180,9 +180,6 @@ export default {
             let old_array=this.AddressLists;
             const first=old_array[0];
             const select=old_array[key];
-
-            // old_array[0]=select;
-            // old_array[key]=first;
             this.city_id=select.city_id;
             this.$set(this.AddressLists,0,select);
             this.$set(this.AddressLists,key,first);

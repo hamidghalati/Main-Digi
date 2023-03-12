@@ -44,7 +44,7 @@
 
             </tbody>
         </table>
-                <pagination align="center" :data="WarrantyList" @pagination-change-page="getWarrantyList"></pagination>
+<!--                <pagination align="center" :data="WarrantyList" @pagination-change-page="getWarrantyList"></pagination>-->
 
         <div class="message_div" style="display: block" v-if="show_message_box">
             <div class="message_box" >
@@ -130,11 +130,11 @@
 
 <script>
 import axios from 'axios';
-import LaravelVuePagination from 'shetabit-laravel-vue-pagination';
+
 export default {
     name: "IncredibleOffers",
     components: {
-        'Pagination': LaravelVuePagination
+
     },
     data(){
         return{

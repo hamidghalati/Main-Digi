@@ -10,15 +10,16 @@
             <span>پرسش خود را در مورد محصول مطرح نمایید</span>
         </div>
 
-        <div>
-            <textarea v-model="Question"></textarea>
+        <div v-on:click="checkAuth()">
+            <textarea v-model="Question" v-if="auth=='ok'"></textarea>
+            <div v-else class="disabled_textarea_div"></div>
 
             <div class="question_bottom_div">
                 <div>
                     <button v-on:click="add_question()" class="btn btn-secondary">ثبت پرسش</button>
                 </div>
 
-                <div CLASS="agreement">
+                <div class="agreement">
                     <span v-on:click="send_email=!send_email" :class="[send_email ? 'check_box active' : 'check_box']"></span>
                     <label for="">
                         اولین پاسخی که به پرسش من داده شد، از طریق ایمیل به من اطلاع دهید.
@@ -30,13 +31,23 @@
 
         </div>
 
+
+        <div class="feq_filter">
+            <p> پرسش ها و پاسخ ها</p>
+            <ul class="feq_filter_item" data-title="مرتب سازی بر اساس :">
+                <li :class="[ordering=='new' ? 'active' : '']" v-on:click="set_ordering('new')">جدیدترین پرسش</li>
+                <li :class="[ordering=='answer_count' ? 'active' : '']" v-on:click="set_ordering('answer_count')">بیشترین پاسخ به پرسش</li>
+                <li :class="[ordering=='user' ? 'active' : '']" v-on:click="set_ordering('user')">پرسش های شما</li>
+            </ul>
+        </div>
+
         <ul class="feq_list" v-for="(row,key) in list.data" v-bind:key="key">
             <li>
                 <div class="section">
                     <div class="feq_header">
                         <p>
                             پرسش
-                            <span v-if="row.get_user.name==''">ناشناس</span>
+                            <span v-if="row.get_user.name==null">ناشناس</span>
                             <span v-else>{{ row.get_user.name}}</span>
                         </p>
                     </div>
@@ -89,7 +100,7 @@
                     <div class="feq_header">
                         <p>
                             پاسخ
-                            <span v-if="answer.get_user.name==''">ناشناس</span>
+                            <span v-if="answer.get_user.name==null">ناشناس</span>
                             <span v-else>{{ answer.get_user.name}}</span>
                         </p>
                     </div>
@@ -114,11 +125,22 @@
 
         </ul>
 
+
+        <div class="col-12">
+            <div class="row">
+                <div class="paginate_div">
+<!--                    <pagination :data="list" @pagination-change-page="get_question"></pagination>-->
+<!--                    <vpagination :response="data" @paginate="get_question"></vpagination>-->
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
 <script>
 import myMixin from "../myMixin";
+
 
 export default {
     name: "QuestionList",
@@ -146,10 +168,19 @@ export default {
                 'اسفند'
             ],
             answer_id:0,
-            save_answer:false
+            save_answer:false,
+            ordering:'new'
         }
     },
     mounted() {
+        const app=this;
+        $(document).on('click','#questions',function () {
+            if (app.list.data.length==0)
+            {
+                app.get_question();
+            }
+
+        });
         this.get_question();
     },
     methods:{
@@ -191,13 +222,34 @@ export default {
             }
         },
         get_question:function (page=1) {
-            const url=this.$siteUrl+"site/get_question/"+this.product_id+"?page="+page;
+            $("#loading").show();
+            const url=this.$siteUrl+"site/get_question/"+this.product_id+"?page="+page+"&ordering="+this.ordering;
             this.axios.get(url).then(response=>{
                 this.list=response.data;
+                $("#loading").hide();
+            }).catch(error=>{
+                $("#loading").hide();
             });
         },
         set_answer_id:function (id) {
-            this.answer_id=id;
+            if (this.auth=='no')
+            {
+                $("#login_box").modal('show');
+            }
+            else {
+                this.answer_id=id;
+            }
+        },
+        checkAuth:function () {
+            if (this.auth=='no')
+            {
+                $("#login_box").modal('show');
+            }
+        },
+        set_ordering:function (type) {
+            this.ordering=type;
+            this.answer_id=0;
+            this.get_question(1);
         }
     }
 }

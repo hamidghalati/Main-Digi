@@ -118,7 +118,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  data-toggle="tab" href="#question" role="tab"  aria-selected="false">
+                    <a class="nav-link"  data-toggle="tab" href="#question" id="questions" role="tab"  aria-selected="false">
                         <span class="fa fa-question-circle"></span>
                         <span>پرسش و پاسخ</span>
                     </a>

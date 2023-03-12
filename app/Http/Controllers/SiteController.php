@@ -321,9 +321,26 @@ class SiteController extends Controller
         return Cart::getCartData();
     }
 
-    public function get_question($product_id){
+    public function get_question($product_id,Request $request){
+        $ordering=$request->get('ordering','new');
         $Question=Question::with(['getUser','getAnswer.getUser'])->where(['questions_id'=>0,'product_id'=>$product_id,'status'=>1]);
-        $Question=$Question->paginate(10);
+        if ($ordering=='new')
+        {
+            $Question=$Question->orderBy('id','DESC');
+        }
+        else if ($ordering=='answer_count')
+        {
+            $Question=$Question->orderBy('answer_count','DESC');
+        }
+        else if ($ordering=='user' && Auth::check())
+        {
+            $user_id=$request->user()->id;
+            $Question=$Question->orderByRaw(DB::raw("FIELD(user_id,".$user_id.") DESC"));
+        }
+        else{
+            $Question=$Question->orderBy('id','DESC');
+        }
+        $Question=$Question->paginate(1);
         return $Question;
     }
 
@@ -342,10 +359,3 @@ class SiteController extends Controller
 
 
 
-//$brand=BrandsModel::where('brand_ename',$brand_name)->firstOrFail();
-//$searchProduct = new SearchProduct($request);
-//$searchProduct->brands = $brand->id;
-//$searchProduct->set_brand_category($request->get('category'));
-//$result = $searchProduct->getProduct();
-//
-//return $result;

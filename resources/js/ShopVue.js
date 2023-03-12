@@ -4,7 +4,9 @@ window.Vue = require('vue');
 // import Paginate from 'vuejs-paginate'
 // Vue.component('paginate', Paginate)
 
-Vue.component('pagination', require('shetabit-laravel-vue-pagination'));
+// require vpaginator
+Vue.component('vpaginator', require('vue-vpaginator'))
+
 
 import axios from 'axios';
 import VueAxios from "vue-axios";
