@@ -39,6 +39,9 @@ Route::prefix('admin')->group(function () {
     //Brand
     create_crud_route('brands', 'BrandController');
 
+    //UserRole
+    create_crud_route('userRole', 'UserRoleController');
+
     //Color
     create_crud_route('colors', 'ColorController');
 

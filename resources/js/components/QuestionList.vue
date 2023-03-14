@@ -110,6 +110,8 @@
                         <span>{{ getDate(answer.time) }}</span>
                         <div>
                             آیا این پاسخ برایتان مفید بود؟
+
+
                             <span class="btn_like" v-on:click="like(answer,answer.id,'questions')"
                                   v-bind:data-count="replaceNumber(answer.like)"><i
                                 class="mdi mdi-thumb-up-outline"></i></span>
@@ -129,8 +131,7 @@
         <div class="col-12">
             <div class="row">
                 <div class="paginate_div">
-<!--                    <pagination :data="list" @pagination-change-page="get_question"></pagination>-->
-<!--                    <vpagination :response="data" @paginate="get_question"></vpagination>-->
+                    <pagination :data="list" v-bind:showDisabled="true" icon="chevron" v-on:change-page="get_question"></pagination>
                 </div>
             </div>
         </div>

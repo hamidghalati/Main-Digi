@@ -4303,6 +4303,48 @@ padding-right: 300px;
     border: 1px solid #dfdfdf;
     background-color: #dfdfdf;
 }
+.pagination .item.active{
+    color: white!important;
+    background: #35ccde!important;
+    padding: 10px!important;
+}
+.pagination .item{
+    padding: 10px!important;
+    cursor: pointer;
+    border: 1px solid #beb9b9;
+}
+.pagination .item .icon.right::before{
+    content: "\f104"!important;
+    display: inline-block!important;
+    font-family: FontAwesome!important;
+}
+.pagination .item .icon.left::before{
+    content: "\f105"!important;
+    display: inline-block!important;
+    font-family: FontAwesome!important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -124,7 +124,9 @@
         <div class="col-12">
             <div class="row">
                 <div class="paginate_div">
-                    <pagination :data="list" @pagination-change-page="getList"></pagination>
+<!--                    <pagination :data="list" @pagination-change-page="getList"></pagination>-->
+                    <pagination :data="list" v-bind:showDisabled="true" icon="chevron" v-on:change-page="getList"></pagination>
+
                 </div>
             </div>
         </div>

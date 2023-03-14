@@ -32,17 +32,11 @@ class ApiController extends Controller
     public function like(Request $request)
     {
         return addLike($request,'like');
-//        $comment_id = $request->get('comment_id');
-//        $result = Comment::addUserScore($comment_id, "like");
-//        return $result;
     }
 
     public function dislike(Request $request)
     {
         return addLike($request,'dislike');
-//        $comment_id = $request->get('comment_id');
-//        $result = Comment::addUserScore($comment_id, "dislike");
-//        return $result;
     }
 
     public function getProductChartData($product_id)

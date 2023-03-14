@@ -340,7 +340,7 @@ class SiteController extends Controller
         else{
             $Question=$Question->orderBy('id','DESC');
         }
-        $Question=$Question->paginate(1);
+        $Question=$Question->paginate(10);
         return $Question;
     }
 

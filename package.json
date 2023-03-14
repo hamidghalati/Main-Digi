@@ -41,6 +41,7 @@
         "icheck-bootstrap": "^3.0.1",
         "jalali-date": "^1.1.4",
         "jquery-ui": "^1.13.1",
+        "laravel-vue-semantic-ui-pagination": "^1.0.3",
         "mdi-icons": "^1.0.1",
         "owl.carousel": "^2.3.4",
         "persian-datepicker": "^1.2.0",

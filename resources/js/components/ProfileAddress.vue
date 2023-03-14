@@ -36,7 +36,13 @@
 
 
 <!--        <pagination align="center" :data="AddressLists" @pagination-change-page="getAddress"></pagination>-->
-
+        <div class="col-12">
+            <div class="row">
+                <div class="paginate_div">
+                    <pagination :data="AddressLists" v-bind:showDisabled="true" icon="chevron" v-on:change-page="getAddress"></pagination>
+                </div>
+            </div>
+        </div>
 
 
 

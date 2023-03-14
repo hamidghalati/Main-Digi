@@ -1,11 +1,10 @@
 window.Vue = require('vue');
 
-// Vue.component('pagination', require('vuejs-paginate'));
+// Vue.component('pagination', require('laravel-vue-pagination'));
 // import Paginate from 'vuejs-paginate'
 // Vue.component('paginate', Paginate)
 
-// require vpaginator
-Vue.component('vpaginator', require('vue-vpaginator'))
+Vue.component('pagination', require('laravel-vue-semantic-ui-pagination'));
 
 
 import axios from 'axios';
@@ -30,6 +29,7 @@ import MobileProductBox from "./components/MobileProductBox";
 import MobileThemeCommentList from "./components/MobileThemeCommentList";
 import ProfileAddress from "./components/ProfileAddress";
 import QuestionList from "./components/QuestionList";
+
 
 
 
@@ -60,7 +60,9 @@ const app = new Vue({
         MobileProductBox,
         MobileThemeCommentList,
         ProfileAddress,
-        QuestionList
+        QuestionList,
+
+
 
     }
 });

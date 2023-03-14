@@ -5206,7 +5206,7 @@ var render = function render() {
     staticStyle: {
       "padding-bottom": "30px"
     }
-  }, [_c("h2", [_vm._v("\n            " + _vm._s(_vm.product_title) + "\n            "), _c("span", [_vm._v("|")]), _vm._v(" "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(5)) + "/" + _vm._s(_vm.replaceNumber(_vm.avg)))]), _vm._v(" "), _c("span", [_vm._v("(" + _vm._s(_vm.replaceNumber(_vm.comment_count)) + " نظر )")])])]) : _vm._e(), _vm._v(" "), _c("div", {
+  }, [_c("h2", [_vm._v("\n                " + _vm._s(_vm.product_title) + "\n                "), _c("span", [_vm._v("|")]), _vm._v(" "), _c("span", [_vm._v(_vm._s(_vm.replaceNumber(5)) + "/" + _vm._s(_vm.replaceNumber(_vm.avg)))]), _vm._v(" "), _c("span", [_vm._v("(" + _vm._s(_vm.replaceNumber(_vm.comment_count)) + " نظر )")])])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-md-6"
@@ -5230,7 +5230,7 @@ var render = function render() {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "comment_summary_note"
-  }, [_c("span", [_vm._v("شما هم می توانید نظر خود را در این بخش بیان نمایید.")]), _vm._v(" "), _c("p", [_vm._v("\n                    برای ثبت نظر، لازم است ابتدا وارد حساب کاربری خود شوید.اگر این محصول را قبلاً از فروشگاه ما\n                    خریداری کرده اید، نظر شما به عنوان مالک محصول ثبت خواهد شد\n                ")]), _vm._v(" "), _c("a", {
+  }, [_c("span", [_vm._v("شما هم می توانید نظر خود را در این بخش بیان نمایید.")]), _vm._v(" "), _c("p", [_vm._v("\n                        برای ثبت نظر، لازم است ابتدا وارد حساب کاربری خود شوید.اگر این محصول را قبلاً از فروشگاه ما\n                        خریداری کرده اید، نظر شما به عنوان مالک محصول ثبت خواهد شد\n                    ")]), _vm._v(" "), _c("a", {
     staticClass: "btn btn-primary",
     on: {
       click: _vm.add_comment
@@ -5297,7 +5297,7 @@ var render = function render() {
       staticClass: "col-md-7"
     }, [_c("div", {
       staticClass: "comment_header_box"
-    }, [_c("span", [_vm._v(_vm._s(comment.title))]), _vm._v(" "), _c("p", [_c("span", [_vm._v("توسط")]), _vm._v(" "), comment.get_user_info == null ? _c("span", [_vm._v("ناشناس")]) : _c("span", [_vm._v(_vm._s(comment.get_user_info.first_name + " " + comment.get_user_info.last_name))]), _vm._v(" "), _c("span", [_vm._v("در تاریخ")]), _vm._v("\n                        " + _vm._s(_vm.getDate(comment.time)) + "\n                    ")])]), _vm._v(" "), _c("div", {
+    }, [_c("span", [_vm._v(_vm._s(comment.title))]), _vm._v(" "), _c("p", [_c("span", [_vm._v("توسط")]), _vm._v(" "), comment.get_user_info == null ? _c("span", [_vm._v("ناشناس")]) : _c("span", [_vm._v(_vm._s(comment.get_user_info.first_name + " " + comment.get_user_info.last_name))]), _vm._v(" "), _c("span", [_vm._v("در تاریخ")]), _vm._v("\n                            " + _vm._s(_vm.getDate(comment.time)) + "\n                        ")])]), _vm._v(" "), _c("div", {
       staticClass: "row"
     }, [comment.advantage.length > 1 ? _c("div", {
       staticClass: "col-md-6"
@@ -5323,7 +5323,7 @@ var render = function render() {
       staticClass: "comment_text"
     }, [_vm._v(_vm._s(comment.content))]), _vm._v(" "), _c("div", {
       staticClass: "footer"
-    }, [_c("div", [_vm._v("\n                        آیا این نظر برایتان مفید بود ؟\n                        "), _c("span", {
+    }, [_c("div", [_vm._v("\n                            آیا این نظر برایتان مفید بود ؟\n                            "), _c("span", {
       staticClass: "btn_like",
       attrs: {
         "data-count": _vm.replaceNumber(comment.like)
@@ -5360,10 +5360,12 @@ var render = function render() {
     staticClass: "paginate_div"
   }, [_c("pagination", {
     attrs: {
-      data: _vm.list
+      data: _vm.list,
+      showDisabled: true,
+      icon: "chevron"
     },
     on: {
-      "pagination-change-page": _vm.getList
+      "change-page": _vm.getList
     }
   })], 1)])]), _vm._v(" "), _vm.comment_count == 0 && _vm.getServerData == "ok" ? _c("div", [_c("p", {
     staticStyle: {
@@ -5372,14 +5374,14 @@ var render = function render() {
       "padding-bottom": "20px",
       color: "red"
     }
-  }, [_vm._v("تاکنون برای این محصول نظری\n            ثبت نشده است")])]) : _vm._e()], 2);
+  }, [_vm._v("تاکنون برای این محصول نظری\n                ثبت نشده است")])]) : _vm._e()], 2);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("a", [_c("span", {
     staticClass: "fa fa-shopping-cart"
-  }), _vm._v("\n                        خریدار محصول\n                    ")]);
+  }), _vm._v("\n                            خریدار محصول\n                        ")]);
 }];
 render._withStripped = true;
 
@@ -7703,7 +7705,22 @@ var render = function render() {
         }
       }
     }, [_vm._v(" حذف")])])])])]);
-  }), _vm._v(" "), _vm.layout != "mobile" ? _c("address-form", {
+  }), _vm._v(" "), _c("div", {
+    staticClass: "col-12"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "paginate_div"
+  }, [_c("pagination", {
+    attrs: {
+      data: _vm.AddressLists,
+      showDisabled: true,
+      icon: "chevron"
+    },
+    on: {
+      "change-page": _vm.getAddress
+    }
+  })], 1)])]), _vm._v(" "), _vm.layout != "mobile" ? _c("address-form", {
     ref: "data",
     attrs: {
       paginate: "ok"
@@ -7767,7 +7784,7 @@ var render = function render() {
     staticClass: "question_box"
   }, [_vm.save_question ? _c("div", {
     staticClass: "alert alert-success"
-  }, [_vm._v("\n            پرسش شما با موفقیت ثبت شد و بعد از تایید نمایش داده خواهد شد\n        ")]) : _vm._e(), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n        پرسش شما با موفقیت ثبت شد و بعد از تایید نمایش داده خواهد شد\n    ")]) : _vm._e(), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
     on: {
       click: function click($event) {
         return _vm.checkAuth();
@@ -7845,7 +7862,7 @@ var render = function render() {
       staticClass: "section"
     }, [_c("div", {
       staticClass: "feq_header"
-    }, [_c("p", [_vm._v("\n                            پرسش\n                            "), row.get_user.name == null ? _c("span", [_vm._v("ناشناس")]) : _c("span", [_vm._v(_vm._s(row.get_user.name))])])]), _vm._v(" "), _c("p", {
+    }, [_c("p", [_vm._v("\n                        پرسش\n                        "), row.get_user.name == null ? _c("span", [_vm._v("ناشناس")]) : _c("span", [_vm._v(_vm._s(row.get_user.name))])])]), _vm._v(" "), _c("p", {
       domProps: {
         innerHTML: _vm._s(row.questions)
       }
@@ -7858,7 +7875,7 @@ var render = function render() {
           return _vm.set_answer_id(row.id);
         }
       }
-    }, [_vm._v("\n                            به این پرسش پاسخ دهید\n                        ")])])])]), _vm._v(" "), _vm.answer_id == row.id ? _c("li", {
+    }, [_vm._v("\n                        به این پرسش پاسخ دهید\n                    ")])])])]), _vm._v(" "), _vm.answer_id == row.id ? _c("li", {
       staticClass: "answerFormItem"
     }, [_c("div", {
       staticClass: "section"
@@ -7866,7 +7883,7 @@ var render = function render() {
       staticClass: "row"
     }, [_c("h5", [_vm._v("به این سوال پاسخ دهید")]), _vm._v(" "), _vm.save_answer ? _c("div", {
       staticClass: "alert alert-success"
-    }, [_vm._v("\n                            پاسخ شما با موفقیت ثبت شد و بعد از تایید نمایش داده خواهد شد\n                        ")]) : _vm._e(), _vm._v(" "), _c("textarea", {
+    }, [_vm._v("\n                        پاسخ شما با موفقیت ثبت شد و بعد از تایید نمایش داده خواهد شد\n                    ")]) : _vm._e(), _vm._v(" "), _c("textarea", {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -7899,13 +7916,13 @@ var render = function render() {
         staticClass: "section"
       }, [_c("div", {
         staticClass: "feq_header"
-      }, [_c("p", [_vm._v("\n                            پاسخ\n                            "), answer.get_user.name == null ? _c("span", [_vm._v("ناشناس")]) : _c("span", [_vm._v(_vm._s(answer.get_user.name))])])]), _vm._v(" "), _c("p", {
+      }, [_c("p", [_vm._v("\n                        پاسخ\n                        "), answer.get_user.name == null ? _c("span", [_vm._v("ناشناس")]) : _c("span", [_vm._v(_vm._s(answer.get_user.name))])])]), _vm._v(" "), _c("p", {
         domProps: {
           innerHTML: _vm._s(answer.questions)
         }
       }), _vm._v(" "), _c("div", {
         staticClass: "footer"
-      }, [_c("span", [_vm._v(_vm._s(_vm.getDate(answer.time)))]), _vm._v(" "), _c("div", [_vm._v("\n                            آیا این پاسخ برایتان مفید بود؟\n                            "), _c("span", {
+      }, [_c("span", [_vm._v(_vm._s(_vm.getDate(answer.time)))]), _vm._v(" "), _c("div", [_vm._v("\n                        آیا این پاسخ برایتان مفید بود؟\n\n\n                        "), _c("span", {
         staticClass: "btn_like",
         attrs: {
           "data-count": _vm.replaceNumber(answer.like)
@@ -7935,14 +7952,29 @@ var render = function render() {
         }
       })])])])])]);
     })], 2);
-  }), _vm._v(" "), _vm._m(4)], 2);
+  }), _vm._v(" "), _c("div", {
+    staticClass: "col-12"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "paginate_div"
+  }, [_c("pagination", {
+    attrs: {
+      data: _vm.list,
+      showDisabled: true,
+      icon: "chevron"
+    },
+    on: {
+      "change-page": _vm.get_question
+    }
+  })], 1)])])], 2);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "feq_headline"
-  }, [_vm._v("\n            پرسش و پاسخ\n            "), _c("span", [_vm._v("پرسش خود را در مورد محصول مطرح نمایید")])]);
+  }, [_vm._v("\n        پرسش و پاسخ\n        "), _c("span", [_vm._v("پرسش خود را در مورد محصول مطرح نمایید")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -7950,17 +7982,17 @@ var staticRenderFns = [function () {
     attrs: {
       "for": ""
     }
-  }, [_vm._v("\n                        اولین پاسخی که به پرسش من داده شد، از طریق ایمیل به من اطلاع دهید.\n                        "), _c("br"), _vm._v('\n                         با انتخاب دکمه"ثبت پرسش"، '), _c("a", {
+  }, [_vm._v("\n                    اولین پاسخی که به پرسش من داده شد، از طریق ایمیل به من اطلاع دهید.\n                    "), _c("br"), _vm._v('\n                     با انتخاب دکمه"ثبت پرسش"، '), _c("a", {
     attrs: {
       href: ""
     }
-  }, [_vm._v("موافقت خود را با قوانین انتشار محتوا")]), _vm._v(" در فروشگاه اعلام می کنم\n                    ")]);
+  }, [_vm._v("موافقت خود را با قوانین انتشار محتوا")]), _vm._v(" در فروشگاه اعلام می کنم\n                ")]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "feq_header"
-  }, [_c("p", [_vm._v("\n                            پاسخ\n                        ")])]);
+  }, [_c("p", [_vm._v("\n                        پاسخ\n                    ")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -7972,21 +8004,11 @@ var staticRenderFns = [function () {
     attrs: {
       "for": ""
     }
-  }, [_vm._v('\n                                    با انتخاب دکمه"ثبت پاسخ"، '), _c("a", {
+  }, [_vm._v('\n                                با انتخاب دکمه"ثبت پاسخ"، '), _c("a", {
     attrs: {
       href: ""
     }
-  }, [_vm._v("موافقت خود را با قوانین انتشار محتوا")]), _vm._v(" در فروشگاه اعلام می کنم\n                                ")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "col-12"
-  }, [_c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "paginate_div"
-  })])]);
+  }, [_vm._v("موافقت خود را با قوانین انتشار محتوا")]), _vm._v(" در فروشگاه اعلام می کنم\n                            ")])]);
 }];
 render._withStripped = true;
 
@@ -9011,6 +9033,109 @@ g.css;a.defined=g.defined;a.destroyObjectProperties=g.destroyObjectProperties;a.
 a.merge=g.merge;a.normalizeTickInterval=g.normalizeTickInterval;a.objectEach=g.objectEach;a.offset=g.offset;a.pad=g.pad;a.pick=g.pick;a.pInt=g.pInt;a.relativeLength=g.relativeLength;a.removeEvent=g.removeEvent;a.seriesType=p.seriesType;a.splat=g.splat;a.stableSort=g.stableSort;a.syncTimeout=g.syncTimeout;a.timeUnits=g.timeUnits;a.uniqueKey=g.uniqueKey;a.useSerialIds=g.useSerialIds;a.wrap=g.wrap;w.compose(z);O.compose(b);m.compose(l);e.compose(l);H.compose(N);u.compose(l);Q.compose(q);h.compose(l,
 q,b);return a});g["masters/highcharts.src.js"]._modules=g;return g["masters/highcharts.src.js"]});
 //# sourceMappingURL=highcharts.js.map
+
+/***/ }),
+
+/***/ "./node_modules/laravel-vue-semantic-ui-pagination/src/laravel-vue-semantic-ui-pagination.js":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/laravel-vue-semantic-ui-pagination/src/laravel-vue-semantic-ui-pagination.js ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+
+    template: '<div class="ui pagination menu" :class="size" v-if="data.total > data.per_page">\
+        <!-- First Item -->\
+        <a class="item" @click.prevent="selectPage(--data.current_page)" v-if="data.prev_page_url">\
+            <i class="left icon" :class="icon"></i>\
+        </a>\
+        <a class="disabled item" v-if="showDisabled && !data.prev_page_url">\
+            <i class="left icon" :class="icon"></i>\
+        </a>\
+        <!-- Pagination Menu Items -->\
+        <a class="item" v-for="n in getPages()" :class="{ \'active\': n == data.current_page }" @click.prevent="selectPage(n)">\
+            {{ n }}\
+        </a>\
+        <!-- Last Item -->\
+        <a class="item" @click.prevent="selectPage(++data.current_page)" v-if="data.next_page_url">\
+            <i class="right icon" :class="icon"></i>\
+        </a>\
+        <a class="disabled item" v-if="showDisabled && !data.next_page_url">\
+            <i class="right icon" :class="icon"></i>\
+        </a>\
+    </div>',
+
+
+    props: {
+        showDisabled: {
+            type: Boolean,
+            default: false,
+            required: false
+        },
+        icon: {
+            type: String,
+            default: 'angle double',
+            required: false
+        },
+        size: {
+            type: String,
+            default: 'small',
+            required: false
+        },
+        data: {
+            type: Object,
+            default: function() {
+                return {
+                    current_page: 1,
+                    data: [],
+                    from: 1,
+                    last_page: 1,
+                    next_page_url: null,
+                    per_page: 10,
+                    prev_page_url: null,
+                    to: 1,
+                    total: 0,
+                }
+            },
+            required: true
+        },
+        limit: {
+            type: Number,
+            default: 0,
+            required: false
+        }
+    },
+
+    methods: {
+        selectPage: function(page) {
+            this.$emit('change-page', page);
+        },
+        getPages: function() {
+            if (this.limit === -1) {
+                return 0;
+            }
+
+            if (this.limit === 0) {
+                return this.data.last_page;
+            }
+
+            var start = this.data.current_page - this.limit,
+                end   = this.data.current_page + this.limit + 1,
+                pages = [],
+                index;
+
+            start = start < 1 ? 1 : start;
+            end   = end >= this.data.last_page ? this.data.last_page + 1 : end;
+
+            for (index = start; index < end; index++) {
+                pages.push(index);
+            }
+
+            return pages;
+        }
+    }
+};
 
 /***/ }),
 
@@ -27875,12 +28000,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_QuestionList__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/QuestionList */ "./resources/js/components/QuestionList.vue");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
-// Vue.component('pagination', require('vuejs-paginate'));
+// Vue.component('pagination', require('laravel-vue-pagination'));
 // import Paginate from 'vuejs-paginate'
 // Vue.component('paginate', Paginate)
 
-// require vpaginator
-Vue.component('vpaginator', __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module 'vue-vpaginator'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())));
+Vue.component('pagination', __webpack_require__(/*! laravel-vue-semantic-ui-pagination */ "./node_modules/laravel-vue-semantic-ui-pagination/src/laravel-vue-semantic-ui-pagination.js"));
 
 
 

@@ -17367,15 +17367,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Counter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Counter */ "./resources/js/components/Counter.vue");
 /* harmony import */ var _components_OrderStep__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/OrderStep */ "./resources/js/components/OrderStep.vue");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-
-// Vue.component('pagination', require('vuejs-paginate'));
-// Vue.component('Pagination', Pagination)
-// Vue.component('paginate', VuejsPaginate)
-// import Paginate from 'vuejs-paginate'
-// Vue.component('paginate', Paginate)
-
-// Vue.component('pagination', require('shetabit-laravel-vue-pagination'));
-
 Vue.component('Cleave', __webpack_require__(/*! vue-cleave-component */ "./node_modules/vue-cleave-component/dist/vue-cleave.min.js"));
 Vue.config.productionTip = false;
 
