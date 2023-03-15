@@ -69,6 +69,14 @@
                                     </a>
                                 @endif
 
+                                    <a href="{{ url('admin/userRole/access/'.$value->id) }}">
+                                         <span class="btn btn-primary" data-toggle="tooltip" data-placement="top"
+                                               title="دسترسی ها" >
+                                             <i class="fa fa-lock" ></i>
+                                              دسترسی ها
+                                        </span>
+                                    </a>
+
                                     @if($value->trashed())
                                         <span class="btn btn-info" data-toggle="tooltip" data-placement="top"
                                            title="بازیابی نقش کاربری"  onclick="restore_row('{{url('admin/userRole/'.$value->id)}}','{{ csrf_token() }}','آیا از بازیابی این نقش کاربری مطمئن هستید؟')">
@@ -101,7 +109,7 @@
 
                     @if(sizeof($userRole)==0)
                         <tr>
-                            <td colspan="4">رکوردی برای نمایش وجود ندارد</td>
+                            <td colspan="5">رکوردی برای نمایش وجود ندارد</td>
                         </tr>
                     @endif
 

@@ -41,7 +41,7 @@ class UserRoleController extends CustomController
 
     public function update($id,Request $request)
     {
-        $this->validate($request,['name'=>'required|unique:user_roles'],[],['name'=>'نام نقش کاربری']);
+        $this->validate($request,['name'=>'required|unique:user_roles,name,'.$id],[],['name'=>'نام نقش کاربری']);
         $userRole=UserRole::findOrFail($id);
         $userRole->update($request->all());
         return redirect('admin/userRole')

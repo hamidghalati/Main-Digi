@@ -3,12 +3,14 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -101,4 +103,45 @@ class User extends Authenticatable
             return 'erroe';
         }
     }
+
+    public static function getData($request)
+    {
+        $string='?';
+        $users=self::with('getRole')->orderBy('id','DESc');
+        if (inTrashed($request)){
+            $users=$users->onlyTrashed();
+            $string=create_paginate_url($string,'trashed=true');
+        }
+
+        if (array_key_exists('name',$request)&& !empty($request['name']))
+        {
+            $users=$users->where('name','like','%'.$request['name'].'%');
+            $string=create_paginate_url($string,'name='.$request['name']);
+        }
+        if (array_key_exists('mobile',$request)&& !empty($request['mobile']))
+        {
+            $users=$users->where('mobile','like','%'.$request['mobile'].'%');
+            $string=create_paginate_url($string,'mobile='.$request['mobile']);
+        }
+        if (array_key_exists('role',$request)&& !empty($request['role']))
+        {
+            if ($request['role']=='admin' || $request['role']=='user'){
+                $users=$users->where('role',$request['role']);
+            }
+            else{
+                $users=$users->where(['role'=>'user','role_id'=>$request['role']]);
+            }
+            $string=create_paginate_url($string,'role='.$request['role']);
+        }
+
+            $users= $users->paginate(10);
+        $users->withPath($string);
+        return $users;
+
+    }
+
+    public function getRole(){
+        return $this->hasOne(UserRole::class,'id','role_id')->withTrashed();
+    }
+
 }

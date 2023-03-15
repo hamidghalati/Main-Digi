@@ -42,6 +42,9 @@ Route::prefix('admin')->group(function () {
     //UserRole
     create_crud_route('userRole', 'UserRoleController');
 
+    //Users
+    create_crud_route('users', 'UsersController');
+
     //Color
     create_crud_route('colors', 'ColorController');
 

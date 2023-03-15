@@ -1135,3 +1135,13 @@ input.pdate{
     -webkit-border-radius: 5px;
     border: 1px solid #e0e1e2;
 }
+#role .bootstrap-select .dropdown-toggle {
+    width: 170px!important;
+    height: 39px!important;
+}
+#role .bootstrap-select .dropdown-menu {
+    min-width: 77%!important;
+}
+#role .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 170px!important;
+}
