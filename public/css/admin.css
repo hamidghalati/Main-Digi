@@ -1145,3 +1145,6 @@ input.pdate{
 #role .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 170px!important;
 }
+#user_div .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 300px!important;
+}

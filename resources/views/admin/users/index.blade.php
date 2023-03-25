@@ -97,7 +97,7 @@
                                 @if($value->getRole)
                                     {{ $value->getRole->name }}
                                 @elseif($value->role=='admin')
-                                    <span style="padding: 10px" class="badge badge-success">مدیر</span>
+                                    <span style="padding: 10px" class="badge badge-primary">مدیر</span>
                                 @else
                                     <span style="padding: 10px" class="badge badge-info">کاربر عادی</span>
                                 @endif

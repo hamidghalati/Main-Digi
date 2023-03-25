@@ -47,6 +47,7 @@ return [
     'enum'                 => ':attribute انتخاب شده اشتباه است.',
     'exists'               => ':attribute انتخاب شده، معتبر نیست.',
     'file'                 => ':attribute باید یک فایل معتبر باشد.',
+    'mobile'                 => ':attribute باید یک شماره همراه معتبر باشد.',
     'filled'               => 'فیلد :attribute باید مقدار داشته باشد.',
     'gt'                   => [
         'array'   => ':attribute باید بیشتر از :value آیتم داشته باشد.',
@@ -106,7 +107,7 @@ return [
     'prohibited_unless'    => 'فیلد :attribute ممنوع است مگر اینکه مقدار :other در :values باشد.',
     'prohibits'            => 'فیلد :attribute اجازه حضور فیلد :other را نمی دهد.',
     'regex'                => 'فرمت :attribute معتبر نیست.',
-    'required'             => 'فیلد :attribute الزامی است.',
+    'required'             => ' :attribute را وارد کنید.',
     'required_array_keys'  => 'فیلد :attribute باید حاوی ورودی های :values باشد.',
     'required_if'          => 'هنگامی که :other برابر با :value است، فیلد :attribute الزامی است.',
     'required_unless'      => 'فیلد :attribute الزامی است، مگر آنکه :other در :values موجود باشد.',
