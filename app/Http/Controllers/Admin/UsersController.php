@@ -41,6 +41,13 @@ class UsersController extends CustomController
         $user->password= Hash::make($request->get('password'));
         $user->saveOrFail();
         return redirect('admin/users')->with(['message'=>'ثبت  کاربر جدید با موفقیت انجام شد','header'=>'ثبت  کاربر','alerts'=>'success']);
+    }
+
+    public function edit($id)
+    {
+        $user=User::findOrFail($id);
+        $roles=UserRole::get();
+        return view('admin.users.edit',['roles'=>$roles,'user'=>$user]);
 
     }
 }

@@ -2,13 +2,19 @@
 @section('content')
     @include('include.breadcrumb',['data'=>[
        ['title'=>'مدیریت کاربران','url'=>url('admin/users')],
-       ['title'=>'افزودن کاربر جدید','url'=>url('admin/users/create')]
+       ['title'=>'ویرایش اطلاعات کاربر ','url'=>url('admin/users/'.$user->id.'/edit')]
        ]])
     <div class="panel">
-        <div class="header">افزودن کاربر جدید</div>
+        <div class="header"> ویرایش کاربر :
+            @if($user->name==null)
+                {{$user->mobile}}
+            @else
+                {{$user->name}}
+            @endif
+        </div>
         <div class="panel_content" id="user_div">
 
-            {{ Form::open(['url' => 'admin/users']) }}
+            {{ Form::model($user,['url' => 'admin/users/'.$user->id]) }}
             <div class="form-group">
                 {{ Form::label('name', 'نام و نام خانوادگی :')}}
                 {{ Form::text('name', null,['class'=>'form-control'])}}
@@ -44,28 +50,28 @@
             <div class="form-group">
                 {{ Form::label('account_status', ' وضعیت اکانت کاربری :')}}
                 <select name="account_status" class="selectpicker">
-                    <option @if(old('account_status')=='active') selected="selected" @endif value="active">فعال</option>
-                    <option @if(old('account_status')=='inactive') selected="selected" @endif value="inactive">غیرفعال</option>
+                    <option @if($user->account_status=='active') selected="selected" @endif value="active">فعال</option>
+                    <option @if($user->account_status=='inactive') selected="selected" @endif value="inactive">غیرفعال
+                    </option>
                 </select>
             </div>
 
             <div class="form-group">
                 {{ Form::label('role', ' نقش کاربری :')}}
-                <select name="role" class="selectpicker" >
-                    <option @if(old('role')=='admin') selected="selected" @endif value="admin">مدیر</option>
-                    <option @if(old('role')=='user') selected="selected" @endif value="user">کاربر عادی</option>
+                <select name="role" class="selectpicker">
+                    <option @if($user->role=='admin') selected="selected" @endif value="admin">مدیر</option>
+                    <option @if($user->role=='user') selected="selected" @endif value="user">کاربر عادی</option>
                     @foreach($roles  as $role)
-                        <option @if(old('role')==$role->id) selected="selected" @endif value="{{ $role->id }}">{{ $role->name }}</option>
+                        <option @if($user->role==$role->id) selected="selected"
+                                @endif value="{{ $role->id }}">{{ $role->name }}</option>
                     @endforeach
 
                 </select>
             </div>
 
 
-
-
             <div class="d-grid gap-2 col-6 mx-auto">
-                <button type="submit" class="btn btn-success btn-lg "><i class="fa fa-check"></i>  ثبت اطلاعات</button>
+                <button type="submit" class="btn btn-warning btn-lg "><i class="fa fa-pencil"></i>     ویرایش اطلاعات     </button>
             </div>
             {{ Form::close() }}
 
