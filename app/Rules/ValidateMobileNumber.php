@@ -9,14 +9,15 @@ use Illuminate\Contracts\Validation\Rule;
 
 class ValidateMobileNumber implements Rule
 {
+    protected $user_id;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user_id=0)
     {
-        //
+        $this->user_id=$user_id;
     }
 
     /**
@@ -28,7 +29,7 @@ class ValidateMobileNumber implements Rule
      */
     public function passes($attribute, $value)
     {
-        $user_id=Auth::check() ? Auth::user()->id :0;
+        $user_id=Auth::check() ? Auth::user()->id :$this->user_id;
         settype($value,'integer');
         if (strlen($value)==10 && is_numeric($value) && substr($value,0,1)=="9")
         {

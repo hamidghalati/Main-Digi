@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         $rules=[
-            'mobile'=>['required','unique:users,mobile,'.$this->user.'',new ValidateMobileNumber()]
+            'mobile'=>['required','unique:users,mobile,'.$this->user.'',new ValidateMobileNumber($this->user)]
         ];
         if ($this->role=='admin'){
             $rules['username']=['required','unique:users,username,'.$this->user.''];

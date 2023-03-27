@@ -144,4 +144,8 @@ class User extends Authenticatable
         return $this->hasOne(UserRole::class,'id','role_id')->withTrashed();
     }
 
+    public function getAdditionalInfo(){
+        return $this->hasOne(AdditionalInfos::class,'user_id','id');
+    }
+
 }

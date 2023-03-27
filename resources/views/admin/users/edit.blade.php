@@ -15,6 +15,7 @@
         <div class="panel_content" id="user_div">
 
             {{ Form::model($user,['url' => 'admin/users/'.$user->id]) }}
+            {{method_field('PUT')}}
             <div class="form-group">
                 {{ Form::label('name', 'نام و نام خانوادگی :')}}
                 {{ Form::text('name', null,['class'=>'form-control'])}}
@@ -47,27 +48,37 @@
                 @endif
             </div>
 
+{{--            <div class="form-group">--}}
+{{--                {{ Form::label('account_status', ' وضعیت اکانت کاربری :')}}--}}
+{{--                <select name="account_status" class="selectpicker">--}}
+{{--                    <option @if($user->account_status=='active') selected="selected" @endif value="active">فعال</option>--}}
+{{--                    <option @if($user->account_status=='Inactive') selected="selected" @endif value="inactive">غیرفعال</option>--}}
+{{--                </select>--}}
+{{--            </div>--}}
+
             <div class="form-group">
-                {{ Form::label('account_status', ' وضعیت اکانت کاربری :')}}
-                <select name="account_status" class="selectpicker">
-                    <option @if($user->account_status=='active') selected="selected" @endif value="active">فعال</option>
-                    <option @if($user->account_status=='inactive') selected="selected" @endif value="inactive">غیرفعال
-                    </option>
-                </select>
+                {{ Form::label('account_status', '  وضعیت اکانت کاربری :')}}
+                {{ Form::select('account_status',['active'=>'فعال','Inactive'=>'غیرفعال'],null,['class'=>'selectpicker'])}}
             </div>
 
             <div class="form-group">
                 {{ Form::label('role', ' نقش کاربری :')}}
-                <select name="role" class="selectpicker">
-                    <option @if($user->role=='admin') selected="selected" @endif value="admin">مدیر</option>
-                    <option @if($user->role=='user') selected="selected" @endif value="user">کاربر عادی</option>
-                    @foreach($roles  as $role)
-                        <option @if($user->role==$role->id) selected="selected"
-                                @endif value="{{ $role->id }}">{{ $role->name }}</option>
-                    @endforeach
-
-                </select>
+                {{ Form::select('role',$roles,null,['class'=>'selectpicker'])}}
             </div>
+
+{{--            <div class="form-group">--}}
+{{--                {{ Form::label('role', ' نقش کاربری :')}}--}}
+{{--                <select name="role" class="selectpicker">--}}
+{{--                    <option @if($user->role=='admin') selected="selected" @endif value="admin">مدیر</option>--}}
+{{--                    <option @if($user->role=='user') selected="selected" @endif value="user">کاربر عادی</option>--}}
+{{--                    @foreach($roles  as $role)--}}
+{{--                        <option @if($user->role==$role->id) selected="selected" @endif value="{{ $role->id }}">{{ $role->name }}</option>--}}
+{{--                    @endforeach--}}
+
+{{--                </select>--}}
+{{--            </div>--}}
+
+
 
 
             <div class="d-grid gap-2 col-6 mx-auto">

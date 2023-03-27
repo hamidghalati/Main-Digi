@@ -43,7 +43,6 @@
             <div class="form-group">
                 {{ Form::label('parent_id', ' دسته محصولات :')}}
                 {{ Form::select('parent_id', $parent_cat,null,['class'=>'selectpicker','data-live-search'=>'true'])}}
-
             </div>
 
             <div class="form-group">

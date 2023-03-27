@@ -95,17 +95,14 @@
                             </td>
                             <td>
                                 @if($value->getRole)
-                                    {{ $value->getRole->name }}
+
+                                    <span style="padding: 10px" class="badge badge-secondary">{{ $value->getRole->name }}</span>
                                 @elseif($value->role=='admin')
                                     <span style="padding: 10px" class="badge badge-primary">مدیر</span>
                                 @else
                                     <span style="padding: 10px" class="badge badge-info">کاربر عادی</span>
                                 @endif
                             </td>
-
-
-
-
 
                             <td>
                                 @if(!$value->trashed())
@@ -126,7 +123,7 @@
                                     <span  data-toggle="tooltip" data-placement="top"
                                           title="بازیابی کاربر"  onclick="restore_row('{{url('admin/users/'.$value->id)}}','{{ csrf_token() }}','آیا از بازیابی این کاربر مطمئن هستید؟')">
                                             <i class="fa fa-refresh text-success" ></i>
-                                            بازیابی
+
                                         </span>
                                 @endif
                                 @if(!$value->trashed())
@@ -139,7 +136,7 @@
                                     <span  onclick="del_row('{{url('admin/users/'.$value->id)}}','{{ csrf_token() }}','اطلاعات شما از بین خواهد رفت.آیا مطمئن هستید؟')" data-toggle="tooltip" data-placement="top"
                                           title="حذف کامل کاربر">
                                              <i class="fa fa-remove" ></i>
-                                              حذف
+
                                         </span>
                                 @endif
 
