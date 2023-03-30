@@ -64,6 +64,45 @@
 
             </table>
 
+            @if(!empty(getUserPersonalData($additionalInfo,'company_name')))
+                <p style="text-align: center;margin-top: 30px;font-weight: bold">اطلاعات حقوقی</p>
+                <table class="table table-bordered order_table_info" style="margin: 20px auto!important;">
+                    <tr>
+                        <td>
+                            نام شرکت :
+                            <span>{{ getUserPersonalData($additionalInfo,'company_name') }}</span>
+                        </td>
+                        <td>
+                            کد اقتصادی :
+                            <span>{{ getUserPersonalData($additionalInfo,'company_economic_number') }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            شناسه ثبت :
+                            <span>{{ getUserPersonalData($additionalInfo,'company_registration_number') }}</span>
+                        </td>
+                        <td>
+                            شناسه حقیقی :
+                            <span>{{ getUserPersonalData($additionalInfo,'company_national_identity_number') }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            شماره تلفن ثابت :
+                            <span>{{ getUserPersonalData($additionalInfo,'company_phone') }}</span>
+                        </td>
+                        <td>
+                            @if($additionalInfo)
+                                استان و شهر:
+                                <span>{{ $additionalInfo->getProvince->name.' - '.$additionalInfo->getCity->name  }}</span>
+                            @endif
+                        </td>
+                    </tr>
+
+                </table>
+            @endif
+
 
         </div>
     </div>

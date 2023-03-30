@@ -145,7 +145,9 @@ class User extends Authenticatable
     }
 
     public function getAdditionalInfo(){
-        return $this->hasOne(AdditionalInfos::class,'user_id','id');
+        return $this->hasOne(AdditionalInfos::class,'user_id','id')->with(['getProvince','getCity']);
     }
+
+
 
 }

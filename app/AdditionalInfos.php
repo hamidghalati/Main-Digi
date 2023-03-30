@@ -72,6 +72,16 @@ class AdditionalInfos extends Model
         }
     }
 
+    public function getProvince()
+    {
+        return $this->hasOne(ProvinceModel::class,'id','province_id')->withDefault(['name'=>'']);
+    }
+
+    public function getCity()
+    {
+        return $this->hasOne(CityModel::class,'id','city_id')->withDefault(['name'=>'']);
+    }
+
 
 
 }
