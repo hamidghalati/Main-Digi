@@ -72,7 +72,7 @@ class Comment extends Model
         if (array_key_exists('user_id',$request)&& !empty($request['user_id']))
         {
             $comments=$comments->where('user_id',$request['user_id']);
-            $string=create_paginate_url($string,'string='.$request['string']);
+            $string=create_paginate_url($string,'user_id='.$request['user_id']);
         }
 
         $comments= $comments->paginate(10);

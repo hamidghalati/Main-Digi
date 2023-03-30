@@ -86,14 +86,14 @@ class UsersController extends CustomController
             ->where('user_id', $id)
             ->limit(10)
             ->get();
-        $question=Question::where(['user_id'=>$id,'questions_id'=>0])
+        $questions=Question::where(['user_id'=>$id,'questions_id'=>0])
             ->limit(10)
             ->get();
         return view('admin.users.show',[
             'user'=>$user,
             'orders'=>$orders,
             'comments'=>$comments,
-            'question'=>$question
+            'questions'=>$questions
         ]);
     }
 }
