@@ -59,6 +59,16 @@ $(document).ready(function () {
         }
 
     });
+    $("#admin_login_btn").click(function () {
+        const username = $("#username").val();
+        const password = $("#login_password").val();
+        const result1 = validate_login_username(username);
+        const result2 = validate_login_password(password);
+        if (result1 && result2) {
+            $("#admin_login_form").submit();
+        }
+
+    });
 
     function validate_login_mobile(mobile_number) {
         if (mobile_number.toString().trim() == "") {
@@ -84,6 +94,19 @@ $(document).ready(function () {
         } else {
             $("#login_password").removeClass('validate_error_border');
             $("#password_error_message").hide();
+            return true;
+        }
+    }
+
+    validate_login_username=function (username)
+    {
+        if (username.toString().trim() == "") {
+            $("#username").addClass('validate_error_border');
+            $("#username_error_message").show().text(' نام کاربری خود را وارد کنید');
+            return false;
+        } else {
+            $("#username").removeClass('validate_error_border');
+            $("#username_error_message").hide();
             return true;
         }
     }

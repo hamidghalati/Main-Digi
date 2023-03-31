@@ -65,7 +65,7 @@
 
             </table>
 
-            @if(!empty(getUserPersonalData($additionalInfo,'company_name')))
+            @if(!empty(getUserData('company_name',$additionalInfo)))
                 <p style="text-align: center;margin-top: 30px;font-weight: bold">اطلاعات حقوقی</p>
                 <table class="table table-bordered order_table_info" style="margin: 20px auto!important;">
                     <tr>
@@ -107,58 +107,71 @@
             @endif
 
 
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="order-tab" data-toggle="tab" href="#last_order" role="tab" aria-controls="home" aria-selected="true">
-                        <span class="fa fa-shopping-basket"></span>
-                        <span>آخرین سفارشات کاربر</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="comment-tab" data-toggle="tab" href="#last_comment" role="tab" aria-controls="profile" aria-selected="false">
-                        <span class="fa fa-comments"></span>
-                        <span>آخرین نظرات کاربر</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="question-tab" data-toggle="tab" href="#last_question" role="tab" aria-controls="contact" aria-selected="false">
-                        <span class="fa fa-question-circle"></span>
-                        <span>آخرین پرسش های کاربر</span>
-                    </a>
-                </li>
-            </ul>
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="last_order" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="content_tab_div">
-                        @include('include.orderList',['remove_delete_link'=>true])
-                        @if(sizeof($orders)>0)
-                            <a href="{{ url('admin/orders?user_id='.$user->id) }}" target="_blank">
-                                <span class="fa fa-arrow-left"></span>
-                                <span>نمایش لیست کامل سفارشات کاربر</span>
-                            </a>
-                        @endif
+            <div id="tab_div">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="order-tab" data-toggle="tab" href="#last_order" role="tab"
+                           aria-controls="home" aria-selected="true">
+                            <span class="fa fa-shopping-basket"></span>
+                            <span>آخرین سفارشات کاربر</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="comment-tab" data-toggle="tab" href="#last_comment" role="tab"
+                           aria-controls="profile" aria-selected="false">
+                            <span class="fa fa-comments"></span>
+                            <span>آخرین نظرات کاربر</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="question-tab" data-toggle="tab" href="#last_question" role="tab"
+                           aria-controls="contact" aria-selected="false">
+                            <span class="fa fa-question-circle"></span>
+                            <span>آخرین پرسش های کاربر</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="last_order" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="content_tab_div">
+                            @include('include.orderList',['remove_delete_link'=>true])
+                            @if(sizeof($orders)>0)
+                                <div  style="padding-top: 20px">
+                                    <a href="{{ url('admin/orders?user_id='.$user->id) }}" target="_blank">
+                                        <span class="fa fa-arrow-left"></span>
+                                        <span>نمایش لیست کامل سفارشات کاربر</span>
+                                    </a>
+                                </div>
+
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="last_comment" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="content_tab_div">
-                        @include('include.CommentList',['remove_delete_link'=>true])
-                        @if(sizeof($comments)>0)
-                            <a href="{{ url('admin/comments?user_id='.$user->id) }}" target="_blank">
-                                <span class="fa fa-arrow-left"></span>
-                                <span>نمایش لیست کامل نظرات کاربر</span>
-                            </a>
-                        @endif
+                    <div class="tab-pane fade" id="last_comment" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="content_tab_div">
+                            @include('include.CommentList',['remove_delete_link'=>true])
+                            @if(sizeof($comments)>0)
+                                <div style="padding-top: 20px">
+                                    <a style="padding-top: 20px" href="{{ url('admin/comments?user_id='.$user->id) }}"
+                                       target="_blank">
+                                        <span class="fa fa-arrow-left"></span>
+                                        <span>نمایش لیست کامل نظرات کاربر</span>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="last_question" role="tabpanel" aria-labelledby="contact-tab">
-                    <div class="content_tab_div">
-                        @include('include.QuestionList',['remove_delete_link'=>true])
-                        @if(sizeof($questions)>0)
-                            <a href="{{ url('admin/questions?user_id='.$user->id) }}" target="_blank">
-                                <span class="fa fa-arrow-left"></span>
-                                <span>نمایش لیست کامل پرسش های کاربر</span>
-                            </a>
-                        @endif
+                    <div class="tab-pane fade" id="last_question" role="tabpanel" aria-labelledby="contact-tab">
+                        <div class="content_tab_div">
+                            @include('include.QuestionList',['remove_delete_link'=>true])
+                            @if(sizeof($questions)>0)
+                                <div   style="padding-top: 20px">
+                                    <a href="{{ url('admin/questions?user_id='.$user->id) }}" target="_blank">
+                                        <span class="fa fa-arrow-left"></span>
+                                        <span>نمایش لیست کامل پرسش های کاربر</span>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

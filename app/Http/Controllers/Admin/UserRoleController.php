@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\UserRole;
+use DB;
 use Illuminate\Http\Request;
 
 class UserRoleController extends CustomController
@@ -46,6 +47,26 @@ class UserRoleController extends CustomController
         $userRole->update($request->all());
         return redirect('admin/userRole')
             ->with(['message'=>'ویرایش نقش کاربری با موفقیت انجام شد','header'=>'ویرایش نقش کاربری','alerts'=>'info']);
+
+    }
+
+    public function access($role_id)
+    {
+        $role=UserRole::findOrFail($role_id);
+        $role_accesses=DB::table('role_accesses')->where('role_id',$role_id)->first();
+        return view('admin.userRole.access',['role'=>$role,'role_accesses'=>$role_accesses]);
+    }
+
+    public function add_access($role_id,Request $request)
+    {
+        $role=UserRole::findOrFail($role_id);
+        $access=$request->get('access',array());
+        DB::table('role_accesses')->where('role_id',$role_id)->delete();
+
+        $string=json_encode($access);
+
+        DB::table('role_accesses')->insert(['role_id'=>$role_id,'access'=>$string]);
+        return redirect()->back()->with(['message'=>'ثبت دسترسی ها با موفقیت انجام شد','header'=>'ثبت دسترسی','alerts'=>'success']);
 
     }
 }

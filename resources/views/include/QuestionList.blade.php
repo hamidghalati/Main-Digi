@@ -8,15 +8,15 @@
             <div class="question_div_header @if($value->status==0) question-pending-approval @endif">
 
                 <div>
-{{--                    <input type="checkbox" name="questions_id[]" class="check_box" value="{{ $value->id }}">--}}
-
-                    <div class="pretty p-icon p-smooth">
-                        <input type="checkbox" name="questions_id[]" value="{{$value->id}}" class="check_box"/>
-                        <div class="state p-danger-o">
-                            <i class="icon fa fa-close"></i>
-                            <label></label>
+                    @if(!isset($remove_delete_link))
+                        <div class="pretty p-icon p-smooth">
+                            <input type="checkbox" name="questions_id[]" value="{{$value->id}}" class="check_box"/>
+                            <div class="state p-danger-o">
+                                <i class="icon fa fa-close"></i>
+                                <label></label>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
 
                     <span class="question_status" question_id="{{ $value->id }}" status="{{ $value->status }}">
@@ -52,42 +52,43 @@
 
                 </div>
 
-                <div>
-                    @if(!$value->trashed())
-                        <span data-toggle="tooltip" data-placement="top"
-                              title="حذف <?= $string?>"
-                              onclick="del_row('{{url('admin/questions/'.$value->id)}}','{{ csrf_token() }}','آیا از حذف این <?= $string?> مطمئن هستید؟')">
+                @if(!isset($remove_delete_link))
+                    <div>
+                        @if(!$value->trashed())
+                            <span data-toggle="tooltip" data-placement="top"
+                                  title="حذف <?= $string?>"
+                                  onclick="del_row('{{url('admin/questions/'.$value->id)}}','{{ csrf_token() }}','آیا از حذف این <?= $string?> مطمئن هستید؟')">
                                              <i style="font-size: 20px;cursor: pointer"
                                                 class="mdi mdi-trash-can-outline"></i>
 
                             </span>
-                    @else
-                        <span class="btn btn-danger"
-                              onclick="del_row('{{url('admin/questions/'.$value->id)}}','{{ csrf_token() }}','اطلاعات شما از بین خواهد رفت.آیا مطمئن هستید؟')"
-                              data-toggle="tooltip" data-placement="top"
-                              title="حذف کامل <?= $string?>">
+                        @else
+                            <span class="btn btn-danger"
+                                  onclick="del_row('{{url('admin/questions/'.$value->id)}}','{{ csrf_token() }}','اطلاعات شما از بین خواهد رفت.آیا مطمئن هستید؟')"
+                                  data-toggle="tooltip" data-placement="top"
+                                  title="حذف کامل <?= $string?>">
                                              <i class="fa fa-remove"></i>
                                               حذف نظر
                             </span>
-                    @endif
+                        @endif
 
-                    @if($value->trashed())
-                        <span class="btn btn-info" data-toggle="tooltip" data-placement="top"
-                              title="بازیابی <?= $string?>"
-                              onclick="restore_row('{{url('admin/questions/'.$value->id)}}','{{ csrf_token() }}','آیا از بازیابی این <?= $string?> مطمئن هستید؟')">
+                        @if($value->trashed())
+                            <span class="btn btn-info" data-toggle="tooltip" data-placement="top"
+                                  title="بازیابی <?= $string?>"
+                                  onclick="restore_row('{{url('admin/questions/'.$value->id)}}','{{ csrf_token() }}','آیا از بازیابی این <?= $string?> مطمئن هستید؟')">
                                             <i class="fa fa-refresh"></i>
                                             بازیابی
                                 </span>
-                    @endif
+                        @endif
 
-                </div>
+                    </div>
+                @endif
             </div>
 
             <div class="question_content">
-{{--                {!! strip_tags($value->questions,'<br>') !!}--}}
+                {{--                {!! strip_tags($value->questions,'<br>') !!}--}}
 
                 {!! strip_tags(nl2br($value->questions),'<br>') !!}
-
 
 
                 <div style="min-height: 70px">
@@ -97,7 +98,7 @@
                                 <span class="fa fa-question"></span>
                                 <span>پرسش اصلی</span>
                             </p>
-{{--                            {!! $value->getParent->questions !!}--}}
+                            {{--                            {!! $value->getParent->questions !!}--}}
                             {!! strip_tags(nl2br( $value->getParent->questions),'<br>') !!}
                         </div>
                     @endif
@@ -105,13 +106,16 @@
 
                 @if($value->questions_id==0)
                     <div class="answer_div">
-                        <textarea name="answer" id="answer_{{ $value->id }}" cols="30" rows="10" placeholder="پاسخ شما"></textarea>
-                        <a onclick="add_answer('<?= csrf_token() ?>','{{$value->id}}')" class="btn btn-success">ثبت پاسخ</a>
+                        <textarea name="answer" id="answer_{{ $value->id }}" cols="30" rows="10"
+                                  placeholder="پاسخ شما"></textarea>
+                        <a onclick="add_answer('<?= csrf_token() ?>','{{$value->id}}')" class="btn btn-success">ثبت
+                            پاسخ</a>
                     </div>
                 @endif
 
                 <div class="question_footer">
-                    <a target="_blank" href="{{ url('product/dkp-'.$value->getProduct->id.'/'.$value->getProduct->product_url) }}">
+                    <a target="_blank"
+                       href="{{ url('product/dkp-'.$value->getProduct->id.'/'.$value->getProduct->product_url) }}">
                         ثبت شده در محصول : {{ $value->getProduct->title }}
                     </a>
 

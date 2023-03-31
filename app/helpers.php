@@ -740,9 +740,9 @@ function create_crud_route($route_param, $controller, $except = ['show'])
 //        Route::resource($route_param,'Admin\\'.$controller)->except($except);
 //    }
     Route::resource($route_param, 'Admin\\' . $controller)->except($except);
-    Route::post($route_param . '/remove_item', 'Admin\\' . $controller . '@remove_item');
-    Route::post($route_param . '/restore_item', 'Admin\\' . $controller . '@restore_item');
-    Route::post($route_param . '/{category}', 'Admin\\' . $controller . '@restore');
+    Route::post($route_param . '/remove_item', 'Admin\\' . $controller . '@remove_item')->name('destroy');
+    Route::post($route_param . '/restore_item', 'Admin\\' . $controller . '@restore_item')->name('restore');
+    Route::post($route_param . '/{id}', 'Admin\\' . $controller . '@restore')->name('restore');
 }
 
 function create_fit_pic($pic_url, $pic_name)
@@ -1475,6 +1475,31 @@ function addLike($request,$score_type){
         return 'error';
     }
 
+}
+
+function CheckAccess($AccessList,$key,$key2){
+    $result=false;
+    if ($AccessList)
+    {
+        $access=json_decode($AccessList->access);
+        if (is_object($access))
+        {
+            if (property_exists($access,$key))
+            {
+                if (is_array($access->$key))
+                {
+                    foreach ($access->$key as $k=>$v)
+                    {
+                        if ($v==$key2)
+                        {
+                            $result=true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return $result;
 }
 
 

@@ -148,6 +148,33 @@ class User extends Authenticatable
         return $this->hasOne(AdditionalInfos::class,'user_id','id')->with(['getProvince','getCity']);
     }
 
+    public static function AccessList(){
+        $array=array();
+        $array['products']=[
+          'label'=>'محصولات',
+          'access'=>[
+              'product_edit'=>['label'=>'ثبت و ویرایش محصولات','routes'=>[
+                  'products.index','products.create','products.store','products.edit','products.update'
+              ]],
+              'remove_product'=>['label'=>'حذف محصولات','routes'=>['products.index','products.destroy']],
+              'restore_product'=>['label'=>'بازیابی محصولات','routes'=>['products.index','products.restore']],
+          ]
+        ];
+        $array['sliders']=[
+          'label'=>'اسلایدرها',
+          'access'=>[
+              'slider_edit'=>['label'=>'ثبت و ویرایش اسلایدر','routes'=>[
+                  'sliders.index','sliders.create','sliders.store','sliders.edit','sliders.update'
+              ]],
+              'remove_slider'=>['label'=>'حذف اسلایدر','routes'=>['sliders.index','sliders.destroy']],
+              'restore_slider'=>['label'=>'بازیابی اسلایدرها','routes'=>['sliders.index','sliders.restore']],
+          ]
+        ];
+
+        return $array;
+
+    }
+
 
 
 }

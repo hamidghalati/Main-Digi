@@ -82,6 +82,11 @@ class AdminController extends Controller
         return view('admin.file_manager');
     }
 
+    public function admin_login_form()
+    {
+        return view('admin.admin_login_form');
+    }
+
 
 
 

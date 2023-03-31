@@ -17,6 +17,9 @@ use App\Question;
 Route::get('/', 'SiteController@index');
 
 Auth::routes();
+
+Route::get('admin_login','Admin\AdminController@admin_login_form')->middleware('guest');;
+
 Route::get('/confirm', 'SiteController@confirm')->middleware('guest');
 Route::get('/confirmphone', 'SiteController@confirmphone')->middleware('auth');
 
@@ -27,7 +30,7 @@ Route::post('changeMobileNumber', 'SiteController@changeMobileNumber')->middlewa
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
     Route::get('/', 'Admin\AdminController@index');
 
     //elFinder used ckeditor
@@ -41,6 +44,9 @@ Route::prefix('admin')->group(function () {
 
     //UserRole
     create_crud_route('userRole', 'UserRoleController');
+    Route::get('userRole/access/{role_id}','Admin\UserRoleController@access');
+    Route::post('userRole/access/{role_id}','Admin\UserRoleController@add_access');
+
 
     //Users
     create_crud_route('users', 'UsersController',[]);

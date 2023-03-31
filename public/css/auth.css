@@ -286,3 +286,10 @@ a {
     font-size: 13px;
 }
 
+.input_label.username::before{
+    content: "\F007"!important;
+    font: normal normal normal 30px/1 FontAwesome;
+    padding-right: 15px;
+    position: absolute;
+    z-index: 10;
+}
