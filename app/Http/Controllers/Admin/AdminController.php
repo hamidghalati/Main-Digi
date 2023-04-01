@@ -87,6 +87,15 @@ class AdminController extends Controller
         return view('admin.admin_login_form');
     }
 
+    public function error403()
+    {
+        return view('admin.403');
+    }
+
+    public function author_panel(){
+        return view('admin.author_panel');
+    }
+
 
 
 

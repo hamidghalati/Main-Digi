@@ -740,9 +740,9 @@ function create_crud_route($route_param, $controller, $except = ['show'])
 //        Route::resource($route_param,'Admin\\'.$controller)->except($except);
 //    }
     Route::resource($route_param, 'Admin\\' . $controller)->except($except);
-    Route::post($route_param . '/remove_item', 'Admin\\' . $controller . '@remove_item')->name('destroy');
-    Route::post($route_param . '/restore_item', 'Admin\\' . $controller . '@restore_item')->name('restore');
-    Route::post($route_param . '/{id}', 'Admin\\' . $controller . '@restore')->name('restore');
+    Route::post($route_param . '/remove_item', 'Admin\\' . $controller . '@remove_item')->name($route_param.'.destroy');
+    Route::post($route_param . '/restore_item', 'Admin\\' . $controller . '@restore_item')->name($route_param.'.restore');
+    Route::post($route_param . '/{id}', 'Admin\\' . $controller . '@restore')->name($route_param.'.restore');
 }
 
 function create_fit_pic($pic_url, $pic_name)
@@ -1198,115 +1198,98 @@ function getScoreType($score, $scoreType)
 
 function get_product_price_changed($product_id)
 {
-    $array=array();
-    $points=[];
-    $jdf=new jdf();
+    $array = array();
+    $points = [];
+    $jdf = new jdf();
 
-    $productColor=ProductColorModel::with('getColor')->where('product_id',$product_id)->get();
-    $timeStamp=strtotime('-30 day');
+    $productColor = ProductColorModel::with('getColor')->where('product_id', $product_id)->get();
+    $timeStamp = strtotime('-30 day');
 
-    $product_price=ProductPriceModel::with(['getColor'])
-        ->with(['getProductWarranty'=>function($query){
+    $product_price = ProductPriceModel::with(['getColor'])
+        ->with(['getProductWarranty' => function ($query) {
             $query->withTrashed();
         }])
-        ->where('product_id',$product_id)
-        ->where('time','>=',$timeStamp)
+        ->where('product_id', $product_id)
+        ->where('time', '>=', $timeStamp)
         ->get();
 
-    $warranty_price=[];
-    $price=[];
-    $seller=[];
-    $color=[];
-    $zone=[];
+    $warranty_price = [];
+    $price = [];
+    $seller = [];
+    $color = [];
+    $zone = [];
 
-    foreach ($product_price as $key=>$value)
-    {
-        $date=$jdf->tr_num($jdf->jdate('Y/n/j',$value->time));
-        $warranty_price[$date][$value->color_id]=$value->price;
-        $seller[$date][$value->color_id]='حمیدرضا سمیعی';
+    foreach ($product_price as $key => $value) {
+        $date = $jdf->tr_num($jdf->jdate('Y/n/j', $value->time));
+        $warranty_price[$date][$value->color_id] = $value->price;
+        $seller[$date][$value->color_id] = 'حمیدرضا سمیعی';
     }
 
-    for ($i=30;$i>=0;$i--)
-    {
-        $timeStamp=strtotime('-'.$i.' day');
-        $date=$jdf->tr_num($jdf->jdate('Y/n/j',$timeStamp));
-        if (array_key_exists($date,$warranty_price))
-        {
-            foreach ($productColor as $key=>$value)
-            {
-                $size=array_key_exists($value->color_id,$price) ? sizeof($price[$value->color_id]) : 0;
-                $points[$date]=$date;
-                if (array_key_exists($value->color_id,$warranty_price[$date]))
-                {
-                    $color[$value->color_id]=['name'=>$value->getColor->name,'code'=>$value->getColor->code,'id'=>$value->getColor->id];
-                    $price[$value->color_id][$size]['y']=$warranty_price[$date][$value->color_id];
-                    if ($warranty_price[$date][$value->color_id]==0)
-                    {
-                        $price[$value->color_id][$size]['y']=$price[$value->color_id][($size-1)]['y'];
-                        $price[$value->color_id][$size]['price']=0;
-                        $price[$value->color_id][$size]['has_product']='no';
-                        $price[$value->color_id][$size]['color']='gray';
+    for ($i = 30; $i >= 0; $i--) {
+        $timeStamp = strtotime('-' . $i . ' day');
+        $date = $jdf->tr_num($jdf->jdate('Y/n/j', $timeStamp));
+        if (array_key_exists($date, $warranty_price)) {
+            foreach ($productColor as $key => $value) {
+                $size = array_key_exists($value->color_id, $price) ? sizeof($price[$value->color_id]) : 0;
+                $points[$date] = $date;
+                if (array_key_exists($value->color_id, $warranty_price[$date])) {
+                    $color[$value->color_id] = ['name' => $value->getColor->name, 'code' => $value->getColor->code, 'id' => $value->getColor->id];
+                    $price[$value->color_id][$size]['y'] = $warranty_price[$date][$value->color_id];
+                    if ($warranty_price[$date][$value->color_id] == 0) {
+                        $price[$value->color_id][$size]['y'] = $price[$value->color_id][($size - 1)]['y'];
+                        $price[$value->color_id][$size]['price'] = 0;
+                        $price[$value->color_id][$size]['has_product'] = 'no';
+                        $price[$value->color_id][$size]['color'] = 'gray';
 
-                        $zone_size=array_key_exists($value->color_id,$zone) ? sizeof($zone[$value->color_id]) : 0;
-                        $zone[$value->color_id][$zone_size]=['value'=>$size];
+                        $zone_size = array_key_exists($value->color_id, $zone) ? sizeof($zone[$value->color_id]) : 0;
+                        $zone[$value->color_id][$zone_size] = ['value' => $size];
 
-                        if (sizeof($zone[$value->color_id])==1 && $i==0)
-                        {
-                            $zone[$value->color_id][($zone_size+1)]['value']=$zone[$value->color_id][$zone_size]['value'];
-                            $zone[$value->color_id][($zone_size+1)]['color']='gray';
+                        if (sizeof($zone[$value->color_id]) == 1 && $i == 0) {
+                            $zone[$value->color_id][($zone_size + 1)]['value'] = $zone[$value->color_id][$zone_size]['value'];
+                            $zone[$value->color_id][($zone_size + 1)]['color'] = 'gray';
                         }
-                    }
-                    else
-                    {
-                        $price[$value->color_id][$size]['price']=$warranty_price[$date][$value->color_id];
-                        $price[$value->color_id][$size]['has_product']='ok';
-                        $price[$value->color_id][$size]['color']='#00bfd6';
-                        $price[$value->color_id][$size]['seller']='حمیدرضا سمیعی';
+                    } else {
+                        $price[$value->color_id][$size]['price'] = $warranty_price[$date][$value->color_id];
+                        $price[$value->color_id][$size]['has_product'] = 'ok';
+                        $price[$value->color_id][$size]['color'] = '#00bfd6';
+                        $price[$value->color_id][$size]['seller'] = 'حمیدرضا سمیعی';
 
-                        if(array_key_exists($value->color_id,$zone))
-                        {
-                            $first=sizeof($zone[$value->color_id])-1;
-                            $end=$zone[$value->color_id][$first];
+                        if (array_key_exists($value->color_id, $zone)) {
+                            $first = sizeof($zone[$value->color_id]) - 1;
+                            $end = $zone[$value->color_id][$first];
 
-                           if ($price[$value->color_id][$size-1]['price']==0)
-                           {
-                               $zone[$value->color_id][sizeof($zone[$value->color_id])]=['value'=>$zone,'color'=>'gray'];
-                           }
+                            if ($price[$value->color_id][$size - 1]['price'] == 0) {
+                                $zone[$value->color_id][sizeof($zone[$value->color_id])] = ['value' => $zone, 'color' => 'gray'];
+                            }
                         }
 
                     }
-                }
-                else{
-                    if (array_key_exists($value->color_id,$price) && array_key_exists(($size-1),$price[$value->color_id]))
-                    {
-                        $color[$value->color_id]=['name'=>$value->getColor->name,'code'=>$value->getColor->code,'id'=>$value->getColor->id];
+                } else {
+                    if (array_key_exists($value->color_id, $price) && array_key_exists(($size - 1), $price[$value->color_id])) {
+                        $color[$value->color_id] = ['name' => $value->getColor->name, 'code' => $value->getColor->code, 'id' => $value->getColor->id];
 
-                        if ($price[$value->color_id][$size-1]['price']==0)
-                        {
-                            $price[$value->color_id][$size]['y']=$price[$value->color_id][($size-1)]['y'];
-                            $price[$value->color_id][$size]['price']=0;
-                            $price[$value->color_id][$size]['has_product']='no';
-                            $price[$value->color_id][$size]['color']='gray';
+                        if ($price[$value->color_id][$size - 1]['price'] == 0) {
+                            $price[$value->color_id][$size]['y'] = $price[$value->color_id][($size - 1)]['y'];
+                            $price[$value->color_id][$size]['price'] = 0;
+                            $price[$value->color_id][$size]['has_product'] = 'no';
+                            $price[$value->color_id][$size]['color'] = 'gray';
 
-                            $zone_size=array_key_exists($value->color_id,$zone) ? sizeof($zone[$value->color_id]) : 0;
-                            $zone[$value->color_id][$zone_size]=['value'=>$size,'color'=>'gray'];
-                        }
-                        else{
-                            $price[$value->color_id][$size]['y']=$price[$value->color_id][$size-1]['y'];
-                            $price[$value->color_id][$size]['price']=$price[$value->color_id][$size-1]['price'];
-                            $price[$value->color_id][$size]['has_product']='ok';
-                            $price[$value->color_id][$size]['color']='#00bfd6';
-                            $price[$value->color_id][$size]['seller']='حمیدرضا سمیعی';
+                            $zone_size = array_key_exists($value->color_id, $zone) ? sizeof($zone[$value->color_id]) : 0;
+                            $zone[$value->color_id][$zone_size] = ['value' => $size, 'color' => 'gray'];
+                        } else {
+                            $price[$value->color_id][$size]['y'] = $price[$value->color_id][$size - 1]['y'];
+                            $price[$value->color_id][$size]['price'] = $price[$value->color_id][$size - 1]['price'];
+                            $price[$value->color_id][$size]['has_product'] = 'ok';
+                            $price[$value->color_id][$size]['color'] = '#00bfd6';
+                            $price[$value->color_id][$size]['seller'] = 'حمیدرضا سمیعی';
 
 
-                            if(array_key_exists($value->color_id,$zone))
-                            {
-                                $first=sizeof($zone[$value->color_id])-1;
-                                $end=$zone[$value->color_id][$first];
+                            if (array_key_exists($value->color_id, $zone)) {
+                                $first = sizeof($zone[$value->color_id]) - 1;
+                                $end = $zone[$value->color_id][$first];
 
-                                if ($price[$value->color_id][$size-1]['price']==0)
-                                {
-                                    $zone[$value->color_id][sizeof($zone[$value->color_id])]=['value'=>$zone,'color'=>'gray'];
+                                if ($price[$value->color_id][$size - 1]['price'] == 0) {
+                                    $zone[$value->color_id][sizeof($zone[$value->color_id])] = ['value' => $zone, 'color' => 'gray'];
                                 }
                             }
 
@@ -1316,38 +1299,33 @@ function get_product_price_changed($product_id)
                 }
 
             }
-        }
-        else if (sizeof($price)){
-            $points[$date]=$date;
-            foreach ($productColor as $key=>$value){
-                $size=array_key_exists($value->color_id,$price) ? sizeof($price[$value->color_id]) : 0;
-                if (array_key_exists($value->color_id,$price) && array_key_exists(($size-1),$price[$value->color_id])){
-                    $color[$value->color_id]=['name'=>$value->getColor->name,'code'=>$value->getColor->code,'id'=>$value->getColor->id];
+        } else if (sizeof($price)) {
+            $points[$date] = $date;
+            foreach ($productColor as $key => $value) {
+                $size = array_key_exists($value->color_id, $price) ? sizeof($price[$value->color_id]) : 0;
+                if (array_key_exists($value->color_id, $price) && array_key_exists(($size - 1), $price[$value->color_id])) {
+                    $color[$value->color_id] = ['name' => $value->getColor->name, 'code' => $value->getColor->code, 'id' => $value->getColor->id];
 
-                    if ($price[$value->color_id][$size-1]['price']==0)
-                    {
-                        $price[$value->color_id][$size]['y']=$price[$value->color_id][($size-1)]['y'];
-                        $price[$value->color_id][$size]['price']=0;
-                        $price[$value->color_id][$size]['has_product']='no';
-                        $price[$value->color_id][$size]['color']='gray';
+                    if ($price[$value->color_id][$size - 1]['price'] == 0) {
+                        $price[$value->color_id][$size]['y'] = $price[$value->color_id][($size - 1)]['y'];
+                        $price[$value->color_id][$size]['price'] = 0;
+                        $price[$value->color_id][$size]['has_product'] = 'no';
+                        $price[$value->color_id][$size]['color'] = 'gray';
 
-                        if(array_key_exists($value->color_id,$zone))
-                        {
-                            $first=sizeof($zone[$value->color_id])-1;
-                            $end=$zone[$value->color_id][$first];
+                        if (array_key_exists($value->color_id, $zone)) {
+                            $first = sizeof($zone[$value->color_id]) - 1;
+                            $end = $zone[$value->color_id][$first];
 
-                            if ($price[$value->color_id][$size-1]['price']==0)
-                            {
-                                $zone[$value->color_id][sizeof($zone[$value->color_id])]=['value'=>$zone,'color'=>'gray'];
+                            if ($price[$value->color_id][$size - 1]['price'] == 0) {
+                                $zone[$value->color_id][sizeof($zone[$value->color_id])] = ['value' => $zone, 'color' => 'gray'];
                             }
                         }
-                    }
-                    else{
-                        $price[$value->color_id][$size]['y']=$price[$value->color_id][$size-1]['y'];
-                        $price[$value->color_id][$size]['price']=$price[$value->color_id][$size-1]['price'];
-                        $price[$value->color_id][$size]['has_product']='ok';
-                        $price[$value->color_id][$size]['color']='#00bfd6';
-                        $price[$value->color_id][$size]['seller']='حمیدرضا سمیعی';
+                    } else {
+                        $price[$value->color_id][$size]['y'] = $price[$value->color_id][$size - 1]['y'];
+                        $price[$value->color_id][$size]['price'] = $price[$value->color_id][$size - 1]['price'];
+                        $price[$value->color_id][$size]['has_product'] = 'ok';
+                        $price[$value->color_id][$size]['color'] = '#00bfd6';
+                        $price[$value->color_id][$size]['seller'] = 'حمیدرضا سمیعی';
                     }
                 }
 
@@ -1355,18 +1333,16 @@ function get_product_price_changed($product_id)
         }
     }
 
-   $i=0;
-    foreach ($points as $key=>$value)
-    {
-        $points[$i]=$value;
+    $i = 0;
+    foreach ($points as $key => $value) {
+        $points[$i] = $value;
         unset($points[$key]);
         $i++;
     }
 
-    $j=0;
-    foreach ($price as $key=>$value)
-    {
-        $price[$j]=$value;
+    $j = 0;
+    foreach ($price as $key => $value) {
+        $price[$j] = $value;
         unset($price[$key]);
         $j++;
     }
@@ -1378,46 +1354,39 @@ function get_product_price_changed($product_id)
         $k++;
     }
 
-    $array['price']=$price;
-    $array['points']=$points;
-    $array['color']=$color;
-    $array['zone']=$zone;
+    $array['price'] = $price;
+    $array['points'] = $points;
+    $array['color'] = $color;
+    $array['zone'] = $zone;
 
     return $array;
 
 
 }
 
-function getUserPersonalData($additionalInfo,$attr1,$attr2=null){
-    $result='-';
-    if ($additionalInfo && !empty($additionalInfo->$attr1))
-    {
-        $result=$additionalInfo->$attr1;
-        if ($attr2)
-        {
-            $result.=' '.$additionalInfo->$attr2;
+function getUserPersonalData($additionalInfo, $attr1, $attr2 = null)
+{
+    $result = '-';
+    if ($additionalInfo && !empty($additionalInfo->$attr1)) {
+        $result = $additionalInfo->$attr1;
+        if ($attr2) {
+            $result .= ' ' . $additionalInfo->$attr2;
         }
     }
     return $result;
 }
 
-function getUserData($key,$additionalInfo)
+function getUserData($key, $additionalInfo)
 {
-    if (!empty(old($key)))
-    {
+    if (!empty(old($key))) {
         return old($key);
-    }
-    else
-    {
-        if ($key=='mobile_phone')
-        {
+    } else {
+        if ($key == 'mobile_phone') {
             return Auth::user()->mobile;
-        }
-        elseif ($additionalInfo && !empty($additionalInfo->$key)){
+        } elseif ($additionalInfo && !empty($additionalInfo->$key)) {
 
             return $additionalInfo->$key;
-        }
-        else{
+        } else {
             return '';
         }
     }
@@ -1425,79 +1394,153 @@ function getUserData($key,$additionalInfo)
 
 function checkEvent($n)
 {
-    if ($n%2==0)
-    {
+    if ($n % 2 == 0) {
         return true;
-    }
-    else{
+    } else {
         return false;
     }
 }
 
-function addLike($request,$score_type){
-    $table_name=$request->get('table_name','');
-    $row_id=$request->get('row_id','');
-    if ($table_name=='comments' || $table_name=='questions')
-    {
-        $row=DB::table($table_name)->where('id',$row_id)->first();
-        if ($row){
-            $user_id=$request->user()->id;
+function addLike($request, $score_type)
+{
+    $table_name = $request->get('table_name', '');
+    $row_id = $request->get('row_id', '');
+    if ($table_name == 'comments' || $table_name == 'questions') {
+        $row = DB::table($table_name)->where('id', $row_id)->first();
+        if ($row) {
+            $user_id = $request->user()->id;
 
-            $user_scored_status=DB::table('user_scored_status')
-                ->where(['user_id'=>$user_id,'row_id'=>$row_id,'score_type'=>$score_type,'type'=>$table_name])
+            $user_scored_status = DB::table('user_scored_status')
+                ->where(['user_id' => $user_id, 'row_id' => $row_id, 'score_type' => $score_type, 'type' => $table_name])
                 ->first();
-            if ($user_scored_status)
-            {
+            if ($user_scored_status) {
                 DB::table('user_scored_status')
-                    ->where(['user_id'=>$user_id,'row_id'=>$row_id,'score_type'=>$score_type,'type'=>$table_name])
+                    ->where(['user_id' => $user_id, 'row_id' => $row_id, 'score_type' => $score_type, 'type' => $table_name])
                     ->delete();
-                DB::table($table_name)->where('id',$row_id)->decrement($score_type,1);
+                DB::table($table_name)->where('id', $row_id)->decrement($score_type, 1);
                 return 'remove';
-            }
-            else{
+            } else {
                 DB::table('user_scored_status')
                     ->insert([
-                        'user_id'=>$user_id,
-                        'row_id'=>$row_id,
-                        'score_type'=>$score_type,
-                        'type'=>$table_name
+                        'user_id' => $user_id,
+                        'row_id' => $row_id,
+                        'score_type' => $score_type,
+                        'type' => $table_name
                     ]);
-                DB::table($table_name)->where('id',$row_id)->increment($score_type,1);
+                DB::table($table_name)->where('id', $row_id)->increment($score_type, 1);
                 return 'add';
             }
 
-        }
-        else{
+        } else {
             return 'error';
         }
-    }
-    else{
+    } else {
         return 'error';
     }
 
 }
 
-function CheckAccess($AccessList,$key,$key2){
-    $result=false;
-    if ($AccessList)
-    {
-        $access=json_decode($AccessList->access);
-        if (is_object($access))
-        {
-            if (property_exists($access,$key))
-            {
-                if (is_array($access->$key))
-                {
-                    foreach ($access->$key as $k=>$v)
-                    {
-                        if ($v==$key2)
-                        {
-                            $result=true;
+function CheckAccess($AccessList, $key, $key2)
+{
+    $result = false;
+    if ($AccessList) {
+        $access = json_decode($AccessList->access);
+        if (is_object($access)) {
+            if (property_exists($access, $key)) {
+                if (is_array($access->$key)) {
+                    foreach ($access->$key as $k => $v) {
+                        if ($v == $key2) {
+                            $result = true;
                         }
                     }
                 }
             }
         }
+    }
+    return $result;
+}
+
+function checkUserAccess($access,$route,$AccessList)
+{
+    $result = false;
+    $access = json_decode($access);
+    if (is_object($access)) {
+        foreach ($access as $key => $value) {
+            if (array_key_exists($key,$AccessList))
+            {
+                $userAccess=$AccessList[$key]['access'];
+                foreach ($value as $key2=>$value2)
+                {
+                    if (array_key_exists($value2,$userAccess)){
+                        if (array_key_exists('routes',$userAccess[$value2]))
+                        {
+                            foreach ($userAccess[$value2]['routes'] as $accessRoute){
+                                if ($accessRoute==$route){
+                                    $result=true;
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+    return $result;
+}
+
+function checkParentMenuAccess($accessList,$access){
+    $result = false;
+    if (Auth::user()->role=='admin'){
+        $result = true;
+    }
+    else{
+        $accessList=json_decode($accessList);
+        $e=explode('|',$access);
+        if (sizeof($e)>0 && is_object($accessList)){
+            foreach ($e as $key=>$value)
+            {
+                if (!empty($value)){
+                    if (property_exists($accessList,$value)){
+                        $result = true;
+                    }
+                }
+            }
+        }
+    }
+    return $result;
+}
+
+function checkAddChildMenuAccess($accessList,$child){
+    $result = false;
+    if (Auth::user()->role=='admin'){
+        $result = true;
+    }
+    else{
+        $accessList=json_decode($accessList);
+        $property=$child['access'];
+       if (is_object($accessList))
+       {
+           if (property_exists($accessList,$property))
+           {
+               if (is_array($accessList->$property))
+               {
+                   if (!array_key_exists('accessValue',$child)){
+                       $result=true;
+                   }
+                   else{
+                       foreach ($accessList->$property as $key=>$value)
+                       {
+                           if ($value==$child['accessValue'])
+                           {
+                               $result=true;
+                           }
+                       }
+                   }
+
+               }
+           }
+       }
     }
     return $result;
 }

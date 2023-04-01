@@ -31,7 +31,12 @@ Route::post('changeMobileNumber', 'SiteController@changeMobileNumber')->middlewa
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
-    Route::get('/', 'Admin\AdminController@index');
+    Route::get('/', 'Admin\AdminController@index')->name('admin');
+
+
+    Route::get('/panel', 'Admin\AdminController@author_panel')->name('author_panel');
+    Route::get('/403', 'Admin\AdminController@error403')->name('error403');
+
 
     //elFinder used ckeditor
     Route::get('file_manager','Admin\AdminController@file_manager');
