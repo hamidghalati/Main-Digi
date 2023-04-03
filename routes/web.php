@@ -18,6 +18,9 @@ Route::get('/', 'SiteController@index');
 
 Auth::routes();
 
+//vue_login
+Route::post('/vue_login','Auth\LoginController@vue_login')->middleware('guest');
+
 Route::get('admin_login','Admin\AdminController@admin_login_form')->middleware('guest');;
 
 Route::get('/confirm', 'SiteController@confirm')->middleware('guest');

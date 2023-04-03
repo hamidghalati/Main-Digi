@@ -94,7 +94,9 @@
 
         <other-price :product_id="{{ $product->id }}"></other-price>
 
-        @include('include.horizontal_product',['title'=>' محصولات مرتبط','products'=>$relate_product])
+       <div id="Related_products">
+           @include('include.horizontal_product',['title'=>' محصولات مرتبط','products'=>$relate_product])
+       </div>
 
 
         <div id="tab_div">
@@ -146,6 +148,7 @@
             </div>
         </div>
 
+        <login-box></login-box>
         <vue-chart :product_id="{{ $product->id }}"></vue-chart>
 
     </div>
@@ -156,6 +159,7 @@
 @endsection
 @section('header')
     <link rel="stylesheet" href="{{asset('css/swiper.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/auth.css')}}">
     <link rel="stylesheet" href="{{asset('slick/slick/slick.css')}}">
     <link rel="stylesheet" href="{{asset('slick/slick/slick-theme.css')}}">
 
@@ -163,6 +167,7 @@
 @section('footer')
 
     <script>
+        import LoginBox from "../../js/components/LoginBox";
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         });
@@ -172,6 +177,8 @@
        {
            $('.more_content').hide();
        }
-
+        export default {
+            components: {LoginBox}
+        }
     </script>
 @endsection

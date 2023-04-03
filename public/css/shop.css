@@ -4323,9 +4323,17 @@ padding-right: 300px;
     display: inline-block!important;
     font-family: FontAwesome!important;
 }
+#Related_products .product_list{
+    display: block!important;
+}
+#login_box .feedback_hint{
+    display: block!important;
+    /*margin-right: -197px!important;*/
+    margin-bottom: 9px!important;
+    right: auto;
+    left: 0!important;
 
-
-
+}
 
 
 
