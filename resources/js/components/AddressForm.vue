@@ -45,7 +45,7 @@
                                             <label for="" class="input_label">
                                                 <select class="selectpicker" v-model="province_id" name="" id="province_id" v-on:change="getCity('')" data-live-search="true">
                                                     <option value="">انتخاب استان</option>
-                                                    <option v-for="row in province" v-bind:value="row.id">{{row.name}}</option>
+                                                    <option v-for="row in province" v-bind:value="row.id" v-bind:key="row.id">{{row.name}}</option>
                                                 </select>
 
                                                 <label for="" v-if="error_province_id_message" :class="[error_province_id_message? 'feedback_hint active' : 'feedback']">{{error_province_id_message}}</label>
@@ -59,7 +59,7 @@
                                             <label for="" class="input_label">
                                                 <select class="selectpicker" v-model="city_id" name="" id="city_id" data-live-search="true">
                                                     <option value="">انتخاب شهر</option>
-                                                    <option v-for="row in city" v-bind:value="row.id">{{row.name}}</option>
+                                                    <option v-for="row in city" v-bind:value="row.id" v-bind:key="row.id">{{row.name}}</option>
                                                 </select>
 
                                                 <label for="" v-if="error_city_id_message" :class="[error_city_id_message? 'feedback_hint active' : 'feedback']">{{error_city_id_message}}</label>

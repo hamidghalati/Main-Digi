@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Lang;
 
 
+
 class LoginController extends Controller
 {
     /*

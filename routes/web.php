@@ -221,6 +221,9 @@ Route::post('site/check_discount_code', 'ShoppingController@check_discount_code'
 
 Route::prefix('user')->middleware(['auth'])->group(function () {
 
+    //add_favorite
+    Route::post('add_favorite','UserController@add_favorite');
+
     //addQuestion
     Route::post('addQuestion','UserController@addQuestion');
 
@@ -253,6 +256,9 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
 
     //profile/address
     Route::get('profile/address','User\UserPanelController@address');
+
+    //profile/favorite
+    Route::get('profile/favorite','User\UserPanelController@favorite');
 
 
 });

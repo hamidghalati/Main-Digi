@@ -39,6 +39,7 @@
                 <div class="alert alert-danger">{{$errors->first('mobile')}}</div>
             @endif
 
+            <a class="reset_password_link" href="{{ url('password/reset') }}">بازیابی کلمه عبور</a>
 
             <div class="send_btn login_btn" id="login_btn">
                 <span class="line"></span>

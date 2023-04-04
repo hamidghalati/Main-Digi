@@ -104,6 +104,10 @@ class UserPanelController extends Controller
         return view($this->view.'userPanel.address');
     }
 
+    public function favorite(){
+        return view($this->view.'userPanel.favorite');
+    }
+
 
 
 }

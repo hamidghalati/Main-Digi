@@ -142,6 +142,42 @@ $(document).ready(function () {
     });
 
 
+    $(".favorite").click(function () {
+        const product_id=$(this).attr('product-id');
+        $("#loading").show();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        const url = site_url + "user/add_favorite";
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: "product_id=" + product_id,
+            success: function (response) {
+                $("#loading").hide();
+                if (response=='ok') {
+                    if ($('.favorite i').hasClass('chosen'))
+                    {
+                        $('.favorite i').removeClass('chosen');
+                    }
+                    else {
+                        $('.favorite i').addClass('chosen');
+                    }
+                }
+            },
+            error:function (xhr,textStatus,error) {
+                $("#loading").hide();
+                if (error=="Unauthorized"){
+                    $("#login_box").modal('show');
+                }
+
+                console.log(textStatus);
+                console.log(error);
+            }
+        });
+    });
 
     $("#login_remember").click(function () {
         if ($(this).hasClass('active')) {

@@ -4332,10 +4332,15 @@ padding-right: 300px;
     margin-bottom: 9px!important;
     right: auto;
     left: 0!important;
-
 }
-
-
+.reset_password_link{
+    font-size: 13px;
+    color: #1ca2db;
+}
+.btn-seller-add-cart:hover{
+    background-color: #00bfd6;
+    color: white!important;
+}
 
 
 

@@ -30,6 +30,7 @@ import MobileThemeCommentList from "./components/MobileThemeCommentList";
 import ProfileAddress from "./components/ProfileAddress";
 import QuestionList from "./components/QuestionList";
 import LoginBox from "./components/LoginBox";
+import FavoriteList from "./components/FavoriteList";
 
 
 
@@ -62,7 +63,8 @@ const app = new Vue({
         MobileThemeCommentList,
         ProfileAddress,
         QuestionList,
-        LoginBox
+        LoginBox,
+        FavoriteList
 
 
 

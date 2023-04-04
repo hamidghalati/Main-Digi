@@ -2,6 +2,36 @@
 
 @section('content')
 
+    <ul class="list-inline map_ul">
+        <li>
+            <a href="{{ url('/') }}">فروشگاه</a>
+            /
+        </li>
+
+        @if($category && $category->getParent->getParent->name!='-')
+            <li>
+                <a href="{{ url('main/'.$category->getParent->getParent->url) }}">{{ $category->getParent->getParent->name }}</a>
+                /
+            </li>
+        @endif
+        @if($category && $category->getParent->name!='-')
+            <li>
+                <a href="{{ url('search/'.$category->getParent->url) }}">{{ $category->getParent->name }}</a>
+                /
+            </li>
+        @endif
+        @if($category)
+            <li>
+                <a href="{{ url('search/'.$category->url) }}">{{ $category->name }}</a>
+                /
+            </li>
+        @endif
+
+        <li>
+            <a href="{{ url()->current() }}">{{$product->title}}</a>
+        </li>
+    </ul>
+
     <div class="content">
         @if(Session::has('comment_status'))
             <div class="alert @if(Session::get('comment_status')=='ok') alert-success @else alert-danger @endif">
@@ -21,8 +51,8 @@
                 <div>
                     <ul class="product_options">
                         <li data-toggle="tooltip" data-placement="left" title="افزودن به علاقه مندی ها">
-                            <a href="">
-                                <i class="mdi mdi-heart-outline" aria-hidden="true"></i>
+                            <a class="favorite" product-id="{{ $product->id }}">
+                                <i class="mdi mdi-heart-outline @if($favorite) chosen @endif" aria-hidden="true"></i>
                             </a>
                         </li>
                         <li data-toggle="tooltip" data-placement="left" title="اشتراک گذاری">

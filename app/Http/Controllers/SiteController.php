@@ -8,6 +8,7 @@ use App\CatBrand;
 use App\CategoriesModel;
 use App\ColorModel;
 use App\Comment;
+use App\Favorite;
 use App\ItemValueModel;
 use App\Lib\MobileDetect;
 use App\ProductsModel;
@@ -91,6 +92,14 @@ class SiteController extends Controller
             $useful_comment=Comment::with('getUserInfo')->where(['product_id'=>$product->id,'status'=>1])->orderBy('like','DESC')->limit(2)->get();
         }
 
+        $favorite=null;
+        if (Auth::check()){
+            $user_id=Auth::user()->id;
+            $favorite=Favorite::where(['product_id'=>$product->id,'user_id'=>$user_id])->first();
+        }
+
+        $category=CategoriesModel::with(['getParent.getParent'])->where('id',$product->cat_id)->first();
+
         return view($this->view.'shop.show_product', [
             'product' => $product,
             'product_item' => $product_item,
@@ -98,7 +107,9 @@ class SiteController extends Controller
             'relate_product' => $relate_product,
             'review'=>$review,
             'comment_count'=>$comment_count,
-            'useful_comment'=>$useful_comment
+            'useful_comment'=>$useful_comment,
+            'favorite'=>$favorite,
+            'category'=>$category
         ]);
     }
 

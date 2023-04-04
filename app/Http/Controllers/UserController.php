@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Favorite;
 use App\Mail\SendAnswer;
 use App\Question;
 use Illuminate\Http\Request;
@@ -60,5 +61,28 @@ class UserController extends Controller
        $Question->save();
 
        return 'ok';
+    }
+
+    public function add_favorite(Request $request)
+    {
+        if ($request->ajax())
+        {
+            $product_id=$request->get('product_id');
+            $user_id=$request->user()->id;
+            $favorite=Favorite::where(['product_id'=>$product_id,'user_id'=>$user_id])->first();
+            if ($favorite){
+                $favorite->delete();
+                return 'ok';
+            }
+            else{
+                $favorite=new Favorite($request->all());
+                $favorite->user_id=$user_id;
+                $favorite->saveOrFail();
+                return 'ok';
+            }
+        }
+        else{
+            return redirect('/');
+        }
     }
 }

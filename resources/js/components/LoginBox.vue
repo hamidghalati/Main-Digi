@@ -37,16 +37,18 @@
                             </label>
                         </div>
 
+                        <a class="reset_password_link" v-bind:href="$siteUrl+'password/reset'">بازیابی کلمه عبور</a>
+
+
                         <div class="form-group row" style="margin-right: 3px;padding-top: 10px;">
                             <input v-model="checked" class="form-check-input" type="checkbox">
                             <span :class="[checked ?'check_box active' : 'check_box']" v-on:click="checked=!checked"></span>
                             <span class="form-check-label">مرا به خاطر بسپار</span>
 
                         </div>
-
-
-
                     </div>
+
+
                     <div v-if="serverError" class="alert alert-danger">{{ serverError }}</div>
                 </div>
                 <div class="modal-footer">
@@ -77,30 +79,38 @@ export default {
             password_error: false,
             password_error_text: false,
             checked:true,
-            serverError:false
+            serverError:false,
+            send_data:true
         }
     },
     methods: {
         login: function () {
             this.validate_login_mobile();
             this.validate_login_password();
-            if (!this.password_error && !this.mobile_error) {
+            if (!this.password_error && !this.mobile_error && this.send_data) {
+                this.send_data=false;
                 const formData=new FormData();
                 formData.append('mobile',this.mobile);
                 formData.append('password',this.password);
                 formData.append('remember',this.checked);
 
-                const url=this.$siteUrl+"vue_login";
+                const url=this.$siteUrl+"/vue_login";
                 $("#loading").show();
                 this.serverError=false;
                 this.axios.post(url,formData).then(response=>{
                     $("#loading").hide();
+                    this.send_data=true;
                     if (response.data.status=='ok'){
+                        $("#login_box").modal('hide');
                         window.location=window.location.href;
                     }
                     else {
                         this.serverError=response.data.status;
                     }
+                }).catch(error=>{
+                    $("#loading").hide();
+                    this.send_data=true;
+                    this.serverError='خطا در ارسال اطلاعات، مجدداً تلاش نمایید';
                 });
             }
 

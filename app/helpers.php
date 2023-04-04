@@ -1491,7 +1491,7 @@ function checkUserAccess($access,$route,$AccessList)
 
 function checkParentMenuAccess($accessList,$access){
     $result = false;
-    if (Auth::user()->role=='admin'){
+    if (Auth::user()->role=='admin' && Auth::user()->account_status=='active'){
         $result = true;
     }
     else{
@@ -1513,7 +1513,7 @@ function checkParentMenuAccess($accessList,$access){
 
 function checkAddChildMenuAccess($accessList,$child){
     $result = false;
-    if (Auth::user()->role=='admin'){
+    if (Auth::user()->role=='admin' && Auth::user()->account_status=='active'){
         $result = true;
     }
     else{
