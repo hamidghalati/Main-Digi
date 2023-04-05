@@ -7,11 +7,8 @@
 
 
         <div class="col-md-9" style="padding: 0">
-            <div class="profile_menu">
-                <span class="profile_menu_title">لیست علاقه مندی ها</span>
-
-
-            </div>
+            <span class="profile_menu_title">لیست علاقه مندی ها</span>
+            <favorite-list></favorite-list>
         </div>
     </div>
 @endsection

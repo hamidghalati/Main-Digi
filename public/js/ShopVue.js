@@ -2510,15 +2510,61 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _myMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../myMixin */ "./resources/js/myMixin.js");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "FavoriteList",
+  mixins: [_myMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  data: function data() {
+    return {
+      FavoriteLists: {
+        data: []
+      },
+      remove_id: 0,
+      show_dialog_box: false
+    };
+  },
   mounted: function mounted() {
-    app = this;
-    app.getList();
+    this.getList();
   },
   methods: {
     getList: function getList() {
+      var _this = this;
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       $("#loading").show();
+      var url = this.$siteUrl + "user/getFavoriteList?page=" + page;
+      this.axios.get(url).then(function (response) {
+        $("#loading").hide();
+        _this.FavoriteLists = response.data;
+      })["catch"](function (error) {
+        $("#loading").hide();
+      });
+    },
+    getScoreValue: function getScoreValue(product) {
+      var width = 0;
+      if (product.score_count > 0) {
+        width = product.score / (product.score_count * 6);
+      }
+      width *= 20;
+      return width;
+    },
+    remove_of_list: function remove_of_list(id) {
+      this.remove_id = id;
+      this.show_dialog_box = true;
+    },
+    approve: function approve() {
+      var _this2 = this;
+      $("#loading").show();
+      this.show_dialog_box = false;
+      var url = this.$siteUrl + "user/favorite/removeProductOfList";
+      var formData = new FormData();
+      formData.append('product_id', this.remove_id);
+      this.axios.post(url, formData).then(function (response) {
+        $("#loading").hide();
+        _this2.FavoriteLists = response.data;
+      })["catch"](function (error) {
+        $("#loading").hide();
+      });
     }
   }
 });
@@ -5765,7 +5811,84 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div");
+  return _c("div", {
+    staticClass: "favorite_list"
+  }, [_vm._l(_vm.FavoriteLists.data, function (item) {
+    return _c("div", {
+      key: item.id,
+      staticClass: "row"
+    }, [_c("div", {
+      staticClass: "col-3"
+    }, [_c("i", {
+      staticClass: "mdi mdi-trash-can-outline",
+      on: {
+        click: function click($event) {
+          return _vm.remove_of_list(item.get_product.id);
+        }
+      }
+    }), _vm._v(" "), _c("img", {
+      attrs: {
+        src: _vm.$siteUrl + "files/thumb/" + item.get_product.image_url,
+        alt: ""
+      }
+    })]), _vm._v(" "), _c("div", {
+      staticClass: "col-9"
+    }, [_c("div", [_c("a", {
+      attrs: {
+        href: _vm.$siteUrl + "/product/dkp-" + item.get_product.id + "/" + item.get_product.product_url
+      }
+    }, [_vm._v("\n                    " + _vm._s(item.get_product.title) + "\n                ")])]), _vm._v(" "), _c("div", [_c("div", {
+      staticClass: "score"
+    }, [_c("div", {
+      staticClass: "gray"
+    }, [_c("div", {
+      staticClass: "red",
+      style: {
+        width: _vm.getScoreValue(item.get_product) + "%"
+      }
+    })])])]), _vm._v(" "), _c("div", [item.get_product.status == 1 ? _c("span", {
+      staticClass: "product_price"
+    }, [_vm._v("\n                        " + _vm._s(_vm.replaceNumber(_vm.number_format(item.get_product.price))) + " تومان\n                    ")]) : _c("span", {
+      staticClass: "product_price"
+    }), _vm._v(" "), _c("a", {
+      staticClass: "btn btn-primary",
+      attrs: {
+        href: _vm.$siteUrl + "/product/dkp-" + item.get_product.id + "/" + item.get_product.product_url
+      }
+    }, [_vm._v("\n                    مشاهده محصول\n                ")])])])]);
+  }), _vm._v(" "), _c("pagination", {
+    attrs: {
+      align: "center",
+      data: _vm.FavoriteLists
+    },
+    on: {
+      "pagination-change-page": _vm.getList
+    }
+  }), _vm._v(" "), _vm.show_dialog_box ? _c("div", {
+    staticClass: "message_div"
+  }, [_c("div", {
+    staticClass: "message_box",
+    staticStyle: {
+      width: "428px!important"
+    }
+  }, [_c("p", {
+    attrs: {
+      id: "msg"
+    }
+  }, [_vm._v("آیا مطمئنید که این محصول از لیست مورد علاقه شما حذف گردد؟")]), _vm._v(" "), _c("a", {
+    staticClass: "alert alert-success",
+    on: {
+      click: _vm.approve
+    }
+  }, [_vm._v("بلی")]), _vm._v(" "), _c("a", {
+    staticClass: "alert alert-danger",
+    on: {
+      click: function click($event) {
+        _vm.show_dialog_box = false;
+        _vm.select_product = null;
+      }
+    }
+  }, [_vm._v("خیر")])])]) : _vm._e()], 2);
 };
 var staticRenderFns = [];
 render._withStripped = true;

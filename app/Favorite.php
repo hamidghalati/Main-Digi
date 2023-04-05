@@ -11,6 +11,6 @@ class Favorite extends Model
 
     public function getProduct()
     {
-        return $this->hasOne(ProductsModel::class,'id','product_id')->select('name');
+        return $this->hasOne(ProductsModel::class,'id','product_id');
     }
 }

@@ -85,4 +85,29 @@ class UserController extends Controller
             return redirect('/');
         }
     }
+
+    public function getFavoriteList(Request $request)
+    {
+        if ($request->header('X-Xsrf-Token',null)){
+            $user_id=$request->user()->id;
+            return Favorite::with('getProduct')
+                ->where('user_id',$user_id)
+                ->orderBy('id','DESC')
+                ->paginate(10);
+        }
+
+    }
+
+    public function removeProductOfList(Request $request)
+    {
+        if ($request->header('X-Xsrf-Token',null)){
+            $user_id=$request->user()->id;
+            $product_id=$request->get('product_id');
+            Favorite::where(['user_id'=>$user_id,'product_id'=>$product_id])->delete();
+            return Favorite::with('getProduct')
+                ->where('user_id',$user_id)
+                ->orderBy('id','DESC')
+                ->paginate(10);
+        }
+    }
 }

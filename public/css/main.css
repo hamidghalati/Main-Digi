@@ -102,3 +102,21 @@ li{
 .chosen{
 color: red!important;
 }
+.score {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.gray {
+    width: 80px;
+    height: 16px;
+    margin-right: 5px;
+    background: url("../files/images/star-new.gif") repeat-x 0 0;
+    direction: ltr;
+}
+
+.red {
+    height: 16px;
+    background: url("../files/images/star-new.gif") repeat-x 0 -32px;
+}

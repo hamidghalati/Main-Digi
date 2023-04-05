@@ -221,6 +221,10 @@ Route::post('site/check_discount_code', 'ShoppingController@check_discount_code'
 
 Route::prefix('user')->middleware(['auth'])->group(function () {
 
+    //getFavoriteList
+    Route::get('getFavoriteList','UserController@getFavoriteList');
+
+
     //add_favorite
     Route::post('add_favorite','UserController@add_favorite');
 
@@ -259,6 +263,10 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
 
     //profile/favorite
     Route::get('profile/favorite','User\UserPanelController@favorite');
+
+    //favorite/removeProductOfList
+    Route::post('favorite/removeProductOfList','UserController@removeProductOfList');
+
 
 
 });
