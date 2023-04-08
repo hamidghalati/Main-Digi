@@ -33,6 +33,7 @@ Route::post('changeMobileNumber', 'SiteController@changeMobileNumber')->middlewa
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//admin
 Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
     Route::get('/', 'Admin\AdminController@index')->name('admin');
 
@@ -73,6 +74,14 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
 
     //discount_code
     create_crud_route('discount', 'DiscountController');
+
+    //stockroom
+    Route::get('stockroom/add/input', 'Admin\StockroomController@add_input')->name('stockroom.add_input');
+    create_crud_route('stockrooms', 'StockroomController',[]);
+
+    //stockroom/getProductWarranty
+    Route::get('stockroom/getProductWarranty', 'Admin\StockroomController@getProductWarranty');
+
 
 
     //gallery

@@ -1198,3 +1198,18 @@ input.pdate{
     padding: 15px;
     width: 25%;
 }
+.textarea_field{
+    display: flex;
+    align-items: center;
+}
+.textarea_field textarea{
+    margin-right: 5px;
+    height: 120px;
+}
+.select_product_btn{
+    border-radius: 0!important;
+    -webkit-border-radius: 0!important;
+    padding: 7px 12px;
+    cursor: pointer;
+    font-size: 15px;
+}

@@ -11,6 +11,7 @@ import axios from 'axios';
 import VueAxios from "vue-axios";
 import Counter from "./components/Counter";
 import OrderStep from "./components/OrderStep";
+import StockroomProductList from "./components/StockroomProductList";
 
 
 
@@ -23,7 +24,8 @@ const app = new Vue({
     components:{
         IncredibleOffers,
         Counter,
-        OrderStep
+        OrderStep,
+        StockroomProductList
 
 
     }
