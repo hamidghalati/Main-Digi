@@ -2198,7 +2198,13 @@ __webpack_require__.r(__webpack_exports__);
       ProductList: {
         data: []
       },
-      page: 1
+      page: 1,
+      product_count: [],
+      selected_product: [],
+      show_message_box: false,
+      select_id: 0,
+      select_key: 0,
+      msg: 'آیا از افزودن این محصول به انبار مطمئن هستید؟'
     };
   },
   mounted: function mounted() {
@@ -2211,6 +2217,9 @@ __webpack_require__.r(__webpack_exports__);
       this.page = page;
       var url = this.$siteUrl + "/admin/stockroom/getProductWarranty?page=" + page;
       this.axios.get(url).then(function (response) {
+        for (var i = 0; i < response.data.data.length; i++) {
+          _this.product_count[i] = response.data.data[i].product_number;
+        }
         _this.ProductList = response.data;
       });
     },
@@ -2219,6 +2228,29 @@ __webpack_require__.r(__webpack_exports__);
       var k = (this.page - 1) * 5;
       k += key;
       return this.replaceNumber(k);
+    },
+    checkInList: function checkInList(id) {
+      var result = false;
+      this.selected_product.forEach(function (row) {
+        if (row.id == id) {
+          result = true;
+        }
+      });
+      return result;
+    },
+    add_product: function add_product(id, key) {
+      this.show_message_box = true;
+      this.select_id = id;
+      this.select_key = key;
+    },
+    add_product_to_stockroom: function add_product_to_stockroom() {
+      this.show_message_box = false;
+      var n = this.product_count[this.select_key];
+      if (parseInt(n) > 0) {
+        var item = this.ProductList.data[this.select_key];
+        item.product_number = n;
+        this.selected_product.push(item);
+      }
     }
   }
 });
@@ -2760,8 +2792,88 @@ var render = function render() {
       "data-toggle": "modal",
       "data-target": ".bd-example-modal-lg"
     }
-  }, [_vm._v("افزودن\n            محصول\n        ")])]), _vm._v(" "), _c("div", {
-    staticClass: "modal fade bd-example-modal-lg",
+  }, [_vm._v("افزودن\n            محصول\n        ")])]), _vm._v(" "), _c("table", {
+    staticClass: "table table-bordered"
+  }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.selected_product, function (item, key) {
+    return _c("tr", {
+      key: key
+    }, [_c("td", {
+      staticStyle: {
+        width: "20px"
+      }
+    }, [_vm._v(_vm._s(_vm.getRow(key)))]), _vm._v(" "), _c("td", [_c("img", {
+      staticClass: "product_pic stockroom_product",
+      attrs: {
+        src: _vm.$siteUrl + "files/thumb/" + item.get_product.image_url,
+        alt: ""
+      }
+    })]), _vm._v(" "), _c("td", [_c("span", [_vm._v(_vm._s(item.get_product.title))])]), _vm._v(" "), _c("td", [_c("span", [_vm._v(_vm._s(item.get_seller.brand_name))])]), _vm._v(" "), _c("td", {
+      staticStyle: {
+        "font-size": "14px"
+      }
+    }, [_c("span", [_vm._v(_vm._s(item.get_warranty.name))])]), _vm._v(" "), _c("td", {
+      staticStyle: {
+        width: "150px"
+      }
+    }, [item.get_color.id > 0 ? _c("span", {
+      staticClass: "color_td",
+      staticStyle: {
+        color: "white"
+      },
+      style: {
+        background: item.get_color.code
+      }
+    }, [_c("span", {
+      staticStyle: {
+        color: "white"
+      }
+    }, [_vm._v(_vm._s(item.get_color.name))])]) : _vm._e()]), _vm._v(" "), _c("td", {
+      staticStyle: {
+        width: "70px"
+      }
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: _vm.product_count[key],
+        expression: "product_count[key]"
+      }],
+      staticClass: "form-control",
+      staticStyle: {
+        width: "70px",
+        "text-align": "center"
+      },
+      attrs: {
+        type: "text",
+        placeholder: "تعداد"
+      },
+      domProps: {
+        value: _vm.product_count[key]
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(_vm.product_count, key, $event.target.value);
+        }
+      }
+    })]), _vm._v(" "), _c("td", {
+      staticStyle: {
+        width: "70px"
+      }
+    }, [_vm.checkInList(item.id) ? _c("span", {
+      staticStyle: {
+        color: "#ef5661"
+      }
+    }, [_vm._v("اضافه شد")]) : _c("span", {
+      staticClass: "select_item",
+      on: {
+        click: function click($event) {
+          return _vm.add_product(item.id, key);
+        }
+      }
+    }, [_vm._v("افزودن")])])]);
+  }), 0)]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade bd-example-modal-lg product_list",
     attrs: {
       tabindex: "-1",
       role: "dialog",
@@ -2772,7 +2884,7 @@ var render = function render() {
     staticClass: "modal-dialog modal-lg"
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
+  }, [_vm._m(1), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("table", {
     staticClass: "table table-striped"
@@ -2789,10 +2901,99 @@ var render = function render() {
       staticStyle: {
         "font-size": "14px"
       }
-    }, [_c("span", [_vm._v(_vm._s(item.get_warranty.name))])])]);
-  }), 0)])])])])])]);
+    }, [_c("span", [_vm._v(_vm._s(item.get_warranty.name))])]), _vm._v(" "), _c("td", {
+      staticStyle: {
+        width: "150px"
+      }
+    }, [item.get_color.id > 0 ? _c("span", {
+      staticClass: "color_td",
+      staticStyle: {
+        color: "white"
+      },
+      style: {
+        background: item.get_color.code
+      }
+    }, [_c("span", {
+      staticStyle: {
+        color: "white"
+      }
+    }, [_vm._v(_vm._s(item.get_color.name))])]) : _vm._e()]), _vm._v(" "), _c("td", {
+      staticStyle: {
+        width: "70px"
+      }
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: _vm.product_count[key],
+        expression: "product_count[key]"
+      }],
+      staticClass: "form-control",
+      staticStyle: {
+        width: "70px",
+        "text-align": "center"
+      },
+      attrs: {
+        type: "text",
+        placeholder: "تعداد"
+      },
+      domProps: {
+        value: _vm.product_count[key]
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(_vm.product_count, key, $event.target.value);
+        }
+      }
+    })]), _vm._v(" "), _c("td", {
+      staticStyle: {
+        width: "70px"
+      }
+    }, [_vm.checkInList(item.id) ? _c("span", {
+      staticStyle: {
+        color: "#ef5661"
+      }
+    }, [_vm._v("اضافه شد")]) : _c("span", {
+      staticClass: "select_item",
+      on: {
+        click: function click($event) {
+          return _vm.add_product(item.id, key);
+        }
+      }
+    }, [_vm._v("افزودن")])])]);
+  }), 0)])])])])]), _vm._v(" "), _vm.show_message_box ? _c("div", {
+    staticClass: "message_div",
+    staticStyle: {
+      display: "block"
+    }
+  }, [_c("div", {
+    staticClass: "message_box"
+  }, [_c("p", {
+    attrs: {
+      id: "msg"
+    }
+  }, [_vm._v(_vm._s(_vm.msg))]), _vm._v(" "), _c("a", {
+    staticClass: "alert alert-success",
+    on: {
+      click: function click($event) {
+        return _vm.add_product_to_stockroom();
+      }
+    }
+  }, [_vm._v("بلی")]), _vm._v(" "), _c("a", {
+    staticClass: "alert alert-danger",
+    on: {
+      click: function click($event) {
+        _vm.show_message_box = false;
+      }
+    }
+  }, [_vm._v("خیر")])])]) : _vm._e()]);
 };
 var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("ردیف")]), _vm._v(" "), _c("th", [_vm._v("تصویر محصول")]), _vm._v(" "), _c("th", [_vm._v("عنوان محصول")]), _vm._v(" "), _c("th", [_vm._v("فروشنده")]), _vm._v(" "), _c("th", [_vm._v("گارانتی")]), _vm._v(" "), _c("th", [_vm._v("رنگ")]), _vm._v(" "), _c("th", [_vm._v("تعداد")]), _vm._v(" "), _c("th", [_vm._v("عملیات")])])]);
+}, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
