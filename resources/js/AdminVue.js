@@ -2,6 +2,7 @@
 
 window.Vue = require('vue');
 
+Vue.component('pagination', require('laravel-vue-semantic-ui-pagination'));
 
  Vue.component('Cleave', require('vue-cleave-component'));
 Vue.config.productionTip = false

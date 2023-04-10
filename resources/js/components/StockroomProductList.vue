@@ -21,7 +21,9 @@
 
         </div>
 
-        <table class="table table-bordered">
+
+        <p style="margin-top: 30px;margin-bottom: 20px">محصولات انتخاب شده</p>
+        <table class="table table-striped">
             <thead>
             <tr>
                 <th>ردیف</th>
@@ -57,13 +59,18 @@
                                     </span>
                 </td>
                 <td style="width:70px">
-                    <input type="text" v-model="product_count[key]" placeholder="تعداد" class="form-control" style="width: 70px;text-align: center">
+                    <input type="text" v-model="selected_product[key].product_number" placeholder="تعداد" class="form-control" style="width: 70px;text-align: center">
                 </td>
-                <td style="width:70px">
-                    <span v-if="checkInList(item.id)" style="color: #ef5661">اضافه شد</span>
-                    <span v-else class="select_item" v-on:click="add_product(item.id,key)">افزودن</span>
+                <td style="width:100px">
+<!--                    <span v-if="checkInList(item.id)" style="color: #ef5661">اضافه شد</span>-->
+                    <span class="remove_item" v-on:click="removeOfList(key)">حذف</span>
                 </td>
             </tr>
+
+            <tr v-if="selected_product.length==0">
+                <td colspan="8">  محصولی انتخاب نشده </td>
+            </tr>
+
             </tbody>
         </table>
 
@@ -78,7 +85,28 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+
+                    <div class="loading_box2">
+
+                        <div class="load-4">
+                            <p>در حال بارگذاری...</p>
+                            <div class="ring-1"></div>
+                        </div>
+
+<!--                        <div >-->
+<!--                            <div class="load-1">-->
+<!--                                <div class="line"></div>-->
+<!--                                <div class="line"></div>-->
+<!--                                <div class="line"></div>-->
+<!--                                <p>صبر نمایید</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+
                     <div class="modal-body">
+
+
+
                         <table class="table table-striped">
                             <tbody>
                             <tr v-for="(item,key) in ProductList.data" v-bind:key="key">
@@ -112,6 +140,8 @@
                             </tr>
                             </tbody>
                         </table>
+                        <pagination :data="ProductList" v-bind:showDisabled="true" icon="chevron" v-on:change-page="getProductWarranty"></pagination>
+
                     </div>
                 </div>
             </div>
@@ -131,6 +161,7 @@
 
 <script>
 import myMixin from "../myMixin";
+import pagination from 'laravel-vue-semantic-ui-pagination';
 
 export default {
     name: "StockroomProductList",
@@ -195,6 +226,9 @@ export default {
                 item.product_number=n;
                 this.selected_product.push(item);
             }
+        },
+        removeOfList:function (key) {
+            this.$delete(this.selected_product,key);
         }
     }
 }

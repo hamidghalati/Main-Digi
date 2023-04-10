@@ -2186,6 +2186,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _myMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../myMixin */ "./resources/js/myMixin.js");
+/* harmony import */ var laravel_vue_semantic_ui_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! laravel-vue-semantic-ui-pagination */ "./node_modules/laravel-vue-semantic-ui-pagination/src/laravel-vue-semantic-ui-pagination.js");
+/* harmony import */ var laravel_vue_semantic_ui_pagination__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(laravel_vue_semantic_ui_pagination__WEBPACK_IMPORTED_MODULE_1__);
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "StockroomProductList",
@@ -2251,6 +2254,9 @@ __webpack_require__.r(__webpack_exports__);
         item.product_number = n;
         this.selected_product.push(item);
       }
+    },
+    removeOfList: function removeOfList(key) {
+      this.$delete(this.selected_product, key);
     }
   }
 });
@@ -2792,9 +2798,14 @@ var render = function render() {
       "data-toggle": "modal",
       "data-target": ".bd-example-modal-lg"
     }
-  }, [_vm._v("افزودن\n            محصول\n        ")])]), _vm._v(" "), _c("table", {
-    staticClass: "table table-bordered"
-  }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.selected_product, function (item, key) {
+  }, [_vm._v("افزودن\n                محصول\n            ")])]), _vm._v(" "), _c("p", {
+    staticStyle: {
+      "margin-top": "30px",
+      "margin-bottom": "20px"
+    }
+  }, [_vm._v("محصولات انتخاب شده")]), _vm._v(" "), _c("table", {
+    staticClass: "table table-striped"
+  }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.selected_product, function (item, key) {
     return _c("tr", {
       key: key
     }, [_c("td", {
@@ -2835,8 +2846,8 @@ var render = function render() {
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: _vm.product_count[key],
-        expression: "product_count[key]"
+        value: _vm.selected_product[key].product_number,
+        expression: "selected_product[key].product_number"
       }],
       staticClass: "form-control",
       staticStyle: {
@@ -2848,31 +2859,31 @@ var render = function render() {
         placeholder: "تعداد"
       },
       domProps: {
-        value: _vm.product_count[key]
+        value: _vm.selected_product[key].product_number
       },
       on: {
         input: function input($event) {
           if ($event.target.composing) return;
-          _vm.$set(_vm.product_count, key, $event.target.value);
+          _vm.$set(_vm.selected_product[key], "product_number", $event.target.value);
         }
       }
     })]), _vm._v(" "), _c("td", {
       staticStyle: {
-        width: "70px"
+        width: "100px"
       }
-    }, [_vm.checkInList(item.id) ? _c("span", {
-      staticStyle: {
-        color: "#ef5661"
-      }
-    }, [_vm._v("اضافه شد")]) : _c("span", {
-      staticClass: "select_item",
+    }, [_c("span", {
+      staticClass: "remove_item",
       on: {
         click: function click($event) {
-          return _vm.add_product(item.id, key);
+          return _vm.removeOfList(key);
         }
       }
-    }, [_vm._v("افزودن")])])]);
-  }), 0)]), _vm._v(" "), _c("div", {
+    }, [_vm._v("حذف")])])]);
+  }), _vm._v(" "), _vm.selected_product.length == 0 ? _c("tr", [_c("td", {
+    attrs: {
+      colspan: "8"
+    }
+  }, [_vm._v("  محصولی انتخاب نشده ")])]) : _vm._e()], 2)]), _vm._v(" "), _c("div", {
     staticClass: "modal fade bd-example-modal-lg product_list",
     attrs: {
       tabindex: "-1",
@@ -2884,7 +2895,7 @@ var render = function render() {
     staticClass: "modal-dialog modal-lg"
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(1), _vm._v(" "), _c("div", {
+  }, [_vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("table", {
     staticClass: "table table-striped"
@@ -2962,7 +2973,16 @@ var render = function render() {
         }
       }
     }, [_vm._v("افزودن")])])]);
-  }), 0)])])])])]), _vm._v(" "), _vm.show_message_box ? _c("div", {
+  }), 0)]), _vm._v(" "), _c("pagination", {
+    attrs: {
+      data: _vm.ProductList,
+      showDisabled: true,
+      icon: "chevron"
+    },
+    on: {
+      "change-page": _vm.getProductWarranty
+    }
+  })], 1)])])]), _vm._v(" "), _vm.show_message_box ? _c("div", {
     staticClass: "message_div",
     staticStyle: {
       display: "block"
@@ -3015,6 +3035,16 @@ var staticRenderFns = [function () {
       "aria-hidden": "true"
     }
   }, [_vm._v("×")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "loading_box2"
+  }, [_c("div", {
+    staticClass: "load-4"
+  }, [_c("p", [_vm._v("در حال بارگذاری...")]), _vm._v(" "), _c("div", {
+    staticClass: "ring-1"
+  })])]);
 }];
 render._withStripped = true;
 
@@ -4696,6 +4726,109 @@ function toComment(sourceMap) {
 	return '/*# ' + data + ' */';
 }
 
+
+/***/ }),
+
+/***/ "./node_modules/laravel-vue-semantic-ui-pagination/src/laravel-vue-semantic-ui-pagination.js":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/laravel-vue-semantic-ui-pagination/src/laravel-vue-semantic-ui-pagination.js ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+
+    template: '<div class="ui pagination menu" :class="size" v-if="data.total > data.per_page">\
+        <!-- First Item -->\
+        <a class="item" @click.prevent="selectPage(--data.current_page)" v-if="data.prev_page_url">\
+            <i class="left icon" :class="icon"></i>\
+        </a>\
+        <a class="disabled item" v-if="showDisabled && !data.prev_page_url">\
+            <i class="left icon" :class="icon"></i>\
+        </a>\
+        <!-- Pagination Menu Items -->\
+        <a class="item" v-for="n in getPages()" :class="{ \'active\': n == data.current_page }" @click.prevent="selectPage(n)">\
+            {{ n }}\
+        </a>\
+        <!-- Last Item -->\
+        <a class="item" @click.prevent="selectPage(++data.current_page)" v-if="data.next_page_url">\
+            <i class="right icon" :class="icon"></i>\
+        </a>\
+        <a class="disabled item" v-if="showDisabled && !data.next_page_url">\
+            <i class="right icon" :class="icon"></i>\
+        </a>\
+    </div>',
+
+
+    props: {
+        showDisabled: {
+            type: Boolean,
+            default: false,
+            required: false
+        },
+        icon: {
+            type: String,
+            default: 'angle double',
+            required: false
+        },
+        size: {
+            type: String,
+            default: 'small',
+            required: false
+        },
+        data: {
+            type: Object,
+            default: function() {
+                return {
+                    current_page: 1,
+                    data: [],
+                    from: 1,
+                    last_page: 1,
+                    next_page_url: null,
+                    per_page: 10,
+                    prev_page_url: null,
+                    to: 1,
+                    total: 0,
+                }
+            },
+            required: true
+        },
+        limit: {
+            type: Number,
+            default: 0,
+            required: false
+        }
+    },
+
+    methods: {
+        selectPage: function(page) {
+            this.$emit('change-page', page);
+        },
+        getPages: function() {
+            if (this.limit === -1) {
+                return 0;
+            }
+
+            if (this.limit === 0) {
+                return this.data.last_page;
+            }
+
+            var start = this.data.current_page - this.limit,
+                end   = this.data.current_page + this.limit + 1,
+                pages = [],
+                index;
+
+            start = start < 1 ? 1 : start;
+            end   = end >= this.data.last_page ? this.data.last_page + 1 : end;
+
+            for (index = start; index < end; index++) {
+                pages.push(index);
+            }
+
+            return pages;
+        }
+    }
+};
 
 /***/ }),
 
@@ -17765,6 +17898,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_OrderStep__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/OrderStep */ "./resources/js/components/OrderStep.vue");
 /* harmony import */ var _components_StockroomProductList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/StockroomProductList */ "./resources/js/components/StockroomProductList.vue");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+Vue.component('pagination', __webpack_require__(/*! laravel-vue-semantic-ui-pagination */ "./node_modules/laravel-vue-semantic-ui-pagination/src/laravel-vue-semantic-ui-pagination.js"));
 Vue.component('Cleave', __webpack_require__(/*! vue-cleave-component */ "./node_modules/vue-cleave-component/dist/vue-cleave.min.js"));
 Vue.config.productionTip = false;
 
