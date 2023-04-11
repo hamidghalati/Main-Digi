@@ -1802,3 +1802,35 @@ input.pdate {
         width: 25px;
     }
 }
+
+.stockroom_product_pic{
+    width: 55px!important;
+}
+@media (min-width: 1300px) {
+    .stockroom_product_pic{
+        width: 65px!important;
+    }
+}
+.product_list .input_div{
+    padding: 20px!important;
+}
+.product_list .input_div a,input{
+    border-radius: 0!important;
+}
+.product_list .input_div input{
+    box-shadow: none!important;
+}
+.product_list .input_div a{
+    margin-top: 1px;
+    font-size: 14px;
+}
+.error_ul{
+    margin-bottom:5px!important;
+    margin-top:5px!important;
+    font-size: 14px;
+    margin-right: 10px;
+    padding: 0!important;
+}
+.error_ul li{
+    line-height: 25px;
+}

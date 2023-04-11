@@ -1,5 +1,14 @@
 <template>
     <div>
+
+        <div class="alert alert-warning" v-if="error.length>0">
+            <ul class="error_ul">
+                <li v-for="(msg,key) in error" v-bind:key="key">
+                    {{ msg }}
+                </li>
+            </ul>
+        </div>
+
         <div style="padding-bottom: 20px">
             <div class="form-group">
                 <label for="stockroom">انتخاب انبار :</label>
@@ -74,6 +83,10 @@
             </tbody>
         </table>
 
+        <button class="btn btn-success" v-on:click="send_data()">
+            ثبت نهایی
+        </button>
+
 
         <div class="modal fade bd-example-modal-lg product_list" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
              aria-hidden="true" >
@@ -86,34 +99,29 @@
                         </button>
                     </div>
 
-                    <div class="loading_box2">
-
+                    <div class="loading_box2" v-if="get_data">
                         <div class="load-4">
                             <p>در حال بارگذاری...</p>
                             <div class="ring-1"></div>
                         </div>
-
-<!--                        <div >-->
-<!--                            <div class="load-1">-->
-<!--                                <div class="line"></div>-->
-<!--                                <div class="line"></div>-->
-<!--                                <div class="line"></div>-->
-<!--                                <p>صبر نمایید</p>-->
-<!--                            </div>-->
-<!--                        </div>-->
                     </div>
 
                     <div class="modal-body">
 
 
 
+                        <div class="box_header">
+                            <div class="input_div">
+                                <input type="text" class="form-control" v-model="search_text" placeholder="نام محصول ..."><a class="btn btn-primary" v-on:click="getProductWarranty(1)" style="color:white;">جستجو</a>
+                            </div>
+                        </div>
                         <table class="table table-striped">
                             <tbody>
                             <tr v-for="(item,key) in ProductList.data" v-bind:key="key">
                                 <td>{{ getRow(key) }}</td>
                                 <td>
                                     <img v-bind:src="$siteUrl+'files/thumb/'+item.get_product.image_url" alt=""
-                                         class="product_pic stockroom_product">
+                                         class="product_pic stockroom_product_pic">
                                 </td>
                                 <td>
                                     <span>{{ item.get_product.title }}</span>
@@ -178,7 +186,10 @@ export default {
             show_message_box:false,
             select_id:0,
             select_key:0,
-            msg:'آیا از افزودن این محصول به انبار مطمئن هستید؟'
+            msg:'آیا از افزودن این محصول به انبار مطمئن هستید؟',
+            get_data:false,
+            search_text:'',
+            error:[]
         }
     },
     mounted() {
@@ -187,13 +198,17 @@ export default {
     methods: {
         getProductWarranty: function (page = 1) {
             this.page = page;
-            const url = this.$siteUrl + "/admin/stockroom/getProductWarranty?page=" + page;
+            this.get_data=true;
+            const url = this.$siteUrl + "/admin/stockroom/getProductWarranty?page=" + page+'&search_text='+this.search_text;
             this.axios.get(url).then(response => {
                 for (let i=0;i<response.data.data.length;i++)
                 {
                     this.product_count[i]=response.data.data[i].product_number;
                 }
                 this.ProductList = response.data;
+                this.get_data=false;
+            }).catch(error=>{
+                this.get_data=false;
             });
         },
         getRow: function (key) {
@@ -229,6 +244,29 @@ export default {
         },
         removeOfList:function (key) {
             this.$delete(this.selected_product,key);
+        },
+        send_data:function () {
+            this.error=[];
+            let send=true;
+            if (this.stockroom_id==0)
+            {
+                send=false;
+                this.error.push('لطفا انبار را انتخاب کنید');
+            }
+            if (this.selected_product.length==0)
+            {
+                send=false;
+                this.error.push('محصولاتی را که باید به انبار ارسال شود را انتخاب نمایید');
+            }
+
+            if (send)
+            {
+                let string='';
+                this.selected_product.forEach(function (row) {
+                    string=string+"@"+row.id+"_"+row.product_number;
+                })
+                console.log(string);
+            }
         }
     }
 }

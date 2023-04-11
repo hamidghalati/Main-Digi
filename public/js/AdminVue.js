@@ -2207,7 +2207,10 @@ __webpack_require__.r(__webpack_exports__);
       show_message_box: false,
       select_id: 0,
       select_key: 0,
-      msg: 'آیا از افزودن این محصول به انبار مطمئن هستید؟'
+      msg: 'آیا از افزودن این محصول به انبار مطمئن هستید؟',
+      get_data: false,
+      search_text: '',
+      error: []
     };
   },
   mounted: function mounted() {
@@ -2218,12 +2221,16 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.page = page;
-      var url = this.$siteUrl + "/admin/stockroom/getProductWarranty?page=" + page;
+      this.get_data = true;
+      var url = this.$siteUrl + "/admin/stockroom/getProductWarranty?page=" + page + '&search_text=' + this.search_text;
       this.axios.get(url).then(function (response) {
         for (var i = 0; i < response.data.data.length; i++) {
           _this.product_count[i] = response.data.data[i].product_number;
         }
         _this.ProductList = response.data;
+        _this.get_data = false;
+      })["catch"](function (error) {
+        _this.get_data = false;
       });
     },
     getRow: function getRow(key) {
@@ -2257,6 +2264,25 @@ __webpack_require__.r(__webpack_exports__);
     },
     removeOfList: function removeOfList(key) {
       this.$delete(this.selected_product, key);
+    },
+    send_data: function send_data() {
+      this.error = [];
+      var send = true;
+      if (this.stockroom_id == 0) {
+        send = false;
+        this.error.push('لطفا انبار را انتخاب کنید');
+      }
+      if (this.selected_product.length == 0) {
+        send = false;
+        this.error.push('محصولاتی را که باید به انبار ارسال شود را انتخاب نمایید');
+      }
+      if (send) {
+        var string = '';
+        this.selected_product.forEach(function (row) {
+          string = string + "@" + row.id + "_" + row.product_number;
+        });
+        console.log(string);
+      }
     }
   }
 });
@@ -2725,7 +2751,15 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("div", {
+  return _c("div", [_vm.error.length > 0 ? _c("div", {
+    staticClass: "alert alert-warning"
+  }, [_c("ul", {
+    staticClass: "error_ul"
+  }, _vm._l(_vm.error, function (msg, key) {
+    return _c("li", {
+      key: key
+    }, [_vm._v("\n                    " + _vm._s(msg) + "\n                ")]);
+  }), 0)]) : _vm._e(), _vm._v(" "), _c("div", {
     staticStyle: {
       "padding-bottom": "20px"
     }
@@ -2883,7 +2917,14 @@ var render = function render() {
     attrs: {
       colspan: "8"
     }
-  }, [_vm._v("  محصولی انتخاب نشده ")])]) : _vm._e()], 2)]), _vm._v(" "), _c("div", {
+  }, [_vm._v("  محصولی انتخاب نشده ")])]) : _vm._e()], 2)]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-success",
+    on: {
+      click: function click($event) {
+        return _vm.send_data();
+      }
+    }
+  }, [_vm._v("\n            ثبت نهایی\n        ")]), _vm._v(" "), _c("div", {
     staticClass: "modal fade bd-example-modal-lg product_list",
     attrs: {
       tabindex: "-1",
@@ -2895,15 +2936,52 @@ var render = function render() {
     staticClass: "modal-dialog modal-lg"
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("div", {
+  }, [_vm._m(1), _vm._v(" "), _vm.get_data ? _c("div", {
+    staticClass: "loading_box2"
+  }, [_vm._m(2)]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
-  }, [_c("table", {
+  }, [_c("div", {
+    staticClass: "box_header"
+  }, [_c("div", {
+    staticClass: "input_div"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.search_text,
+      expression: "search_text"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: "نام محصول ..."
+    },
+    domProps: {
+      value: _vm.search_text
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.search_text = $event.target.value;
+      }
+    }
+  }), _c("a", {
+    staticClass: "btn btn-primary",
+    staticStyle: {
+      color: "white"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getProductWarranty(1);
+      }
+    }
+  }, [_vm._v("جستجو")])])]), _vm._v(" "), _c("table", {
     staticClass: "table table-striped"
   }, [_c("tbody", _vm._l(_vm.ProductList.data, function (item, key) {
     return _c("tr", {
       key: key
     }, [_c("td", [_vm._v(_vm._s(_vm.getRow(key)))]), _vm._v(" "), _c("td", [_c("img", {
-      staticClass: "product_pic stockroom_product",
+      staticClass: "product_pic stockroom_product_pic",
       attrs: {
         src: _vm.$siteUrl + "files/thumb/" + item.get_product.image_url,
         alt: ""
@@ -3039,12 +3117,10 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "loading_box2"
-  }, [_c("div", {
     staticClass: "load-4"
   }, [_c("p", [_vm._v("در حال بارگذاری...")]), _vm._v(" "), _c("div", {
     staticClass: "ring-1"
-  })])]);
+  })]);
 }];
 render._withStripped = true;
 

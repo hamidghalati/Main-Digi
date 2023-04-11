@@ -5,6 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\ProductWarranty;
 use App\Stockrooms;
+//use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class StockroomController extends CustomController
@@ -57,9 +59,23 @@ class StockroomController extends CustomController
 
     public function getProductWarranty(Request $request)
     {
+        $search_text=$request->get('search_text','');
         $product_warranty=ProductWarranty::
-        with(['getProduct','getWarranty','getSeller','getColor'])
-            ->whereHas('getProduct')
+        with(['getProduct','getWarranty','getSeller','getColor']);
+
+        if (!empty($search_text))
+        {
+            define('title',$search_text);
+            $product_warranty=$product_warranty->whereHas('getProduct',function (Builder $query){
+                $query->where('title','like','%'.title.'%');
+            });
+        }
+        else{
+            $product_warranty=$product_warranty->whereHas('getProduct');
+        }
+
+
+            $product_warranty=$product_warranty
             ->paginate(5);
         return $product_warranty;
     }
