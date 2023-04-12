@@ -80,4 +80,9 @@ class StockroomController extends CustomController
         return $product_warranty;
     }
 
+    public function add_product(Request $request)
+    {
+        return Stockrooms::add_product($request);
+    }
+
 }

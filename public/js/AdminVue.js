@@ -2210,7 +2210,8 @@ __webpack_require__.r(__webpack_exports__);
       msg: 'آیا از افزودن این محصول به انبار مطمئن هستید؟',
       get_data: false,
       search_text: '',
-      error: []
+      error: [],
+      show_loading: false
     };
   },
   mounted: function mounted() {
@@ -2266,6 +2267,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$delete(this.selected_product, key);
     },
     send_data: function send_data() {
+      var _this2 = this;
       this.error = [];
       var send = true;
       if (this.stockroom_id == 0) {
@@ -2277,11 +2279,33 @@ __webpack_require__.r(__webpack_exports__);
         this.error.push('محصولاتی را که باید به انبار ارسال شود را انتخاب نمایید');
       }
       if (send) {
+        this.show_loading = true;
         var string = '';
         this.selected_product.forEach(function (row) {
           string = string + "@" + row.id + "_" + row.product_number;
         });
-        console.log(string);
+        var url = this.$siteUrl + "/admin/stockroom/add_input";
+        var formData = new FormData();
+        formData.append('list', string);
+        formData.append('stockroom_id', this.stockroom_id);
+        formData.append('tozihat', this.tozihat);
+        this.axios.post(url, formData).then(function (response) {
+          _this2.show_loading = false;
+          if (response.data == 'ok') {
+            window.location = _this2.$siteUrl + "admin/stockrooms/input";
+          } else {
+            $("#server_error_box").show();
+            setTimeout(function () {
+              $("#server_error_box").hide();
+            }, 5000);
+          }
+        })["catch"](function (error) {
+          _this2.show_loading = false;
+          $("#server_error_box").show();
+          setTimeout(function () {
+            $("#server_error_box").hide();
+          }, 5000);
+        });
       }
     }
   }
@@ -2751,7 +2775,12 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_vm.error.length > 0 ? _c("div", {
+  return _c("div", [_vm.show_loading ? _c("div", {
+    staticClass: "loading_box2",
+    staticStyle: {
+      right: "0!important"
+    }
+  }, [_vm._m(0)]) : _vm._e(), _vm._v(" "), _vm.error.length > 0 ? _c("div", {
     staticClass: "alert alert-warning"
   }, [_c("ul", {
     staticClass: "error_ul"
@@ -2797,7 +2826,10 @@ var render = function render() {
     }
   }, [_vm._v("انتخاب انبار")]), _vm._v(" "), _vm._l(_vm.stockroom, function (row) {
     return _c("option", {
-      key: row.id
+      key: row.id,
+      domProps: {
+        value: row.id
+      }
     }, [_vm._v(_vm._s(row.name))]);
   })], 2)]), _vm._v(" "), _c("div", {
     staticClass: "form-group textarea_field"
@@ -2839,7 +2871,7 @@ var render = function render() {
     }
   }, [_vm._v("محصولات انتخاب شده")]), _vm._v(" "), _c("table", {
     staticClass: "table table-striped"
-  }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.selected_product, function (item, key) {
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", [_vm._l(_vm.selected_product, function (item, key) {
     return _c("tr", {
       key: key
     }, [_c("td", {
@@ -2936,9 +2968,9 @@ var render = function render() {
     staticClass: "modal-dialog modal-lg"
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(1), _vm._v(" "), _vm.get_data ? _c("div", {
+  }, [_vm._m(2), _vm._v(" "), _vm.get_data ? _c("div", {
     staticClass: "loading_box2"
-  }, [_vm._m(2)]) : _vm._e(), _vm._v(" "), _c("div", {
+  }, [_vm._m(3)]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("div", {
     staticClass: "box_header"
@@ -3088,6 +3120,14 @@ var render = function render() {
   }, [_vm._v("خیر")])])]) : _vm._e()]);
 };
 var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "load-10"
+  }, [_c("p", [_vm._v("در حال بارگذاری...")]), _vm._v(" "), _c("div", {
+    staticClass: "bar"
+  })]);
+}, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("thead", [_c("tr", [_c("th", [_vm._v("ردیف")]), _vm._v(" "), _c("th", [_vm._v("تصویر محصول")]), _vm._v(" "), _c("th", [_vm._v("عنوان محصول")]), _vm._v(" "), _c("th", [_vm._v("فروشنده")]), _vm._v(" "), _c("th", [_vm._v("گارانتی")]), _vm._v(" "), _c("th", [_vm._v("رنگ")]), _vm._v(" "), _c("th", [_vm._v("تعداد")]), _vm._v(" "), _c("th", [_vm._v("عملیات")])])]);

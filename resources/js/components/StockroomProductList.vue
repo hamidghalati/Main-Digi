@@ -1,6 +1,13 @@
 <template>
     <div>
 
+        <div class="loading_box2" v-if="show_loading" style="right: 0!important;">
+            <div class="load-10">
+                <p>در حال بارگذاری...</p>
+                <div class="bar"></div>
+            </div>
+        </div>
+
         <div class="alert alert-warning" v-if="error.length>0">
             <ul class="error_ul">
                 <li v-for="(msg,key) in error" v-bind:key="key">
@@ -14,7 +21,7 @@
                 <label for="stockroom">انتخاب انبار :</label>
                 <select v-model="stockroom_id" id="stockroom" class="selectpicker">
                     <option value="0">انتخاب انبار</option>
-                    <option v-for="row in stockroom" v-bind:key="row.id">{{ row.name }}</option>
+                    <option v-for="row in stockroom" v-bind:key="row.id" v-bind:value="row.id">{{ row.name }}</option>
                 </select>
             </div>
 
@@ -189,7 +196,8 @@ export default {
             msg:'آیا از افزودن این محصول به انبار مطمئن هستید؟',
             get_data:false,
             search_text:'',
-            error:[]
+            error:[],
+            show_loading:false
         }
     },
     mounted() {
@@ -261,11 +269,36 @@ export default {
 
             if (send)
             {
+                this.show_loading=true;
                 let string='';
                 this.selected_product.forEach(function (row) {
                     string=string+"@"+row.id+"_"+row.product_number;
-                })
-                console.log(string);
+                });
+                const url=this.$siteUrl+"/admin/stockroom/add_input";
+                const formData=new FormData();
+                formData.append('list',string);
+                formData.append('stockroom_id',this.stockroom_id);
+                formData.append('tozihat',this.tozihat);
+                this.axios.post(url,formData).then(response=>{
+                    this.show_loading=false;
+                    if (response.data=='ok')
+                    {
+                      window.location=this.$siteUrl+"admin/stockrooms/input";
+                    }
+                    else {
+                        $("#server_error_box").show();
+                        setTimeout(function () {
+                            $("#server_error_box").hide();
+                        },5000);
+                    }
+                }).catch(error=>{
+                    this.show_loading=false;
+                    $("#server_error_box").show();
+                    setTimeout(function () {
+                        $("#server_error_box").hide();
+                    },5000);
+                });
+
             }
         }
     }

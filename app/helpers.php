@@ -1545,6 +1545,26 @@ function checkAddChildMenuAccess($accessList,$child){
     return $result;
 }
 
+function get_stockroom_product_count($list)
+{
+    $n=0;
+    foreach ($list as $key=>$value)
+    {
+        if (!empty($value))
+        {
+            $e=explode('_',$value);
+            if (sizeof($e)==2)
+            {
+                $a=$e[1];
+                settype($a,'integer');
+                $n+=$a;
+            }
+
+        }
+    }
+    return $n;
+}
+
 
 
 

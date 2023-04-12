@@ -82,6 +82,8 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
     //stockroom/getProductWarranty
     Route::get('stockroom/getProductWarranty', 'Admin\StockroomController@getProductWarranty');
 
+    //stockroom/add_input
+    Route::post('stockroom/add_input', 'Admin\StockroomController@add_product')->name('stockroom.add_product');;
 
 
     //gallery
