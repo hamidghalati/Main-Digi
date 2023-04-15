@@ -85,6 +85,12 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
     //stockroom/add_input
     Route::post('stockroom/add_input', 'Admin\StockroomController@add_product')->name('stockroom.add_product');;
 
+    //stockroom/input
+    Route::get('stockroom/input', 'Admin\StockroomController@input')->name('stockroom.input');;
+
+    //stockroom/input/id
+    Route::get('stockroom/input/{id}', 'Admin\StockroomController@show_input')->name('stockroom.show_input');;
+
 
     //gallery
     Route::get('products/gallery/{id}', 'Admin\ProductController@gallery');

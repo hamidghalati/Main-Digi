@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\ProductWarranty;
+use App\StockroomEvent;
 use App\Stockrooms;
 //use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Builder;
@@ -83,6 +84,26 @@ class StockroomController extends CustomController
     public function add_product(Request $request)
     {
         return Stockrooms::add_product($request);
+    }
+
+    public function input(Request $request)
+    {
+        $stockroom_id=$request->get('stockroom_id',0);
+        settype($stockroom_id,'integer');
+       $stockroom=[''=>'انتخاب انبار']+Stockrooms::pluck('name','id')->toArray();
+       $stockroomEvent=StockroomEvent::with(['getUser','getStockroom'])->where('type','input');
+       if ($stockroom_id>0)
+       {
+           $stockroomEvent= $stockroomEvent->where(['stockroom_id'=>$stockroom_id]);
+       }
+        $stockroomEvent=$stockroomEvent->orderBy('id','DESC')->paginate(10);
+       return view('admin.stockroom.input',['stockroomEvent'=>$stockroomEvent,'stockroom'=>$stockroom]);
+    }
+
+    public function show_input($id,Request $request)
+    {
+        $input=Stockrooms::getProductList($id,"input",$request);
+        return view('admin.stockroom.show_input',['input'=>$input]);
     }
 
 }
