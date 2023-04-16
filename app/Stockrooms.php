@@ -3,8 +3,10 @@
 namespace App;
 
 use DB;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Stockrooms extends Model
 {
@@ -101,11 +103,33 @@ class Stockrooms extends Model
 
     public static function getProductList($id,$type,$request)
     {
-        $string=$request->get('string');
+        $string=$request->get('string','');
+        define('search_text',$string);
         $stockroomEvent=StockroomEvent::with(['getUser','getStockroom'])
             ->where(['type'=>$type])
             ->where('id',$id)
             ->firstOrFail();
+
+        $stockroom_product=StockroomProduct::with(['getProductWarranty'=>function($query){
+           $query->with(['getColor','getSeller','getWarranty','getProduct']);
+        }])
+            ->whereHas('getProductWarranty',function (Builder $query){
+                if (!empty(search_text))
+                {
+                    $query->whereHas('getProduct',function (Builder $query2){
+                        $query2->where('title','like','%'.search_text.'%');
+                    });
+                }
+                else{
+                    $query->whereHas('getProduct');
+                }
+            })
+            ->where('event_id',$id)->get();
+
+        return[
+            'stockroomEvent'=>$stockroomEvent,
+            'stockroom_product'=>$stockroom_product
+        ];
 
 
     }

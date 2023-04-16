@@ -16,12 +16,17 @@
 
             <form action="" method="get" class="search_form" id="auto_width">
                 <div class="form-group" style="margin-bottom: 0!important;">
-                    {{ Form::select('stockroom_id', $stockroom,null,['class'=>'selectpicker','data-live-search'=>'true'])}}
+                    {{ Form::select('stockroom_id', $stockroom,$req->get('stockroom_id',''),['class'=>'selectpicker','data-live-search'=>'true'])}}
                 </div>
                 <button class="btn btn-primary btn_search">جستجو
                 </button>
 
             </form>
+
+            <a href="{{ url('admin/stockroom/add/input') }}" class="btn btn-success add_btn">
+                <span class="mdi mdi-pencil"></span>
+                اضافه کردن محصول به انبار
+            </a>
 
             <form method="post" id="data_form">
                 @csrf
@@ -51,7 +56,7 @@
                             <td>{{$value->product_count}}</td>
                             <td>
                                 <span>
-                                   {{$jdf->jdate('Y-m-m',$value->time) }}
+                                   {{$jdf->jdate('Y-m-d',$value->time) }}
                                 </span>
                                 <p>
                                     {{$jdf->jdate('H:i:s',$value->time) }}

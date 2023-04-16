@@ -1837,3 +1837,22 @@ input.pdate {
 #auto_width .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: auto!important;
 }
+.tozihat{
+    background-color: #f5f6f75d;
+    padding: 18px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.09);
+    -webkit-box-shadow: 0 2px 3px rgba(0,0,0,0.09);
+    color: grey;
+    margin-bottom: 20px;
+}
+.tozihat span{
+    color: black;
+    display: block;
+    font-size: 15px;
+    padding-bottom: 20px;
+}
+.add_btn{
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+

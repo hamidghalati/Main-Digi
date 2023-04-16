@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\InventoryList;
 use App\ProductWarranty;
 use App\StockroomEvent;
 use App\Stockrooms;
@@ -74,8 +75,6 @@ class StockroomController extends CustomController
         else{
             $product_warranty=$product_warranty->whereHas('getProduct');
         }
-
-
             $product_warranty=$product_warranty
             ->paginate(5);
         return $product_warranty;
@@ -97,13 +96,19 @@ class StockroomController extends CustomController
            $stockroomEvent= $stockroomEvent->where(['stockroom_id'=>$stockroom_id]);
        }
         $stockroomEvent=$stockroomEvent->orderBy('id','DESC')->paginate(10);
-       return view('admin.stockroom.input',['stockroomEvent'=>$stockroomEvent,'stockroom'=>$stockroom]);
+       return view('admin.stockroom.input',['stockroomEvent'=>$stockroomEvent,'stockroom'=>$stockroom,'req'=>$request]);
     }
 
     public function show_input($id,Request $request)
     {
         $input=Stockrooms::getProductList($id,"input",$request);
-        return view('admin.stockroom.show_input',['input'=>$input]);
+        return view('admin.stockroom.show_input',['input'=>$input,'req'=>$request]);
+    }
+
+    public function show($id,Request $request)
+    {
+        $stockroom=Stockrooms::findOrFail();
+        $inventory_list=InventoryList::getList($id,$request);
     }
 
 }
