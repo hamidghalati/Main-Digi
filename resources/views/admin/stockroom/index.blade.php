@@ -39,7 +39,6 @@
                     </thead>
                     <tbody>
                     <?php
-
                     $i = (isset($_GET['page'])) ? (($_GET['page'] - 1) * 10) : 0;
                     ?>
                     @foreach($stockroom as $key=>$value)

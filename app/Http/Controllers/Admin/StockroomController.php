@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\InventoryList;
 use App\ProductWarranty;
+use App\Seller;
 use App\StockroomEvent;
 use App\Stockrooms;
 //use Illuminate\Database\Query\Builder;
@@ -107,8 +108,12 @@ class StockroomController extends CustomController
 
     public function show($id,Request $request)
     {
-        $stockroom=Stockrooms::findOrFail();
+        $stockroom=Stockrooms::findOrFail($id);
         $inventory_list=InventoryList::getList($id,$request);
+
+        $seller=[''=>'انتخاب فروشنده',0=>env('SHOP_NAME')]+Seller::pluck('brand_name','id')->toArray();
+
+        return view('admin.stockroom.list',['stockroom'=>$stockroom,'req'=>$request,'inventory_list'=>$inventory_list,'seller'=>$seller]);
     }
 
 }

@@ -1855,4 +1855,6 @@ input.pdate {
     margin-bottom: 20px;
     font-size: 14px;
 }
-
+.search_form .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    margin-left: 85px;
+}

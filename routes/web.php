@@ -76,20 +76,37 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
     create_crud_route('discount', 'DiscountController');
 
     //stockroom
-    Route::get('stockroom/add/input', 'Admin\StockroomController@add_input')->name('stockroom.add_input');
     create_crud_route('stockrooms', 'StockroomController',[]);
+
 
     //stockroom/getProductWarranty
     Route::get('stockroom/getProductWarranty', 'Admin\StockroomController@getProductWarranty');
-
-    //stockroom/add_input
-    Route::post('stockroom/add_input', 'Admin\StockroomController@add_product')->name('stockroom.add_product');;
 
     //stockroom/input
     Route::get('stockroom/input', 'Admin\StockroomController@input')->name('stockroom.input');;
 
     //stockroom/input/id
     Route::get('stockroom/input/{id}', 'Admin\StockroomController@show_input')->name('stockroom.show_input');;
+
+    //stockroom/add_input
+    Route::post('stockroom/add_input', 'Admin\StockroomController@add_product')->name('stockroom.add_product');;
+
+    //stockroom/add/input
+    Route::get('stockroom/add/input', 'Admin\StockroomController@add_input')->name('stockroom.add_input');
+
+
+    //stockroom/output
+    Route::get('stockroom/output', 'Admin\StockroomController@output')->name('stockroom.output');;
+
+    //stockroom/output/id
+    Route::get('stockroom/output/{id}', 'Admin\StockroomController@show_output')->name('stockroom.show_output');;
+
+    //stockroom/add_output
+    Route::post('stockroom/add_output', 'Admin\StockroomController@add_product')->name('stockroom.add_product');;
+
+    //stockroom/add/output
+    Route::get('stockroom/add/output', 'Admin\StockroomController@add_output')->name('stockroom.add_output');
+
 
 
     //gallery
