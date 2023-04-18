@@ -14,7 +14,7 @@
             @include('include.alert')
 
 
-            <form action="" method="get" class="search_form">
+            <form action="" method="get" class="search_form" id="search_form_list">
                 <div>
                     {{ Form::select('seller_id', $seller,$req->get('seller',''),['class'=>'selectpicker','data-live-search'=>'true'])}}
                 </div>

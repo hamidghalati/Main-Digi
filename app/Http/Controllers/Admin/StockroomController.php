@@ -88,15 +88,9 @@ class StockroomController extends CustomController
 
     public function input(Request $request)
     {
-        $stockroom_id=$request->get('stockroom_id',0);
-        settype($stockroom_id,'integer');
+
        $stockroom=[''=>'انتخاب انبار']+Stockrooms::pluck('name','id')->toArray();
-       $stockroomEvent=StockroomEvent::with(['getUser','getStockroom'])->where('type','input');
-       if ($stockroom_id>0)
-       {
-           $stockroomEvent= $stockroomEvent->where(['stockroom_id'=>$stockroom_id]);
-       }
-        $stockroomEvent=$stockroomEvent->orderBy('id','DESC')->paginate(10);
+        $stockroomEvent=StockroomEvent::getList($request,'input');
        return view('admin.stockroom.input',['stockroomEvent'=>$stockroomEvent,'stockroom'=>$stockroom,'req'=>$request]);
     }
 
@@ -114,6 +108,33 @@ class StockroomController extends CustomController
         $seller=[''=>'انتخاب فروشنده',0=>env('SHOP_NAME')]+Seller::pluck('brand_name','id')->toArray();
 
         return view('admin.stockroom.list',['stockroom'=>$stockroom,'req'=>$request,'inventory_list'=>$inventory_list,'seller'=>$seller]);
+    }
+
+    public function add_output()
+    {
+        $stockroom=Stockrooms::get();
+        return view('admin.stockroom.add_output',['stockroom'=>$stockroom]);
+    }
+
+    public function getInventory(Request $request)
+    {
+        $stockroom_id=$request->get('stockroom_id',0);
+        return InventoryList::getList($stockroom_id,$request,10);
+    }
+
+    public function output (Request $request)
+    {
+        $stockroom=[''=>'انتخاب انبار']+Stockrooms::pluck('name','id')->toArray();
+
+        $stockroomEvent=StockroomEvent::getList($request,'output');
+
+        return view('admin.stockroom.output',['stockroomEvent'=>$stockroomEvent,'stockroom'=>$stockroom,'req'=>$request]);
+    }
+
+    public function show_output($id,Request $request)
+    {
+        $output=Stockrooms::getProductList($id,"output",$request);
+        return view('admin.stockroom.show_output',['output'=>$output,'req'=>$request]);
     }
 
 }

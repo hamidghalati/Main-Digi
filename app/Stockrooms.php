@@ -97,6 +97,10 @@ class Stockrooms extends Model
 
             }
         } else {
+            $check = InventoryList::where(['product_warranty_id' => $product_warranty_id, 'stockroom_id' => $stockroom_id])->first();
+                $check->product_count -= $product_count;
+                $check->update();
+
 
         }
     }

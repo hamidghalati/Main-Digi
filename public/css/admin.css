@@ -1855,6 +1855,12 @@ input.pdate {
     margin-bottom: 20px;
     font-size: 14px;
 }
-.search_form .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+#search_form_list .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     margin-left: 85px;
+}
+#add_input_select .bootstrap-select .dropdown-menu {
+    width:300px;
+}
+#add_input_select .bootstrap-select .dropdown-menu.inner{
+    width: auto;
 }

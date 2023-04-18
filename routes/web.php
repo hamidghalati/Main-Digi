@@ -88,12 +88,15 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
     //stockroom/input/id
     Route::get('stockroom/input/{id}', 'Admin\StockroomController@show_input')->name('stockroom.show_input');;
 
-    //stockroom/add_input
-    Route::post('stockroom/add_input', 'Admin\StockroomController@add_product')->name('stockroom.add_product');;
+    //stockroom/add_product
+    Route::post('stockroom/add_product', 'Admin\StockroomController@add_product')->name('stockroom.add_product');;
 
     //stockroom/add/input
     Route::get('stockroom/add/input', 'Admin\StockroomController@add_input')->name('stockroom.add_input');
 
+
+    //stockroom/getInventory
+    Route::get('stockroom/getInventory', 'Admin\StockroomController@getInventory');
 
     //stockroom/output
     Route::get('stockroom/output', 'Admin\StockroomController@output')->name('stockroom.output');;

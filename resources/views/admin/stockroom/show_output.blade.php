@@ -3,17 +3,17 @@
 
     @include('include.breadcrumb',['data'=>[
     ['title'=>'مدیریت انبار ها','url'=>url('admin/stockrooms')],
-    ['title'=>'لیست ورودی انبار ها','url'=>url('admin/stockroom/input')],
-    ['title'=>'ورودی انبار ها','url'=>url('admin/stockroom/input/'.$input['stockroomEvent']->id)],
+    ['title'=>'لیست خروجی انبار ها','url'=>url('admin/stockroom/output')],
+    ['title'=>'خروجی انبار ها','url'=>url('admin/stockroom/output/'.$output['stockroomEvent']->id)],
     ]])
     <div class="panel">
         <div class="header">
             <?php $jdf = new \App\Lib\jdf(); ?>
-            محصولات اضافه شده به {{ $input['stockroomEvent']->getStockroom->name }} توسط : {{ $input['stockroomEvent']->getUser->name }}
+            محصولات خارج شده از {{ $output['stockroomEvent']->getStockroom->name }} توسط : {{ $output['stockroomEvent']->getUser->name }}
 
             <div style="margin-left: 15px">
-                 {{$jdf->jdate('Y/m/d',$input['stockroomEvent']->time) }} -
-                {{$jdf->jdate('H:i:s',$input['stockroomEvent']->time) }}
+                 {{$jdf->jdate('Y/m/d',$output['stockroomEvent']->time) }} -
+                {{$jdf->jdate('H:i:s',$output['stockroomEvent']->time) }}
                 <span class="mdi mdi-calendar-check"></span>
             </div>
 
@@ -36,10 +36,10 @@
             </form>
 
 
-            @if(!empty($input['stockroomEvent']->tozihat))
+            @if(!empty($output['stockroomEvent']->tozihat))
                 <div class="tozihat">
                     <span>توضیحات : </span>
-                    {{ $input['stockroomEvent']->tozihat }}
+                    {{ $output['stockroomEvent']->tozihat }}
                 </div>
             @endif
 
@@ -57,7 +57,7 @@
                 </thead>
                 <tbody>
 
-                @foreach($input['stockroom_product'] as $key=>$value)
+                @foreach($output['stockroom_product'] as $key=>$value)
                     <tr>
                         <td>{{ ++$key }}</td>
                         <td>

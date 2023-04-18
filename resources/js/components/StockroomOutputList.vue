@@ -56,29 +56,29 @@
             <tr v-for="(item,key) in selected_product" v-bind:key="key">
                 <td style="width: 20px">{{ getRow(key) }}</td>
                 <td>
-                    <img v-bind:src="$siteUrl+'files/thumb/'+item.get_product.image_url" alt=""
+                    <img v-bind:src="$siteUrl+'files/thumb/'+item.get_product_warranty.get_product.image_url" alt=""
                          class="product_pic stockroom_product">
                 </td>
                 <td>
-                    <span>{{ item.get_product.title }}</span>
+                    <span>{{ item.get_product_warranty.get_product.title }}</span>
 
                 </td>
                 <td>
-                    <span>{{ item.get_seller.brand_name }}</span>
+                    <span>{{ item.get_product_warranty.get_seller.brand_name }}</span>
                 </td>
                 <td style="font-size: 14px">
-                    <span>{{ item.get_warranty.name }}</span>
+                    <span>{{ item.get_product_warranty.get_warranty.name }}</span>
                 </td>
                 <td style="width:150px">
-                                    <span style="color: white" v-if="item.get_color.id>0" :style="{background:item.get_color.code}" class="color_td">
-                                        <span style="color: white">{{ item.get_color.name }}</span>
+                                    <span style="color: white" v-if="item.get_product_warranty.get_color.id>0" :style="{background:item.get_product_warranty.get_color.code}" class="color_td">
+                                        <span style="color: white">{{ item.get_product_warranty.get_color.name }}</span>
                                     </span>
                 </td>
                 <td style="width:70px">
                     <input type="text" v-model="selected_product[key].product_number" placeholder="تعداد" class="form-control" style="width: 70px;text-align: center">
                 </td>
                 <td style="width:100px">
-<!--                    <span v-if="checkInList(item.id)" style="color: #ef5661">اضافه شد</span>-->
+                    <!--                    <span v-if="checkInList(item.id)" style="color: #ef5661">اضافه شد</span>-->
                     <span class="remove_item" v-on:click="removeOfList(key)">حذف</span>
                 </td>
             </tr>
@@ -119,7 +119,7 @@
 
                         <div class="box_header">
                             <div class="input_div">
-                                <input type="text" class="form-control" v-model="search_text" placeholder="نام محصول ..."><a class="btn btn-primary" v-on:click="getProductWarranty(1)" style="color:white;">جستجو</a>
+                                <input type="text" class="form-control" v-model="search_text" placeholder="نام محصول ..."><a class="btn btn-primary" v-on:click="getList(1)" style="color:white;">جستجو</a>
                             </div>
                         </div>
                         <table class="table table-striped">
@@ -127,22 +127,22 @@
                             <tr v-for="(item,key) in ProductList.data" v-bind:key="key">
                                 <td>{{ getRow(key) }}</td>
                                 <td>
-                                    <img v-bind:src="$siteUrl+'files/thumb/'+item.get_product.image_url" alt=""
+                                    <img v-bind:src="$siteUrl+'files/thumb/'+item.get_product_warranty.get_product.image_url" alt=""
                                          class="product_pic stockroom_product_pic">
                                 </td>
                                 <td>
-                                    <span>{{ item.get_product.title }}</span>
+                                    <span>{{ item.get_product_warranty.get_product.title }}</span>
 
                                 </td>
                                 <td>
-                                    <span>{{ item.get_seller.brand_name }}</span>
+                                    <span>{{ item.get_product_warranty.get_seller.brand_name }}</span>
                                 </td>
                                 <td style="font-size: 14px">
-                                    <span>{{ item.get_warranty.name }}</span>
+                                    <span>{{ item.get_product_warranty.get_warranty.name }}</span>
                                 </td>
                                 <td style="width:150px">
-                                    <span style="color: white" v-if="item.get_color.id>0" :style="{background:item.get_color.code}" class="color_td">
-                                        <span style="color: white">{{ item.get_color.name }}</span>
+                                    <span style="color: white" v-if="item.get_product_warranty.get_color.id>0" :style="{background:item.get_product_warranty.get_color.code}" class="color_td">
+                                        <span style="color: white">{{ item.get_product_warranty.get_color.name }}</span>
                                     </span>
                                 </td>
                                 <td style="width:70px">
@@ -150,12 +150,12 @@
                                 </td>
                                 <td style="width:70px">
                                     <span v-if="checkInList(item.id)" style="color: #ef5661">اضافه شد</span>
-                                    <span v-else class="select_item" v-on:click="add_product(item.id,key)">افزودن</span>
+                                    <span v-else class="select_item" v-on:click="add_product(item.get_product_warranty.id,key)">افزودن</span>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
-                        <pagination :data="ProductList" v-bind:showDisabled="true" icon="chevron" v-on:change-page="getProductWarranty"></pagination>
+                        <pagination :data="ProductList" v-bind:showDisabled="true" icon="chevron" v-on:change-page="getList"></pagination>
 
                     </div>
                 </div>
@@ -176,10 +176,9 @@
 
 <script>
 import myMixin from "../myMixin";
-import pagination from 'laravel-vue-semantic-ui-pagination';
 
 export default {
-    name: "StockroomProductList",
+    name: "StockroomOutputList",
     props: ['stockroom'],
     mixins: [myMixin],
     data() {
@@ -193,7 +192,7 @@ export default {
             show_message_box:false,
             select_id:0,
             select_key:0,
-            msg:'آیا از افزودن این محصول به انبار مطمئن هستید؟',
+            msg:'آیا از خروج این محصول از انبار مطمئن هستید؟',
             get_data:false,
             search_text:'',
             error:[],
@@ -201,17 +200,16 @@ export default {
         }
     },
     mounted() {
-        this.getProductWarranty();
     },
     methods: {
-        getProductWarranty: function (page = 1) {
+        getList: function (page = 1) {
             this.page = page;
             this.get_data=true;
-            const url = this.$siteUrl + "/admin/stockroom/getProductWarranty?page=" + page+'&search_text='+this.search_text;
+            const url = this.$siteUrl + "/admin/stockroom/getInventory?page=" + page+'&search_text='+this.search_text+"&stockroom_id="+this.stockroom_id;
             this.axios.get(url).then(response => {
                 for (let i=0;i<response.data.data.length;i++)
                 {
-                    this.product_count[i]=response.data.data[i].product_number;
+                    this.product_count[i]=response.data.data[i].product_count;
                 }
                 this.ProductList = response.data;
                 this.get_data=false;
@@ -228,10 +226,10 @@ export default {
         checkInList:function (id) {
             let result=false;
             this.selected_product.forEach(function (row) {
-               if (row.id==id)
-               {
-                   result=true;
-               }
+                if (row.id==id)
+                {
+                    result=true;
+                }
             });
             return result;
         },
@@ -243,10 +241,12 @@ export default {
         add_product_to_stockroom:function () {
             this.show_message_box=false;
             const n=this.product_count[this.select_key];
+            const maxCount=this.ProductList.data[this.select_key].product_count;
             if (parseInt(n)>0)
             {
+                const count= n<=maxCount ? n : maxCount;
                 let item=this.ProductList.data[this.select_key];
-                item.product_number=n;
+                item.product_number=count;
                 this.selected_product.push(item);
             }
         },
@@ -272,18 +272,19 @@ export default {
                 this.show_loading=true;
                 let string='';
                 this.selected_product.forEach(function (row) {
-                    string=string+"@"+row.id+"_"+row.product_number;
+                    string=string+"@"+row.get_product_warranty.id+"_"+row.product_number;
                 });
                 const url=this.$siteUrl+"/admin/stockroom/add_product";
                 const formData=new FormData();
                 formData.append('list',string);
                 formData.append('stockroom_id',this.stockroom_id);
                 formData.append('tozihat',this.tozihat);
+                formData.append('type',"output");
                 this.axios.post(url,formData).then(response=>{
                     this.show_loading=false;
                     if (response.data=='ok')
                     {
-                      window.location=this.$siteUrl+"admin/stockroom/input";
+                        window.location=this.$siteUrl+"admin/stockroom/output";
                     }
                     else {
                         $("#server_error_box").show();
@@ -300,6 +301,11 @@ export default {
                 });
 
             }
+        }
+    },
+    watch:{
+        stockroom_id:function () {
+            this.getList();
         }
     }
 }

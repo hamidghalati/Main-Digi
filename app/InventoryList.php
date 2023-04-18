@@ -9,7 +9,7 @@ class InventoryList extends Model
 {
     protected $fillable = ['product_count', 'product_warranty_id', 'stockroom_id'];
 
-    public static function getList($id, $request)
+    public static function getList($id, $request,$page_size=10)
     {
         $string='?';
         $title=$request->get('title','');
@@ -52,7 +52,7 @@ class InventoryList extends Model
             $string=create_paginate_url($string,'seller_id='.$request['seller_id']);
         }
 
-        $inventory_list = $inventory_list->paginate(10);
+        $inventory_list = $inventory_list->paginate($page_size);
         $inventory_list->withPath($string);
 
         return $inventory_list;
