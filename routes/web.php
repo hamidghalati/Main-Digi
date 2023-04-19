@@ -80,7 +80,7 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
 
 
     //stockroom/getProductWarranty
-    Route::get('stockroom/getProductWarranty', 'Admin\StockroomController@getProductWarranty');
+    Route::get('stockroom/getProductWarranty', 'Admin\StockroomController@getProductWarranty')->name('get_product_warranty');
 
     //stockroom/input
     Route::get('stockroom/input', 'Admin\StockroomController@input')->name('stockroom.input');;
@@ -96,7 +96,7 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
 
 
     //stockroom/getInventory
-    Route::get('stockroom/getInventory', 'Admin\StockroomController@getInventory');
+    Route::get('stockroom/getInventory', 'Admin\StockroomController@getInventory')->name('get_inventory');
 
     //stockroom/output
     Route::get('stockroom/output', 'Admin\StockroomController@output')->name('stockroom.output');;

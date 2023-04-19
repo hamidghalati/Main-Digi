@@ -15,7 +15,7 @@ class Order extends Model
     use SoftDeletes;
     protected $fillable=['date','user_id','send_type','address_id',
         'pay_status','total_price','price','order_id','pay_code1','pay_code2','order_read','send_type',
-        'discount_value','discount_code','gift_value','gift_id'
+        'discount_value','discount_code','gift_value','gift_id','created_at'
         ];
     protected $table='orders';
     protected $dateFormat='U';
@@ -300,6 +300,34 @@ class Order extends Model
     public function getOrderProduct()
     {
         return $this->hasMany(OrderProduct::class,'order_id','id');
+    }
+
+    public static function getChartData()
+    {
+        $jdf=new jdf();
+        $date=$jdf->tr_num($jdf->jdate('Y/n')).'/1';
+        $time=getTimestamp($date,'first');
+
+        $y=$jdf->tr_num($jdf->jdate('Y'));
+        $m=$jdf->tr_num($jdf->jdate('n'));
+        $t=$jdf->tr_num($jdf->jdate('t'));
+
+        $date_list=array();
+        $price_array=array();
+        $count_array=array();
+        for ($i=1;$i<=$t;$i++)
+        {
+            $d=$y.'/'.$m.'/'.$i;
+            $date_list[$i]=$d;
+        }
+
+        echo $time;
+       $orders=self::where(['pay_status'=>'ok'])->where('created_at','<=',$time)
+           ->get();
+
+
+
+        dd(sizeof($orders));
     }
 
 

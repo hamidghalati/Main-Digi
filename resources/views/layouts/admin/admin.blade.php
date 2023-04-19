@@ -70,6 +70,16 @@
             'access' => 'file_manager',
             'url' => url('admin/file_manager')
         ];
+        $sideBarMenu[12] = [
+            'label' => 'انبار',
+            'icon' => 'fa fa-ambulance',
+            'access' => 'stockrooms',
+            'child' => [
+                ['url' => url('admin/stockrooms'), 'label' => 'مدیریت انبار ها', 'access' => 'stockrooms','accessValue' =>'stockroom_edit'],
+                ['url' => url('admin/stockroom/input'), 'label' => 'ورودی های انبار', 'access' => 'stockrooms','accessValue' =>'add_input'],
+                ['url' => url('admin/stockroom/output'), 'label' => 'خروجی های انبار', 'access' => 'stockrooms','accessValue' =>'add_output'],
+            ]
+        ];
         ?>
         <span class="fa fa-bars" id="sidebarToggle"></span>
 {{--        @php $access=json_decode($access); @endphp--}}

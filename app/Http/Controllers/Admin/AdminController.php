@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Offers;
+use App\Order;
 use App\ProductWarranty;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,7 +15,8 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.index');
+        $indexChartData=Order::getChartData();
+//        return view('admin.index');
     }
 
     public function incredible_offers()
