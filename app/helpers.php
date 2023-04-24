@@ -931,7 +931,7 @@ function get_cat_url($cat)
 function getTimestamp($date, $type)
 {
 
-    $jdf = new jdf();
+//    $jdf = new jdf();
     $time = 0;
     $e = explode('/', $date);
     if (sizeof($e) == 3) {
@@ -940,10 +940,10 @@ function getTimestamp($date, $type)
         $d = $e[2];
 
         if ($type == 'first') {
-            $time = $jdf->jmktime(0, 0, 0, $m, $d, $y);
+            $time = jmktime(0, 0, 0, $m, $d, $y);
 
         } else {
-            $time = $jdf->jmktime(23, 59, 59, $m, $d, $y);
+            $time = jmktime(23, 59, 59, $m, $d, $y);
 
         }
 

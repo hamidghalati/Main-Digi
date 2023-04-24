@@ -308,6 +308,9 @@ class Order extends Model
         $date=$jdf->tr_num($jdf->jdate('Y/n')).'/1';
         $time=getTimestamp($date,'first');
 
+
+        $month=$jdf->tr_num($jdf->jdate('F Y'));
+
         $y=$jdf->tr_num($jdf->jdate('Y'));
         $m=$jdf->tr_num($jdf->jdate('n'));
         $t=$jdf->tr_num($jdf->jdate('t'));
@@ -317,17 +320,37 @@ class Order extends Model
         $count_array=array();
         for ($i=1;$i<=$t;$i++)
         {
-            $d=$y.'/'.$m.'/'.$i;
+            $d=$y.'-'.$m.'-'.$i;
             $date_list[$i]=$d;
         }
 
-        echo $time;
-       $orders=self::where(['pay_status'=>'ok'])->where('created_at','<=',$time)
+       $orders=self::where(['pay_status'=>'ok'])
+           ->where('created_at','>=',$time)
            ->get();
 
+        foreach ($orders as $order)
+        {
+            if (array_key_exists($order->date,$price_array))
+            {
+                $price_array[$order->date]=$price_array[$order->date]+$order->price;
+                $count_array[$order->date]+=1;
+            }
+            else{
+                $price_array[$order->date]=$order->price;
+                $count_array[$order->date]=1;
+
+            }
+        }
 
 
-        dd(sizeof($orders));
+
+        return[
+            'price_array'=>$price_array,
+            'count_array'=>$count_array,
+            'date_list'=>$date_list,
+            'month'=>$month
+        ];
+
     }
 
 

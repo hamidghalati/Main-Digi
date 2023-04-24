@@ -56,9 +56,6 @@ $(document).ready(function () {
 });
 
 
-
-
-
 $(document).ready(function () {
     set_sidebar_width();
 
@@ -85,10 +82,10 @@ set_sidebar_width=function () {
     }
 }
 
-
 select_file=function (){
     $('#pic').click();
 };
+
 select_file2=function (){
     $('#mobile_pic').click();
 };
@@ -102,6 +99,7 @@ loadFile=function (event) {
     render.readAsDataURL(event.target.files[0]);
 
 }
+
 loadFile2=function (event) {
     const render=new FileReader();
     render.onload=function (){
@@ -111,8 +109,6 @@ loadFile2=function (event) {
     render.readAsDataURL(event.target.files[0]);
 
 }
-
-
 
 del_row=function (url,t,message_text) {
     _method='DELETE';
@@ -478,3 +474,20 @@ add_answer=function (token,id) {
     }
 }
 
+number_format=function (num)
+{
+    num=num.toString();
+    let format='';
+    let counter=0;
+    for (let i=num.length-1;i>=0;i--)
+    {
+        format+=num[i];
+        counter++;
+        if (counter==3)
+        {
+            format+=",";
+            counter=0;
+        }
+    }
+    return format.split('').reverse().join('');
+}

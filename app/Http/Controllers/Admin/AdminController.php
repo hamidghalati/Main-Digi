@@ -16,7 +16,7 @@ class AdminController extends Controller
     public function index()
     {
         $indexChartData=Order::getChartData();
-//        return view('admin.index');
+        return view('admin.index',['indexChartData'=>$indexChartData]);
     }
 
     public function incredible_offers()
