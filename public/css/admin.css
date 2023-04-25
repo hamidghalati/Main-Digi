@@ -1864,3 +1864,6 @@ input.pdate {
 #add_input_select .bootstrap-select .dropdown-menu.inner{
     width: auto;
 }
+.auto-width-select{
+    width: auto!important;
+}

@@ -19,7 +19,6 @@ class DiscountController extends CustomController
         $discount=DiscountCode::getData($request->all());
         $trash_count=DiscountCode::onlyTrashed()->count();
         return view('admin.discount.index',['discount'=>$discount,'trash_count'=>$trash_count,'req'=>$request]);
-
     }
 
     public function create(){

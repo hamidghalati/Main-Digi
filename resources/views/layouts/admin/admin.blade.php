@@ -70,6 +70,16 @@
             'access' => 'file_manager',
             'url' => url('admin/file_manager')
         ];
+        $sideBarMenu[5] = [
+            'label' => 'گزارشات',
+            'icon' => 'fa fa-line-chart',
+            'access' => 'report|commission',
+            'child' => [
+                ['url' => url('admin/report/sale'), 'label' => 'آمار فروش', 'access' => 'report'],
+                ['url' => url('admin/report/view'), 'label' => 'آمار بازدید', 'access' => 'report'],
+                ['url' => url('admin/commissions'), 'label' => 'کمیسیون ها', 'access' => 'commission'],
+            ]
+        ];
         $sideBarMenu[12] = [
             'label' => 'انبار',
             'icon' => 'fa fa-ambulance',

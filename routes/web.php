@@ -19,9 +19,9 @@ Route::get('/', 'SiteController@index');
 Auth::routes();
 
 //vue_login
-Route::post('/vue_login','Auth\LoginController@vue_login')->middleware('guest');
+Route::post('/vue_login', 'Auth\LoginController@vue_login')->middleware('guest');
 
-Route::get('admin_login','Admin\AdminController@admin_login_form')->middleware('guest');;
+Route::get('admin_login', 'Admin\AdminController@admin_login_form')->middleware('guest');;
 
 Route::get('/confirm', 'SiteController@confirm')->middleware('guest');
 Route::get('/confirmphone', 'SiteController@confirmphone')->middleware('auth');
@@ -34,7 +34,7 @@ Route::post('changeMobileNumber', 'SiteController@changeMobileNumber')->middlewa
 Route::get('/home', 'HomeController@index')->name('home');
 
 //admin
-Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', 'Admin\AdminController@index')->name('admin');
 
 
@@ -43,7 +43,7 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
 
 
     //elFinder used ckeditor
-    Route::get('file_manager','Admin\AdminController@file_manager');
+    Route::get('file_manager', 'Admin\AdminController@file_manager');
 
     //Category
     create_crud_route('category', 'CategoryController');
@@ -53,12 +53,12 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
 
     //UserRole
     create_crud_route('userRole', 'UserRoleController');
-    Route::get('userRole/access/{role_id}','Admin\UserRoleController@access');
-    Route::post('userRole/access/{role_id}','Admin\UserRoleController@add_access');
+    Route::get('userRole/access/{role_id}', 'Admin\UserRoleController@access');
+    Route::post('userRole/access/{role_id}', 'Admin\UserRoleController@add_access');
 
 
     //Users
-    create_crud_route('users', 'UsersController',[]);
+    create_crud_route('users', 'UsersController', []);
 
     //Color
     create_crud_route('colors', 'ColorController');
@@ -76,7 +76,10 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
     create_crud_route('discount', 'DiscountController');
 
     //stockroom
-    create_crud_route('stockrooms', 'StockroomController',[]);
+    create_crud_route('stockrooms', 'StockroomController', []);
+
+    //commissions
+    create_crud_route('commissions', 'CommissionController');
 
 
     //stockroom/getProductWarranty
@@ -111,7 +114,6 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
     Route::get('stockroom/add/output', 'Admin\StockroomController@add_output')->name('stockroom.add_output');
 
 
-
     //gallery
     Route::get('products/gallery/{id}', 'Admin\ProductController@gallery');
     Route::post('products/gallery_upload/{id}', 'Admin\ProductController@gallery_upload');
@@ -128,13 +130,13 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
     create_crud_route('city', 'CityController');
 
     //comment
-    create_crud_route('comments', 'CommentController',['show','create','store','edit','update']);
-    Route::post('comment/change_status','Admin\CommentController@change_status');
+    create_crud_route('comments', 'CommentController', ['show', 'create', 'store', 'edit', 'update']);
+    Route::post('comment/change_status', 'Admin\CommentController@change_status');
 
     //question
-    create_crud_route('questions', 'QuestionController',['show','create','store','edit','update']);
-    Route::post('question/change_status','Admin\QuestionController@change_status');
-    Route::post('question/addAnswer/{id}','Admin\QuestionController@addAnswer');
+    create_crud_route('questions', 'QuestionController', ['show', 'create', 'store', 'edit', 'update']);
+    Route::post('question/change_status', 'Admin\QuestionController@change_status');
+    Route::post('question/addAnswer/{id}', 'Admin\QuestionController@addAnswer');
 
 
     //Item category
@@ -193,12 +195,12 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function () {
 });
 
 //comments
-Route::get('product/comment/{product_id}','SiteController@comment_form')->middleware('auth');
-Route::post('product/comment/{product_id}','SiteController@add_comment')->middleware('auth');
-Route::get('site/getComment','ApiController@getComment');
+Route::get('product/comment/{product_id}', 'SiteController@comment_form')->middleware('auth');
+Route::post('product/comment/{product_id}', 'SiteController@add_comment')->middleware('auth');
+Route::get('site/getComment', 'ApiController@getComment');
 
 //show question
-Route::get('site/get_question/{product_id}','SiteController@get_question');
+Route::get('site/get_question/{product_id}', 'SiteController@get_question');
 
 Route::get('product/{product_id}/{product_url}', 'SiteController@show_product');
 Route::get('product/{product_id}', 'SiteController@show_product');
@@ -208,13 +210,11 @@ Route::get('product/{product_id}', 'SiteController@show_product');
 Route::post('site/change_color', 'SiteController@change_color');
 
 
-
 Route::post('Cart', 'SiteController@add_cart');
 Route::get('Cart', 'SiteController@show_cart');
 
 Route::post('site/cart/remove_product', 'SiteController@remove_product');
 Route::post('site/cart/change_product_cart', 'SiteController@change_product_cart');
-
 
 
 //main
@@ -254,29 +254,27 @@ Route::post('site/check_gift_cart', 'ShoppingController@check_gift_cart');
 Route::post('site/check_discount_code', 'ShoppingController@check_discount_code');
 
 
-
-
 Route::prefix('user')->middleware(['auth'])->group(function () {
 
     //getFavoriteList
-    Route::get('getFavoriteList','UserController@getFavoriteList');
+    Route::get('getFavoriteList', 'UserController@getFavoriteList');
 
 
     //add_favorite
-    Route::post('add_favorite','UserController@add_favorite');
+    Route::post('add_favorite', 'UserController@add_favorite');
 
     //addQuestion
-    Route::post('addQuestion','UserController@addQuestion');
+    Route::post('addQuestion', 'UserController@addQuestion');
 
     //getAddress
-    Route::get('/getAddress','UserController@getAddress');
+    Route::get('/getAddress', 'UserController@getAddress');
 
     //Address
     Route::post('/addAddress', 'UserController@addAddress');
 
     //like
-    Route::post('/like','ApiController@like');
-    Route::post('/dislike','ApiController@dislike');
+    Route::post('/like', 'ApiController@like');
+    Route::post('/dislike', 'ApiController@dislike');
 
     Route::delete('/removeAddress/{address_id}', 'UserController@removeAddress');
 
@@ -285,25 +283,24 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::get('/profile/orders', 'User\UserPanelController@orders');
     Route::get('/profile/orders/{order_id}', 'User\UserPanelController@show_orders');
     //profile
-    Route::get('profile','User\UserPanelController@profile');
-    Route::get('profile/additional-info','User\UserPanelController@additional_info');
-    Route::post('profile/additional-info','User\UserPanelController@save_additional_info');
+    Route::get('profile', 'User\UserPanelController@profile');
+    Route::get('profile/additional-info', 'User\UserPanelController@additional_info');
+    Route::post('profile/additional-info', 'User\UserPanelController@save_additional_info');
 
     //profile/personal-info
-    Route::get('profile/personal-info','User\UserPanelController@personal_info');
+    Route::get('profile/personal-info', 'User\UserPanelController@personal_info');
 
     //profile/address
-    Route::get('profile/address','User\UserPanelController@address');
+    Route::get('profile/address', 'User\UserPanelController@address');
 
     //profile/address
-    Route::get('profile/address','User\UserPanelController@address');
+    Route::get('profile/address', 'User\UserPanelController@address');
 
     //profile/favorite
-    Route::get('profile/favorite','User\UserPanelController@favorite');
+    Route::get('profile/favorite', 'User\UserPanelController@favorite');
 
     //favorite/removeProductOfList
-    Route::post('favorite/removeProductOfList','UserController@removeProductOfList');
-
+    Route::post('favorite/removeProductOfList', 'UserController@removeProductOfList');
 
 
 });

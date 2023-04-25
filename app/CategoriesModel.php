@@ -28,7 +28,7 @@ class CategoriesModel extends Model
         return $array;
     }
 
-    public function get_parent2(){
+    public static function get_parent2(){
         $array=[''=>'انتخاب گروه محصولات'];
         $list=self::with('getChild.getChild.getChild')->where('parent_id',0)->get();
         foreach ($list as $key=>$value){

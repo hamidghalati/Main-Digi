@@ -72,14 +72,15 @@
                 },
                 labels:{
                     formatter:function(){
-                        let value=this.value;
+                        let values=parseInt(this.value);
 
-                        // if(value>1000)
-                        // {
-                        //     value=number_format(value);
-                        // }
-                        return value;
-
+                        if(values>1000)
+                        {
+                            values=new Intl.NumberFormat().format(values);
+                        }
+                        return '<div>'+
+                            '<span>'+values+'</span>'
+                            +'</div>';
                     },
                     style:{
                         fontsize:'15px'
@@ -144,6 +145,7 @@
             }
 
         });
+
 
 
     </script>
