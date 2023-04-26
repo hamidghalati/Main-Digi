@@ -28,10 +28,7 @@
 
             </form>
 
-            <a href="{{ url('admin/stockroom/add/input') }}" class="btn btn-success add_btn">
-                <span class="mdi mdi-pencil"></span>
-                کمیسیون
-            </a>
+
 
             <form method="post" id="data_form">
                 @csrf

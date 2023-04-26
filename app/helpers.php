@@ -740,9 +740,9 @@ function create_crud_route($route_param, $controller, $except = ['show'])
 //        Route::resource($route_param,'Admin\\'.$controller)->except($except);
 //    }
     Route::resource($route_param, 'Admin\\' . $controller)->except($except);
-    Route::post($route_param . '/remove_item', 'Admin\\' . $controller . '@remove_item')->name($route_param.'.destroy');
-    Route::post($route_param . '/restore_item', 'Admin\\' . $controller . '@restore_item')->name($route_param.'.restore');
-    Route::post($route_param . '/{id}', 'Admin\\' . $controller . '@restore')->name($route_param.'.restore');
+    Route::post($route_param . '/remove_item', 'Admin\\' . $controller . '@remove_item')->name($route_param . '.destroy');
+    Route::post($route_param . '/restore_item', 'Admin\\' . $controller . '@restore_item')->name($route_param . '.restore');
+    Route::post($route_param . '/{id}', 'Admin\\' . $controller . '@restore')->name($route_param . '.restore');
 }
 
 function create_fit_pic($pic_url, $pic_name)
@@ -1460,23 +1460,20 @@ function CheckAccess($AccessList, $key, $key2)
     return $result;
 }
 
-function checkUserAccess($access,$route,$AccessList)
+function checkUserAccess($access, $route, $AccessList)
 {
     $result = false;
     $access = json_decode($access);
     if (is_object($access)) {
         foreach ($access as $key => $value) {
-            if (array_key_exists($key,$AccessList))
-            {
-                $userAccess=$AccessList[$key]['access'];
-                foreach ($value as $key2=>$value2)
-                {
-                    if (array_key_exists($value2,$userAccess)){
-                        if (array_key_exists('routes',$userAccess[$value2]))
-                        {
-                            foreach ($userAccess[$value2]['routes'] as $accessRoute){
-                                if ($accessRoute==$route){
-                                    $result=true;
+            if (array_key_exists($key, $AccessList)) {
+                $userAccess = $AccessList[$key]['access'];
+                foreach ($value as $key2 => $value2) {
+                    if (array_key_exists($value2, $userAccess)) {
+                        if (array_key_exists('routes', $userAccess[$value2])) {
+                            foreach ($userAccess[$value2]['routes'] as $accessRoute) {
+                                if ($accessRoute == $route) {
+                                    $result = true;
                                 }
                             }
                         }
@@ -1489,19 +1486,18 @@ function checkUserAccess($access,$route,$AccessList)
     return $result;
 }
 
-function checkParentMenuAccess($accessList,$access){
+function checkParentMenuAccess($accessList, $access)
+{
     $result = false;
-    if (Auth::user()->role=='admin' && Auth::user()->account_status=='active'){
+    if (Auth::user()->role == 'admin' && Auth::user()->account_status == 'active') {
         $result = true;
-    }
-    else{
-        $accessList=json_decode($accessList);
-        $e=explode('|',$access);
-        if (sizeof($e)>0 && is_object($accessList)){
-            foreach ($e as $key=>$value)
-            {
-                if (!empty($value)){
-                    if (property_exists($accessList,$value)){
+    } else {
+        $accessList = json_decode($accessList);
+        $e = explode('|', $access);
+        if (sizeof($e) > 0 && is_object($accessList)) {
+            foreach ($e as $key => $value) {
+                if (!empty($value)) {
+                    if (property_exists($accessList, $value)) {
                         $result = true;
                     }
                 }
@@ -1511,53 +1507,44 @@ function checkParentMenuAccess($accessList,$access){
     return $result;
 }
 
-function checkAddChildMenuAccess($accessList,$child){
+function checkAddChildMenuAccess($accessList, $child)
+{
     $result = false;
-    if (Auth::user()->role=='admin' && Auth::user()->account_status=='active'){
+    if (Auth::user()->role == 'admin' && Auth::user()->account_status == 'active') {
         $result = true;
-    }
-    else{
-        $accessList=json_decode($accessList);
-        $property=$child['access'];
-       if (is_object($accessList))
-       {
-           if (property_exists($accessList,$property))
-           {
-               if (is_array($accessList->$property))
-               {
-                   if (!array_key_exists('accessValue',$child)){
-                       $result=true;
-                   }
-                   else{
-                       foreach ($accessList->$property as $key=>$value)
-                       {
-                           if ($value==$child['accessValue'])
-                           {
-                               $result=true;
-                           }
-                       }
-                   }
+    } else {
+        $accessList = json_decode($accessList);
+        $property = $child['access'];
+        if (is_object($accessList)) {
+            if (property_exists($accessList, $property)) {
+                if (is_array($accessList->$property)) {
+                    if (!array_key_exists('accessValue', $child)) {
+                        $result = true;
+                    } else {
+                        foreach ($accessList->$property as $key => $value) {
+                            if ($value == $child['accessValue']) {
+                                $result = true;
+                            }
+                        }
+                    }
 
-               }
-           }
-       }
+                }
+            }
+        }
     }
     return $result;
 }
 
 function get_stockroom_product_count($list)
 {
-    $n=0;
-    foreach ($list as $key=>$value)
-    {
-        if (!empty($value))
-        {
-            $e=explode('_',$value);
-            if (sizeof($e)==2)
-            {
-                $a=$e[1];
-                settype($a,'integer');
-                $n+=$a;
+    $n = 0;
+    foreach ($list as $key => $value) {
+        if (!empty($value)) {
+            $e = explode('_', $value);
+            if (sizeof($e) == 2) {
+                $a = $e[1];
+                settype($a, 'integer');
+                $n += $a;
             }
 
         }
@@ -1565,6 +1552,159 @@ function get_stockroom_product_count($list)
     return $n;
 }
 
+function set_sale($order)
+{
+    if ($order)
+    {
+        $jdf = new jdf();
+        $y = $jdf->tr_num($jdf->jdate('Y'));
+        $m = $jdf->tr_num($jdf->jdate('j'));
+        $d = $jdf->tr_num($jdf->jdate('n'));
+        $total_price = 0;
+        $commission_price = 0;
+
+        foreach ($order->getProductRow as $key => $value) {
+            $cat_id = $value->getProduct->cat_id;
+            $brand_id = $value->getProduct->brand_id;
+            $c = 0;
+            $product_price = $value->product_price2 * $value->product_count;
+            if ($value->seller_id > 0) {
+                $commision = \App\Commission::where(['cat_id' => $cat_id, 'brand_id' => $brand_id])->first();
+                if ($commision) {
+                    $c = ($value->product_price2 * $commision->percentage) / 100;
+                    $c = ($c * $value->product_count);
+                    $commission_price += $c;
+                }
+
+                DB::table('sellers')->where('id', $value->seller_id)->increment('new_order_count');
+                DB::table('sellers')->where('id', $value->seller_id)->increment('total_commission', $c);
+                DB::table('sellers')->where('id', $value->seller_id)->increment('total_price', $product_price);
+
+                $value->commission = $c;
+                $value->update();
+
+                set_seller_sale_statistics($product_price, $c, $y, $m, $d, $value->seller_id);
+            }
+            $total_price += $product_price;
+            product_sale_statistics($y, $m, $d, $c, $product_price, $value->product_id);
+        }
+
+        set_overall_statistics($y,$m,$d,$total_price,$commission_price);
+    }
+}
+
+function product_sale_statistics($y, $m, $d, $commission, $product_price, $product_id, $type = 'plus')
+{
+    $product_sale = DB::table('product_sale_statistics')
+        ->where(['year' => $y, 'month' => $m, 'day' => $d, 'product_id' => $product_id])
+        ->first();
+    if ($product_sale) {
+        if ($type == 'plus') {
+            $product_price = $product_price + $product_sale->price;
+            $commission = $commission + $product_sale->commission;
+        } else {
+            $product_price = $product_sale->price - $product_price;
+            $commission = $product_sale->commission - $commission;
+        }
+
+        DB::table('product_sale_statistics')
+            ->where(['year' => $y, 'month' => $m, 'day' => $d, 'product_id' => $product_id])
+            ->update([
+                'price' => $product_price,
+                'commission' => $commission
+            ]);
+
+    } else {
+        if ($type == 'minus') {
+            $commission = -$commission;
+            $product_price = -$product_price;
+        }
+        DB::table('product_sale_statistics')
+            ->insert([
+                'year' => $y,
+                'month' => $m,
+                'day' => $d,
+                'product_id' => $product_id,
+                'commission' => $commission,
+                'price' => $product_price
+            ]);
+    }
+}
+
+function set_seller_sale_statistics($product_price, $commission, $y, $m, $d, $seller_id,$type = 'plus')
+{
+    $seller_sale = DB::table('seller_sale_statistics')
+        ->where(['year' => $y, 'month' => $m, 'day' => $d, 'seller_id' => $seller_id])
+        ->first();
+    if ($seller_sale) {
+        if ($type == 'plus') {
+            $product_price = $product_price + $seller_sale->price;
+            $commission = $commission + $seller_sale->commission;
+        } else {
+            $product_price = $seller_sale->price - $product_price;
+            $commission = $seller_sale->commission - $commission;
+        }
+
+        DB::table('seller_sale_statistics')
+            ->where(['year' => $y, 'month' => $m, 'day' => $d, 'seller_id' => $seller_id])
+            ->update([
+                'price' => $product_price,
+                'commission' => $commission
+            ]);
+
+    } else {
+        if ($type == 'minus') {
+            $commission = -$commission;
+            $product_price = -$product_price;
+        }
+        DB::table('seller_sale_statistics')
+            ->insert([
+                'year' => $y,
+                'month' => $m,
+                'day' => $d,
+                'seller_id' => $seller_id,
+                'commission' => $commission,
+                'price' => $product_price
+            ]);
+    }
+}
+
+function set_overall_statistics($y,$m,$d,$total_price,$commission,$type = 'plus')
+{
+    $sale_statistics = DB::table('sale_statistics')
+        ->where(['year' => $y, 'month' => $m, 'day' => $d])
+        ->first();
+    if ($sale_statistics) {
+        if ($type == 'plus') {
+            $product_price = $total_price + $sale_statistics->price;
+            $commission = $commission + $sale_statistics->commission;
+        } else {
+            $total_price = $sale_statistics->price - $total_price;
+            $commission = $sale_statistics->commission - $commission;
+        }
+
+        DB::table('sale_statistics')
+            ->where(['year' => $y, 'month' => $m, 'day' => $d])
+            ->update([
+                'price' => $product_price,
+                'commission' => $commission
+            ]);
+
+    } else {
+        if ($type == 'minus') {
+            $commission = -$commission;
+            $total_price = -$total_price;
+        }
+        DB::table('sale_statistics')
+            ->insert([
+                'year' => $y,
+                'month' => $m,
+                'day' => $d,
+                'commission' => $commission,
+                'price' => $total_price
+            ]);
+    }
+}
 
 
 

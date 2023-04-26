@@ -11,7 +11,9 @@
 |
 */
 
+use App\Jobs\OrderStatistics;
 use App\Mail\SendAnswer;
+use App\Order;
 use App\Question;
 
 Route::get('/', 'SiteController@index');
@@ -307,7 +309,10 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
 
 
 Route::get('test', function () {
-
+    $order_id=95;
+    $order=Order::with(['getProductRow.getProduct','getOrderInfo','getAddress','getGiftCart'])
+        ->where(['id'=>$order_id])->firstOrFail();
+    OrderStatistics::dispatch($order);
 });
 
 //Session::forget('cart_final_price');

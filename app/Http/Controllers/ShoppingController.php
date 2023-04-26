@@ -6,6 +6,7 @@ use App\Address;
 use App\Cart;
 use App\DiscountCode;
 use App\GiftCart;
+use App\Jobs\OrderStatistics;
 use App\Lib\MobileDetect;
 use App\Order;
 
@@ -110,10 +111,10 @@ class ShoppingController extends Controller
     }
 
     public function verify(){
-        $order_id=94;
+        $order_id=95;
         DB::beginTransaction();
         try {
-            $order=Order::with(['getProductRow','getOrderInfo','getAddress','getGiftCart'])
+            $order=Order::with(['getProductRow.getProduct','getOrderInfo','getAddress','getGiftCart'])
                 ->where(['id'=>$order_id])->firstOrFail();
             $order->pay_status='ok';
             $order->update();
@@ -141,7 +142,11 @@ class ShoppingController extends Controller
 
             DB::commit();
 
+            OrderStatistics::dispatch($order);
             return view('shipping.verify',['order'=>$order,'order_data'=>$order_data]);
+
+
+
         }
         catch (\Exception $exception)
         {

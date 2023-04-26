@@ -14,7 +14,7 @@ class OrderProduct extends Model
     public function getProduct()
     {
         return $this->hasOne(ProductsModel::class,'id','product_id')
-            ->select(['id','title','image_url']);
+            ->select(['id','title','image_url','cat_id','brand_id']);
     }
     public  function getColor()
     {
