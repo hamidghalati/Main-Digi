@@ -14,6 +14,7 @@ import Counter from "./components/Counter";
 import OrderStep from "./components/OrderStep";
 import StockroomProductList from "./components/StockroomProductList";
 import StockroomOutputList from "./components/StockroomOutputList";
+import SaleReport from "./components/SaleReport";
 
 
 
@@ -28,7 +29,8 @@ const app = new Vue({
         Counter,
         OrderStep,
         StockroomProductList,
-        StockroomOutputList
+        StockroomOutputList,
+        SaleReport
 
 
     }

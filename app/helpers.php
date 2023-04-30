@@ -1556,12 +1556,12 @@ function set_sale($order)
 {
     if ($order)
     {
-        $jdf = new jdf();
-        $y = $jdf->tr_num($jdf->jdate('Y'));
-        $m = $jdf->tr_num($jdf->jdate('j'));
-        $d = $jdf->tr_num($jdf->jdate('n'));
+        $y = tr_num(jdate('Y'));
+        $m = tr_num(jdate('n'));
+        $d = tr_num(jdate('j'));
         $total_price = 0;
         $commission_price = 0;
+
 
         foreach ($order->getProductRow as $key => $value) {
             $cat_id = $value->getProduct->cat_id;
@@ -1595,6 +1595,7 @@ function set_sale($order)
 
 function product_sale_statistics($y, $m, $d, $commission, $product_price, $product_id, $type = 'plus')
 {
+
     $product_sale = DB::table('product_sale_statistics')
         ->where(['year' => $y, 'month' => $m, 'day' => $d, 'product_id' => $product_id])
         ->first();
@@ -1704,6 +1705,30 @@ function set_overall_statistics($y,$m,$d,$total_price,$commission,$type = 'plus'
                 'price' => $total_price
             ]);
     }
+}
+
+function get_sale_report($request,$year,$table_name,$where,$attr)
+{
+    $sale=[1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0,12=>0];
+    $commission=[1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0,12=>0];
+    $data=DB::table($table_name)->where($where)->get();
+    foreach ($data as $key=>$value)
+    {
+        if (array_key_exists($value->month,$sale))
+        {
+            $sale[$value->month]+=$value->$attr;
+        }
+        if (array_key_exists($value->month,$commission))
+        {
+            $commission[$value->month]+=$value->commission;
+        }
+    }
+    $response=array();
+    $response['sale']=$sale;
+    $response['commission']=$commission;
+
+
+    return $response;
 }
 
 

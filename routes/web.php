@@ -83,6 +83,13 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     //commissions
     create_crud_route('commissions', 'CommissionController');
 
+    //report/sale
+    Route::get('report/sale','Admin\AdminController@sale_report');
+
+    //shop/get_sale_report
+    Route::get('shop/get_sale_report','Admin\AdminController@get_sale_report');
+
+
 
     //stockroom/getProductWarranty
     Route::get('stockroom/getProductWarranty', 'Admin\StockroomController@getProductWarranty')->name('get_product_warranty');
@@ -309,10 +316,11 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
 
 
 Route::get('test', function () {
-    $order_id=95;
+    $order_id=98;
     $order=Order::with(['getProductRow.getProduct','getOrderInfo','getAddress','getGiftCart'])
         ->where(['id'=>$order_id])->firstOrFail();
-    OrderStatistics::dispatch($order);
+// OrderStatistics::dispatch($order);
+    set_sale($order);
 });
 
 //Session::forget('cart_final_price');

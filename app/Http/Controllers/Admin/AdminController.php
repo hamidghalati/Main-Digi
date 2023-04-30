@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Lib\jdf;
 use App\Offers;
 use App\Order;
 use App\ProductWarranty;
@@ -96,6 +97,19 @@ class AdminController extends Controller
 
     public function author_panel(){
         return view('admin.author_panel');
+    }
+
+    public function sale_report()
+    {
+        return view('admin.sale_report');
+    }
+
+    public function get_sale_report(Request $request)
+    {
+        $jdf=new jdf();
+        $y=$jdf->tr_num(jdate('Y'));
+        $y=!empty($request->get('default_year')) ? $request->get('default_year') : $y;
+        return get_sale_report($request,$y,'sale_statistics',['year'=>$y],'price');
     }
 
 
