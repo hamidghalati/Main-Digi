@@ -1707,10 +1707,10 @@ function set_overall_statistics($y,$m,$d,$total_price,$commission,$type = 'plus'
     }
 }
 
-function get_sale_report($request,$year,$table_name,$where,$attr)
+function get_sale_report($request,$year,$table_name,$where,$attr,$now)
 {
-    $sale=[1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0,12=>0];
-    $commission=[1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0,12=>0];
+    $sale=[0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0,12=>0];
+    $commission=[0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0,12=>0];
     $data=DB::table($table_name)->where($where)->get();
     foreach ($data as $key=>$value)
     {
@@ -1723,11 +1723,28 @@ function get_sale_report($request,$year,$table_name,$where,$attr)
             $commission[$value->month]+=$value->commission;
         }
     }
+
+    $first=DB::table($table_name)->first();
+    $year_list=array();
+    if ($first && $first->year!=$now)
+    {
+        $j=0;
+        $a=$first->year;
+        settype($a,'integer');
+        for ($i=$a;$i<=$now;$i++)
+        {
+            $year_list[$j]=$i;
+            $j++;
+        }
+    }
+    else{
+        $year_list[0]=$now;
+    }
     $response=array();
     $response['sale']=$sale;
     $response['commission']=$commission;
-
-
+    $response['default_year']=$year;
+    $response['year_list']=$year_list;
     return $response;
 }
 

@@ -26,4 +26,11 @@ class OrderProduct extends Model
         return $this->hasOne(WarrantyModel::class,'id','warranty_id')
             ->withDefault(['name'=>'']);
     }
+
+    public function getSeller()
+    {
+        return $this->hasOne(Seller::class,'id','seller_id')
+            ->select(['id','brand_name'])
+            ->withDefault(['brand_name'=>env('SHOP_NAME')]);
+    }
 }

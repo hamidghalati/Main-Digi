@@ -98,6 +98,9 @@ class OrderData
                     $this->row_data[$key][$j]['title']=$product->title;
                     $this->row_data[$key][$j]['image_url']=$product->image_url;
                     $this->row_data[$key][$j]['warranty_name']=$warranty->name;
+                    $this->row_data[$key][$j]['seller']=$value2->getSeller->brand_name;
+                    $this->row_data[$key][$j]['commission']=$value2->commission;
+                    $this->row_data[$key][$j]['send_status']=$value2->send_status;
                     if ($color)
                     {
                          $this->row_data[$key][$j]['color_name']=$color->name;

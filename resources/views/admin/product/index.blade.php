@@ -72,7 +72,7 @@
                             </td>
                             <td>
                                 @if(!$value->trashed())
-                                    <a class="btn btn-warning"
+                                    <a
                                        href="{{url('admin/products/'.$value->id.'/edit')}}">
                                         <span data-toggle="tooltip" data-placement="top" title="ویرایش محصول"><i class="fa fa-edit"></i></span>
 
@@ -80,7 +80,7 @@
                                 @endif
 
                                 @if(!$value->trashed())
-                                    <a class="btn btn-success"
+                                    <a
                                        href="{{url('admin/products/'.$value->id.'/items')}}">
                                         <span data-toggle="tooltip" data-placement="top" title="اضافه کردن آیتم به محصول"><i class="fa fa-bar-chart"></i></span>
 
@@ -88,28 +88,33 @@
                                 @endif
 
                                     @if(!$value->trashed())
-                                        <a class="btn btn-info"
+                                        <a
                                            href="{{url('admin/Product_warranties?product_id='.$value->id)}}">
                                             <span data-toggle="tooltip" data-placement="top" title="اضافه کردن تنوع قیمت"><i class="fa fa-credit-card"></i></span>
-
                                         </a>
                                     @endif
 
+                                    <a
+                                        href="{{url('admin/products/'.$value->id)}}">
+                                        <span data-toggle="tooltip" data-placement="top" title="آمار فروش"><i class="fa fa-line-chart"></i></span>
+
+                                    </a>
+
                                     @if($value->trashed())
-                                        <span class="btn btn-info" data-toggle="tooltip" data-placement="top"
+                                        <span  data-toggle="tooltip" data-placement="top"
                                            title="بازیابی محصولات"  onclick="restore_row('{{url('admin/products/'.$value->id)}}','{{ csrf_token() }}','آیا از بازیابی این دسته مطمئن هستید؟')">
                                             <i class="fa fa-refresh" ></i>
                                             بازیابی
                                         </span>
                                     @endif
                                     @if(!$value->trashed())
-                                        <span class="btn btn-danger" data-toggle="tooltip" data-placement="top"
+                                        <span data-toggle="tooltip" data-placement="top"
                                               title="حذف محصولات" onclick="del_row('{{url('admin/products/'.$value->id)}}','{{ csrf_token() }}','آیا از حذف این دسته مطمئن هستید؟')" >
-                                             <i class="fa fa-remove" ></i>
+                                             <i class="fa fa-trash-restore" ></i>
 
                                         </span>
                                     @else
-                                        <span class="btn btn-danger" onclick="del_row('{{url('admin/products/'.$value->id)}}','{{ csrf_token() }}','اطلاعات شما از بین خواهد رفت.آیا مطمئن هستید؟')" data-toggle="tooltip" data-placement="top"
+                                        <span onclick="del_row('{{url('admin/products/'.$value->id)}}','{{ csrf_token() }}','اطلاعات شما از بین خواهد رفت.آیا مطمئن هستید؟')" data-toggle="tooltip" data-placement="top"
                                               title="حذف کامل محصولات">
                                              <i class="fa fa-remove" ></i>
                                               حذف

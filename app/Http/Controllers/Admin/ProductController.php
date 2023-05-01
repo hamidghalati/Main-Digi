@@ -9,11 +9,12 @@ use App\FilterModel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\ItemModel;
+use App\Lib\jdf;
 use App\ProductFilterModel;
 use App\ProductGalleryModel;
 use App\ProductsModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use DB;
 
 use function PHPUnit\Framework\fileExists;
 
@@ -31,7 +32,6 @@ class ProductController extends CustomController
 
     }
 
-
     public function create()
     {
         $colors=ColorModel::get();
@@ -44,7 +44,6 @@ class ProductController extends CustomController
             'catList'=>$catList
         ]);
     }
-
 
     public function store(ProductRequest $request)
     {
@@ -72,12 +71,18 @@ class ProductController extends CustomController
 
     }
 
-
     public function show($id)
     {
-        //
-    }
+        $product=ProductsModel::findOrFail($id);
+        $total_sale=DB::table('product_sale_statistics')->where('product_id',$id)->sum('price');
+        $commission=DB::table('product_sale_statistics')->where('product_id',$id)->sum('commission');
+        return view('Admin.product.show',[
+            'total_sale'=>$total_sale,
+            'commission'=>$commission,
+            'product'=>$product,
 
+        ]);
+    }
 
     public function edit($id)
     {
@@ -95,7 +100,6 @@ class ProductController extends CustomController
             'product_color'=>$product_color
         ]);
     }
-
 
     public function update(Request $request, $id)
     {
@@ -276,6 +280,16 @@ class ProductController extends CustomController
         }
         return redirect()->back()->with(['message'=>'ثبت فیلتر برای محصول با موفقیت انجام شد','header'=>'ثبت فیلتر ','alerts'=>'success']);
 
+    }
+
+    public function get_sale_report(Request $request)
+    {
+        $product_id=$request->get('product_id');
+        $jdf=new jdf();
+        $y=$jdf->tr_num(jdate('Y'));
+        $now=$jdf->tr_num(jdate('Y'));
+        $y=!empty($request->get('default_year')) ? $request->get('default_year') : $y;
+        return get_sale_report($request,$y,'product_sale_statistics',['year'=>$y,'product_id'=>$product_id],'price',$now);
     }
 
 

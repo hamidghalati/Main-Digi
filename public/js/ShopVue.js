@@ -8725,6 +8725,7 @@ var render = function render() {
     staticClass: "color_ul"
   }, _vm._l(_vm.colors, function (color, key) {
     return _c("li", {
+      key: key,
       "class": [_vm.color_key == key ? "color_li active" : "color_li"]
     }, [_c("label", {
       on: {

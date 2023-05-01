@@ -491,3 +491,29 @@ number_format=function (num)
     }
     return format.split('').reverse().join('');
 }
+
+const month=[
+    'فروردین',
+    'اردیبهشت',
+    'خرداد',
+    'تیر',
+    'مرداد',
+    'شهریور',
+    'مهر',
+    'آبان',
+    'آذر',
+    'دی',
+    'بهمن',
+    'اسفند'
+]
+
+getMonthName=function (key) {
+
+    if (month[key]!=undefined)
+    {
+        return month[key];
+    }
+    else {
+        return '';
+    }
+}

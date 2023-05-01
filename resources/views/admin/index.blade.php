@@ -71,6 +71,7 @@
                     text: ''
                 },
                 labels:{
+                    useHTML:true,
                     formatter:function(){
                         let values=parseInt(this.value);
 
@@ -78,8 +79,8 @@
                         {
                             values=new Intl.NumberFormat().format(values);
                         }
-                        return '<div>'+
-                            '<span>'+values+'</span>'
+                        return '<div style="direction: rtl">'+
+                            '<span>'+values+'  تومان </span>'
                             +'</div>';
                     },
                     style:{

@@ -101,15 +101,18 @@ class AdminController extends Controller
 
     public function sale_report()
     {
-        return view('admin.sale_report');
+        $total_sale=DB::table('sale_statistics')->sum('price');
+        $commission=DB::table('sale_statistics')->sum('commission');
+        return view('admin.sale_report',['total_sale'=>$total_sale,'commission'=>$commission]);
     }
 
     public function get_sale_report(Request $request)
     {
         $jdf=new jdf();
         $y=$jdf->tr_num(jdate('Y'));
+        $now=$jdf->tr_num(jdate('Y'));
         $y=!empty($request->get('default_year')) ? $request->get('default_year') : $y;
-        return get_sale_report($request,$y,'sale_statistics',['year'=>$y],'price');
+        return get_sale_report($request,$y,'sale_statistics',['year'=>$y],'price',$now);
     }
 
 

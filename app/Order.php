@@ -24,7 +24,6 @@ class Order extends Model
 
     public function add_order($order_data)
     {
-
         $user_id=Auth::user()->id;
         $order_send_type=Session::get('order_send_type');
         $order_address_id=Session::get('order_address_id');
@@ -352,6 +351,8 @@ class Order extends Model
         ];
 
     }
+
+
 
 
 }

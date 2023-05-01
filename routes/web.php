@@ -89,6 +89,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     //shop/get_sale_report
     Route::get('shop/get_sale_report','Admin\AdminController@get_sale_report');
 
+    //product/get_sale_report
+    Route::get('product/get_sale_report','Admin\ProductController@get_sale_report');
+
 
 
     //stockroom/getProductWarranty

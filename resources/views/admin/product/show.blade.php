@@ -2,19 +2,22 @@
 
 
 @section('content')
-    @include('include.breadcrumb',['data'=>[['title'=>'آمار فروش','url'=>url('admin/report/sale')]]])
+    @include('include.breadcrumb',['data'=>[
+    ['title'=>'مدیریت محصولات','url'=>url('admin/products')],
+    ['title'=>'آمار فروش','url'=>url('admin/products/'.$product->id)],
+    ]])
     <div class="panel">
         <div class="header">
-            آمار فروش
+            آمار فروش محصول : {{ $product->title }}
 
 
         </div>
         <div class="panel_content">
-            <sale-report></sale-report>
+            <sale-report :product_id="{{ $product->id }}"></sale-report>
 
             <table class="table table-bordered table-striped" style="margin-top: 40px">
                 <tr>
-                    <td>میزان فروش کل</td>
+                    <td>میزان فروش محصول</td>
                     <td>{{ number_format($total_sale) }} تومان </td>
                 </tr>
                 <tr>

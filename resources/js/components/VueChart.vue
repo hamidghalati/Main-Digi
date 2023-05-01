@@ -11,7 +11,7 @@
                     </div>
                     <div class="chart_color_div">
                         <ul class="color_ul">
-                            <li v-for="(color,key) in colors" v-bind:class="[color_key==key ? 'color_li active' : 'color_li']">
+                            <li v-for="(color,key) in colors" v-bind:class="[color_key==key ? 'color_li active' : 'color_li']" v-bind:key="key">
                                 <label v-on:click="change_series(key)">
                                     <span class="ui-variant-shape" v-bind:style="{background:color.code}"></span>
                                     <span class="color_name">{{ color.name }}</span>

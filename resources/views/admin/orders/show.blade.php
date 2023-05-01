@@ -153,7 +153,14 @@
                                         <img src="{{url('files/thumb/'.$product['image_url'])}}" alt="">
                                         <ul>
                                             <li class="title">{{$product['title']}}</li>
-                                            @if($product['color_id']>0)
+
+                                            <li>
+                                                <span>فروشنده :</span>
+                                                <span>{{$product['seller']}}</span>
+                                            </li>
+
+
+                                        @if($product['color_id']>0)
                                                 <li>
                                                     <span>رنگ :</span>
                                                     <span>{{$product['color_name']}}</span>
@@ -173,7 +180,16 @@
                                     $discount=(($product['product_price1']*$product['product_count'])-($product['product_price2']*$product['product_count']));
                                     ?>
                                 <td>{{replace_number(number_format($discount))}}</td>
-                                <td>{{replace_number(number_format($product['product_price2']*$product['product_count']))}}</td>
+                                <td>
+                                    {{replace_number(number_format($product['product_price2']*$product['product_count']))}}
+                                    @if($product['commission']>0 && $product['send_status']>-1)
+                                        <div class="alert alert-success" style="padding: 8px;border-radius: 0;margin-top: 15px">
+                                            <span>کمیسیون :</span>
+                                            {{ number_format($product['commission']) }} تومان
+                                        </div>
+                                    @endif
+
+                                </td>
                             </tr>
                         @endforeach
                     </table>

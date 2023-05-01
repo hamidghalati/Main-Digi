@@ -1867,3 +1867,6 @@ input.pdate {
 .auto-width-select{
     width: auto!important;
 }
+.years_tag .dropdown-toggle{
+    width: 150px!important;
+}

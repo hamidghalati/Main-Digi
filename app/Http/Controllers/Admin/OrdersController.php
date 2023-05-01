@@ -25,7 +25,7 @@ class OrdersController extends CustomController
 
     public function show($order_id)
     {
-        $order=Order::with(['getProductRow','getOrderInfo','getAddress','getGiftCart'])
+        $order=Order::with(['getProductRow.getSeller','getOrderInfo','getAddress','getGiftCart'])
             ->where(['id'=>$order_id])->firstOrFail();
         if ($order->order_read=='no'){
             $order->order_read='ok';
