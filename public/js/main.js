@@ -1,52 +1,45 @@
-
 $(document).ready(function () {
 
     $("#profile_province_id").change(function () {
-        const province_id=$(this).val();
-        if (parseInt(province_id)>0)
-        {
-            const url=site_url+"api/get_city/"+province_id;
+        const province_id = $(this).val();
+        if (parseInt(province_id) > 0) {
+            const url = site_url + "api/get_city/" + province_id;
             $.ajax({
-                type:"GET",
-                url:url,
-                success:function (response) {
-                    let html='';
-                    for (let i=0;i<response.length;i++)
-                    {
-                        html+='<option value='+response[i].id+'>'+response[i].name+'</option>'
+                type: "GET",
+                url: url,
+                success: function (response) {
+                    let html = '';
+                    for (let i = 0; i < response.length; i++) {
+                        html += '<option value=' + response[i].id + '>' + response[i].name + '</option>'
                     }
-                    if (html.trim()!='')
-                    {
+                    if (html.trim() != '') {
                         $("#profile_city").html(html).selectpicker('refresh');
-                    }
-                    else {
-                        html='<option value="">انتخاب شهر</option>';
+                    } else {
+                        html = '<option value="">انتخاب شهر</option>';
                         $("#profile_city").html(html).selectpicker('refresh');
                     }
                 }
             })
-        }
-        else {
-            html='<option value="">انتخاب شهر</option>';
+        } else {
+            html = '<option value="">انتخاب شهر</option>';
             $("#profile_city").html(html).selectpicker('refresh');
         }
     });
 
     $("#newsletter").click(function () {
-       if ($(this).hasClass('active')){
-           $("#newsletter_input").removeAttr('checked');
-           $(this).removeClass('active');
-       }
-       else {
-           $(this).addClass('active');
-           $("#newsletter_input").attr('checked',true);
-       }
+        if ($(this).hasClass('active')) {
+            $("#newsletter_input").removeAttr('checked');
+            $(this).removeClass('active');
+        } else {
+            $(this).addClass('active');
+            $("#newsletter_input").attr('checked', true);
+        }
     });
 
     $('.form_cover span').click(function () {
         $("#account_type").click();
         $('.form_cover').hide();
-        document.getElementById('legal').value=true;
+        document.getElementById('legal').value = true;
     });
 
     $("#login_btn").click(function () {
@@ -98,8 +91,7 @@ $(document).ready(function () {
         }
     }
 
-    validate_login_username=function (username)
-    {
+    validate_login_username = function (username) {
         if (username.toString().trim() == "") {
             $("#username").addClass('validate_error_border');
             $("#username_error_message").show().text(' نام کاربری خود را وارد کنید');
@@ -122,57 +114,69 @@ $(document).ready(function () {
     });
 
     $("#send_email").click(function () {
-       const email=$("#email").val();
-       const product_id=$("#share_product_id").val();
+        const email = $("#email").val();
+        const product_id = $("#share_product_id").val();
 
-       if (email.trim()!='' && validateEmailAddress(email))
-       {
-           $("#share_box").modal('hide');
-           $("#loading").show();
+        if (email.trim() != '' && validateEmailAddress(email)) {
+            $("#share_box").modal('hide');
+            $("#loading").show();
 
-           $.ajaxSetup({
-               headers: {
-                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-               }
-           });
-           const url = site_url + "site/share_product";
-           $.ajax({
-               url: url,
-               type: "POST",
-               data: "email=" + email+'&product_id='+product_id,
-               success: function (response) {
-                   $("#loading").hide();
-                   if (response=='ok') {
-                       $("#email").val('');
-                       $("#share_link_error").text('')
-                   }
-                   else {
-                       $("#share_box").modal('show');
-                       $("#share_link_error").text('خطا در ارسال ایمیل، دوباره تلاش نمایید')
-                   }
-               },
-               error:function () {
-                   $("#loading").hide();
-               }
-           });
-       }
-
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            const url = site_url + "site/share_product";
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: "email=" + email + '&product_id=' + product_id,
+                success: function (response) {
+                    $("#loading").hide();
+                    if (response == 'ok') {
+                        $("#email").val('');
+                        $("#share_link_error").text('')
+                    } else {
+                        $("#share_box").modal('show');
+                        $("#share_link_error").text('خطا در ارسال ایمیل، دوباره تلاش نمایید')
+                    }
+                },
+                error: function () {
+                    $("#loading").hide();
+                }
+            });
+        }
 
 
     });
 
-    validateEmailAddress=function (email) {
-        if ( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email))
-        {
+    validateEmailAddress = function (email) {
+        if (/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
             return true;
-        }
-        else {
+        } else {
             $("#share_link_error").text('آدرس ایمیل وارد شده معتبر نمی باشد')
             return false;
         }
     }
 
+    $("#copy_btn").click(function () {
+        const copy_data = $(this).attr('copy-data');
+        const input = document.createElement('input');
+        input.setAttribute('value', copy_data);
+        input.setAttribute('id', "url_input");
+        input.setAttribute('contenteditable', true);
 
+        $("#share_box").append(input);
+        input.select();
+        document.execCommand('copy');
+        $("#url_input").remove();
+
+        $(this).text('کپی شد');
+        setTimeout(function () {
+            $("#copy_btn").text('کپی لینک');
+        },3000);
+
+    });
 
 
 });

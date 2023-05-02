@@ -40,14 +40,14 @@
                         </a>
                     </li>
                     <li>
-                        <button>کپی لینک</button>
+                        <button id="copy_btn" copy-data="{{ url('product/dkp-'.$product->id.'/'.$product->product_url) }}">کپی لینک</button>
                     </li>
                 </ul>
 
                 <div class="share_link_form">
                     <div class="email_form">
                         <input type="text" id="email" class="form-control">
-                        <input type="hidden" id="share_product_id" value="{{ $product->id }}">
+                        <input type="hidden" id="share_product_id" value="{{ $product->id }}" >
                         <button id="send_email">ارسال</button>
                     </div>
                     <div>
