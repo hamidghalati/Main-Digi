@@ -173,8 +173,6 @@ $(document).ready(function () {
                     $("#login_box").modal('show');
                 }
 
-                console.log(textStatus);
-                console.log(error);
             }
         });
     });

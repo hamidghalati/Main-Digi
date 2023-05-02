@@ -11,6 +11,7 @@ use App\Comment;
 use App\Favorite;
 use App\ItemValueModel;
 use App\Lib\MobileDetect;
+use App\Mail\ShareEmail;
 use App\ProductsModel;
 use App\ProductWarranty;
 use App\Question;
@@ -22,6 +23,7 @@ use App\User;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
+use Mail;
 use Session;
 
 class SiteController extends Controller
@@ -353,6 +355,35 @@ class SiteController extends Controller
         }
         $Question=$Question->paginate(10);
         return $Question;
+    }
+
+    public function share_product(Request $request)
+    {
+       if ($request->ajax())
+       {
+           $email=$request->get('email');
+           $product_id=$request->get('product_id');
+           $user_name=(Auth::check() && !empty(Auth::user()->name)) ? Auth::user()->name : 'کاربر ناشناس';
+           $product=ProductsModel::where('id',$product_id)->select(['id','title','price','image_url','product_url'])->first();
+
+           if ($product)
+           {
+               try {
+                   Mail::to($email)->send(new ShareEmail($user_name,$product));
+                   return 'ok';
+               }
+               catch (\Exception $exception)
+               {
+                   return 'error';
+               }
+           }
+           else{
+               return 'error';
+           }
+
+       }
+
+
     }
 
 

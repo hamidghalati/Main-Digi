@@ -120,3 +120,70 @@ color: red!important;
     height: 16px;
     background: url("../files/images/star-new.gif") repeat-x 0 -32px;
 }
+#share_box .modal-dialog{
+    max-width: 390px!important;
+}
+#share_box ul
+{
+    display: flex;
+    justify-content: space-between;
+}
+#share_box ul li{
+    list-style: none;
+}
+#share_box ul li a span{
+    font-size: 28px;
+}
+#share_box .mdi-telegram{
+    color: #08c;
+}
+#share_box .mdi-twitter{
+    color: #4dcceb;
+}
+#share_box .mdi-facebook{
+    color: #1da1f2;
+}
+#share_box .mdi-whatsapp{
+    color: #1bd741;
+}
+#share_box .mdi-email-outline{
+    color: #ef5661;
+    cursor: pointer;
+}
+#share_box ul li button{
+    font-size: 13px;
+    width: 100px;
+    background: white;
+    border: 1px solid grey;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    height: 30px;
+    margin-top: 5px;
+}
+.share_link_form{
+    width: 100%;
+    display: none;
+}
+.share_link_form #email{
+    width: calc(100% - 100px)!important;
+    height: 40px;
+}
+.email_form{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.share_link_form button{
+    background: #ef5661!important;
+    border-color:#ef5661!important;
+    width: 80px;
+    font-size: 14px;
+    border-radius: 0.25rem;
+    color: white;
+    height: 40px;
+}
+.share_link_form .has_error{
+    font-size: 13px;
+    color: red;
+    padding-top: 10px;
+}

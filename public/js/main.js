@@ -117,6 +117,61 @@ $(document).ready(function () {
         $('.send_btn .line').removeClass('line2');
     });
 
+    $("#share_box .mdi-email-outline").click(function () {
+        $('.share_link_form').show();
+    });
+
+    $("#send_email").click(function () {
+       const email=$("#email").val();
+       const product_id=$("#share_product_id").val();
+
+       if (email.trim()!='' && validateEmailAddress(email))
+       {
+           $("#share_box").modal('hide');
+           $("#loading").show();
+
+           $.ajaxSetup({
+               headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               }
+           });
+           const url = site_url + "site/share_product";
+           $.ajax({
+               url: url,
+               type: "POST",
+               data: "email=" + email+'&product_id='+product_id,
+               success: function (response) {
+                   $("#loading").hide();
+                   if (response=='ok') {
+                       $("#email").val('');
+                       $("#share_link_error").text('')
+                   }
+                   else {
+                       $("#share_box").modal('show');
+                       $("#share_link_error").text('خطا در ارسال ایمیل، دوباره تلاش نمایید')
+                   }
+               },
+               error:function () {
+                   $("#loading").hide();
+               }
+           });
+       }
+
+
+
+    });
+
+    validateEmailAddress=function (email) {
+        if ( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email))
+        {
+            return true;
+        }
+        else {
+            $("#share_link_error").text('آدرس ایمیل وارد شده معتبر نمی باشد')
+            return false;
+        }
+    }
+
 
 
 

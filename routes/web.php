@@ -211,6 +211,9 @@ Route::get('product/comment/{product_id}', 'SiteController@comment_form')->middl
 Route::post('product/comment/{product_id}', 'SiteController@add_comment')->middleware('auth');
 Route::get('site/getComment', 'ApiController@getComment');
 
+//site/share_product
+Route::post('site/share_product','SiteController@share_product');
+
 //show question
 Route::get('site/get_question/{product_id}', 'SiteController@get_question');
 
@@ -319,11 +322,11 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
 
 
 Route::get('test', function () {
-    $order_id=98;
-    $order=Order::with(['getProductRow.getProduct','getOrderInfo','getAddress','getGiftCart'])
-        ->where(['id'=>$order_id])->firstOrFail();
-// OrderStatistics::dispatch($order);
-    set_sale($order);
+    $email="hamid.sam86@gmail.com";
+    $user_name=(Auth::check() && !empty(Auth::user()->name)) ? Auth::user()->name : 'کاربر ناشناس';
+    $product=\App\ProductsModel::where('id',12)->select(['id','title','price','image_url','product_url'])->first();
+
+    Mail::to($email)->send(new \App\Mail\ShareEmail($user_name,$product));
 });
 
 //Session::forget('cart_final_price');

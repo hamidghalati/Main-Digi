@@ -56,8 +56,8 @@
                             </a>
                         </li>
                         <li data-toggle="tooltip" data-placement="left" title="اشتراک گذاری">
-                            <a href="">
-                                <i class="fa fa-share-alt" aria-hidden="true"></i>
+                            <a>
+                                <i class="fa fa-share-alt" aria-hidden="true" data-toggle="modal" data-target="#share_box"></i>
                             </a>
                         </li>
                         <li data-toggle="tooltip" data-placement="left" title="مقایسه">
@@ -180,6 +180,9 @@
 
         <login-box></login-box>
         <vue-chart :product_id="{{ $product->id }}"></vue-chart>
+
+
+        @include('include.share-link')
 
     </div>
 
