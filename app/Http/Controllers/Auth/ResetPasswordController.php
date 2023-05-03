@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Lib\MobileDetect;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
@@ -26,5 +27,16 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/';
+    protected $view='';
+
+    public function __construct()
+    {
+        $this->middleware('guest');
+        $detect=new MobileDetect();
+        if ($detect->isMobile() || $detect->isTablet())
+        {
+            $this->view='mobile.';
+        }
+    }
 }

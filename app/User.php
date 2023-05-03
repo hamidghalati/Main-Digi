@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-         'name','mobile', 'password','account_status','active_code','role','role_id','username'
+         'name','mobile', 'password','account_status','active_code','role','role_id','username','forget_password_code'
     ];
 
     /**
@@ -185,6 +185,10 @@ class User extends Authenticatable
 
     }
 
+    public function getEmailForPasswordReset()
+    {
+        return $this->mobile;
+    }
 
 
 }

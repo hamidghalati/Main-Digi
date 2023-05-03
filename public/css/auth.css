@@ -293,3 +293,15 @@ a {
     position: absolute;
     z-index: 10;
 }
+.send_btn.forget_password .line::before{
+    content: "\F023";
+    font-family: FontAwesome;
+    padding-right: 20px;
+    padding-top: 12px;
+    display: block;
+}
+
+.send_btn.forget_password
+{
+    width: 100%;
+}

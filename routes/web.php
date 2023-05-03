@@ -20,6 +20,10 @@ Route::get('/', 'SiteController@index');
 
 Auth::routes();
 
+//password/confirm
+Route::get('password/confirm','Auth\ForgotPasswordController@confirm')->middleware('guest');
+Route::post('password/confirm','Auth\ForgotPasswordController@check_confirm_code')->middleware('guest');
+
 //vue_login
 Route::post('/vue_login', 'Auth\LoginController@vue_login')->middleware('guest');
 

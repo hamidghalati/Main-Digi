@@ -52,6 +52,7 @@ $(document).ready(function () {
         }
 
     });
+
     $("#admin_login_btn").click(function () {
         const username = $("#username").val();
         const password = $("#login_password").val();
@@ -177,6 +178,15 @@ $(document).ready(function () {
         },3000);
 
     });
+
+    $("#forget_password").click(function () {
+        const mobile = $("#mobile").val();
+        const result1 = validate_register_mobile(mobile);
+
+        if (result1) {
+            $("#forget_password_form").submit();
+        }
+    })
 
 
 });
