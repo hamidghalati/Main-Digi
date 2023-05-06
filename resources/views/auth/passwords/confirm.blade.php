@@ -45,12 +45,7 @@
             </form>
         </div>
 
-        <div class="alert alert-warning">
-            <span>قبلاً در سایت ثبت نام کرده اید؟</span>
-            <span>
-                <a class="data_link" href="{{route('login')}}">وارد شوید</a>
-            </span>
-        </div>
+
 
 
 

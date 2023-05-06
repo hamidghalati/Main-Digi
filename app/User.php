@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -69,8 +70,12 @@ class User extends Authenticatable
     {
         $active_code = rand(99999, 1000000);
         $mobile = $request->get('mobile');
+        $forget_password=$request->get('forget_password','no');
+
+
+
         if ($request->ajax()) {
-           if (\Auth::check())
+           if (Auth::check())
            {
                $user_id=$request->user->id;
                $row=AdditionalInfos::where('user_id',$user_id)->first();
@@ -90,15 +95,52 @@ class User extends Authenticatable
 
            }
            else{
-               $user = User::where(['mobile' => $mobile, 'account_status' => 'InActive'])->first();
-               if ($user) {
-                   $user->active_code = $active_code;
-                   $user->update();
-                   return 'ok';
-               } else {
-                   return 'error';
+               if ($forget_password=='ok')
+               {
+
+                   $user = User::where(['mobile' => $mobile])->first();
+                   return $user;
+//                   if ($user) {
+//                       $user->forget_password_code = $active_code;
+//                       $user->update();
+//                       return 'ok';
+//                   } else {
+//                       return 'forget_password_code';
+//                   }
                }
+               else{
+                   $user = User::where(['mobile' => $mobile, 'account_status' => 'InActive'])->first();
+                   if ($user) {
+                       $user->active_code = $active_code;
+                       $user->update();
+                       return 'ok';
+                   } else {
+                       return 'error';
+                   }
+               }
+
            }
+        } else {
+            return 'erroe';
+        }
+    }
+
+    public static function resend_forget_password($request)
+    {
+        $active_code = rand(99999, 1000000);
+        $mobile = $request->get('mobile');
+        echo $mobile;
+
+        if ($request->ajax()) {
+            $user = User::where(['mobile' => $mobile])->first();
+            if ($user) {
+                $user->forget_password_code = $active_code;
+                $user->update();
+                return 'ok';
+            } else {
+                return 'error';
+            }
+
         } else {
             return 'erroe';
         }

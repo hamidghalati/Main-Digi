@@ -188,5 +188,73 @@ $(document).ready(function () {
         }
     })
 
+    $("#update_password_btn").click(function () {
+
+        const mobile = $("#mobile").val();
+        const password = $("#password").val();
+        const password_confirm = $("#password_confirmation").val();
+        const result1 = validate_mobile(mobile,"#mobile");
+        const result2 = validate_password(password,"#password");
+        const result3 = validate_password_confirm(password,password_confirm);
+        if (result1 && result2 && result3) {
+            $("#updatePasswordForm").submit();
+        }
+    });
+
+
+
 
 });
+function validate_mobile(mobile_number,element) {
+    const el=(element==undefined) ? "#register_mobile" : element;
+    if (mobile_number.toString().trim() == "") {
+        $(el).addClass('validate_error_border');
+        $("#mobile_error_message").show().text('لطفاً شماره موبایل خود را وارد نمایید');
+        return false;
+    } else if (check_mobile_number(mobile_number)) {
+        $(el).addClass('validate_error_border');
+        $("#mobile_error_message").show().text(' شماره موبایل وارد شده معتبر نمی باشد');
+        return false;
+    } else {
+        $(el).removeClass('validate_error_border');
+        $("#mobile_error_message").hide();
+        return true;
+    }
+}
+
+function validate_password(password,element) {
+    const el=(element==undefined) ? "#register_mobile" : element;
+    if (password.toString().trim().length < 8) {
+        $(el).addClass('validate_error_border');
+        $("#password_error_message").show().text(' کلمه عبور باید حداقل 8 کاراکتر باشد');
+        return false;
+    } else {
+        $(el).removeClass('validate_error_border');
+        $("#password_error_message").hide();
+        return true;
+    }
+}
+
+function validate_password_confirm(password,password_confirm)
+{
+    if(password.toString().trim().length >= 8)
+    {
+            if (password_confirm!=password)
+            {
+
+                $("#password_confirmation").addClass('validate_error_border');
+                $("#password_confirmation_error_message").show().text('تکرار کلمه عبور با کلمه عبور مطابقت ندارد');
+                return false;
+            }
+            else {
+                $("#password_confirmation").removeClass('validate_error_border');
+                $("#password_confirmation_error_message").hide();
+                return true;
+            }
+    }
+    else {
+        return false;
+    }
+
+
+}

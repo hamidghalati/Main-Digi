@@ -160,6 +160,11 @@ class SiteController extends Controller
         return User::resend($request);
     }
 
+    public function resend_forget_password(Request $request)
+    {
+        return User::resend_forget_password($request);
+    }
+
     public function active_account(Request $request)
     {
         $mobile = $request->get('mobile');

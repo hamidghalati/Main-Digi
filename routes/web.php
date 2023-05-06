@@ -34,6 +34,9 @@ Route::get('/confirmphone', 'SiteController@confirmphone')->middleware('auth');
 
 Route::post('ajax/resend', 'SiteController@resend');
 
+//ajax/resend_forget_password
+Route::post('ajax/resend_forget_password', 'SiteController@resend_forget_password');
+
 Route::post('active_account', 'SiteController@active_account')->middleware('guest')->name('active_account');
 Route::post('changeMobileNumber', 'SiteController@changeMobileNumber')->middleware('auth');
 
@@ -326,11 +329,7 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
 
 
 Route::get('test', function () {
-    $email="hamid.sam86@gmail.com";
-    $user_name=(Auth::check() && !empty(Auth::user()->name)) ? Auth::user()->name : 'کاربر ناشناس';
-    $product=\App\ProductsModel::where('id',12)->select(['id','title','price','image_url','product_url'])->first();
-
-    Mail::to($email)->send(new \App\Mail\ShareEmail($user_name,$product));
+    sendSms();
 });
 
 //Session::forget('cart_final_price');

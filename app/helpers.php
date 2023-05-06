@@ -1748,6 +1748,20 @@ function get_sale_report($request,$year,$table_name,$where,$attr,$now)
     return $response;
 }
 
+function sendSms()
+{
+    $api = new App\Ghasedak\GhasedakApi( 'f3bf6b8f7fd8a7ffeb737ee836337755dcb8d6c1c17db9f564f77a49482e7298');
+    try {
+        $result= $api->SendSimple("09351360402","این یک پیام تستی از طرف حمیدرضا سمیعی می باشد",'10008566');
+    }
+    catch (Exception $exception)
+    {
+
+    }
+
+
+}
+
 
 
 

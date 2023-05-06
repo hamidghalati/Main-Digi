@@ -137,6 +137,32 @@ $(document).ready(function () {
         }
     });
 
+    $("#forget_password_code").click(function () {
+        if (t == 0) {
+            const mobile = $("#mobile").val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            const url = site_url + "ajax/resend_forget_password";
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: "mobile=" + mobile,
+                success: function (response) {
+                    t = 180;
+                    startTime();
+                    alert(response)
+                },
+                error: function (jqXhr, textStatus, error) {
+                    t = 180;
+                    startTime();
+                }
+            });
+        }
+    });
+
     $("#active_account_btn").click(function () {
         $("#active_account_form").submit();
     });
