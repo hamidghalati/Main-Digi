@@ -8,6 +8,12 @@
 
         <div style="margin: {{$margin}}px">
 
+            @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
+
             <form method="POST" action="{{ route('password.update') }}" id="updatePasswordForm">
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">

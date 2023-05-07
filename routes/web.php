@@ -32,6 +32,7 @@ Route::get('admin_login', 'Admin\AdminController@admin_login_form')->middleware(
 Route::get('/confirm', 'SiteController@confirm')->middleware('guest');
 Route::get('/confirmphone', 'SiteController@confirmphone')->middleware('auth');
 
+//ajax/resend
 Route::post('ajax/resend', 'SiteController@resend');
 
 //ajax/resend_forget_password
@@ -329,7 +330,8 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
 
 
 Route::get('test', function () {
-    sendSms();
+//    $user=\App\User::find(22);
+//    $user->notify(new \App\Notifications\SendSms($user->mobile,'ارسال پیامک'));
 });
 
 //Session::forget('cart_final_price');

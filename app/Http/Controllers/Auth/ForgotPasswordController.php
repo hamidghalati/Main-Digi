@@ -62,8 +62,9 @@ class ForgotPasswordController extends Controller
         {
             $user->forget_password_code=null;
             $user->update();
-            Session::forget('forget_password_token');
+
             return redirect('/password/reset/'.$token.'?mobile='.$mobile);
+//            Session::forget('token');
         }
         else{
             return redirect()->back()->with('mobile', $mobile)->with(['token'=>$token])->with('danger', 'کد وارد شده اشتباه می باشد')->withInput();
