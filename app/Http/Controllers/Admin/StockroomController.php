@@ -137,4 +137,11 @@ class StockroomController extends CustomController
         return view('admin.stockroom.show_output',['output'=>$output,'req'=>$request]);
     }
 
+    public function input_factor($id,Request $request)
+    {
+        $input=Stockrooms::getProductList($id,"input",$request);
+        $type="input";
+        return view('admin.stockroom.factor',['input'=>$input,'type'=>$type]);
+    }
+
 }

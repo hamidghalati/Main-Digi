@@ -35,6 +35,8 @@
 
             </form>
 
+            <a href="{{ url('admin/factor/'.$input['stockroomEvent']->id.'/input') }}" class="btn btn-primary" style="margin-bottom: 20px" target="_blank">نمایش فاکتور</a>
+
 
             @if(!empty($input['stockroomEvent']->tozihat))
                 <div class="tozihat">

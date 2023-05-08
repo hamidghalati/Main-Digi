@@ -85,9 +85,6 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     //discount_code
     create_crud_route('discount', 'DiscountController');
 
-    //stockroom
-    create_crud_route('stockrooms', 'StockroomController', []);
-
     //commissions
     create_crud_route('commissions', 'CommissionController');
 
@@ -100,7 +97,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     //product/get_sale_report
     Route::get('product/get_sale_report','Admin\ProductController@get_sale_report');
 
-
+    //stockroom
+    create_crud_route('stockrooms', 'StockroomController', []);
 
     //stockroom/getProductWarranty
     Route::get('stockroom/getProductWarranty', 'Admin\StockroomController@getProductWarranty')->name('get_product_warranty');
@@ -133,6 +131,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     //stockroom/add/output
     Route::get('stockroom/add/output', 'Admin\StockroomController@add_output')->name('stockroom.add_output');
 
+    //factor/id/input
+    Route::get('factor/{id}/input','Admin\StockroomController@input_factor')->name('stockroom.input_factor');
 
     //gallery
     Route::get('products/gallery/{id}', 'Admin\ProductController@gallery');
@@ -330,8 +330,8 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
 
 
 Route::get('test', function () {
-//    $user=\App\User::find(22);
-//    $user->notify(new \App\Notifications\SendSms($user->mobile,'ارسال پیامک'));
+    $user=\App\User::find(22);
+    $user->notify(new \App\Notifications\SendSms($user->mobile,'ارسال پیامک'));
 });
 
 //Session::forget('cart_final_price');
