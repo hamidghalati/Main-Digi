@@ -35,8 +35,11 @@
 
             </form>
 
+            <a href="{{ url('admin/factor/'.$output['stockroomEvent']->id.'/output') }}" class="btn btn-primary" style="margin-bottom: 20px" target="_blank">نمایش فاکتور</a>
 
-            @if(!empty($output['stockroomEvent']->tozihat))
+
+
+        @if(!empty($output['stockroomEvent']->tozihat))
                 <div class="tozihat">
                     <span>توضیحات : </span>
                     {{ $output['stockroomEvent']->tozihat }}

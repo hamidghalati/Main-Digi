@@ -199,8 +199,8 @@ class User extends Authenticatable
                 'stockroom_edit' => ['label' => 'مدیریت انبارها', 'routes' => [
                     'stockrooms.index', 'stockrooms.create', 'stockrooms.store', 'stockrooms.edit', 'stockrooms.update', 'stockrooms.show'
                 ]],
-                'add_input' => ['label' => 'ثبت ورودی انبار', 'routes' => ['stockroom.input', 'stockroom.show_input', 'stockroom.add_product', 'stockroom.add_input', 'get_product_warranty']],
-                'add_output' => ['label' => 'ثبت خروجی انبار', 'routes' => ['stockroom.output', 'stockroom.show_output', 'stockroom.add_product', 'stockroom.add_output', 'get_inventory']],
+                'add_input' => ['label' => 'ثبت ورودی انبار', 'routes' => ['stockroom.input', 'stockroom.show_input', 'stockroom.add_product', 'stockroom.add_input', 'get_product_warranty','stockroom.input_factor']],
+                'add_output' => ['label' => 'ثبت خروجی انبار', 'routes' => ['stockroom.output', 'stockroom.show_output', 'stockroom.add_product', 'stockroom.add_output', 'get_inventory','stockroom.output_factor']],
             ]
         ];
 

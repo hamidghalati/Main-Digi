@@ -157,5 +157,17 @@ class OrdersController extends CustomController
         ]);
     }
 
+    public function submission_factor($id)
+    {
+        $submission_info=OrderInfo::with('getOrder.getAddress')
+            ->where('id',$id)
+            ->has('getOrder')
+            ->firstOrFail();
+        $order_data=new OrderData($submission_info->getOrder->getOrderInfo,$submission_info->getOrder->getProductRow,$submission_info->getOrder->user_id);
+        $order_data=$order_data->getData($id);
+        return view('admin.orders.factor',['submission_info'=>$submission_info,'order_data'=>$order_data]);
+
+    }
+
 
 }

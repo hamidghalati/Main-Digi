@@ -134,6 +134,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     //factor/id/input
     Route::get('factor/{id}/input','Admin\StockroomController@input_factor')->name('stockroom.input_factor');
 
+    //factor/id/output
+    Route::get('factor/{id}/output','Admin\StockroomController@output_factor')->name('stockroom.output_factor');
+
     //gallery
     Route::get('products/gallery/{id}', 'Admin\ProductController@gallery');
     Route::post('products/gallery_upload/{id}', 'Admin\ProductController@gallery_upload');
@@ -187,7 +190,6 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::match(['get', 'post'], 'setting/send-order-price', 'Admin\SettingController@send_order_price');
 
     //orders
-
     create_crud_route('orders', 'OrdersController');
 
     Route::get('orders', 'Admin\OrdersController@index');
@@ -204,6 +206,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('orders/{order_id}', 'Admin\OrdersController@show');
 
     Route::post('order/change_status', 'Admin\OrdersController@change_status');
+
+    //orders/submission/factor/id
+    Route::get('orders/submission/factor/{submission_id}','Admin\OrdersController@submission_factor');
 
 
     ///ReView

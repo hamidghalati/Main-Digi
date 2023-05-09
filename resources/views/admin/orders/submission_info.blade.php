@@ -55,7 +55,10 @@
 
         </table>
 
-        <div class="panel_content">
+        <a href="{{ url('admin/orders/submission/factor/'.$submission_info->id) }}" class="btn btn-primary" style="margin-right: 25px;" target="_blank">نمایش فاکتور</a>
+
+
+        <div class="panel_content" style="padding: 0!important;">
 
             <div class="order_info_div">
                 <div class="header">
