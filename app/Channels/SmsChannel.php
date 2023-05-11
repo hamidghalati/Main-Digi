@@ -14,13 +14,13 @@ class SmsChannel
         $mobile_number=$data['mobile_number'];
         $message=$data['message'];
 
-        $api = new GhasedakApi( env('SMS_API_KEY'));
+        $api = new GhasedakApi('ab2f76f4702dfba647ceb09fab9e7470ec960b6a037bbb1cbef25d1465b6efb4');
         try {
-            $api->SendSimple($mobile_number,$message,env('SMS_API_LINE'));
+            $api->SendSimple($mobile_number,$message,'10008566');
         }
         catch (Exception $exception)
         {
-//SMS_API_KEY=f3bf6b8f7fd8a7ffeb737ee836337755dcb8d6c1c17db9f564f77a49482e7298
+//SMS_API_KEY=ab2f76f4702dfba647ceb09fab9e7470ec960b6a037bbb1cbef25d1465b6efb4
 //SMS_API_LINE=10008566
         }
 

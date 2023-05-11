@@ -1935,15 +1935,33 @@ input.pdate {
 .factor .product_list_data .product_verify_info div ul{
     padding: 0!important;
     margin: 0!important;
-    width: calc(100% - 85px);
+    width: calc(100% - 70px);
 
 }
+.factor .product_list_data .product_verify_info div ul li{
+    margin-right: 10px!important;
+}
 .factor .product_list_data .product_verify_info .title{
-    color:#584c4c !important
+    color:#584c4c !important;
+    margin-right: 10px!important;
 }
 .factor .product_list_data {
     width: 100%!important;
 }
 .factor .order_table_info {
     width: 100%!important;
+    margin: 0!important;
+}
+.factor_price_table{
+    float: left;
+    width: 28%;
+}
+.print_page{
+    /*width: 21cm;*/
+    height: 29.7cm;
+}
+@media print {
+    .print_page{
+        page-break-after: always;
+    }
 }

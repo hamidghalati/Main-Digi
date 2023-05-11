@@ -20,95 +20,112 @@
 
 </head>
 <body>
-<?php $jdf = new \App\Lib\jdf(); ?>
-<div class="container factor">
-    <div class="line"></div>
-    <div class="header_factor">
-        <div>
-            <p>
-                <span>تاریخ :{{$jdf->jdate('Y/m/d') }} - {{$jdf->jdate('H:i:s') }}</span>
-                <span>شماره فاکتور : {{ $input['stockroomEvent']->id }}</span>
-                <span>تعداد محصول : {{ replace_number(sizeof($input['stockroom_product'])) }}</span>
-            </p>
-        </div>
-        <div class="title">
-            @if($type=="input")
-                ورود کالا به انبار
-            @else
-                خروج کالا از انبار
-            @endif
-        </div>
-        <div>
-            <img src="{{asset(env('SHOP_LOGO','files/images/logo.svg'))}}" alt="" class="shop_logo">
-        </div>
-    </div>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>ردیف</th>
-            <th>تصویر محصول</th>
-            <th>عنوان محصول</th>
-            <th>فروشنده</th>
-            <th>گارانتی</th>
-            <th>رنگ</th>
-            <th>تعداد</th>
-        </tr>
-        </thead>
-        <tbody>
+<?php $jdf = new \App\Lib\jdf();$count = 7;$size = sizeof($input['stockroom_product']);$n = ceil($size / $count);?>
 
-        @foreach($input['stockroom_product'] as $key=>$value)
+@for($i=0;$i<$n;$i++)
+    <div class="container factor print_page">
+        <div class="line"></div>
+        <div class="header_factor">
+            @php $p=$i+1 @endphp
+            <div>
+                <p>
+                    <span>تاریخ :{{$jdf->jdate('Y/m/d') }} - {{$jdf->jdate('H:i:s') }}</span>
+                    <span>شماره فاکتور : {{ $input['stockroomEvent']->id }}</span>
+                    <span>تعداد محصول : {{ replace_number(sizeof($input['stockroom_product'])) }}</span>
+                    <span>
+                        @if($n!=1)
+                            <span>صفحه {{ replace_number($p) }} از {{ replace_number($n) }} </span>
+                        @endif
+                    </span>
+                </p>
+            </div>
+            <div class="title">
+                @if($type=="input")
+                    ورود کالا به انبار
+                @else
+                    خروج کالا از انبار
+                @endif
+            </div>
+            <div>
+                <img src="{{asset(env('SHOP_LOGO','files/images/logo.svg'))}}" alt="" class="shop_logo">
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <td>{{ ++$key }}</td>
-                <td>
-                    <img style="width: 70px;"
-                         src="{{ url('files/thumb/'.$value->getProductWarranty->getProduct->image_url) }}"
-                         alt=""
-                         class="product_pic stockroom_product">
-                </td>
-                <td width="30%">{{ $value->getProductWarranty->getProduct->title }}</td>
-                <td>{{ $value->getProductWarranty->getSeller->brand_name }}</td>
-                <td>{{ $value->getProductWarranty->getWarranty->name }}</td>
-                <td>
-                    @if($value->getProductWarranty->getColor->id>0)
-                        <span style="background: {{ $value->getProductWarranty->getColor->code }}"
-                              class="color_td">
+                <th>ردیف</th>
+                <th>تصویر محصول</th>
+                <th>عنوان محصول</th>
+                <th>فروشنده</th>
+                <th>گارانتی</th>
+                <th>رنگ</th>
+                <th>تعداد</th>
+            </tr>
+            </thead>
+            <tbody>
+
+                <?php
+                $j =  (($i - 0) * $count) ;
+                ?>
+            @foreach($input['stockroom_product'] as $key=>$value)
+
+                @if($key>=$j && $key<$j+$count)
+                    <tr>
+                        <td>{{ ++$key }}</td>
+                        <td>
+                            <img style="width: 70px;"
+                                 src="{{ url('files/thumb/'.$value->getProductWarranty->getProduct->image_url) }}"
+                                 alt=""
+                                 class="product_pic stockroom_product">
+                        </td>
+                        <td width="30%">{{ $value->getProductWarranty->getProduct->title }}</td>
+                        <td>{{ $value->getProductWarranty->getSeller->brand_name }}</td>
+                        <td>{{ $value->getProductWarranty->getWarranty->name }}</td>
+                        <td>
+                            @if($value->getProductWarranty->getColor->id>0)
+                                <span style="background: {{ $value->getProductWarranty->getColor->code }}"
+                                      class="color_td">
                                    <span style="color: white"> {{ $value->getProductWarranty->getColor->name }}</span>
                                 </span>
-                    @endif
+                            @endif
 
-                </td>
-                <td>{{ $value->product_count }}</td>
-            </tr>
-        @endforeach
-
-
-        </tbody>
-    </table>
+                        </td>
+                        <td>{{ $value->product_count }}</td>
+                    </tr>
+                @endif
+            @endforeach
 
 
-    <div class="factor_tozihat">
-        <span>کالاهای فوق توسط  : </span>
-        {{ $input['stockroomEvent']->getUser->name }}
-        <span>
+            </tbody>
+        </table>
+
+
+{{--        @if($i==($n-1))--}}
+            <div class="factor_tozihat">
+                <span>کالاهای فوق توسط  : </span>
+                {{ $input['stockroomEvent']->getUser->name }}
+                <span>
                  @if($type=="input")
-                به  {{ $input['stockroomEvent']->getStockroom->name }} اضافه شده
-            @else
-                از  {{ $input['stockroomEvent']->getStockroom->name }}  خارج شده
-            @endif
+                        به  {{ $input['stockroomEvent']->getStockroom->name }} اضافه شده
+                    @else
+                        از  {{ $input['stockroomEvent']->getStockroom->name }}  خارج شده
+                    @endif
             </span>
-    </div>
+            </div>
 
-    <div class="factor_footer">
+            <div class="factor_footer">
         <span>
             مهر و امضای تحویل گیرنده
         </span>
-        <span>
+                <span>
             مهر و امضای تحویل دهنده
         </span>
+            </div>
+{{--        @endif--}}
+
+
     </div>
-
-
-</div>
+@endfor
 
 </body>
 </html>

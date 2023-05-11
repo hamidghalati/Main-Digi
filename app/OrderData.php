@@ -25,13 +25,12 @@ class OrderData
 
     public function getData($id=0)
     {
-
-
         foreach ($this->OrderInfo as $info) {
 
             if (($id>0 && $info->id=$id)|| $id==0)
             {
                 $this->order_row_amount[$info->id]=$info->send_order_amount;
+
                 $products_id = explode('_', $info->product_id);
                 $colors_id = explode('_', $info->colors_id);
                 $warranty_id = explode('_', $info->warranty_id);
@@ -41,9 +40,6 @@ class OrderData
                     }
                 }
             }
-
-
-
         }
 
         $this->getProductData();
@@ -101,6 +97,7 @@ class OrderData
                     $this->row_data[$key][$j]['seller']=$value2->getSeller->brand_name;
                     $this->row_data[$key][$j]['commission']=$value2->commission;
                     $this->row_data[$key][$j]['send_status']=$value2->send_status;
+                    $this->row_data[$key][$j]['post']=$value2->product_price2;
                     if ($color)
                     {
                          $this->row_data[$key][$j]['color_name']=$color->name;

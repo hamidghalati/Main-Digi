@@ -55,7 +55,7 @@
 
         </table>
 
-        <a href="{{ url('admin/orders/submission/factor/'.$submission_info->id) }}" class="btn btn-primary" style="margin-right: 25px;" target="_blank">نمایش فاکتور</a>
+        <a href="{{ url('admin/orders/submission/factor/'.$order->id) }}" class="btn btn-primary" style="margin-right: 25px;" target="_blank">نمایش فاکتور</a>
 
 
         <div class="panel_content" style="padding: 0!important;">
@@ -65,12 +65,7 @@
                     {{\App\Order::getOrderStatus($submission_info->send_status,$orderStatus)}}
                 </div>
 
-
-
-
                 <order-step :steps="{{json_encode($orderStatus)}}" :send_status="{{$submission_info->send_status}}" :order_id="{{$submission_info->id}}"></order-step>
-
-
 
                 <table class="table table-bordered order_table_info">
                     <tr>

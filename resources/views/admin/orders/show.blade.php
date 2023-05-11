@@ -19,6 +19,10 @@
         ?>
 
         <div class="panel_content">
+
+            <a href="{{ url('admin/orders/submission/factor/'.$order->id) }}" class="btn btn-primary" style="margin-right: 25px;" target="_blank">نمایش فاکتور</a>
+
+
             <table class="table table-bordered order_table_info">
                 <tr>
                     <td>
