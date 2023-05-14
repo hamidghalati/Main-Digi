@@ -71,7 +71,7 @@
                             <span class="btn btn-danger" onclick="del_row('{{url('admin/products/gallery/'.$value->id)}}','{{ csrf_token() }}','تصویر شما از بین خواهد رفت.آیا مطمئن هستید؟')" data-toggle="tooltip" data-placement="top"
                                 title="حذف تصویر">
                                <i class="fa fa-remove" ></i>
-                                حذف برند
+                                حذف تصویر
                           </span>
                         </td>
 

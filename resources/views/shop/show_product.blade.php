@@ -76,6 +76,11 @@
                            <img src="{{url('files/products/'.$product->image_url)}}" alt="">
                        </div>
                     @endif
+
+                    <div class="product_gallery_box">
+                        @include('include.Gallery')
+                    </div>
+
                 </div>
             </div>
             <div class="product_data">
