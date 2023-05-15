@@ -4814,18 +4814,81 @@ element.style {
     -webkit-border-radius: 100%;
     display: block;
 }
-
-
-
-
-
-
-
-
-
-
-
-
+.gallery_box_content{
+    border-radius: 0!important;
+    -webkit-border-radius: 0!important;
+    height: 570px;
+    display: inline-flex;
+    flex-direction: row!important;
+}
+.gallery_box_content .left_box{
+    position: relative;
+    width: 85%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.gallery_box_content .right_box{
+    overflow: hidden;
+    width: 15%;
+    border-left: 1px solid #c8c8c8;
+}
+.img_swiper{
+    overflow-y: hidden;
+    transform: translate3d(0,100px,0);
+    transition-duration: 300ms;
+}
+.img_swiper .swiper-slide{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.img_select_border{
+    border-left: 2px solid #00bfd6!important;
+}
+.gallery_box_content .swiper-slide img{
+    width: 75%;
+    margin: auto;
+    display: block;
+}
+.gallery_box_content .left_box img{
+    margin: auto;
+    display: block;
+}
+#product_gallery_box .modal-body{
+    display: flex;
+}
+.range_slider{
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    direction: ltr;
+    width: 180px;
+    height: 40px;
+    margin: auto;
+    background: white;
+    display: inline-flex;
+    justify-content: center;
+    border-radius: 5px!important;
+    -webkit-border-radius: 5px!important;
+}
+.range_slider input[type="range"]{
+    width: 100px!important;
+    margin-top: 7px;
+}
+.range_slider .mdi{
+    color: #808080;
+    /*margin-top: 15px;*/
+}
+.range_slider .mdi-minus{
+    margin-right: 15px;
+    font-size: 25px;
+}
+.range_slider .mdi-plus{
+    margin-left: 15px;
+    font-size: 25px;
+}
 
 
 
@@ -5017,10 +5080,12 @@ element.style {
         width: 25% !important;
     }
 
-    product_div img {
+    .product_div img {
         width: 60% !important;
     }
-
+    .gallery_box_content{
+        height: 650px;
+    }
 }
 
 @media (max-width: 1279px) {
@@ -5056,6 +5121,12 @@ element.style {
 @media (min-width: 992px) {
     .modal-lg, .modal-xl {
         max-width: 900px;
+    }
+}
+
+@media (min-width: 1500px) {
+    .gallery_box_content .swiper-slide img{
+       width: 70%;
     }
 }
 

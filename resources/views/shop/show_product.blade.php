@@ -188,6 +188,7 @@
 
 
         @include('include.share-link')
+        @include('include.gallery-modal-box')
 
     </div>
 
