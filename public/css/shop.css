@@ -4874,8 +4874,10 @@ element.style {
     -webkit-border-radius: 5px!important;
 }
 .range_slider input[type="range"]{
-    width: 100px!important;
-    margin-top: 7px;
+    /*width: 100px!important;*/
+    margin-top: 21px!important;
+    height: 2px;
+
 }
 .range_slider .mdi{
     color: #808080;
@@ -4884,10 +4886,12 @@ element.style {
 .range_slider .mdi-minus{
     margin-right: 15px;
     font-size: 25px;
+    margin-top: 3px;
 }
 .range_slider .mdi-plus{
     margin-left: 15px;
     font-size: 25px;
+    margin-top: 3px;
 }
 
 

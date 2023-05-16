@@ -398,8 +398,18 @@ $(document).ready(function () {
 
         const src=$(this).find('img').attr('src');
         $("#selected_img").attr('src',src);
+        $("#image_zoom_range").val(0);
+        zoom_image();
 
-    })
+    });
+
+    const rangeElement=document.getElementById('image_zoom_range');
+    if (rangeElement!=null)
+    {
+        rangeElement.addEventListener('input',function () {
+           zoom_image();
+        });
+    }
 
 
 
@@ -545,9 +555,6 @@ function startTime() {
     }, 1000);
 }
 
-
-
-
 check_has_compare_list = function () {
     const check_has_compare_list = document.getElementsByClassName('compare_product_gallery');
     if (check_has_compare_list.length > 0) {
@@ -595,8 +602,7 @@ check_comment_content = function (content) {
     }
 }
 
-number_format=function (num)
-{
+number_format=function (num){
     num=num.toString();
     let format='';
     let counter=0;
@@ -613,54 +619,52 @@ number_format=function (num)
     return format.split('').reverse().join('');
 }
 
-// replaceNumber=function(n) {
-//     n=n.toString();
-//     const find=["0","1","2","3","4","5","6","7","8","9"]
-//     const replace=["۰","۱","۲","۳","۴","۵","۶","۷","۸","۹"]
-//     for (let i=0;i<find.length;i++)
-//     {
-//         n=n.replace(new RegExp(find[i],'g'),replace[i]);
-//     }
-//     return n;
-// }
-
-
-//        <!--دستور جی کوِرب برای منو-->
-var timer = {};
-
-$('#menu_top li').hover(function () {
-    var tag = $(this);
-    var timerAtte = tag.attr('data-time');
-    clearTimeout(timer[timerAtte]);
-    timer[timerAtte] = setTimeout(function () {
-        $('>ul', tag).fadeIn(0);
-        tag.addClass('active-menu');
-        $('>.submenu3 ', tag).fadeIn(0);
-    }, 500);
-
-
-}, function () {
-    var tag = $(this);
-    var timerAtte = tag.attr('data-time');
-    clearTimeout(timer[timerAtte]);
-    timer[timerAtte] = setTimeout(function () {
-        $('>ul', tag).fadeOut(0);
-        tag.removeClass('active-menu');
-        $('> .submenu3', tag).fadeOut(0);
-    }, 600);
-})
-
-let promo_index=0;
-startPromoSingleSlide=function () {
-    $('.promo_single_header').addClass('promo-single-bar');
-    setInterval(function () {
-        promo_index++;
-        if (promo_index>(promo_single_count-1))
-        {
-            promo_index=0;
-        }
-        $('.promo_single a').removeClass('active');
-        $("a[data-swiper-slide-index='"+promo_index+"']").addClass('active');
-    },7000);
+const zoom_width=65;
+zoom_image=function () {
+    const value=parseFloat($("#image_zoom_range").val());
+    const width=parseFloat($("#selected_img").attr('width').replace('%'));
+    let new_width=zoom_width+value;
+    new_width+='%';
+    $("#selected_img").attr('width',new_width);
 }
 
+//
+// //        <!--دستور جی کوِرب برای منو-->
+// var timer = {};
+//
+// $('#menu_top li').hover(function () {
+//     var tag = $(this);
+//     var timerAtte = tag.attr('data-time');
+//     clearTimeout(timer[timerAtte]);
+//     timer[timerAtte] = setTimeout(function () {
+//         $('>ul', tag).fadeIn(0);
+//         tag.addClass('active-menu');
+//         $('>.submenu3 ', tag).fadeIn(0);
+//     }, 500);
+//
+//
+// }, function () {
+//     var tag = $(this);
+//     var timerAtte = tag.attr('data-time');
+//     clearTimeout(timer[timerAtte]);
+//     timer[timerAtte] = setTimeout(function () {
+//         $('>ul', tag).fadeOut(0);
+//         tag.removeClass('active-menu');
+//         $('> .submenu3', tag).fadeOut(0);
+//     }, 600);
+// })
+//
+// let promo_index=0;
+// startPromoSingleSlide=function () {
+//     $('.promo_single_header').addClass('promo-single-bar');
+//     setInterval(function () {
+//         promo_index++;
+//         if (promo_index>(promo_single_count-1))
+//         {
+//             promo_index=0;
+//         }
+//         $('.promo_single a').removeClass('active');
+//         $("a[data-swiper-slide-index='"+promo_index+"']").addClass('active');
+//     },7000);
+// }
+//
