@@ -57,7 +57,8 @@
                         </li>
                         <li data-toggle="tooltip" data-placement="left" title="اشتراک گذاری">
                             <a>
-                                <i class="fa fa-share-alt" aria-hidden="true" data-toggle="modal" data-target="#share_box"></i>
+                                <i class="fa fa-share-alt" aria-hidden="true" data-toggle="modal"
+                                   data-target="#share_box"></i>
                             </a>
                         </li>
                         <li data-toggle="tooltip" data-placement="left" title="مقایسه">
@@ -71,11 +72,14 @@
                             </a>
                         </li>
                     </ul>
-                    @if(!empty($product->image_url))
-                       <div class="default_product_pic">
-                           <img src="{{url('files/products/'.$product->image_url)}}" alt="">
-                       </div>
-                    @endif
+
+                    <div class="default_product_pic">
+                        @if(!empty($product->image_url))
+                            <img class="default_pic" src="{{url('files/products/'.$product->image_url)}}"
+                                 data-zoom-image="{{url('files/products/'.$product->image_url)}}" alt="">
+                        @endif
+                    </div>
+
 
                     <div class="product_gallery_box">
                         @include('include.Gallery')
@@ -84,6 +88,9 @@
                 </div>
             </div>
             <div class="product_data">
+
+                <div id="zoom_box"></div>
+
                 <div class="product_headline">
                     <h6 class="product_title">
                         {{$product->title}}
@@ -129,33 +136,35 @@
 
         <other-price :product_id="{{ $product->id }}"></other-price>
 
-       <div id="Related_products">
-           @include('include.horizontal_product',['title'=>' محصولات مرتبط','products'=>$relate_product])
-       </div>
+        <div id="Related_products">
+            @include('include.horizontal_product',['title'=>' محصولات مرتبط','products'=>$relate_product])
+        </div>
 
 
         <div id="tab_div">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active"  data-toggle="tab" href="#review" role="tab" aria-selected="true">
+                    <a class="nav-link active" data-toggle="tab" href="#review" role="tab" aria-selected="true">
                         <span class="fa fa-camera-retro"></span>
                         <span>نقد و بررسی</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  data-toggle="tab" href="#product_items" role="tab"  aria-selected="false">
+                    <a class="nav-link" data-toggle="tab" href="#product_items" role="tab" aria-selected="false">
                         <span class="fa fa-list-ul"></span>
                         <span>مشخصات فنی</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  data-toggle="tab" id="comments" href="#product_comments" role="tab"  aria-selected="false">
+                    <a class="nav-link" data-toggle="tab" id="comments" href="#product_comments" role="tab"
+                       aria-selected="false">
                         <span class="fa fa-comments"></span>
                         <span>نظرات کاربران</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  data-toggle="tab" href="#question" id="questions" role="tab"  aria-selected="false">
+                    <a class="nav-link" data-toggle="tab" href="#question" id="questions" role="tab"
+                       aria-selected="false">
                         <span class="fa fa-question-circle"></span>
                         <span>پرسش و پاسخ</span>
                     </a>
@@ -176,8 +185,8 @@
                 </div>
                 <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="contact-tab">
                     <question-list auth="<?php echo Auth::check() ? 'ok' : 'no' ?>"
-                                  product_id="<?= $product->id ?>"
-                                  product_title="<?= $product->title ?>">
+                                   product_id="<?= $product->id ?>"
+                                   product_title="<?= $product->title ?>">
                     </question-list>
                 </div>
             </div>
@@ -192,11 +201,11 @@
 
     </div>
 
-
-
-
 @endsection
 @section('header')
+{{--    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>--}}
+{{--    <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>--}}
+
     <link rel="stylesheet" href="{{asset('css/swiper.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/auth.css')}}">
     <link rel="stylesheet" href="{{asset('slick/slick/slick.css')}}">
@@ -204,20 +213,38 @@
 
 @endsection
 @section('footer')
+    <script type="text/javascript" src="{{ asset('js/jquery.elevateZoom-3.0.8.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.elevatezoom.js') }}"></script>
+
 
     <script>
         import LoginBox from "../../js/components/LoginBox";
+
+
+        $('.default_pic').elevateZoom({
+            zoomWindowPosition: "zoom_box",
+            borderSize: 1,
+            zoomWindowWidth: 500,
+            zoomWindowHeight: 450,
+            cursor: 'zoom-in'
+        });
+
+
+
+
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         });
 
-       const product_tozihat= $("#product_tozihat")[0].scrollHeight;
-       if (product_tozihat<250)
-       {
-           $('.more_content').hide();
-       }
+
+        const product_tozihat = $("#product_tozihat")[0].scrollHeight;
+        if (product_tozihat < 250) {
+            $('.more_content').hide();
+        }
         export default {
             components: {LoginBox}
         }
+
+
     </script>
 @endsection

@@ -26,17 +26,19 @@
                     </div>
                     <div class="left_box">
 
-                        @foreach($product->Gallery as $key=>$value)
-                            @if($key==0)
-                                <img src="{{ url('files/gallery/'.$value->image_url) }}" alt="" width="65%"
-                                     id="selected_img">
-                            @endif
-                        @endforeach
+                       <div class="gallery_item" id="gallery_item">
+                           @foreach($product->Gallery as $key=>$value)
+                               @if($key==0)
+                                   <img ondragstart="return false" onload="set_image_width()" src="{{ url('files/gallery/'.$value->image_url) }}" alt="" width="65%"
+                                        id="selected_img">
+                               @endif
+                           @endforeach
+                       </div>
 
                         <div class="range_slider">
                             <span class="mdi mdi-minus range_slider_minus" id="range_minus"></span>
                             <input type="range" value="0" min="0" max="100" id="image_zoom_range">
-                            <span class="mdi mdi-plus range_slider_minus" id="range_plus"></span>
+                            <span class="mdi mdi-plus range_slider_plus" id="range_plus"></span>
 
                         </div>
 

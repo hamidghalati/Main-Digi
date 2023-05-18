@@ -1,7 +1,7 @@
 const site_url = "http://127.0.0.1:8000/";
 var times = 0;
 let t = 180;
-let promo_single_count=0
+let promo_single_count = 0
 
 $(document).ready(function () {
     $(".cat_item").mouseover(function () {
@@ -122,14 +122,10 @@ $(document).ready(function () {
             });
             const url = site_url + "ajax/resend";
             $.ajax({
-                url: url,
-                type: "POST",
-                data: "mobile=" + mobile,
-                success: function (response) {
+                url: url, type: "POST", data: "mobile=" + mobile, success: function (response) {
                     t = 180;
                     startTime();
-                },
-                error: function (jqXhr, textStatus, error) {
+                }, error: function (jqXhr, textStatus, error) {
                     t = 180;
                     startTime();
                 }
@@ -147,15 +143,11 @@ $(document).ready(function () {
             });
             const url = site_url + "ajax/resend_forget_password";
             $.ajax({
-                url: url,
-                type: "POST",
-                data: "mobile=" + mobile,
-                success: function (response) {
+                url: url, type: "POST", data: "mobile=" + mobile, success: function (response) {
                     t = 180;
                     startTime();
                     alert(response)
-                },
-                error: function (jqXhr, textStatus, error) {
+                }, error: function (jqXhr, textStatus, error) {
                     t = 180;
                     startTime();
                 }
@@ -169,7 +161,7 @@ $(document).ready(function () {
 
 
     $(".favorite").click(function () {
-        const product_id=$(this).attr('product-id');
+        const product_id = $(this).attr('product-id');
         $("#loading").show();
         $.ajaxSetup({
             headers: {
@@ -178,24 +170,18 @@ $(document).ready(function () {
         });
         const url = site_url + "user/add_favorite";
         $.ajax({
-            url: url,
-            type: "POST",
-            data: "product_id=" + product_id,
-            success: function (response) {
+            url: url, type: "POST", data: "product_id=" + product_id, success: function (response) {
                 $("#loading").hide();
-                if (response=='ok') {
-                    if ($('.favorite i').hasClass('chosen'))
-                    {
+                if (response == 'ok') {
+                    if ($('.favorite i').hasClass('chosen')) {
                         $('.favorite i').removeClass('chosen');
-                    }
-                    else {
+                    } else {
                         $('.favorite i').addClass('chosen');
                     }
                 }
-            },
-            error:function (xhr,textStatus,error) {
+            }, error: function (xhr, textStatus, error) {
                 $("#loading").hide();
-                if (error=="Unauthorized"){
+                if (error == "Unauthorized") {
                     $("#login_box").modal('show');
                 }
 
@@ -233,11 +219,7 @@ $(document).ready(function () {
         if (search.get('has_product') != null) {
             if (search.get('has_product') == 1) {
                 $('#product_status').toggles({
-                    type: 'Light',
-                    text: {'on': 'موجود', 'off': 'ناموجود'},
-                    width: 85,
-                    direction: 'rtl',
-                    on: true
+                    type: 'Light', text: {'on': 'موجود', 'off': 'ناموجود'}, width: 85, direction: 'rtl', on: true
                 });
             }
         }
@@ -335,10 +317,7 @@ $(document).ready(function () {
         const value = $(this).parent().find('input[type="text"]').val();
         const name = $(this).parent().find('input[type="text"]').attr('id');
         if (value.trim().length > 2) {
-            const html = '<div><span>' + value + '</span>' +
-                '<span class="fa fa-close" id="fa-close"></span>' +
-                '<input type="hidden" value="' + value + '" name="' + name + '[]">' +
-                '</div>';
+            const html = '<div><span>' + value + '</span>' + '<span class="fa fa-close" id="fa-close"></span>' + '<input type="hidden" value="' + value + '" name="' + name + '[]">' + '</div>';
             $("#" + name + "_input_box").append(html);
             $(this).parent().find('input[type="text"]').val('')
             $(this).hide();
@@ -363,14 +342,14 @@ $(document).ready(function () {
 
     });
 
-    const promo_single=$(".promo_single a");
-    if (promo_single.length>0)
-    {
-        promo_single_count=promo_single.length;
+    const promo_single = $(".promo_single a");
+    if (promo_single.length > 0) {
+        promo_single_count = promo_single.length;
         startPromoSingleSlide();
     }
 
-    $(".cart-header-box .dropdown-menu").on({"click":function (e) {
+    $(".cart-header-box .dropdown-menu").on({
+        "click": function (e) {
             e.stopPropagation();
         }
     })
@@ -380,38 +359,59 @@ $(document).ready(function () {
     });
 
     $("#img_swiper div").click(function () {
-        const n=$(this).index()+1;
-        const transform=$(".img_swiper").css('transform').split(',');
-        const number=transform[5].toString().replace(')','');
-        let new_value=(n*100);
-        new_value=200-new_value;
+        const n = $(this).index() + 1;
+        const transform = $(".img_swiper").css('transform').split(',');
+        const number = transform[5].toString().replace(')', '');
+        let new_value = (n * 100);
+        new_value = 200 - new_value;
 
-        if (n==1)
-        {
-            new_value=200;
+        if (n == 1) {
+            new_value = 200;
         }
 
-        const newTransform="translate3d(0,"+new_value+"px,0)";
-        document.getElementById('img_swiper').style.transform=newTransform;
+        const newTransform = "translate3d(0," + new_value + "px,0)";
+        document.getElementById('img_swiper').style.transform = newTransform;
         $('.swiper-slide').removeClass('img_select_border');
         $(this).addClass('img_select_border');
 
-        const src=$(this).find('img').attr('src');
-        $("#selected_img").attr('src',src);
+        const src = $(this).find('img').attr('src');
+        $("#selected_img").attr('src', src);
         $("#image_zoom_range").val(0);
         zoom_image();
 
     });
 
-    const rangeElement=document.getElementById('image_zoom_range');
-    if (rangeElement!=null)
-    {
-        rangeElement.addEventListener('input',function () {
-           zoom_image();
+    const rangeElement = document.getElementById('image_zoom_range');
+    if (rangeElement != null) {
+        rangeElement.addEventListener('input', function () {
+            zoom_image();
         });
     }
 
+    set_image_width();
 
+    set_gallery_item_event();
+
+    $('.range_slider_plus').click(function () {
+       const image_zoom_range=parseInt($("#image_zoom_range").val());
+       if (image_zoom_range<=95)
+       {
+           const new_value=image_zoom_range+5;
+           $("#image_zoom_range").val(new_value);
+           zoom_image();
+       }
+    });
+
+    $('.range_slider_minus').click(function () {
+
+       const image_zoom_range=parseInt($("#image_zoom_range").val());
+       if (image_zoom_range>=5)
+       {
+           const new_value=image_zoom_range-5;
+           $("#image_zoom_range").val(new_value);
+           zoom_image();
+       }
+    });
 
 
 
@@ -602,31 +602,105 @@ check_comment_content = function (content) {
     }
 }
 
-number_format=function (num){
-    num=num.toString();
-    let format='';
-    let counter=0;
-    for (let i=num.length-1;i>=0;i--)
-    {
-        format+=num[i];
+number_format = function (num) {
+    num = num.toString();
+    let format = '';
+    let counter = 0;
+    for (let i = num.length - 1; i >= 0; i--) {
+        format += num[i];
         counter++;
-        if (counter==3)
-        {
-            format+=",";
-            counter=0;
+        if (counter == 3) {
+            format += ",";
+            counter = 0;
         }
     }
     return format.split('').reverse().join('');
 }
 
-const zoom_width=65;
-zoom_image=function () {
-    const value=parseFloat($("#image_zoom_range").val());
-    const width=parseFloat($("#selected_img").attr('width').replace('%'));
-    let new_width=zoom_width+value;
-    new_width+='%';
-    $("#selected_img").attr('width',new_width);
+zoom_image = function () {
+    const value = parseFloat($("#image_zoom_range").val());
+    const nw = parseFloat($("#selected_img").attr('nw'));
+    let new_width = nw + value;
+    new_width += '%';
+    $("#selected_img").attr('width', new_width);
+
+    const scrollWidth=document.getElementById('gallery_item').scrollWidth;
+    const offsetWidth=document.getElementById('gallery_item').offsetWidth;
+
+
+    const scrollHeight=document.getElementById('gallery_item').scrollHeight;
+    const offsetHeight=document.getElementById('gallery_item').offsetHeight;
+
+    const a=(scrollWidth-offsetWidth)/2;
+    const b=(scrollHeight-offsetHeight)/2;
+
+    document.getElementById('gallery_item').scroll(-a,b);
+
+
 }
+
+set_image_width=function () {
+    const selected_img = document.getElementById('selected_img');
+    if (selected_img != null) {
+        selected_img.onload = function () {
+            if (selected_img.naturalHeight > selected_img.naturalWidth ) {
+                selected_img.setAttribute('width', '40%');
+                selected_img.setAttribute('nw', '40');
+            } else if (selected_img.naturalWidth > 600 && selected_img.naturalHeight<700) {
+                selected_img.setAttribute('width', '65%');
+                selected_img.setAttribute('nw', '65');
+            }
+            else {
+                selected_img.setAttribute('width', '55%');
+                selected_img.setAttribute('nw', '55');
+            }
+        }
+    }
+
+}
+
+
+let isDown=false;
+let startX;
+let startY;
+let scrollTop;
+let scrollLeft;
+set_gallery_item_event=function () {
+    const gallery_item=document.getElementById('gallery_item');
+    if (gallery_item!=null)
+    {
+        gallery_item.addEventListener('mousedown',(e)=>{
+            isDown=true;
+            startX=e.pageX - gallery_item.offsetLeft;
+            startY=e.pageY - gallery_item.offsetTop;
+            scrollLeft=gallery_item.scrollLeft;
+            scrollTop=gallery_item.scrollTop;
+        });
+
+        gallery_item.addEventListener('mouseup',(e)=>{
+            isDown=false;
+        });
+
+        gallery_item.addEventListener('mousemove',(e)=>{
+
+            if (!isDown) return;
+
+            e.preventDefault();
+            const x=e.pageX - gallery_item.offsetLeft;
+            const y=e.pageY - gallery_item.offsetTop;
+
+            const x1=(x-startX)*2;
+            const y1=(y-startY)*2;
+
+            gallery_item.scrollLeft=(scrollLeft-x1);
+            gallery_item.scrollTop=(scrollTop-y1);
+
+        });
+    }
+}
+
+
+
 
 //
 // //        <!--دستور جی کوِرب برای منو-->

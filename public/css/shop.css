@@ -774,7 +774,7 @@ a {
 
 .product .discount-badge {
     top: -40px;
-    left: 227px;
+    right: 227px;
 }
 
 .product_img_div {
@@ -4828,6 +4828,7 @@ element.style {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    flex-direction: column
 }
 .gallery_box_content .right_box{
     overflow: hidden;
@@ -4893,7 +4894,14 @@ element.style {
     font-size: 25px;
     margin-top: 3px;
 }
+.gallery_item{
+    position: relative;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    cursor: pointer;
 
+}
 
 
 
