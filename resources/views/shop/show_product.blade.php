@@ -75,7 +75,7 @@
 
                     <div class="default_product_pic">
                         @if(!empty($product->image_url))
-                            <img class="default_pic" src="{{url('files/products/'.$product->image_url)}}"
+                            <img class="default_pic" id="default_pic" src="{{url('files/products/'.$product->image_url)}}"
                                  data-zoom-image="{{url('files/products/'.$product->image_url)}}" alt="">
                         @endif
                     </div>
@@ -214,21 +214,22 @@
 @endsection
 @section('footer')
     <script type="text/javascript" src="{{ asset('js/jquery.elevateZoom-3.0.8.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.elevatezoom.js') }}"></script>
-
 
     <script>
-        import LoginBox from "../../js/components/LoginBox";
+        // import LoginBox from "../../js/components/LoginBox";
 
 
-        $('.default_pic').elevateZoom({
+        $('#default_pic').elevateZoom({
             zoomWindowPosition: "zoom_box",
+            // zoomType: "inner",
+            cursor: "crosshair",
+            zoomWindowFadeIn: 500,
+            zoomWindowFadeOut: 750,
             borderSize: 1,
             zoomWindowWidth: 500,
             zoomWindowHeight: 450,
             cursor: 'zoom-in'
         });
-
 
 
 
@@ -241,9 +242,9 @@
         if (product_tozihat < 250) {
             $('.more_content').hide();
         }
-        export default {
-            components: {LoginBox}
-        }
+        // export default {
+        //     components: {LoginBox}
+        // }
 
 
     </script>
