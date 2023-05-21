@@ -97,6 +97,7 @@ class OrderData
                     $this->row_data[$key][$j]['seller']=$value2->getSeller->brand_name;
                     $this->row_data[$key][$j]['commission']=$value2->commission;
                     $this->row_data[$key][$j]['send_status']=$value2->send_status;
+                    $this->row_data[$key][$j]['row_id']=$value2->id;
                     $this->row_data[$key][$j]['post']=$value2->product_price2;
                     if ($color)
                     {

@@ -159,21 +159,21 @@ class Order extends Model
     public function get_fasted_send_product_id($order_data,$key)
     {
         $collection=collect($order_data['array_product_id'][$key]);
-        $products_id=$collection->implode('_');
+        $products_id=$collection->implode('-');
         return $products_id;
     }
 
     public function get_fasted_send_warranty_id($order_data,$key)
     {
         $collection=collect($order_data['array_warranty_id'][$key]);
-        $warranty_id=$collection->implode('_');
+        $warranty_id=$collection->implode('-');
         return $warranty_id;
     }
 
     public function get_fasted_send_colors_id($order_data,$key)
     {
         $collection=collect($order_data['array_colors_id'][$key]);
-        $colors_id=$collection->implode('_');
+        $colors_id=$collection->implode('-');
         return $colors_id;
     }
 
@@ -186,7 +186,7 @@ class Order extends Model
             $product_id=$product_id.$value['product_id'];
             if ($j!=sizeof($order_data['cart_product_data'])-1)
             {
-                $product_id.='_';
+                $product_id.='-';
             }
             $j++;
 
@@ -204,8 +204,8 @@ class Order extends Model
             $this->colors_id=$this->colors_id.$value['color_id'];
             if ($j!=sizeof($order_data['cart_product_data'])-1)
             {
-                $warranty_id.='_';
-                $this->colors_id.='_';
+                $warranty_id.='-';
+                $this->colors_id.='-';
             }
             $j++;
 

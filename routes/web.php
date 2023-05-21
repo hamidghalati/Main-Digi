@@ -210,6 +210,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     //orders/submission/factor/id
     Route::get('orders/submission/factor/{submission_id}','Admin\OrdersController@submission_factor');
 
+    //orders/return-product/id
+    Route::get('orders/return-product/{id}','Admin\OrdersController@return_product')->name('return-product');
+
 
     ///ReView
     Route::get('product/review/primary', 'Admin\ReviewController@primary');

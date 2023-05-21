@@ -1004,13 +1004,14 @@ function getCartWarrantyData($warranties, $warranty_id)
 
 function set_order_product_status($orderInfo, $status)
 {
-    $product_id = $orderInfo->products_id;
+
+    $products_id = $orderInfo->product_id;
     $colors_id = $orderInfo->colors_id;
     $warranty_id = $orderInfo->warranty_id;
-    $product_id = explode('-', $product_id);
-    $colors_id = explode('-', $colors_id);
-    $warranty_id = explode('-', $warranty_id);
-    foreach ($product_id as $key => $value) {
+    $products_id = explode("-", $products_id);
+    $colors_id = explode("-", $colors_id);
+    $warranty_id = explode("-", $warranty_id);
+    foreach ($products_id as $key => $value) {
         if (!empty($value)) {
             DB::table('order_products')
                 ->where(['order_id' => $orderInfo->order_id, 'product_id' => $value, 'color_id' => $colors_id[$key], 'warranty_id' => $warranty_id[$key]])
@@ -1021,7 +1022,7 @@ function set_order_product_status($orderInfo, $status)
 
 function getOrderProductCount($products_id)
 {
-    $e = explode('_', $products_id);
+    $e = explode('-', $products_id);
     return sizeof($e);
 }
 
@@ -1748,12 +1749,6 @@ function get_sale_report($request,$year,$table_name,$where,$attr,$now)
     return $response;
 }
 
-function sendSms()
-{
-
-
-
-}
 
 
 

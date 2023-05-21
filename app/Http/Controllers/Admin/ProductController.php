@@ -227,7 +227,7 @@ class ProductController extends CustomController
 
         $product=ProductsModel::where('id',$id)->select(['id','title','cat_id'])->firstOrFail();
         $items_value=$request->get('item_value');
-        $filters_value=$request->get('filter_value');
+        $filters_value=$request->get('filter_value',array());
         DB::table('item_value')->where(['product_id'=>$id])->delete();
         foreach ($items_value as $key=>$value)
         {

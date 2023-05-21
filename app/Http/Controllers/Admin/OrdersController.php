@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Order;
 use App\OrderData;
 use App\OrderInfo;
+use App\OrderProduct;
+use App\Stockrooms;
 use DB;
 use Illuminate\Http\Request;
 
@@ -58,9 +60,7 @@ class OrdersController extends CustomController
             {
                 DB::rollBack();
                 return 'error';
-
             }
-
         }
         else
         {
@@ -173,6 +173,18 @@ class OrdersController extends CustomController
         $order_data=new OrderData($order->getOrderInfo,$order->getProductRow,$order->user_id,'yes');
         $order_data=$order_data->getData();
       return view('admin.orders.factor',['order'=>$order,'order_data'=>$order_data]);
+
+    }
+
+    public function return_product($id)
+    {
+        $stockroom=[''=>'انتخاب انبار']+Stockrooms::pluck('name','id')->toArray();
+        $orderProduct=OrderProduct::with(['getProduct','getColor','getWarranty','getSeller','getOrder.getAddress'])
+            ->whereHas('getOrder')
+            ->where(['send_status'=>6,'id'=>$id])
+            ->firstOrFail();
+
+        return view('admin.orders.return_product',['stockroom'=>$stockroom,'orderProduct'=>$orderProduct]);
 
     }
 

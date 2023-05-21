@@ -33,4 +33,9 @@ class OrderProduct extends Model
             ->select(['id','brand_name'])
             ->withDefault(['brand_name'=>env('SHOP_NAME')]);
     }
+
+    public function getOrder()
+    {
+       return $this->hasOne(Order::class,'id','order_id');
+    }
 }

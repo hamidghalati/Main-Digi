@@ -21,7 +21,7 @@ class FilterController extends Controller
     {
 
        $filter=$request->get('filter');
-       $child_filter=$request->get('child_filter');
+       $child_filter=$request->get('child_filter',array());
         $itemValue=$request->get('item_id');
        FilterModel::addFilter($filter,$child_filter,$cat_id,$itemValue);
         return redirect()->back()->with(['message'=>'ثبت فیلتر با موفقیت انجام شد','header'=>'فیلتر','alerts'=>'success']);
