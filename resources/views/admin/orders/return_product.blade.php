@@ -27,6 +27,40 @@
                         <div>
                             <img src="{{ url('files/thumb/'.$orderProduct->getProduct->image_url) }}" alt="">
                         </div>
+
+                        <div>
+                            <ul>
+                                <li>{{$orderProduct->getProduct->title}}</li>
+                                <li>
+                                    <a href="{{ url('admin/orders/'.$orderProduct->getOrder->id) }}" target="_blank">
+                                        <span>شماره سفارش : </span> {{$orderProduct->getOrder->order_id}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <span>فروشنده :</span> {{ $orderProduct->getSeller->brand_name }}
+                                </li>
+                                <li>
+                                    <span>رنگ : </span> {{ $orderProduct->getColor->name }}
+                                </li>
+                                @if(!empty($orderProduct->getWarranty->name))
+                                    <li>
+                                        <span>گارانتی : </span> {{ $orderProduct->getWarranty->name }}
+                                    </li>
+                                @endif
+                                <li>
+                                    <span>قیمت فروش محصول :</span> {{ number_format($orderProduct->product_price2) }} تومان
+                                </li>
+
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    {{ Form::select('stockroom', $stockroom,null,['class'=>'selectpicker','data-live-search'=>'true'])}}
+                    <textarea name="tozihat" id=""  placeholder="توضیحات"></textarea>
+
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <button type="submit" class="btn btn-success btn-lg "><i class="fa fa-check"></i>  ثبت اطلاعات</button>
                     </div>
                 </div>
             </form>

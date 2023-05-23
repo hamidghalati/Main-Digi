@@ -50,9 +50,9 @@
     $total_price = 0;
     $order_price = 0;
     $post_price = 0;
-    $d=0;
-    $g=0;
-    $tp=0;
+    $d = 0;
+    $g = 0;
+    $tp = 0;
     ?>
 
     <table class="table table-bordered order_table_info">
@@ -76,7 +76,6 @@
                 <span>{{replace_number(sizeof($order->getOrderInfo))}}</span>
             </td>
         </tr>
-
 
 
         @if(!empty($order->gift_value)&& $order->gift_value>0)
@@ -190,7 +189,7 @@
                     <td>{{replace_number($product['product_count'])}} </td>
                     <td>{{replace_number(number_format($product['product_price1']))}} تومان</td>
                     <td>
-                        <?php $tp=$product['product_price1']*$product['product_count'] ?>
+                            <?php $tp = $product['product_price1'] * $product['product_count'] ?>
                         {{replace_number(number_format($product['product_price1']*$product['product_count']))}}تومان
                     </td>
                         <?php
@@ -216,7 +215,7 @@
                     @endif
                 </td>
                 <td>
-                    <?php $sum=$tp-$discount?>
+                        <?php $sum = $tp - $discount ?>
                     {{replace_number(number_format($sum))}} تومان
                 </td>
             </tr>
@@ -230,12 +229,12 @@
             <td>{{replace_number(number_format($order_price)).' تومان '}}</td>
         </tr>
         <tr>
-            <td> هزینه ارسال</td>
+            <td> + هزینه ارسال</td>
             <td>
                 @if($value['send_order_amount']==0)
                     رایگان
                 @else
-                        <?php $p=$post_price ?>
+                        <?php $p = $post_price ?>
                     {{replace_number(number_format($post_price)).' تومان '}}
                 @endif
             </td>
@@ -243,10 +242,10 @@
         @if(!empty($order->gift_value)&& $order->gift_value>0)
             <tr>
                 <td>
-                    مبلغ کارت هدیه
+                    - مبلغ کارت هدیه
                 </td>
                 <td>
-                        <?php $g=$order->gift_value ?>
+                        <?php $g = $order->gift_value ?>
                     {{replace_number(number_format($order->gift_value)).' تومان '}}
                 </td>
             </tr>
@@ -255,10 +254,10 @@
 
         @if(!empty($order->discount_value)&& $order->discount_value>0)
             <tr>
+
+                <td>- مبلغ کارت تخفیف</td>
                 <td>
-                <td>مبلغ کارت تخفیف</td>
-                <td>
-                    <?php $d=$order->discount_value ?>
+                        <?php $d = $order->discount_value ?>
                     {{replace_number(number_format($order->discount_value)).' تومان '}}
                 </td>
             </tr>
@@ -268,7 +267,7 @@
         <tr>
             <td>مبلغ نهایی</td>
             <td>
-                <?php $total_price=($order_price+$post_price)-($g+$d) ?>
+                <?php $total_price = ($order_price + $post_price) - ($g + $d) ?>
                 @if($total_price==0)
                     {{replace_number(number_format($total_price))}}
                 @else

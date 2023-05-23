@@ -1965,3 +1965,33 @@ input.pdate {
         page-break-after: always;
     }
 }
+.product_data{
+    display: flex;
+}
+.product_data img{
+    max-width: 250px;
+    margin-bottom: 30px;
+}
+.product_data ul{
+    margin-right: 20px!important;
+}
+.product_data ul li{
+    list-style: none;
+    line-height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #5e5c5c;
+}
+.return_product_box textarea{
+    width: 100%;
+    resize: none!important;
+    border: 1px solid #ced4da;
+    height: 160px;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    font-size: 14px;
+    font-family: iransans;
+    margin-bottom: 20px;
+}

@@ -188,5 +188,15 @@ class OrdersController extends CustomController
 
     }
 
+    public function add_return_product($id,Request $request)
+    {
+        $orderProduct=OrderProduct::with(['getProduct'])
+            ->whereHas('getOrder')
+            ->where(['send_status'=>6,'id'=>$id])
+            ->firstOrFail();
+        $count=1;
+        return OrderProduct::setReturnProduct($count,$request,$orderProduct);
+    }
+
 
 }

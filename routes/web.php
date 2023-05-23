@@ -212,6 +212,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     //orders/return-product/id
     Route::get('orders/return-product/{id}','Admin\OrdersController@return_product')->name('return-product');
+    Route::post('orders/return-product/{id}','Admin\OrdersController@add_return_product')->name('return-product');
 
 
     ///ReView

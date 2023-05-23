@@ -31,9 +31,9 @@ class OrderData
             {
                 $this->order_row_amount[$info->id]=$info->send_order_amount;
 
-                $products_id = explode('_', $info->product_id);
-                $colors_id = explode('_', $info->colors_id);
-                $warranty_id = explode('_', $info->warranty_id);
+                $products_id = explode('-', $info->product_id);
+                $colors_id = explode('-', $info->colors_id);
+                $warranty_id = explode('-', $info->warranty_id);
                 foreach ($products_id as $key => $value) {
                     if (!empty($value)) {
                         $this->getProductDataOfList($info, $this->ProductRow, $value, $warranty_id[$key], $colors_id[$key]);

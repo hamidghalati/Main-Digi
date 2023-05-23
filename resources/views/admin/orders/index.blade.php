@@ -4,7 +4,7 @@
     @include('include.breadcrumb',['data'=>[['title'=>'مدیریت سفارشات','url'=>url('admin/orders')]]])
     <div class="panel">
         <div class="header">
-            مدیریت سفارشات
+           hggh مدیریت سفارشات
 
             @include('include.item_table',['count'=>$trash_count,'route'=>'admin/orders','title'=>'سفارش'])
 
