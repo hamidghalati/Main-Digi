@@ -1587,7 +1587,7 @@ function set_sale($order)
                 set_seller_sale_statistics($product_price, $c, $y, $m, $d, $value->seller_id);
             }
             $total_price += $product_price;
-            product_sale_statistics($y, $m, $d, $c, $product_price, $value->product_id);
+            product_sale_statistics($y, $m, $d, $c, $product_price, $value->product_id,$value->seller_id);
         }
 
         set_overall_statistics($y,$m,$d,$total_price,$commission_price);
@@ -1681,7 +1681,7 @@ function set_overall_statistics($y,$m,$d,$total_price,$commission,$type = 'plus'
             $product_price = $total_price + $sale_statistics->price;
             $commission = $commission + $sale_statistics->commission;
         } else {
-            $total_price = $sale_statistics->price - $total_price;
+            $product_price = $sale_statistics->price - $total_price;
             $commission = $sale_statistics->commission - $commission;
         }
 
@@ -1747,6 +1747,39 @@ function get_sale_report($request,$year,$table_name,$where,$attr,$now)
     $response['default_year']=$year;
     $response['year_list']=$year_list;
     return $response;
+}
+
+function get_return_product_price($cat_id,$order_discount,$product_price)
+{
+    foreach ($order_discount as $key=>$value)
+    {
+        if ($value->cat_id==$cat_id)
+        {
+            $p=$value->total_price-$product_price;
+            if ($p>$value->min_price)
+            {
+                if (!empty($value->amount_percent))
+                {
+                    $product_price-=(($product_price*$value->amount_percent)/100);
+                }
+                return $product_price;
+            }
+            else{
+                return ($product_price-$value->discount_price);
+            }
+        }
+        else if ($value->cat_id==0)
+        {
+            if ($value->cat_id==$cat_id) {
+                $p = $value->total_price - $product_price;
+                if ($p > $value->min_price) {
+                    return $product_price;
+                } else {
+                    return ($product_price - $value->discount_price);
+                }
+            }
+        }
+    }
 }
 
 

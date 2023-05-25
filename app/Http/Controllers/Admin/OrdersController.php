@@ -34,10 +34,13 @@ class OrdersController extends CustomController
             $order->update();
         }
 
+        $order_discount=DB::table('order_discount')->where('order_id',$order->id)->get();
+
+
         $order_data=new OrderData($order->getOrderInfo,$order->getProductRow,$order->user_id);
         $order_data=$order_data->getData();
 
-        return view('admin.orders.show',['order'=>$order,'order_data'=>$order_data]);
+        return view('admin.orders.show',['order'=>$order,'order_data'=>$order_data,'order_discount'=>$order_discount]);
 
     }
 

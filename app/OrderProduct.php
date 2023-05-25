@@ -49,27 +49,49 @@ class OrderProduct extends Model
         $time=time();
         if ($count==$orderProduct->product_count)
         {
-            DB::beginTransaction();
-            try {
+//            DB::beginTransaction();
+//            try {
 
                 $orderProduct->send_status=-1;
                 $orderProduct->tozihat=$request->get('tozihat');
                 $orderProduct->stockroom_id=$request->get('stockroom_id',0);
                 $orderProduct->update();
+                self::set_sale($orderProduct);
 
-                DB::commit();
-                return[
-                    'status'=>'ok',
 
-                ];
-            }
-            catch (\Exception $exception)
-            {
-                DB::rollBack();
-                return[
-                    'status'=>'error',
-                ];
-            }
+//                DB::commit();
+//                return[
+//                    'status'=>'ok',
+//
+//                ];
+//            }
+//            catch (\Exception $exception)
+//            {
+//                DB::rollBack();
+//                return[
+//                    'status'=>'error',
+//                ];
+//            }
         }
     }
+
+    public static function set_sale($orderProduct)
+    {
+        $time=$orderProduct->time;
+        $y = tr_num(jdate('Y',$time));
+        $m = tr_num(jdate('n',$time));
+        $d = tr_num(jdate('j',$time));
+
+        $product_price=$orderProduct->product_price2*$orderProduct->product_count;
+        if ($orderProduct->id>0)
+        {
+            DB::table('sellers')->where('id', $orderProduct->seller_id)->decrement('total_commission', $orderProduct->commission);
+            DB::table('sellers')->where('id', $orderProduct->seller_id)->decrement('total_price', $product_price);
+            set_seller_sale_statistics($product_price, $orderProduct->commission, $y, $m, $d, $orderProduct->seller_id,'minus');
+        }
+
+        product_sale_statistics($y, $m, $d, $orderProduct->commission, $product_price, $orderProduct->product_id,$orderProduct->seller_id,'minus');
+        set_overall_statistics($y,$m,$d,$product_price,$orderProduct->commission,'minus');
+    }
+
 }

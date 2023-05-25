@@ -176,7 +176,7 @@
                                                 <span>{{$product['warranty_name']}}</span>
                                             </li>
 
-                                            @if($value['send_status']==6)
+                                            @if($product['send_status']==6)
                                                 <li>
                                                     <a href="{{ url('admin/orders/return-product/'.$product['row_id']) }}">ثبت
                                                         به عنوان کالای مرجوعی</a>
@@ -207,6 +207,33 @@
 
                                 </td>
                             </tr>
+
+                            @if($product['send_status']==-1)
+                                <tr>
+
+                                    <td colspan="3">
+                                        این کالا توسط مشتری برگشت داده شده است
+                                    </td>
+                                    <td colspan="3">
+                                        @php $p=$product['product_price2']*$product['product_count']; @endphp
+                                        {{ number_format( get_return_product_price($product['cat_id'],$order_discount,$p)).'  تومان '  }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6">
+                                        @if(!empty($product['tozihat']))
+                                            <div style="width: 100%;display: flex;">
+                                                <span style="margin-top: 10px;margin-left: 10px;float: right;font-weight: bold;">   علت مرجوعی :     </span>
+                                                <span style="margin-top: 10px;color: red;float: right;">{{ $product['tozihat'] }}</span>
+                                            </div>
+
+
+                                        @endif
+
+                                    </td>
+                                </tr>
+                            @endif
+
                         @endforeach
                     </table>
 

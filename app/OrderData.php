@@ -73,7 +73,7 @@ class OrderData
     public function getProductData()
     {
         $products=ProductsModel::whereIn('id',$this->array_product_id)
-            ->select(['id','title','image_url','use_for_gift_cart'])->get();
+            ->select(['id','title','image_url','use_for_gift_cart','cat_id'])->get();
         $colors=ColorModel::whereIn('id',$this->array_color_id)->get();
         $warranties=WarrantyModel::whereIn('id',$this->array_warranty_id)->get();
         $j=0;
@@ -97,6 +97,8 @@ class OrderData
                     $this->row_data[$key][$j]['seller']=$value2->getSeller->brand_name;
                     $this->row_data[$key][$j]['commission']=$value2->commission;
                     $this->row_data[$key][$j]['send_status']=$value2->send_status;
+                    $this->row_data[$key][$j]['tozihat']=$value2->tozihat;
+                    $this->row_data[$key][$j]['cat_id']=$product->cat_id;
                     $this->row_data[$key][$j]['row_id']=$value2->id;
                     $this->row_data[$key][$j]['post']=$value2->product_price2;
                     if ($color)

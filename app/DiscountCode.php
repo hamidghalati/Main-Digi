@@ -46,26 +46,30 @@ class DiscountCode extends Model
             if ($cat_id > 0) {
                 foreach ($cart_data['product'] as $product) {
                     if ($cat_id == $product['cat_id']) {
-                        $price += $product['price1'] * $product['product_count'];
+//                        $price += $product['price1'] * $product['product_count'];
+                        $price += $product['int_price'] * $product['product_count'];
                     }
                 }
 
-                $product_price2 = $product_price2 - $price;
+
                 $result = self::set_discount_value($discount, $price, $cat_id);
                 if (is_array($result) && $result['status'] == 'ok') {
+                    $product_price2 = $product_price2 - $price;
                     if (array_key_exists($cat_id, $discount_value_array)) {
                         if ($result['discount_value'] > $discount_value_array[$cat_id]) {
                             $discount_value_array[$cat_id] = $result['discount_value'];
                             $discount_info[$cat_id] =[
                                 'price'=>$result['price'],
-                                'discount_amount'=>$result['discount_amount']
+                                'discount_amount'=>$result['discount_amount'],
+                                'amount_percent'=>$result['amount_percent']
                             ];
                         }
                     } else {
                         $discount_value_array[$cat_id] = $result['discount_value'];
                         $discount_info[$cat_id] =[
                             'price'=>$result['price'],
-                            'discount_amount'=>$result['discount_amount']
+                            'discount_amount'=>$result['discount_amount'],
+                            'amount_percent'=>$result['amount_percent']
                         ];
                     }
                 }
@@ -84,14 +88,16 @@ class DiscountCode extends Model
                             $discount_value_array[$cat_id] = $result['discount_value'];
                             $discount_info[$cat_id] =[
                                 'price'=>$result['price'],
-                                'discount_amount'=>$result['discount_amount']
+                                'discount_amount'=>$result['discount_amount'],
+                                'amount_percent'=>$result['amount_percent']
                             ];
                         }
                     } else {
                         $discount_value_array[$cat_id] = $result['discount_value'];
                         $discount_info[$cat_id] =[
                             'price'=>$result['price'],
-                            'discount_amount'=>$result['discount_amount']
+                            'discount_amount'=>$result['discount_amount'],
+                            'amount_percent'=>$result['amount_percent']
                         ];
                     }
                 }
@@ -134,19 +140,22 @@ class DiscountCode extends Model
     public static function set_discount_value($discount, $price, $cat_id)
     {
         if ($price > 0) {
+            $percent='';
             if ($price >= $discount->amount) {
                 $discount_value = 0;
                 if (!empty($discount->amount_discount)) {
                     $discount_value = $discount->amount_discount;
 
                 } else if (!empty($discount->amount_percent)) {
+                    $percent=$discount->amount_percent;
                     $discount_value = ($discount->amount_percent * $price) / 100;
                 }
                 return [
                     'status' => 'ok',
                     'discount_value' => $discount_value,
                     'price'=>$price,
-                    'discount_amount'=>$discount->amount
+                    'discount_amount'=>$discount->amount,
+                    'amount_percent'=>$percent
                 ];
             } else {
                 return 'error';

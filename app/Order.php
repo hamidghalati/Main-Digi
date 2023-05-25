@@ -67,6 +67,7 @@ class Order extends Model
         try {
             $this->save();
             $this->add_order_row($order_data);
+            $this->add_order_discount();
             DB::commit();
             return[
                 'status'=>'ok',
@@ -351,6 +352,31 @@ class Order extends Model
         ];
 
     }
+
+    public function add_order_discount()
+    {
+        $discount_info=Session::get('discount_info',array());
+        $discount_value_array=Session::get('discount_value_array',array());
+        foreach ($discount_value_array as $key=>$value)
+        {
+            if (array_key_exists($key,$discount_info))
+            {
+                $amount_percent=$discount_info[$key]['amount_percent'];
+                settype($value,'integer');
+                settype($amount_percent,'integer');
+                DB::table('order_discount')->insert([
+                    'cat_id'=>$key,
+                    'discount_price'=>$value,
+                    'total_price'=>$discount_info[$key]['price'],
+                    'min_price'=>$discount_info[$key]['discount_amount'],
+                    'order_id'=>$this->id,
+                    'amount_percent'=>$amount_percent
+                ]);
+            }
+
+        }
+    }
+
 
 
 
