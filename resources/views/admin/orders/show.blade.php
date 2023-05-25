@@ -223,8 +223,8 @@
                                     <td colspan="6">
                                         @if(!empty($product['tozihat']))
                                             <div style="width: 100%;display: flex;">
-                                                <span style="margin-top: 10px;margin-left: 10px;float: right;font-weight: bold;">   علت مرجوعی :     </span>
-                                                <span style="margin-top: 10px;color: red;float: right;">{{ $product['tozihat'] }}</span>
+                                                <span style="margin-left: 10px;font-weight: bold;"> علت مرجوعی :</span>
+                                                <span style="color: red">{{ $product['tozihat'] }}</span>
                                             </div>
 
 
