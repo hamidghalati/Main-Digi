@@ -153,6 +153,7 @@
                         </tr>
                         @foreach($order_data['row_data'][$value->id] as $product)
                             <tr>
+
                                 <td class="product_verify_info">
                                     <div>
                                         <img src="{{url('files/thumb/'.$product['image_url'])}}" alt="">

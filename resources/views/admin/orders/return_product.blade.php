@@ -50,13 +50,23 @@
                                 <li>
                                     <span>قیمت فروش محصول :</span> {{ number_format($orderProduct->product_price2) }} تومان
                                 </li>
+                                @if($orderProduct->product_count>1)
+                                    <li id="count">
+                                        <span>تعداد : </span>
+                                        <select name="count"  class="selectpicker auto-width-select">
+                                            @for($i=1;$i<=$orderProduct->product_count;$i++)
+                                                <option value="{{ $i }}">{{ $i }}</option>
+                                            @endfor
+                                        </select>
+                                    </li>
+                                @endif
 
                             </ul>
                         </div>
 
                     </div>
 
-                    {{ Form::select('stockroom', $stockroom,null,['class'=>'selectpicker','data-live-search'=>'true'])}}
+                    {{ Form::select('stockroom_id', $stockroom,null,['class'=>'selectpicker','data-live-search'=>'true'])}}
                     <textarea name="tozihat" id=""  placeholder="توضیحات"></textarea>
 
                     <div class="d-grid gap-2 col-6 mx-auto">

@@ -92,13 +92,15 @@ class Order extends Model
         {
             foreach ($order_data['cart_product_data'] as $key=>$value)
             {
+                $p1=($value['price1']/$value['product_count']);
+                $p2=($value['price2']/$value['product_count']);
                 DB::table('order_products')->insert([
                     'order_id'=>$this->id,
                     'product_id'=>$value['product_id'],
                     'color_id'=>$value['color_id'],
                     'warranty_id'=>$value['warranty_id'],
-                    'product_price1'=>$value['price1'],
-                    'product_price2'=>$value['price2'],
+                    'product_price1'=>$p1,
+                    'product_price2'=>$p2,
                     'product_count'=>$value['product_count'],
                     'seller_id'=>$value['seller_id'],
                     'preparation_time'=>$value['send_day'],

@@ -45,12 +45,11 @@ class OrderProduct extends Model
 
     public static function setReturnProduct($count,$request,$orderProduct)
     {
-        $user=$request->user()->id;
+        $user_id=$request->user()->id;
         $time=time();
-        if ($count==$orderProduct->product_count)
-        {
-//            DB::beginTransaction();
-//            try {
+        if ($count==$orderProduct->product_count){
+            DB::beginTransaction();
+            try {
 
                 $orderProduct->send_status=-1;
                 $orderProduct->tozihat=$request->get('tozihat');
@@ -58,20 +57,66 @@ class OrderProduct extends Model
                 $orderProduct->update();
                 self::set_sale($orderProduct);
 
+                if( $orderProduct->stockroom_id>0)
+                {
+                    self::addStockroom($orderProduct,$count,$request);
+                }
 
-//                DB::commit();
-//                return[
-//                    'status'=>'ok',
-//
-//                ];
-//            }
-//            catch (\Exception $exception)
-//            {
-//                DB::rollBack();
-//                return[
-//                    'status'=>'error',
-//                ];
-//            }
+
+                DB::commit();
+                return[
+                    'status'=>'ok',
+
+                ];
+            }
+            catch (\Exception $exception)
+            {
+                DB::rollBack();
+                return[
+                    'status'=>'error',
+                ];
+            }
+        }
+        else{
+            DB::beginTransaction();
+            try {
+                $product_count=$orderProduct->product_count-$count;
+                $commission=$orderProduct->commission;
+                if ($commission>0)
+                {
+                    $commission=($commission/$orderProduct->product_count)*$product_count;
+                }
+                $new_record=$orderProduct->replicate();
+                $new_record->product_count=$product_count;
+                $new_record->commission=$commission;
+                $new_record->save();
+
+                $orderProduct->send_status=-1;
+                $orderProduct->tozihat=$request->get('tozihat');
+                $orderProduct->product_count=$count;
+                $orderProduct->stockroom_id=$request->get('stockroom_id',0);
+                $orderProduct->update();
+
+                self::set_sale($orderProduct);
+
+                if( $orderProduct->stockroom_id>0)
+                {
+                    self::addStockroom($orderProduct,$count,$request);
+                }
+
+                DB::commit();
+                return[
+                    'status'=>'ok',
+
+                ];
+            }
+            catch (\Exception $exception)
+            {
+                DB::rollBack();
+                return[
+                    'status'=>'error',
+                ];
+            }
         }
     }
 
@@ -92,6 +137,24 @@ class OrderProduct extends Model
 
         product_sale_statistics($y, $m, $d, $orderProduct->commission, $product_price, $orderProduct->product_id,$orderProduct->seller_id,'minus');
         set_overall_statistics($y,$m,$d,$product_price,$orderProduct->commission,'minus');
+    }
+
+    public static function addStockroom($orderProduct,$count,$request)
+    {
+        $product_warranty=ProductWarranty::where([
+            'product_id'=>$orderProduct->product_id,
+            'warranty_id'=>$orderProduct->warranty_id,
+            'color_id'=>$orderProduct->color_id,
+            'seller_id'=>$orderProduct->seller_id,
+        ])->withTrashed()->first();
+        if ($product_warranty)
+        {
+            $list=$product_warranty->id.'_'.$count;
+            Stockrooms::add_product($request,$list);
+        }
+        else{
+
+        }
     }
 
 }

@@ -1773,6 +1773,10 @@ function get_return_product_price($cat_id,$order_discount,$product_price)
             if ($value->cat_id==$cat_id) {
                 $p = $value->total_price - $product_price;
                 if ($p > $value->min_price) {
+                    if (!empty($value->amount_percent))
+                    {
+                        $product_price-=(($product_price*$value->amount_percent)/100);
+                    }
                     return $product_price;
                 } else {
                     return ($product_price - $value->discount_price);

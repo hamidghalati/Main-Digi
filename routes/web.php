@@ -203,6 +203,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::get('orders/submission/{submission_id}', 'Admin\OrdersController@submission_info');
 
+    //orders/return-product
+    Route::get('orders/return-product','Admin\OrdersController@return_product_list')->name('return-product-list');
+
     Route::get('orders/{order_id}', 'Admin\OrdersController@show');
 
     Route::post('order/change_status', 'Admin\OrdersController@change_status');
@@ -213,6 +216,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     //orders/return-product/id
     Route::get('orders/return-product/{id}','Admin\OrdersController@return_product')->name('return-product');
     Route::post('orders/return-product/{id}','Admin\OrdersController@add_return_product')->name('return-product');
+
 
 
     ///ReView

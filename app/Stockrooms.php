@@ -35,14 +35,14 @@ class Stockrooms extends Model
 
     }
 
-    public static function add_product($request)
+    public static function add_product($request,$product_list=null)
     {
-        DB::beginTransaction();
-
-        try {
+//        DB::beginTransaction();
+//
+//        try {
             $user_id = $request->user()->id;
             $stockroom_id = $request->get('stockroom_id', 0);
-            $list = $request->get('list');
+            $list = $product_list ? $product_list : $request->get('list');
             $time = time();
             $list = explode('@', $list);
             $type = $request->get('type', 'input');
@@ -70,13 +70,13 @@ class Stockrooms extends Model
                 }
             }
 
-            DB::commit();
-            return 'ok';
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            return 'error';
-
-        }
+//            DB::commit();
+//            return 'ok';
+//        } catch (\Exception $exception) {
+//            DB::rollBack();
+//            return 'error';
+//
+//        }
 
 
     }
