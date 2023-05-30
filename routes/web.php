@@ -186,11 +186,16 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::post('add_incredible_offers/{warranty_id}', 'Admin\AdminController@add_incredible_offers');
     Route::post('remove_incredible_offers/{warranty_id}', 'Admin\AdminController@remove_incredible_offers');
 
+    //orders/return-product
+    Route::post('orders/return-product','Admin\OrdersController@remove_return_product')->name('remove-return-product');
+
+
     //setting
     Route::match(['get', 'post'], 'setting/send-order-price', 'Admin\SettingController@send_order_price');
 
     //orders
     create_crud_route('orders', 'OrdersController');
+
 
     Route::get('orders', 'Admin\OrdersController@index');
     Route::get('orders/submission', 'Admin\OrdersController@submission');
@@ -205,6 +210,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     //orders/return-product
     Route::get('orders/return-product','Admin\OrdersController@return_product_list')->name('return-product-list');
+
+
 
     Route::get('orders/{order_id}', 'Admin\OrdersController@show');
 

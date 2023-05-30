@@ -198,16 +198,22 @@ class OrdersController extends CustomController
             ->where(['send_status'=>6,'id'=>$id])
             ->firstOrFail();
         $count=$request->get('count',1);
-        return OrderProduct::setReturnProduct($count,$request,$orderProduct);
+        OrderProduct::setReturnProduct($count,$request,$orderProduct);
+        return redirect('admin/orders/return-product');
     }
 
     public function return_product_list(Request $request)
     {
-        $return_product_list=OrderProduct::with(['getProduct','getColor','getWarranty','getSeller'])
+        $return_product_list=OrderProduct::with(['getProduct','getColor','getWarranty','getSeller','getStockroom'])
             ->orderBy('id','DESC')
             ->where('send_status',-1)
             ->paginate(10);
         return view('admin.orders.return_product_list',['return_product_list'=>$return_product_list,'req'=>$request]);
+    }
+
+    public function remove_return_product(Request $request)
+    {
+        var_dump($request->all());
     }
 
 

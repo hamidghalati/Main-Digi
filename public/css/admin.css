@@ -1982,7 +1982,7 @@ input.pdate {
     padding-bottom: 5px;
     color: #5e5c5c;
 }
-.return_product_box textarea{
+.return_product_box textarea,.tozihat{
     width: 100%;
     resize: none!important;
     border: 1px solid #ced4da;
@@ -1997,4 +1997,12 @@ input.pdate {
 }
 #count .bootstrap-select .dropdown-menu.inner{
     margin-right:0!important;
+}
+.return_product_info{
+    text-align: right;
+    padding-right: 5px!important;
+}
+.return_product_info li{
+    list-style: none;
+    line-height: 30px;
 }

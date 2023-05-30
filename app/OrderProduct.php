@@ -43,6 +43,11 @@ class OrderProduct extends Model
        return $this->hasOne(Order::class,'id','order_id');
     }
 
+    public function getStockroom()
+    {
+        return $this->hasOne(Stockrooms::class,'id','stockroom_id');
+    }
+
     public static function setReturnProduct($count,$request,$orderProduct)
     {
         $user_id=$request->user()->id;
