@@ -199,21 +199,34 @@ class OrdersController extends CustomController
             ->firstOrFail();
         $count=$request->get('count',1);
         OrderProduct::setReturnProduct($count,$request,$orderProduct);
-        return redirect('admin/orders/return-product');
+        return redirect('admin/orders/return-product')->with(['message'=>'اطلاعات شما با موفقیت ثبت گردید.','header'=>'ثبت اطلاعات','alerts'=>'success']);
+
     }
 
     public function return_product_list(Request $request)
     {
-        $return_product_list=OrderProduct::with(['getProduct','getColor','getWarranty','getSeller','getStockroom'])
-            ->orderBy('id','DESC')
-            ->where('send_status',-1)
-            ->paginate(10);
+        $return_product_list=OrderProduct::getList($request->all());
         return view('admin.orders.return_product_list',['return_product_list'=>$return_product_list,'req'=>$request]);
     }
 
     public function remove_return_product(Request $request)
     {
-        var_dump($request->all());
+       $id=$request->get('id');
+        $orderProduct=OrderProduct::with(['getProduct'])
+            ->whereHas('getOrder')
+            ->where(['send_status'=>-1,'id'=>$id])
+            ->firstOrFail();
+        $result=OrderProduct::RemoveReturnProduct($request,$orderProduct);
+        if ($result=='ok')
+        {
+            $message='ثبت درخواست با موفقیت انجام شد';
+            $alert='success';
+        }
+        else{
+            $message='خطا در ثبت اطلاعات، مجدداً تلاش نمایید.';
+            $alert='warning';
+        }
+        return redirect('admin/orders/return-product')->with(['message'=>$message,'header'=>'ثبت درخواست','alerts'=>$alert]);
     }
 
 

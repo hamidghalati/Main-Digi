@@ -19,7 +19,7 @@
                     <input type="hidden" name="trashed" value="true">
                 @endif
                 <input type="text" name="string" class="form-control" value="{{$req->get('string','')}}"
-                       placeholder="کلمه مورد نظر را وارد کنید">
+                       placeholder="عنوان محصول را وارد کنید">
                 <button class="btn btn-primary btn_search">جستجو
                 </button>
 
@@ -129,6 +129,7 @@
                     <div class="modal-body">
                         <div id="message" style="text-align: justify;"></div>
                         <input type="hidden" name="id" id="product_id">
+                        <input type="hidden" name="type" id="output" value="output">
                         <textarea name="tozihat" class="tozihat" placeholder="توضیحات"></textarea>
                     </div>
 

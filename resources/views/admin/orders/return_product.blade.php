@@ -20,6 +20,8 @@
 
         <div class="panel_content">
 
+            @include('include.alert')
+
             <form action="{{ url('admin/orders/return-product/'.$orderProduct->id) }}" method="post">
                 @csrf
                 <div class="return_product_box">
