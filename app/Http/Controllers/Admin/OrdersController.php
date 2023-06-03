@@ -170,12 +170,42 @@ class OrdersController extends CustomController
 //        $order_data=$order_data->getData($id);
 //        return view('admin.orders.factor',['submission_info'=>$submission_info,'order_data'=>$order_data]);
 
-        $order=Order::with(['getProductRow.getProduct','getOrderInfo','getAddress','getGiftCart'])
-            ->where(['id'=>$id])->firstOrFail();
+//        $order=Order::with(['getProductRow.getProduct','getOrderInfo','getAddress','getGiftCart'])
+//            ->where(['id'=>$id])->firstOrFail();
+//
+//        $order_data=new OrderData($order->getOrderInfo,$order->getProductRow,$order->user_id,'yes');
+//        $order_data=$order_data->getData();
+//        $order_discount=DB::table('order_discount')->where('order_id',$order->id)->get();
 
-        $order_data=new OrderData($order->getOrderInfo,$order->getProductRow,$order->user_id,'yes');
+
+
+
+
+
+        $order=Order::with(['getProductRow.getSeller','getOrderInfo','getAddress','getGiftCart'])
+            ->where(['id'=>$id])->firstOrFail();
+        if ($order->order_read=='no'){
+            $order->order_read='ok';
+            $order->update();
+        }
+
+        $order_discount=DB::table('order_discount')->where('order_id',$order->id)->get();
+
+
+        $order_data=new OrderData($order->getOrderInfo,$order->getProductRow,$order->user_id);
         $order_data=$order_data->getData();
-      return view('admin.orders.factor',['order'=>$order,'order_data'=>$order_data]);
+
+        return view('admin.orders.factor',['order'=>$order,'order_data'=>$order_data,'order_discount'=>$order_discount]);
+
+
+
+
+
+
+
+
+
+//      return view('admin.orders.factor',['order'=>$order,'order_data'=>$order_data,'order_discount'=>$order_discount]);
 
     }
 

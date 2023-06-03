@@ -15,9 +15,6 @@
 
 
             <form action="" method="get" class="search_form">
-                @if(isset($_GET['trashed']) && $_GET['trashed']==true)
-                    <input type="hidden" name="trashed" value="true">
-                @endif
                 <input type="text" name="string" class="form-control" value="{{$req->get('string','')}}"
                        placeholder="عنوان محصول را وارد کنید">
                 <button class="btn btn-primary btn_search">جستجو

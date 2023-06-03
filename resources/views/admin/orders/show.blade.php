@@ -217,7 +217,9 @@
                                     </td>
                                     <td colspan="3">
                                         @php $p=$product['product_price2']*$product['product_count']; @endphp
-                                        {{ number_format( get_return_product_price($product['cat_id'],$order_discount,$p)).'  تومان '  }}
+                                        <span>هزینه قابل پرداخت به کاربر :</span>
+                                        @php $return_product_price=get_return_product_price($product['cat_id'],$order_discount,$p) @endphp
+                                        {{ number_format($return_product_price).'  تومان '  }}
                                     </td>
                                 </tr>
                                 <tr>

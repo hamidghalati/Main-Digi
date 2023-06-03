@@ -181,7 +181,7 @@ class OrderProduct extends Model
     }
 
     public static function getList($request){
-        $product_title=$request['string'];
+        $product_title=array_key_exists('string',$request) ? $request['string'] : '';
         $string='?';
         $return_product_list=self::with(['getProduct','getColor','getWarranty','getSeller','getStockroom']);
 

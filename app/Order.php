@@ -379,6 +379,11 @@ class Order extends Model
         }
     }
 
+    public function getUserInfo()
+    {
+        return $this->hasOne(AdditionalInfos::class,'user_id','user_id')
+            ->withDefault(['email'=>'']);
+    }
 
 
 

@@ -1751,6 +1751,7 @@ function get_sale_report($request,$year,$table_name,$where,$attr,$now)
 
 function get_return_product_price($cat_id,$order_discount,$product_price)
 {
+
     foreach ($order_discount as $key=>$value)
     {
         if ($value->cat_id==$cat_id)
@@ -1783,6 +1784,11 @@ function get_return_product_price($cat_id,$order_discount,$product_price)
                 }
             }
         }
+    }
+
+    if (sizeof($order_discount)==0)
+    {
+        return $product_price;
     }
 }
 

@@ -53,6 +53,7 @@
     $d = 0;
     $g = 0;
     $tp = 0;
+    $total_return_product_price=0;
     ?>
 
     <table class="table table-bordered order_table_info">
@@ -173,6 +174,10 @@
                             <img src="{{url('files/thumb/'.$product['image_url'])}}" alt="">
                             <ul>
                                 <li class="title">{{$product['title']}}</li>
+                                <li>
+                                    <span>فروشنده :</span>
+                                    <span>{{$product['seller']}}</span>
+                                </li>
                                 @if($product['color_id']>0)
                                     <li>
                                         <span>رنگ :</span>
@@ -202,7 +207,43 @@
                         {{replace_number(number_format($product['product_price2']*$product['product_count']))}}
                     </td>
                 </tr>
+
+
+
+
+
             @endforeach
+
+            @if($product['send_status']==-1)
+                <tr>
+
+                    <td colspan="3">
+                        این کالا توسط مشتری برگشت داده شده است
+                    </td>
+                    <td colspan="3">
+                        @php $p=$product['product_price2']*$product['product_count']; @endphp
+                        <span>هزینه قابل پرداخت به کاربر :</span>
+                        @php
+                            $return_product_price=get_return_product_price($product['cat_id'],$order_discount,$p);
+                            $total_return_product_price+=$return_product_price;
+                        @endphp
+                        {{ number_format($return_product_price).'  تومان '  }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        @if(!empty($product['tozihat']))
+                            <div style="width: 100%;display: flex;">
+                                <span style="margin-left: 10px;font-weight: bold;"> علت مرجوعی :</span>
+                                <span style="color: red">{{ $product['tozihat'] }}</span>
+                            </div>
+
+
+                        @endif
+
+                    </td>
+                </tr>
+            @endif
 
             <tr>
                 <td colspan="3">کل :</td>
@@ -220,6 +261,8 @@
                 </td>
             </tr>
         </table>
+
+
 
     @endforeach
 
@@ -261,13 +304,21 @@
                     {{replace_number(number_format($order->discount_value)).' تومان '}}
                 </td>
             </tr>
+        @endif
 
+        @if($total_return_product_price>0)
+            <tr>
+                <td>- مبلغ قابل برگشت به کاربر</td>
+                <td>
+                    {{replace_number(number_format($total_return_product_price)).' تومان '}}
+                </td>
+            </tr>
         @endif
 
         <tr>
-            <td>مبلغ نهایی</td>
+            <td> = مبلغ نهایی </td>
             <td>
-                <?php $total_price = ($order_price + $post_price) - ($g + $d) ?>
+                <?php $total_price = ($order_price + $post_price) - ($g + $d)- $total_return_product_price ?>
                 @if($total_price==0)
                     {{replace_number(number_format($total_price))}}
                 @else

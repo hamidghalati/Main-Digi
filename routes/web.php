@@ -14,6 +14,7 @@
 use App\Jobs\OrderStatistics;
 use App\Mail\SendAnswer;
 use App\Order;
+use App\OrderData;
 use App\Question;
 
 Route::get('/', 'SiteController@index');
@@ -350,8 +351,14 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
 
 
 Route::get('test', function () {
-    $user=\App\User::find(22);
-    $user->notify(new \App\Notifications\SendSms($user->mobile,'ارسال پیامک'));
+    $order_id=137;
+    $order=Order::with(['getProductRow.getProduct','getOrderInfo','getAddress','getGiftCart'])
+        ->where(['id'=>$order_id])->firstOrFail();
+
+    $order_data=new OrderData($order->getOrderInfo,$order->getProductRow,$order->user_id,'yes');
+    $order_data=$order_data->getData();
+
+    Mail::to('hamid.sam86@gmail.com')->queue(new \App\Mail\Order($order,$order_data));
 });
 
 //Session::forget('cart_final_price');

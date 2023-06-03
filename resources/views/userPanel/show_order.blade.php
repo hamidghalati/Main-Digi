@@ -185,6 +185,10 @@
                                             <img src="{{url('files/thumb/'.$product['image_url'])}}" alt="">
                                             <ul>
                                                 <li class="title">{{$product['title']}}</li>
+                                                <li>
+                                                    <span>فروشنده :</span>
+                                                    <span>{{$product['seller']}}</span>
+                                                </li>
                                                 @if($product['color_id']>0)
                                                     <li>
                                                         <span>رنگ :</span>

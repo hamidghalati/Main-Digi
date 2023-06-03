@@ -15,6 +15,7 @@ use App\OrderingTime;
 use App\ProvinceModel;
 use DB;
 use Illuminate\Http\Request;
+use Mail;
 use Session;
 
 class ShoppingController extends Controller
@@ -111,10 +112,10 @@ class ShoppingController extends Controller
     }
 
     public function verify(){
-        $order_id=137;
+        $order_id=142;
         DB::beginTransaction();
         try {
-            $order=Order::with(['getProductRow.getProduct','getOrderInfo','getAddress','getGiftCart'])
+            $order=Order::with(['getProductRow.getProduct','getOrderInfo','getAddress','getGiftCart','getUserInfo'])
                 ->where(['id'=>$order_id])->firstOrFail();
             $order->pay_status='ok';
             $order->update();
@@ -143,6 +144,13 @@ class ShoppingController extends Controller
             DB::commit();
 
             OrderStatistics::dispatch($order);
+
+            if (!empty($order->getUserInfo->email))
+            {
+                Mail::to($order->getUserInfo->email)->queue(new \App\Mail\Order($order,$order_data));
+            }
+
+
             return view('shipping.verify',['order'=>$order,'order_data'=>$order_data]);
 
 
