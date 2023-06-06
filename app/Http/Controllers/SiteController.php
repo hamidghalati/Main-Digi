@@ -12,6 +12,7 @@ use App\Favorite;
 use App\ItemValueModel;
 use App\Lib\MobileDetect;
 use App\Mail\ShareEmail;
+use App\Page;
 use App\ProductsModel;
 use App\ProductWarranty;
 use App\Question;
@@ -389,6 +390,12 @@ class SiteController extends Controller
        }
 
 
+    }
+
+    public function page($url)
+    {
+        $page=Page::where(['url'=>$url])->firstOrFail();
+        return view('shop.page',['page'=>$page]);
     }
 
 

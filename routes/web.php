@@ -101,6 +101,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     //stockroom
     create_crud_route('stockrooms', 'StockroomController', []);
 
+    //page
+    create_crud_route('pages', 'PageController');
+
     //stockroom/getProductWarranty
     Route::get('stockroom/getProductWarranty', 'Admin\StockroomController@getProductWarranty')->name('get_product_warranty');
 
@@ -259,6 +262,9 @@ Route::get('Cart', 'SiteController@show_cart');
 
 Route::post('site/cart/remove_product', 'SiteController@remove_product');
 Route::post('site/cart/change_product_cart', 'SiteController@change_product_cart');
+
+//pages/id
+Route::get('page/{page}','SiteController@page');
 
 
 //main

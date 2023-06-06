@@ -90,6 +90,18 @@
                 ['url' => url('admin/stockroom/output'), 'label' => 'خروجی های انبار', 'access' => 'stockrooms','accessValue' =>'add_output'],
             ]
         ];
+
+        $sideBarMenu[30] = [
+            'label' => 'صفحات اضافی',
+            'icon' => 'fa fa-file',
+            'access' => 'pages',
+            'child' => [
+                ['url' => url('admin/pages'), 'label' => 'مدیریت صفحات', 'access' => 'pages'],
+                ['url' => url('admin/pages/create'), 'label' => 'افزودن صفحه جدید', 'access' => 'pages'],
+            ]
+        ];
+
+
         ?>
         <span class="fa fa-bars" id="sidebarToggle"></span>
 {{--        @php $access=json_decode($access); @endphp--}}

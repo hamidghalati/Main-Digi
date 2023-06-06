@@ -187,3 +187,17 @@ color: red!important;
     color: red;
     padding-top: 10px;
 }
+.page{
+    background: white;
+    margin-top: 10px;
+    width: 100%;
+    padding: 30px;
+    line-height: 30px;
+    border: 1px solid #dedede;
+}
+.page h2{
+    margin-bottom: 20px!important;
+}
+.page div{
+    text-align: justify;
+}
