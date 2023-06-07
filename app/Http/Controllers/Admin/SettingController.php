@@ -22,4 +22,9 @@ class SettingController extends Controller
         }
         return view('admin.setting.send_order_price',['data'=>$data]);
     }
+
+    public function shop(Request $request)
+    {
+        return view('admin.setting.shop');
+    }
 }

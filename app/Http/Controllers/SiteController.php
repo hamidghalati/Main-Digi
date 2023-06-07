@@ -256,7 +256,7 @@ class SiteController extends Controller
     public function brand_product($brand_name)
     {
         $brand=BrandsModel::with('getCat.getCategory')->where('brand_ename',$brand_name)->firstOrFail();
-        return view('shop.brand_product',['brand'=>$brand]);
+        return view($this->view.'shop.brand_product',['brand'=>$brand]);
 
     }
 

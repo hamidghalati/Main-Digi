@@ -24,15 +24,26 @@
                             <input class="form-control" type="text" id="brand_search"
                                    placeholder="جستجوی نام برند">
 
+{{--                            <ul class="list-inline product_cat_ul brand_list">--}}
+{{--                                @foreach($brand->getCat as $key=>$value)--}}
+
+{{--                                    <li data="category_param_{{$value->getCategory->id}}">--}}
+{{--                                        <span class="check_box"></span>--}}
+{{--                                        <span class="title">{{$value->getCategory->name}}</span>--}}
+{{--                                    </li>--}}
+{{--                                @endforeach--}}
+{{--                            </ul>--}}
+
                             <ul class="list-inline product_cat_ul brand_list">
                                 @foreach($brand->getCat as $key=>$value)
 
-                                    <li data="category_param_{{$value->getCategory->id}}">
+                                    <li data="brand_param_{{$value->getCategory->id}}">
                                         <span class="check_box"></span>
                                         <span class="title">{{$value->getCategory->name}}</span>
                                     </li>
                                 @endforeach
                             </ul>
+
                         </div>
                     </div>
                 </div>

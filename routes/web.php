@@ -194,8 +194,11 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::post('orders/return-product','Admin\OrdersController@remove_return_product')->name('remove-return-product');
 
 
-    //setting
+    //setting/send-order-price
     Route::match(['get', 'post'], 'setting/send-order-price', 'Admin\SettingController@send_order_price');
+
+    //setting/shop
+    Route::match(['get', 'post'], 'setting/shop', 'Admin\SettingController@shop');
 
     //orders
     create_crud_route('orders', 'OrdersController');

@@ -91,13 +91,24 @@
             ]
         ];
 
-        $sideBarMenu[30] = [
+        $sideBarMenu[20] = [
             'label' => 'صفحات اضافی',
             'icon' => 'fa fa-file',
             'access' => 'pages',
             'child' => [
                 ['url' => url('admin/pages'), 'label' => 'مدیریت صفحات', 'access' => 'pages'],
                 ['url' => url('admin/pages/create'), 'label' => 'افزودن صفحه جدید', 'access' => 'pages'],
+            ]
+        ];
+
+        $sideBarMenu[30] = [
+            'label' => 'تنظیمات',
+            'icon' => 'fa fa-cogs',
+            'access' => 'setting',
+            'child' => [
+                ['url' => url('admin/setting/shop'), 'label' => 'فروشگاه', 'access' => 'setting'],
+                ['url' => url('admin/setting/send-order-price'), 'label' => 'هزینه ارسال سفارشات', 'access' => 'setting'],
+                ['url' => url('admin/setting/payment-gateway'), 'label' => 'درگاه پرداخت', 'access' => 'setting'],
             ]
         ];
 
