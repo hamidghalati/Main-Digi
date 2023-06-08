@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+    @yield('seo')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('header')
@@ -17,7 +17,7 @@
 
 
 
-    <title>فروشگاه من</title>
+    <title>{{ config('shop-info.shop_name') }}</title>
 </head>
 
 <body>
@@ -26,7 +26,7 @@
     <div class="header">
 
         <a href="{{url('/')}}">
-            <img src="{{asset('files/images/logo.svg')}}" alt="" class="shop_logo">
+            <img src="{{config('shop-info.shop_icon')}}" alt="" class="shop_logo">
         </a>
 
         <div class="header_row">
@@ -136,7 +136,7 @@
         </nav>
         <div class="row">
             <div class="col-md-3">
-                <h6>راهنمای خرید از {{ env('SHOP_NAME','') }}</h6>
+                <h6>راهنمای خرید از {{  config('shop-info.shop_name') }}</h6>
                 <ul>
                     <li>
                         <a href="">نحوه ثبت سفارش</a>
@@ -200,8 +200,8 @@
         </div>
 
         <p>
-            برای استفاده از مطالب {{ env('SHOP_NAME','') }}، داشتن «هدف غیرتجاری» و ذکر «منبع» کافیست. تمام حقوق اين
-            وب‌سايت متعلق به {{ env('SHOP_NAME','') }} است.
+            برای استفاده از مطالب {{  config('shop-info.shop_name') }}، داشتن «هدف غیرتجاری» و ذکر «منبع» کافیست. تمام حقوق اين
+            وب‌سايت متعلق به {{  config('shop-info.shop_name') }} است.
         </p>
 
     </footer>

@@ -28,7 +28,7 @@ Route::post('password/confirm','Auth\ForgotPasswordController@check_confirm_code
 //vue_login
 Route::post('/vue_login', 'Auth\LoginController@vue_login')->middleware('guest');
 
-Route::get('admin_login', 'Admin\AdminController@admin_login_form')->middleware('guest');;
+Route::get(config('shop-info.login_url'), 'Admin\AdminController@admin_login_form')->middleware('guest');;
 
 Route::get('/confirm', 'SiteController@confirm')->middleware('guest');
 Route::get('/confirmphone', 'SiteController@confirmphone')->middleware('auth');

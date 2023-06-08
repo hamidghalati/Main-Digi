@@ -203,15 +203,25 @@
 
 @endsection
 @section('header')
-{{--    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>--}}
-{{--    <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>--}}
-
     <link rel="stylesheet" href="{{asset('css/swiper.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/auth.css')}}">
     <link rel="stylesheet" href="{{asset('slick/slick/slick.css')}}">
     <link rel="stylesheet" href="{{asset('slick/slick/slick-theme.css')}}">
-
 @endsection
+
+@section('seo')
+    <meta name="description" content="{{ $product->description }}">
+    <meta name="keywords" content="{{ $product->keywords}}">
+    <meta property="og:site_name" content="{{ config('shop-info.shop_name') }}" />
+    <meta property="og:description" content="{{ $product->description }}" />
+    <meta property="og:title" content="{{ $product->title }}" />
+    <meta property="og:locale" content="fa_IR" />
+    <meta property="og:image" content="{{url('files/products/'.$product->image_url)}}" />
+    <meta name="twitter:description" content="{{ $product->description}}">
+    <meta name="twitter:title" content="{{ $product->title}}">
+    <meta property="twitter:image" content="{{url('files/products/'.$product->image_url)}}" />
+@endsection
+
 @section('footer')
     <script type="text/javascript" src="{{ asset('js/jquery.elevateZoom-3.0.8.min.js') }}"></script>
 

@@ -14,8 +14,13 @@
             </div>
 
             <div class="form-group">
+                {{ Form::label('login_url', ' آدرس ورود به پنل مدیریت :')}}
+                {{ Form::text('login_url', config('shop-info.login_url'),['class'=>'form-control left'])}}
+            </div>
+
+            <div class="form-group">
                 {{ Form::label('shop_icon', 'لوگو فروشگاه:')}}
-                {{ Form::file('send_price',['class'=>'form-control left'])}}
+                {{ Form::file('shop_icon',['class'=>'form-control left'])}}
             </div>
 
 
@@ -29,46 +34,44 @@
                 </span>
 
 
-
-                    <input type="hidden" name="keywords" value="{{config('shop-info.keywords')}}" id="keywords">
-
-
-
-            </div>
-            <div id="tag_box">
-                <?php
-                $keywords = config('shop-info.keywords');
-                $e = explode(',', $keywords);
-                $i = 1;
-                ?>
-                @if (is_array($e))
-                    @foreach ($e as $key=>$value)
-                        @if (!empty($value))
-                            <div class="tag_div" id="tag_div_{{$i}}" style="margin-bottom: 30px!important;">
-                                <span class="fa fa-remove" onclick="remove_tag('{{$i}}','{{$value}}')"></span>
-                                {{$value}}
-                            </div>
-                                <?php
-                                $i++;
-                                ?>
-                        @endif
-                    @endforeach
-                @endif
-
-
-                <div style="clear: both"></div>
+                <input type="hidden" name="keywords" value="{{config('shop-info.keywords')}}" id="keywords">
 
 
             </div>
 
+            <div class="form-group">
+                <div id="tag_box" style="display: flex;">
+                    <?php
+                    $keywords = config('shop-info.keywords');
+                    $e = explode(',', $keywords);
+                    $i = 1;
+                    ?>
+                    @if (is_array($e))
+                        @foreach ($e as $key=>$value)
+                            @if (!empty($value))
+                                <div class="tag_div" id="tag_div_{{$i}}" style="margin-bottom: 30px!important;">
+                                    <span class="fa fa-remove" onclick="remove_tag('{{$i}}','{{$value}}')"></span>
+                                    {{$value}}
+                                </div>
+                                    <?php
+                                    $i++;
+                                    ?>
+                            @endif
+                        @endforeach
+                    @endif
 
 
-                <div class="form-group">
-{{--                    {{ Form::label('description',['style'=>'width:100%!important','placeholder'=>'توضیحات'])}}--}}
-                    {{ Form::textArea('description', config('shop-info.description'),['class'=>'form-control description','placeholder'=>'توضیحات'])}}
+                    <div style="clear: both"></div>
+
+
                 </div>
+            </div>
 
 
+            <div class="form-group">
+                {{--                    {{ Form::label('description',['style'=>'width:100%!important','placeholder'=>'توضیحات'])}}--}}
+                {{ Form::textArea('description', config('shop-info.description'),['class'=>'form-control description','placeholder'=>'توضیحات مختصر در مورد فروشگاه'])}}
+            </div>
 
 
             <div class="d-grid gap-2 col-6 mx-auto">

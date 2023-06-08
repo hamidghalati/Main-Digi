@@ -136,6 +136,20 @@
 
 
 @endsection
+
+@section('seo')
+    <meta name="description" content="{{ $product->description }}">
+    <meta name="keywords" content="{{ $product->keywords}}">
+    <meta property="og:site_name" content="{{ config('shop-info.shop_name') }}" />
+    <meta property="og:description" content="{{ $product->description }}" />
+    <meta property="og:title" content="{{ $product->title }}" />
+    <meta property="og:locale" content="fa_IR" />
+    <meta property="og:image" content="{{url('files/products/'.$product->image_url)}}" />
+    <meta name="twitter:description" content="{{ $product->description}}">
+    <meta name="twitter:title" content="{{ $product->title}}">
+    <meta property="twitter:image" content="{{url('files/products/'.$product->image_url)}}" />
+@endsection
+
 @section('footer')
     <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
     <script>

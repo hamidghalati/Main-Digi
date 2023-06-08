@@ -395,7 +395,7 @@ class SiteController extends Controller
     public function page($url)
     {
         $page=Page::where(['url'=>$url])->firstOrFail();
-        return view('shop.page',['page'=>$page]);
+        return view($this->view.'shop.page',['page'=>$page]);
     }
 
 

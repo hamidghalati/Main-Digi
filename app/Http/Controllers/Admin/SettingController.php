@@ -25,6 +25,12 @@ class SettingController extends Controller
 
     public function shop(Request $request)
     {
+        if ($request->isMethod('post'))
+        {
+            $setting=new Setting();
+            $setting->addConfig($request);
+            return redirect()->back();
+        }
         return view('admin.setting.shop');
     }
 }

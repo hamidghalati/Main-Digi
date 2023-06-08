@@ -1,4 +1,4 @@
-@extends('layouts.shop.shop')
+@extends('layouts.mobile.mobile')
 
 @section('content')
 
