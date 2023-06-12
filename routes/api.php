@@ -26,6 +26,10 @@ Route::middleware('cors')->group(function () {
     Route::post('seller/first_step_register','api\SellerController@first_step_register');
     Route::get('seller/get_province','ApiController@get_province');
     Route::get('seller/get_city/{province_id}','ApiController@get_city');
+
+    //second_step_register
+    Route::post('seller/second_step_register','api\SellerController@second_step_register');
+
 });
 
 Route::get('get_province','ApiController@get_province');
