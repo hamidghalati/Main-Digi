@@ -30,6 +30,13 @@ Route::middleware('cors')->group(function () {
     //second_step_register
     Route::post('seller/second_step_register','api\SellerController@second_step_register');
 
+    //resend_active_code
+    Route::post('seller/resend_active_code','api\SellerController@resend_active_code');
+
+    //check_active_code
+    Route::post('seller/check_active_code','api\SellerController@check_active_code');
+
+
 });
 
 Route::get('get_province','ApiController@get_province');

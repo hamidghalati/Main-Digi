@@ -2,14 +2,17 @@
 
 namespace App;
 
+use App\Notifications\SendSms;
 use DB;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
 class Seller extends Model
 {
-    protected $fillable=['email','mobile','password','step','active_code'];
+    use Notifiable;
+    protected $fillable=['email','mobile','password','step','active_code','brand_name','fname','lname','province_id','city_id','account_type'];
 
     public static function first_step_register($request)
     {
@@ -43,6 +46,27 @@ class Seller extends Model
 
     }
 
+    public static function second_step_register($request)
+    {
+        $mobile=$request->get('mobile');
+        $seller=Seller::where(['mobile'=>$mobile,'step'=>1])->first();
+        if ($seller){
+            $seller->step=2;
+            $seller->update($request->all());
+
+            $code= $seller->active_code;
+            $message=config('shop-info.shop_name')."\n";
+            $message.='کد تایید';
+            $message.=':'.$code;
+            $seller->notify(new SendSms($seller->mobile,$message));
+
+            return ['status'=>'ok','step'=>2];
+        }
+        else{
+            return ['status'=>'error','message'=>'خطا در ثبت اطلاعات، مجدداً تلاش نمایید'];
+        }
+    }
+
     public static function check($field_name,$value)
     {
         $result=DB::table('sellers')->where([$field_name=>$value,'step'=>4])->first();
@@ -52,6 +76,22 @@ class Seller extends Model
         }
         else{
             return false;
+        }
+    }
+
+    public static function check_active_cod($request)
+    {
+        $mobile=$request->get('mobile');
+        $code=$request->get('code');
+        $seller=Seller::where(['mobile'=>$mobile,'step'=>2,'active_code'=>$code])->first();
+        if ($seller)
+        {
+            $seller->step=3;
+            $seller->update();
+            return ['status'=>'ok'];
+        }
+        else{
+            return ['status'=>'error','message'=>'کد تایید وارد شده اشتباه می باشد'];
         }
     }
 
