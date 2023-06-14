@@ -8,11 +8,13 @@ use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Validator;
 
 class Seller extends Model
 {
     use Notifiable;
-    protected $fillable=['email','mobile','password','step','active_code','brand_name','fname','lname','province_id','city_id','account_type'];
+    protected $fillable=['email','mobile','password','step','active_code','brand_name','fname','lname',
+        'province_id','city_id','account_type'];
 
     public static function first_step_register($request)
     {
@@ -93,6 +95,62 @@ class Seller extends Model
         else{
             return ['status'=>'error','message'=>'کد تایید وارد شده اشتباه می باشد'];
         }
+    }
+
+    public static function upload_file($request)
+    {
+        $image_url3=true;
+        $mobile=$request->get('mobile');
+        $account_type=$request->get('account_type');
+        $seller=Seller::where(['mobile'=>$mobile,'step'=>3,'account_type'=>$account_type])->first();
+        if ($seller)
+        {
+            $rules=[
+                'shenasname'=>'required|image',
+                'cart'=>'required|image',
+            ];
+            if ($account_type==2)
+            {
+                $image_url3=false;
+                $rules['rooznamepic']='required|image';
+            }
+            $validator=Validator::make($request->all(),$rules);
+            if ($validator->fails())
+            {
+                return  ['status'=>'error_file_type'];
+            }
+            else{
+                $image_url1=uploade_file($request,'shenasname','seller','shenasname_');
+                $image_url2=uploade_file($request,'cart','seller','cart_');
+                if (!$image_url3)
+                {
+                    $image_url3=uploade_file($request,'rooznamepic','seller','rooznamepic_');
+                }
+
+                if ($image_url1 && $image_url2 && $image_url3)
+                {
+                    $insert=[
+                        'seller_id'=>$seller->id,
+                        'shenasname'=>$image_url1,
+                        'cart'=>$image_url2,
+
+                    ];
+                    if ($account_type==2){
+                        $insert['rooznamepic']=$image_url3;
+                    }
+                    DB::table('seller_document')->insert($insert);
+                    $seller->step=4;
+                    $seller->update();
+                    return ['status'=>'ok'];
+                }
+
+            }
+        }
+        else{
+            return ['status'=>'error'];
+        }
+
+
     }
 
 

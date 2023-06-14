@@ -46,4 +46,9 @@ class SellerController extends Controller
     {
         return Seller::check_active_cod($request);
     }
+
+    public function upload_file(Request $request)
+    {
+        return Seller::upload_file($request);
+    }
 }

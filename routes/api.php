@@ -36,6 +36,9 @@ Route::middleware('cors')->group(function () {
     //check_active_code
     Route::post('seller/check_active_code','api\SellerController@check_active_code');
 
+    //upload_file
+    Route::post('seller/upload_file','api\SellerController@upload_file');
+
 
 });
 
